@@ -56,6 +56,11 @@
    - Never pass a .geo file into Firedrake's Mesh() constructor.
    - Don't pip install new packages without asking.
    ```
+4b. ***When preparing to write Firedrake code, which borrows from python often, it can be helpful to include the following convention in your list above:***
+
+   ```markdown
+   - **When writing Firedrake code, always defer to Firedrake/UFL syntax over Python equivalents.** Firedrake builds on the Unified Form Language    (UFL) and provides its own versions of many operations — math functions (`sin`, `cos`, `exp`, `sqrt`, `pi`), tensor algebra (`inner`, `dot`, `grad`, `outer`), conditionals (`conditional()`), symbolic constants (`Constant(...)`), norms, and more — but the rule is broader than any list of examples. Many Python, NumPy, or other-library lookalikes appear to work on symbolic objects but produce subtly wrong results, or fail in ways that are hard to diagnose. The principle: whenever there's a Firedrake/UFL way to express something, use it — even if a Python construct would compile. Check the Firedrake/UFL namespace before reaching for any Python alternative.
+```
 
 5. Reset the conversation (`/clear`) and re-ask:
 

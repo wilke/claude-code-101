@@ -362,6 +362,74 @@ MEMORY.md, and overwrite STATUS.md with where we are now.</pre>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 5 · MCP</div>
+    <h1>Wrap a small Laplace solver as an MCP server</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">An MCP exposes a capability to <i>every</i> future session in this project. Register once; invoke by tool name forever.</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · framing -->
+  <section class="slide">
+    <h3>Exercise 5 · framing</h3>
+    <h1>MCP vs skill vs <code>CLAUDE.md</code> note</h1>
+    <p>Three places to put a capability. They overlap, but each one earns its keep in a different regime.</p>
+    <table class="matrix">
+      <tr><th>Mechanism</th><th>When it earns its keep</th></tr>
+      <tr><td><code>CLAUDE.md</code> note</td><td>One-shot conventions ("we use <code>dx(degree=4)</code> for non-polynomial integrands"). No code needed; Claude reads <code>CLAUDE.md</code> every session.</td></tr>
+      <tr><td>Skill</td><td>Stateless, reusable inside this project, ships in the repo. The CFL-check skill from Exercise 3 is the canonical shape.</td></tr>
+      <tr><td>MCP</td><td>Persistent state worth keeping warm across calls; or it talks to something Claude can't run inline; or it needs to be available to many sessions across many projects.</td></tr>
+    </table>
+    <div class="callout" style="background: #8a1f1f; color: #fbfaf6; border-left-color: #4a0e0e; font-weight: 500;">The toy in this exercise is honestly <i>skill-shaped</i> — the MCP shell is what's being taught. The stretch (Firedrake-in-Docker with a warm JIT cache) is where the persistent-state justification actually bites.</div>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · walkthrough -->
+  <section class="slide">
+    <h3>Exercise 5 <span class="badge">15 min</span></h3>
+    <h1>Run the exercise</h1>
+    <ol>
+      <li><code>cd exercises-pde/05-mcp</code> and <code>pip install -r requirements.txt</code>. Pure Python — no Docker for the main flow.</li>
+      <li>Register the server:
+        <pre>claude mcp add toy-laplace -- python3 "$(pwd)/laplace_mcp.py"</pre>
+        Confirm with <code>claude mcp list</code>.
+        <p style="color: #8a1f1f; font-weight: 500; font-size: 16px; margin: 6px 0 0;">⚠ Verify before running live: older <code>claude</code> versions used <code>--command</code>/<code>--args</code> flags instead of the <code>--</code> separator shown here. Run <code>claude mcp add --help</code> to confirm the syntax on your install. On Homebrew macOS, only <code>python3</code> is on PATH (no <code>python</code>).</p>
+      </li>
+      <li>Launch <code>claude</code> in this directory and paste:
+        <pre>Solve the Poisson problem described in problem.json using the
+toy-laplace MCP and print the structured result.</pre>
+      </li>
+      <li>Watch the call cross the wire. Note the exact arguments and the structured payload — <i>that</i> is the audit trail an MCP buys you.</li>
+      <li>Edit <code>problem.json</code> (bump <code>n</code> to 64, or change the RHS) and re-prompt. Confirm Claude re-calls the MCP rather than recycling the prior answer.</li>
+    </ol>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · debrief -->
+  <section class="slide">
+    <h3>Exercise 5 · debrief</h3>
+    <h1>What "MCP routing" looks like</h1>
+    <p>The artifact to inspect is not the answer — it is the <i>call</i>. Read what Claude did against this checklist.</p>
+    <table class="matrix">
+      <tr><th>Good routing</th><th>What to push back on</th></tr>
+      <tr><td>Calls <code>toy-laplace:solve_laplace</code> by name.</td><td>Computes the answer inline with <code>scipy</code> — bypasses the MCP entirely.</td></tr>
+      <tr><td>Arguments at the wire match <code>problem.json</code> verbatim.</td><td>Rounded <code>n</code>, simplified RHS, or <code>bc = 0</code> in place of <code>0.0</code>.</td></tr>
+      <tr><td>Reports the structured payload verbatim alongside any prose.</td><td>Paraphrases as "max ≈ 1, looks right" and drops the JSON.</td></tr>
+      <tr><td>Re-calls the MCP when <code>problem.json</code> changes.</td><td>Recycles the prior answer — treats the first call as a memo, not a tool.</td></tr>
+      <tr><td>Treats the MCP as the source of truth.</td><td>Cross-checks with an inline scipy solve, then second-guesses the MCP.</td></tr>
+    </table>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · closing -->
+  <section class="slide">
+    <h3>Exercise 5 · closing</h3>
+    <h1>MCP = capability that survives the session</h1>
+    <p>The artifact this exercise produced is not the Laplace solver. It is the <i>registered tool name</i> — <code>toy-laplace:solve_laplace</code> — that any future session in this folder can invoke without setup, without re-explaining, without re-implementing.</p>
+    <div class="callout">The stretch is where the design compounds: a warm Firedrake worker amortizes the JIT cost across every call in a session. That is the regime where <i>"MCP, not skill"</i> stops being a teaching point and starts being the design that actually wins. The capstone (Exercise 6) is where multiple MCPs meet in a single workflow.</div>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
 </div>
 
 <div class="nav">

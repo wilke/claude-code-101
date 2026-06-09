@@ -1,5 +1,7 @@
 # Exercise 2 — Plan a small MINLP (15 min)
 
+***THIS NEEDS TO BE CHANGED! I THINK THERE NEEDS TO BE A PROCESS OF CHECKING/WALKING THROUGH THE PLAN***
+
 **Goal.** Use plan mode to lay out the structure of a small MINLP project before any code is written.
 
 ## The problem

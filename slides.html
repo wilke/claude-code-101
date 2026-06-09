@@ -295,7 +295,7 @@
     <div class="kicker">Workshop · two hours</div>
     <h1>Files, not chats</h1>
     <p class="sub" style="font-size: 28px; color: var(--ink); margin-top: 8px; margin-bottom: 18px;">Claude Code as a co-scientist <span style="color: var(--muted); font-size: 22px;">— for mathematicians</span></p>
-    <p class="sub">A hands-on workshop for researchers in nonlinear, discrete, and PDE-constrained optimization. The four-file architecture (CLAUDE.md, plans/, MEMORY.md, STATUS.md), skills, MCP servers, version control, testing, and literature workflows — with runnable exercises in Python, Pyomo, CasADi, and PETSc/TAO.</p>
+    <p class="sub">A hands-on workshop for researchers in computational mathematics — numerical PDEs, optimization, etc. The four-file architecture (CLAUDE.md, plans/, MEMORY.md, STATUS.md), skills, MCP servers, version control, testing, and literature workflows — with runnable exercises.</p>
     <div class="footer">
       <span>Workshop · v1</span>
       <div class="progress"><div></div></div>
@@ -312,8 +312,7 @@
       <div class="col">
         <h4>You're in the right room if</h4>
         <ul>
-          <li>You write nonlinear or discrete optimization solvers, or apply them.</li>
-          <li>Your problems involve MINLP, complementarity constraints, or PDE constraints.</li>
+          <li>You write or apply numerical solvers.</li>
           <li>You're comfortable with Python and the command line.</li>
           <li>You want less yak-shaving (plot scripts, log parsing, refactors) and more research.</li>
         </ul>
@@ -342,6 +341,34 @@
       <li><b>Sustainable habits</b> — version control, recognizing whack-a-mole loops, ending sessions cleanly.</li>
       <li><b>A capstone</b> — an inverse Poisson problem with PETSc/TAO that uses everything.</li>
     </ol>
+    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- NEW: Workshop organization -->
+  <section class="slide">
+    <h3>Organization</h3>
+    <h1>How the workshop is structured</h1>
+    <p class="lede">Two stages: short guided exercises first, then an open-ended capstone where you put the tools to work on your own research.</p>
+    <div class="two-col">
+      <div class="col">
+        <div style="font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent); margin-bottom: 4px;">Stage 1</div>
+        <h2 style="font-size: 34px; margin-bottom: 10px;">Exercises</h2>
+        <ul>
+          <li>Small, self-contained examples that show how individual Claude features work — CLAUDE.md, plan mode, skills, MEMORY.md, MCP.</li>
+          <li>These are <i>not</i> "you must only use it this way" prescriptions. They're starting points.</li>
+          <li>During each exercise, keep asking yourself: <i>how could a tool like this help me in my own research?</i> The answer will look different for everyone.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <div style="font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent); margin-bottom: 4px;">Stage 2</div>
+        <h2 style="font-size: 34px; margin-bottom: 10px;">Capstone</h2>
+        <ul>
+          <li>Open-ended time to try the tools on your own — your code, your problem.</li>
+          <li>Push past what you saw in the exercises. The exercises show the shape; the capstone is where you stretch it.</li>
+          <li>Goal: actually accomplish a piece of research with Claude as your collaborator, not just rehearse a feature.</li>
+        </ul>
+      </div>
+    </div>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -442,8 +469,8 @@ claude</code></pre>
     <p class="lede">Everything Claude reads and writes during a session lives in one finite buffer called the <i>context window</i>.</p>
     <ul>
       <li>Every prompt you type, every file Claude reads, every tool output — all go into the same window.</li>
-      <li>The window is large but bounded (around 200K tokens, roughly 150K words).</li>
-      <li>When you approach the limit, Claude Code <b>auto-compacts</b> — older messages are summarized to make room.</li>
+      <li>The context window is large but bounded (around 200K tokens, roughly 150K words).</li>
+      <li style="color: #c0392b;">When you approach the limit, Claude Code <b>auto-compacts</b> — older messages are summarized to make room.</li>
       <li>After auto-compact, specific details from earlier turns can fade. Anything you want to keep should be on disk, not just in the conversation.</li>
     </ul>
     <div class="callout">Implication: long sessions are fine, but treat the conversation as ephemeral. Persistent facts go in CLAUDE.md, MEMORY.md, or files in the repo.</div>
@@ -463,7 +490,7 @@ claude</code></pre>
       <tr><td>The conversation itself</td><td>Only with <code>--resume</code></td><td>Compressed to a summary</td></tr>
       <tr><td>"Mental notes" Claude has in-conversation</td><td>No — they vanish</td><td>Often lost</td></tr>
     </table>
-    <p class="small" style="margin-top: 8px;">If a fact matters tomorrow, write it to MEMORY.md today. If it's a reusable procedure, lift it into a skill. The conversation is scratch paper.</p>
+    <p class="small" style="margin-top: 8px;">If a fact matters tomorrow, write it to MEMORY.md today. If it's a reusable procedure, lift it into a skill. <b>The conversation is scratch paper.</b></p>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -481,7 +508,7 @@ claude --resume
 /clear      # wipe the conversation; keep CLAUDE.md, skills, files
 /compact    # manually summarize older turns to free context space</code></pre>
     <p>Sessions are stored locally under <code>~/.claude/projects/&lt;hash&gt;/</code>. They're plain files; you can grep them.</p>
-    <div class="callout">House rule: end every session with <code>summarize what we did and append a dated entry to MEMORY.md</code>. Two minutes; beats relying on <code>--resume</code> to remember decisions.</div>
+    <div class="callout"><b>House rule:</b> end every session with <code>summarize what we did and append a dated entry to MEMORY.md</code>. Two minutes; beats relying on <code>--resume</code> to remember decisions.</div>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -498,7 +525,7 @@ claude --resume
       <tr><td>Strong fit</td><td>Solver code, experiments, paper LaTeX</td><td>Grant admin, email triage, document pipelines</td></tr>
       <tr><td>Shared</td><td colspan="2">Same model family, plugins, skills, memory conventions</td></tr>
     </table>
-    <p class="small" style="margin-top: 6px;">For optimization research, Claude Code is the workhorse. Cowork is useful when the work crosses tools your terminal can't reach — drafting a referee reply that pulls from your Calendar, Gmail, and a Notion outline at once.</p>
+    <p class="small" style="margin-top: 6px;">For the kind of computational research this workshop covers, Claude Code is the workhorse. Cowork is useful when the work crosses tools your terminal can't reach — drafting a referee reply that pulls from your Calendar, Gmail, and a Notion outline at once.</p>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -570,18 +597,10 @@ Develop a primal-dual IPM with inertia correction for nonconvex NLPs.
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- 12. Exercise 1 -->
-  <section class="slide">
-    <h3>Exercise 1 <span class="badge">10 min</span></h3>
-    <h1>Write your own CLAUDE.md</h1>
-    <ol>
-      <li><code>cd exercises/01-claude-md/</code></li>
-      <li>Read the included <code>rosenbrock.py</code> — a deliberately under-tested SciPy solve.</li>
-      <li>Run <code>claude</code> and ask: <code>/init</code>. Read the generated CLAUDE.md.</li>
-      <li>Edit it. Add: project goal, your preferred tolerance, and one "don't" rule.</li>
-      <li>Then ask Claude: <code>add a convergence plot for rosenbrock.py using our conventions</code>.</li>
-    </ol>
-    <div class="callout">Discussion: did Claude follow your conventions? What did it miss? Add the missing rule to CLAUDE.md and try again — that's the whole loop.</div>
+  <!-- 12. Exercise 1 — pointer to supplemental deck -->
+  <section class="slide section-divider">
+    <h1>Exercise 1</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Please refer to your supplemental slide deck.</p>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -597,7 +616,7 @@ Develop a primal-dual IPM with inertia correction for nonconvex NLPs.
   <section class="slide">
     <h3>Planning</h3>
     <h1>Why plan first?</h1>
-    <p>Optimization problems have tightly coupled steps: model formulation, derivative computation, scaling, regularization, line search, termination. Without a plan, the assistant fixes one and breaks another.</p>
+    <p>Research code has tightly coupled steps: problem formulation, discretization or transcription, numerical scheme, parameter choices, verification. Without a plan, the assistant fixes one and breaks another.</p>
     <ul>
       <li>Plan mode gives you a written specification before any code is written.</li>
       <li>The plan itself is a deliverable: paste it into your notes.</li>
@@ -642,17 +661,10 @@ Open questions:
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- 17. Exercise 2 -->
-  <section class="slide">
-    <h3>Exercise 2 <span class="badge">15 min</span></h3>
-    <h1>Plan a small MINLP</h1>
-    <ol>
-      <li><code>cd exercises/02-planning/</code></li>
-      <li>Open <code>minlp_seed.py</code> — a portfolio problem with binary cardinality constraints.</li>
-      <li>Enter plan mode. Ask: <code>plan a Pyomo formulation, a relaxation-based heuristic, and a benchmarking harness against BARON.</code></li>
-      <li>Save the plan to <code>plans/$(date +%Y-%m-%d)-portfolio.md</code>. Discuss with your neighbor: what does it miss?</li>
-    </ol>
-    <div class="callout">The output is the plan, not the code. Write down one assumption you would have made wrong without the plan.</div>
+  <!-- 17. Exercise 2 — pointer to supplemental deck -->
+  <section class="slide section-divider">
+    <h1>Exercise 2</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Please refer to your supplemental slide deck.</p>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -811,17 +823,10 @@ Returns max residuals for stationarity, feasibility, complementarity.</code></pr
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- 23. Exercise 3 -->
-  <section class="slide">
-    <h3>Exercise 3 <span class="badge">15 min</span></h3>
-    <h1>Use a skill to verify a KKT point</h1>
-    <ol>
-      <li><code>cd exercises/03-skills/</code></li>
-      <li>The folder ships with <code>.claude/skills/kkt-checker/</code> and a small QP whose solution is in <code>solution.json</code>.</li>
-      <li>Run <code>claude</code> and ask: <code>verify the candidate solution in solution.json against problem.py</code>.</li>
-      <li>Now corrupt one multiplier and re-run. Confirm Claude reports the failing residual.</li>
-      <li>Stretch: ask Claude to extend the skill to also report the active set.</li>
-    </ol>
+  <!-- 23. Exercise 3 — pointer to supplemental deck -->
+  <section class="slide section-divider">
+    <h1>Exercise 3</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Please refer to your supplemental slide deck.</p>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -864,16 +869,10 @@ Returns max residuals for stationarity, feasibility, complementarity.</code></pr
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- 27. Exercise 4 -->
-  <section class="slide">
-    <h3>Exercise 4 <span class="badge">10 min</span></h3>
-    <h1>Bootstrap a MEMORY.md</h1>
-    <ol>
-      <li><code>cd exercises/04-memory/</code> — a small folder with three lab notebook entries.</li>
-      <li>Run <code>claude</code> and ask: <code>read notebooks/ and produce MEMORY.md with sections Decisions, Parameters, Dead Ends, Open Questions.</code></li>
-      <li>Review and edit. The first draft is always too long.</li>
-      <li>Now ask: <code>given MEMORY.md, what's the next experiment I should run?</code> Discuss the answer.</li>
-    </ol>
+  <!-- 27. Exercise 4 — pointer to supplemental deck -->
+  <section class="slide section-divider">
+    <h1>Exercise 4</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Please refer to your supplemental slide deck.</p>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -919,15 +918,15 @@ Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
   <section class="slide">
     <h3>MEMORY.md</h3>
     <h1>Literature: the fifth artifact</h1>
-    <p class="lede">For optimization researchers, literature reading is a daily activity — and the highest-leverage place where Claude as a <i>co-scientist</i> differs from Claude as a <i>programmer</i>. Treat it as first class.</p>
+    <p class="lede" style="font-size: 19px;">For computational mathematicians, literature reading is a daily activity — and the highest-leverage place where Claude as a <i>co-scientist</i> differs from Claude as a <i>programmer</i>. Treat it as first class.</p>
     <table class="matrix">
       <tr><th></th><th>Claude does well</th><th>Claude does badly</th></tr>
       <tr><td>PDFs</td><td>Extract text, equations, tables (built-in <code>pdf</code> skill)</td><td>Decide what a result <i>really means</i> — that's still you</td></tr>
       <tr><td>Notation</td><td>Translate between Nocedal–Wright / Conn–Gould–Toint / Boyd–Vandenberghe</td><td>Catch subtle distinctions (B- vs. M- vs. S-stationarity) without your verification</td></tr>
       <tr><td>Citations</td><td>Resolve fragments via <code>arxiv</code> / <code>semantic-scholar</code> MCP</td><td>Emit citations from memory — these are often <b>plausible-looking and wrong</b></td></tr>
     </table>
-    <p>Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.</p>
-    <pre><code>project/
+    <p style="font-size: 19px;">Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.</p>
+    <pre style="font-size: 17px;"><code>project/
 ├── CLAUDE.md
 ├── MEMORY.md          # cites plans/ AND literature/
 ├── STATUS.md
@@ -1052,17 +1051,10 @@ claude mcp remove sqlite</code></pre>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- 33. Exercise 5 -->
-  <section class="slide">
-    <h3>Exercise 5 <span class="badge">15 min</span></h3>
-    <h1>Wrap a toy solver as an MCP</h1>
-    <ol>
-      <li><code>cd exercises/05-mcp/</code></li>
-      <li>Open <code>toy_solver_mcp.py</code> — a 60-line MCP server exposing <code>solve_qp(Q, c, A, b)</code> via <code>cvxpy</code>.</li>
-      <li>Register it: <code>claude mcp add toy --command python --args toy_solver_mcp.py</code>.</li>
-      <li>In a new session, ask: <code>solve the QP in problem.json using the toy MCP and append the result to MEMORY.md</code>.</li>
-    </ol>
-    <div class="callout">Stretch goal: replace cvxpy with PETSc/TAO's bound-constrained QP. Same MCP shell, different solver — that's the whole point.</div>
+  <!-- Exercise 5 — pointer to supplemental deck -->
+  <section class="slide section-divider">
+    <h1>Exercise 5</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Please refer to your supplemental slide deck.</p>
     <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 

@@ -1,0 +1,4 @@
+{
+  "dt": 0.002,
+  "_note": "Proposed timestep for an explicit time-stepping scheme on the wave equation defined in problem.py. The wave-cfl-checker skill verifies dt < 2/sqrt(lambda_max) on every element, where lambda_max is the largest generalized eigenvalue of (K_e, M_e). With c = 2 in the bottom layer and h = 1/16 the bound is around 8e-3, so 0.002 should pass comfortably."
+}

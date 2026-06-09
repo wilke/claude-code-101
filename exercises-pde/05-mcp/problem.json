@@ -1,6 +1,0 @@
-{
-  "_description": "-div(grad u) = f on (0,1)^2 with u = bc on the boundary. Manufactured solution u_exact = sin(pi x) sin(pi y) has f = 2 pi^2 sin(pi x) sin(pi y) and vanishes on the boundary, so max(u) should land near 1.0.",
-  "n": 32,
-  "rhs": "2 * pi**2 * sin(pi*x) * sin(pi*y)",
-  "bc": 0.0
-}

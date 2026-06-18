@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Numerical PDEs supplement — Claude Code workshop</title>
+<style>
+  :root {
+    --bg: #fbfaf6;
+    --ink: #1c1c1c;
+    --muted: #5b5b5b;
+    --accent: #b8410f;
+    --accent-soft: #e8d8c4;
+    --rule: #d6cfbf;
+    --code-bg: #f1ece1;
+    --code-ink: #1c1c1c;
+    --serif: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", Palatino, Georgia, serif;
+    --sans: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  #deck {
+    position: relative;
+    width: min(96vw, 1180px);
+    aspect-ratio: 16 / 10;
+    max-height: 92vh;
+    background: var(--bg);
+    box-shadow: 0 1px 0 var(--rule);
+    overflow: hidden;
+  }
+  .slide { position: absolute; inset: 0; padding: 56px 72px 72px; display: none; flex-direction: column; overflow: auto; }
+  .slide.active { display: flex; }
+  .slide h1 { font-family: var(--serif); font-weight: 600; font-size: 44px; line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 8px; color: var(--ink); }
+  .slide h2 { font-family: var(--serif); font-weight: 600; font-size: 32px; line-height: 1.2; margin: 0 0 6px; }
+  .slide h3 { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; font-weight: 600; color: var(--accent); margin: 0 0 18px; }
+  .slide p, .slide li { font-size: 21px; line-height: 1.45; }
+  .slide ul, .slide ol { padding-left: 1.2em; margin: 0.4em 0 0.6em; }
+  .slide li { margin: 0.25em 0; }
+  .slide code { font-family: var(--mono); font-size: 0.92em; background: var(--code-bg); padding: 1px 6px; border-radius: 3px; }
+  .slide pre { font-family: var(--mono); background: var(--code-bg); color: var(--code-ink); padding: 16px 20px; border-radius: 4px; font-size: 15.5px; line-height: 1.45; overflow: auto; margin: 8px 0; border-left: 3px solid var(--accent); }
+  .slide pre code { background: transparent; padding: 0; font-size: inherit; }
+  .slide .lede { font-size: 24px; color: var(--muted); margin-top: 0; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 8px; }
+  .two-col .col h4 { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; color: var(--muted); margin: 0 0 8px; }
+  .callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 16px; margin: 12px 0; font-size: 18px; line-height: 1.45; }
+  .section-divider { background: var(--ink); color: var(--bg); }
+  .section-divider .kicker { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent-soft); }
+  .section-divider h1 { color: var(--bg); font-size: 64px; }
+  .title-slide { justify-content: center; background: var(--bg); }
+  .title-slide .kicker { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent); margin-bottom: 18px; }
+  .title-slide h1 { font-size: 64px; line-height: 1.05; max-width: 18ch; }
+  .title-slide .sub { font-size: 22px; color: var(--muted); margin-top: 18px; max-width: 56ch; }
+  .footer { position: absolute; bottom: 18px; left: 72px; right: 72px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; pointer-events: none; }
+  .footer .progress { flex: 1; height: 2px; background: var(--rule); margin: 0 18px; align-self: center; position: relative; }
+  .footer .progress > div { position: absolute; inset: 0 auto 0 0; background: var(--accent); width: 0%; transition: width 200ms ease; }
+  .nav { position: fixed; bottom: 14px; right: 18px; display: flex; gap: 6px; align-items: center; z-index: 10; }
+  .nav button { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 10px; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); cursor: pointer; }
+  .nav button:hover { background: var(--accent-soft); }
+  .badge { display: inline-block; font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; color: var(--bg); background: var(--accent); padding: 2px 8px; border-radius: 2px; vertical-align: middle; margin-right: 8px; }
+  .small { font-size: 16px; color: var(--muted); }
+  table.matrix { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 17px; }
+  table.matrix th, table.matrix td { border: 1px solid var(--rule); padding: 8px 12px; text-align: left; vertical-align: top; }
+  table.matrix th { background: var(--code-bg); font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+  @media (max-width: 800px) {
+    .slide { padding: 32px 28px 56px; }
+    .slide h1 { font-size: 32px; }
+    .slide h2 { font-size: 24px; }
+    .slide p, .slide li { font-size: 17px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <!-- 1. Title -->
+  <section class="slide title-slide active">
+    <div class="kicker">Supplement · numerical PDEs</div>
+    <h1>Numerical PDEs supplement</h1>
+    <p class="sub" style="font-size: 28px; color: var(--ink); margin-top: 8px; margin-bottom: 18px;">Exercise walkthroughs for the FEM track</p>
+    <p class="sub">Companion to the main workshop deck. Slot in this supplement during the exercise blocks if your group is working in the FEM track. The main deck covers the concepts (CLAUDE.md, plans, MEMORY.md, skills, MCP); this supplement walks through the FEM-flavored variant of each exercise and supplies the framing the main deck deliberately leaves out.</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 2. SECTION: Exercise 1 -->
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 1 · CLAUDE.md</div>
+    <h1>Write your first CLAUDE.md</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Your first contact with file-based collaboration. Encode your conventions for an FEM convergence study in a single markdown file, then watch the assistant respect them on the second try.</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 3. Why CLAUDE.md matters for FEM -->
+  <section class="slide">
+    <h3>Exercise 1 · framing</h3>
+    <h1>Why an FEM author needs CLAUDE.md</h1>
+    <p>Numerical PDE work is full of recurring micro-decisions — small, stable choices that shape every result and that you don't want to re-justify in every prompt. CLAUDE.md is where those live.</p>
+    <table class="matrix">
+      <tr><th>Decision</th><th>Why it belongs in CLAUDE.md</th></tr>
+      <tr><td>Mesh source and format</td><td>Pinned upstream by your geometry pipeline. Letting the assistant pick a different format mid-project breaks reproducibility.</td></tr>
+      <tr><td>Element family and polynomial order</td><td>One number with outsized effect on convergence rates. Easy to set wrong, easy to change silently.</td></tr>
+      <tr><td>Error norms reported (L², H¹, energy, …)</td><td>The norm you report defines what "convergence" means for your paper. A study that swaps norms between runs is not a study.</td></tr>
+      <tr><td>Figure conventions for convergence plots</td><td>Log-log axes, reference slope lines, file format, output directory. Three of these wrong and the figure is unusable in a paper.</td></tr>
+      <tr><td>Sanity-check values</td><td>Every PDE solver should report a small number (max of solution, energy, integral) you can eyeball against a known reference. Pin it once and forget.</td></tr>
+    </table>
+    <p class="small" style="margin-top: 8px;">CLAUDE.md is read at the start of every session. The assistant doesn't re-derive your conventions — it inherits them.</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 4. Exercise 1 walkthrough -->
+  <section class="slide">
+    <h3>Exercise 1 <span class="badge">10 min</span></h3>
+    <h1>Write your own CLAUDE.md</h1>
+    <ol>
+      <li>Open the exercise folder: <code>cd exercises-pde/01-claude-md/</code></li>
+      <li>Read <code>laplace_square.py</code> — a deliberately under-specified Firedrake solve on a coarse <code>UnitSquareMesh(8, 8)</code> with hardcoded P1 elements and no convergence study.</li>
+      <li>Run <code>claude</code> on the host. <b>First, with no CLAUDE.md</b>, ask: <code>add a convergence study for laplace_square.py</code>. Note what Claude picks for norms, axes, file paths, and element-order handling.</li>
+      <li>Now write a CLAUDE.md (use <code>/init</code> or copy the seed in <code>README.md</code>). Encode your conventions for: error norms (L² <i>and</i> H¹), table format, figure path and axes, reference slope lines, and how element order is exposed.</li>
+      <li><code>/clear</code> the conversation, re-ask the same prompt, compare.</li>
+    </ol>
+    <div class="callout">Discussion: which conventions did Claude follow on the second try? Which did it miss? Add the missing rule to CLAUDE.md and ask once more — that's the whole loop.</div>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 5. Exercise 1 — what to look for -->
+  <section class="slide">
+    <h3>Exercise 1 · debrief</h3>
+    <h1>What to look for in Claude's output</h1>
+    <p>The improvement that respects a well-written CLAUDE.md should look something like this. Use it as a checklist, not an answer key.</p>
+    <table class="matrix">
+      <tr><th>Convention you wrote</th><th>What it produces in the code</th></tr>
+      <tr><td>L² and H¹ errors with rates</td><td>A printed table with columns <code>n</code>, <code>dofs</code>, <code>L2</code>, <code>L2 rate</code>, <code>H1</code>, <code>H1 rate</code>. Rates computed as <code>log2(prev/curr)</code>.</td></tr>
+      <tr><td>Log-log convergence plot with reference slopes</td><td>Two data lines (L², H¹) and two dotted reference lines at <code>O(h^(p+1))</code> and <code>O(h^p)</code>, anchored at the coarsest data point.</td></tr>
+      <tr><td>Figures saved, never shown</td><td>No <code>plt.show()</code>; output goes to <code>figures/convergence.pdf</code>.</td></tr>
+      <tr><td>Element order configurable + first-run confirm</td><td>An <code>--order</code> flag (default 1); on each <code>--convergence</code> run, prompt to confirm the order, persisting the choice in <code>.element_order_confirmed</code>.</td></tr>
+      <tr><td>Sanity check on every solve</td><td>Report <code>max(u_h)</code> per level. The manufactured solution attains max = 1; values far from this signal trouble.</td></tr>
+    </table>
+    <p class="small" style="margin-top: 8px;">For P1 you should see L² rate → 2 and H¹ rate → 1 in the table, with the data lines parallel to the dotted reference lines on the plot.</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 6. SECTION: Exercise 2 -->
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 2 · plan mode</div>
+    <h1>Plan a fix for a broken convergence test</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">The deliverable is working code, not just a plan. Plan mode is the <i>method</i>; the recovered convergence rate is the <i>artifact</i>. Fifteen minutes from "this is broken" to "it isn't anymore."</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 7. Why a plan first -->
+  <section class="slide">
+    <h3>Exercise 2 · framing</h3>
+    <h1>Why a plan first for a broken convergence test</h1>
+    <p>The L-shape corner singularity is one of the most-taught problems in FEM, so the assistant has a strong textbook answer ready. Plan mode is what lets you check whether that textbook matches <i>this</i> code before any of it is written.</p>
+    <table class="matrix">
+      <tr><th>Decision</th><th>What plan mode forces you to settle in advance</th></tr>
+      <tr><td>Diagnostic chosen</td><td>What "where the error is" actually means — element-wise <code>|u_h − u_exact|</code> vs. a residual indicator vs. eyeballing a plot. Skip this and you are refining without evidence.</td></tr>
+      <tr><td>Refinement mechanism</td><td>Whether the implementation is one line or a hundred. <code>MeshHierarchy</code> + coordinate transformation, NetgenHierarchy with a marker, PETSc-level cell refinement — pick one before code is written.</td></tr>
+      <tr><td>Grading parameters</td><td>What "graded toward the corner" actually means: a radius, a depth, an exponent, a marking criterion. Defaults pinned in the plan, not invented during implementation.</td></tr>
+      <tr><td>Out-of-scope discipline</td><td>Keeps the assistant from rewriting the rates harness while it is in there. Lose the harness and you lose the before/after comparison.</td></tr>
+      <tr><td>Visible before/after</td><td>The same harness runs both times; that is the test. The plan has to leave the rates loop intact.</td></tr>
+    </table>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 8. Claude is a tool -->
+  <section class="slide">
+    <h3>Exercise 2 · principle</h3>
+    <h1>Claude is a tool. You are the scientist.</h1>
+    <p>On a classical pedagogical problem like this one, the assistant has seen the textbook answer many times and will draft it quickly. That cuts both ways: it tends to compress the diagnosis step — "we know it is the corner" — or to substitute a different refinement strategy than the one you asked for, because that is the variant it has seen more often.</p>
+    <p>Your job in plan mode is to decide <i>how much structure to impose</i> so the plan actually matches the problem in front of you. The "only the mesh is in scope" line in the prompt is one example of that structure. When you find yourself imposing the same structure session after session, promote it into your <code>CLAUDE.md</code>; that is what the file is for.</p>
+    <div class="callout">Claude Code becomes risky the moment you start trusting it to make major scientific decisions without checking. The pattern-match is fast and often plausible, and on a familiar problem it is very hard to tell a textbook reflex from real reasoning. The check has to come from you.</div>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 9. Run the exercise -->
+  <section class="slide">
+    <h3>Exercise 2 <span class="badge">15 min</span></h3>
+    <h1>Run the exercise</h1>
+    <ol>
+      <li><code>cd exercises-pde/02-planning &amp;&amp; claude</code>; start the Firedrake container per <code>../01-claude-md/INSTALL.md</code>.</li>
+      <li>In the container, run <code>python3 laplace_lshape.py</code>. Note the L² rate stuck around <code>4/3</code> and the H¹ rate around <code>2/3</code> — far from the <code>2.0</code> and <code>1.0</code> the footer line says to expect.</li>
+      <li>Press <code>Shift+Tab</code> twice to enter plan mode (look for the indicator at the bottom of the screen).</li>
+      <li>Paste the prompt and submit. Do <i>not</i> approve yet.
+        <pre>The convergence in this code is suboptimal. Create a plan to
+identify where the error is concentrated, then construct an a
+priori mesh refinement strategy in the problem regions.
+
+The polynomial order is fixed at P1; only the mesh is in scope.</pre>
+      </li>
+      <li>Read the plan against four highest-leverage questions: <b>diagnostic mechanism?</b> <b>refinement primitive?</b> <b>grading parameters?</b> <b>what is out of scope?</b> Push back on at least one.</li>
+      <li>Approve. Watch the assistant edit <code>laplace_lshape.py</code>. Re-run; the L² rate should climb visibly toward <code>2.0</code>.</li>
+    </ol>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 9. Debrief -->
+  <section class="slide">
+    <h3>Exercise 2 · debrief</h3>
+    <h1>What a good plan + implementation produces</h1>
+    <p>A plan that survives review on this exercise has six sections. Each one closes off a class of drift that would otherwise surface during implementation.</p>
+    <table class="matrix">
+      <tr><th>Plan section</th><th>What it contains for this exercise</th></tr>
+      <tr><td>Goal</td><td>One paragraph. Modify <code>laplace_lshape.py</code> so the study refines more densely near the corner; target L² rate toward 2.0 and H¹ toward 1.0; keep the rates harness, manufactured solution, BC, and P1 untouched.</td></tr>
+      <tr><td>Step-by-step</td><td>Inspect the mesh → implement the element-wise error diagnostic → implement the grading transformation → wire it into the rates loop → run and verify.</td></tr>
+      <tr><td>Out of scope</td><td>A posteriori adaptive marking. Dörfler loops. hp-refinement. Alternative element families. Touching the manufactured solution, the BC, or the polynomial order.</td></tr>
+    </table>
+    <p class="small" style="margin-top: 8px;">A successful run shows the rates moving visibly in the right direction — not necessarily reaching the textbook constants. Closing the last fraction is FEM-tuning craft and out of scope for this exercise.</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 10. Closing -->
+  <section class="slide">
+    <h3>Exercise 2 · closing</h3>
+    <h1>What plan mode is really for</h1>
+    <p>Plan mode produces text. The value is not the text — it is the questions the <i>act</i> of planning forces you to answer in advance. They are the same questions you would have hit during implementation, just in an order where you can still afford to redirect cheaply. On a problem the assistant knows well, those questions are also the ones the assistant most wants to skip; on a problem it has never seen, they are the ones you most need to spell out. Either way, the scientist is you.</p>
+    <div class="callout">Take the conventions you found yourself imposing back to your <code>CLAUDE.md</code>. The next exercise builds on that file again.</div>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · section divider -->
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 3 · skills</div>
+    <h1>Verify a CFL condition with a skill</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Skills are the workshop's mechanism for packaging the check your team runs every project. The check is the pretext; the skill is the artifact.</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · framing -->
+  <section class="slide">
+    <h3>Exercise 3 · framing</h3>
+    <h1>Why a skill (and not just a function)?</h1>
+    <p>A skill is a folder Claude loads on demand — <code>SKILL.md</code> plus helper scripts. The shape is simple; what makes it earn its keep is four properties that a private function or a <code>CLAUDE.md</code> note do not have.</p>
+    <table class="matrix">
+      <tr><th>Property</th><th>Why it earns the skill its keep</th></tr>
+      <tr><td>Triggered by description, not import</td><td>Claude routes a natural-language prompt to the skill via the <code>description:</code> field — you do not tell it which file to run.</td></tr>
+      <tr><td>Stateless and deterministic</td><td>Same input gives the same output. No external service to be down, no license dance — unlike an MCP.</td></tr>
+      <tr><td>Versioned in the repo</td><td>The check travels with the project. <code>git clone</code> brings the team's CFL check along, no per-developer setup.</td></tr>
+      <tr><td>The description is the contract</td><td>Extend the helper and the description must change too. An extension that does not change the description is invisible to future natural-language requests.</td></tr>
+    </table>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · walkthrough -->
+  <section class="slide">
+    <h3>Exercise 3 <span class="badge">15 min</span></h3>
+    <h1>Run the exercise</h1>
+    <ol>
+      <li><code>cd exercises-pde/03-skills</code></li>
+      <li>Install the skills into the project-local hidden directory:
+        <pre>mkdir -p .claude
+cp -R skills .claude/</pre>
+      </li>
+      <li>Launch <code>claude</code>. No interactive container needed — the skill calls <code>docker run --rm</code> itself when it fires.</li>
+      <li>Paste the prompt — note that it does <i>not</i> name the skill; description-routing is what is being tested:
+        <pre>Verify that the proposed timestep in candidate.json is CFL-safe
+for the wave problem defined in problem.py.</pre>
+      </li>
+      <li>Approve the docker command when Claude prompts you (the default permission policy flags new shell commands). Read the <code>PASS</code> output — note the <code>safe</code> bound and the per-layer summary.</li>
+      <li>Edit <code>candidate.json</code> to <code>{"dt": 0.05}</code>. Re-ask. Confirm <code>FAIL</code> and that the violators localize to the bottom (high-<code>c</code>) layer.</li>
+      <li>Restore <code>dt</code> below <code>safe</code>. Re-run. Back to <code>PASS</code>.</li>
+    </ol>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · debrief -->
+  <section class="slide">
+    <h3>Exercise 3 · debrief</h3>
+    <h1>What you should see</h1>
+    <p>Read Claude's <i>behavior</i> as much as the skill's output. The pass / fail / restore loop is deterministic; what varies between learners is how cleanly the skill mechanism worked end-to-end.</p>
+    <table class="matrix">
+      <tr><th>What you should see</th><th>Detail</th></tr>
+      <tr><td>Passing run</td><td><code>PASS: dt = 0.002, safe ~ 8e-3</code>. Limiting cell is in the bottom layer; per-layer summary shows the bottom roughly 2× tighter than the top.</td></tr>
+      <tr><td>Failing run</td><td><code>FAIL: dt = 0.05</code>. Several hundred violators, all in the bottom layer (between the two per-layer minima).</td></tr>
+      <tr><td>What flipped</td><td>The lead (<code>PASS</code> → <code>FAIL</code>). The <code>safe</code> bound itself did not change — it is a property of the discretization, not of <code>dt</code>.</td></tr>
+      <tr><td>Behavior to watch</td><td>Did Claude run the skill, or recompute the check inline? Did it use the docker-wrapped command, or try bare <code>python3</code> on the host? Did it show the full output, or paraphrase?</td></tr>
+    </table>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · closing -->
+  <section class="slide">
+    <h3>Exercise 3 · closing</h3>
+    <h1>Skills as your team's checklists</h1>
+    <p>Every research group has a small set of checks they re-derive every project — KKT residuals, CFL bounds, convergence-rate fits, mesh-quality reports, citation-format validators. Skills are the place those checks earn back their authorship cost. The price is small (a <code>SKILL.md</code> and a script); the payoff is that everyone in the group, and every future Claude session, runs the same check the same way.</p>
+    <div class="callout">If you only remember one rule about skills: <b>the description is the contract</b>. When you extend a skill, update its description in the same commit — otherwise the new capability is invisible to natural-language routing, and the next person to ask for it will silently re-derive what you already built.</div>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 4 · section divider -->
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 4 · MEMORY.md</div>
+    <h1>Bootstrap a MEMORY.md from lab notebooks</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">MEMORY.md is how <i>this</i> session leaves something behind for the <i>next</i> one. The synthesis is the pretext; the file is the artifact.</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 4 · framing -->
+  <section class="slide">
+    <h3>Exercise 4 · framing</h3>
+    <h1>Why a MEMORY.md (and not just more CLAUDE.md)?</h1>
+    <p>Both are markdown files at the project root. Both get read by Claude on session start. They answer different questions, and confusing the two is the most common decay path for both.</p>
+    <table class="matrix">
+      <tr><th>Question</th><th>Answer</th></tr>
+      <tr><td>What does <code>CLAUDE.md</code> answer?</td><td><i>How does this project work.</i> Stack, file layout, conventions, hard rules.</td></tr>
+      <tr><td>What does <code>MEMORY.md</code> answer?</td><td><i>What have we learned.</i> Decisions, parameters, dead ends, open questions.</td></tr>
+      <tr><td>Growth pattern</td><td><code>CLAUDE.md</code> changes rarely. <code>MEMORY.md</code> grows monotonically as experiments accumulate.</td></tr>
+      <tr><td>The test</td><td>If knowing a fact depends on <i>having run experiments</i>, it belongs in <code>MEMORY.md</code>. Otherwise <code>CLAUDE.md</code>.</td></tr>
+    </table>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 4 · walkthrough -->
+  <section class="slide">
+    <h3>Exercise 4 <span class="badge">10 min</span></h3>
+    <h1>Run the exercise</h1>
+    <ol>
+      <li><code>cd exercises-pde/04-memory</code> — three dated lab-notebook entries are already there. No container needed; this is a writing exercise.</li>
+      <li>Launch <code>claude</code> and paste:
+        <pre>Read everything under notebooks/ and produce MEMORY.md with the
+sections: Decisions, Parameters, Dead Ends, Open Questions. Each
+entry should cite the notebook file it came from.</pre>
+      </li>
+      <li><b>Trim aggressively.</b> Drop anything a future session would not consult. If the file is longer than the source notebooks combined, push back — that is copying, not synthesis.</li>
+      <li>With the trimmed file in place, paste:
+        <pre>Given MEMORY.md, what would be the most informative next experiment
+to run? Justify in two sentences.</pre>
+        A good answer cites a <i>specific</i> dated entry; a hand-wave is a teachable failure.
+      </li>
+      <li>Close with the two-minute ritual:
+        <pre>Summarize what we did in this session, append as a dated entry to
+MEMORY.md, and overwrite STATUS.md with where we are now.</pre>
+      </li>
+    </ol>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 4 · debrief -->
+  <section class="slide">
+    <h3>Exercise 4 · debrief</h3>
+    <h1>What a good synthesis looks like</h1>
+    <p>The exercise tests <i>editorial</i> judgment more than computational behavior. Read the synthesized file and Claude's next-experiment answer against this checklist.</p>
+    <table class="matrix">
+      <tr><th>What a good synthesis does</th><th>What to push back on</th></tr>
+      <tr><td>Cites the source notebook by filename on every entry.</td><td>"See notebooks" or no citations at all.</td></tr>
+      <tr><td>Comes in well under the combined length of the three source notebooks.</td><td>Longer than the inputs — that is re-typing, not synthesis.</td></tr>
+      <tr><td>Dead Ends section preserves the <i>why</i> a path was abandoned.</td><td>Verdict only ("abandoned X"). The reason is what stops the re-attempt six months later.</td></tr>
+      <tr><td>Next-experiment answer names a specific dated entry and proposes a one-session scope.</td><td>Generic "more research needed," or a multi-week project that ignores what <code>MEMORY.md</code> said.</td></tr>
+      <tr><td>Surfaces any conflict between two notebooks rather than smoothing it over.</td><td>Silent merge of two entries that disagree — destroys the most valuable information.</td></tr>
+    </table>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 4 · closing -->
+  <section class="slide">
+    <h3>Exercise 4 · closing</h3>
+    <h1>MEMORY.md as next-session inheritance</h1>
+    <p>Every session is downstream of a hundred forgotten ones — your own from last month, your colleagues', the one you'll resume on a different machine in three weeks. <code>MEMORY.md</code> is the file that decides what the next session knows. Without it, every resumption pays the same "what was I working on" tax.</p>
+    <div class="callout">The two-minute end-of-session ritual is the workshop's most lopsided ROI move: <code>append a dated entry to MEMORY.md, overwrite STATUS.md with where we are now</code>. Two minutes now; saves the first ten minutes of the next session, every time.</div>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 5 · MCP</div>
+    <h1>Wrap a small Laplace solver as an MCP server</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">An MCP exposes a capability to <i>every</i> future session in this project. Register once; invoke by tool name forever.</p>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · framing -->
+  <section class="slide">
+    <h3>Exercise 5 · framing</h3>
+    <h1>MCP vs skill vs <code>CLAUDE.md</code> note</h1>
+    <p>Three places to put a capability. They overlap, but each one earns its keep in a different regime.</p>
+    <table class="matrix">
+      <tr><th>Mechanism</th><th>When it earns its keep</th></tr>
+      <tr><td><code>CLAUDE.md</code> note</td><td>One-shot conventions ("we use <code>dx(degree=4)</code> for non-polynomial integrands"). No code needed; Claude reads <code>CLAUDE.md</code> every session.</td></tr>
+      <tr><td>Skill</td><td>Stateless, reusable inside this project, ships in the repo. The CFL-check skill from Exercise 3 is the canonical shape.</td></tr>
+      <tr><td>MCP</td><td>Persistent state worth keeping warm across calls; or it talks to something Claude can't run inline; or it needs to be available to many sessions across many projects.</td></tr>
+    </table>
+    <div class="callout" style="background: #8a1f1f; color: #fbfaf6; border-left-color: #4a0e0e; font-weight: 500;">The toy in this exercise is honestly <i>skill-shaped</i> — the MCP shell is what's being taught. The stretch (Firedrake-in-Docker with a warm JIT cache) is where the persistent-state justification actually bites.</div>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · walkthrough -->
+  <section class="slide">
+    <h3>Exercise 5 <span class="badge">15 min</span></h3>
+    <h1>Run the exercise</h1>
+    <ol>
+      <li><code>cd exercises-pde/05-mcp</code> and <code>pip install -r requirements.txt</code>. Pure Python — no Docker for the main flow.</li>
+      <li>Register the server:
+        <pre>claude mcp add toy-laplace -- python3 "$(pwd)/laplace_mcp.py"</pre>
+        Confirm with <code>claude mcp list</code>.
+        <p style="color: #8a1f1f; font-weight: 500; font-size: 16px; margin: 6px 0 0;">⚠ Verify before running live: older <code>claude</code> versions used <code>--command</code>/<code>--args</code> flags instead of the <code>--</code> separator shown here. Run <code>claude mcp add --help</code> to confirm the syntax on your install. On Homebrew macOS, only <code>python3</code> is on PATH (no <code>python</code>).</p>
+      </li>
+      <li>Launch <code>claude</code> in this directory and paste:
+        <pre>Solve the Poisson problem described in problem.json using the
+toy-laplace MCP and print the structured result.</pre>
+      </li>
+      <li>Watch the call cross the wire. Note the exact arguments and the structured payload — <i>that</i> is the audit trail an MCP buys you.</li>
+      <li>Edit <code>problem.json</code> (bump <code>n</code> to 64, or change the RHS) and re-prompt. Confirm Claude re-calls the MCP rather than recycling the prior answer.</li>
+    </ol>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · debrief -->
+  <section class="slide">
+    <h3>Exercise 5 · debrief</h3>
+    <h1>What "MCP routing" looks like</h1>
+    <p>The artifact to inspect is not the answer — it is the <i>call</i>. Read what Claude did against this checklist.</p>
+    <table class="matrix">
+      <tr><th>Good routing</th><th>What to push back on</th></tr>
+      <tr><td>Calls <code>toy-laplace:solve_laplace</code> by name.</td><td>Computes the answer inline with <code>scipy</code> — bypasses the MCP entirely.</td></tr>
+      <tr><td>Arguments at the wire match <code>problem.json</code> verbatim.</td><td>Rounded <code>n</code>, simplified RHS, or <code>bc = 0</code> in place of <code>0.0</code>.</td></tr>
+      <tr><td>Reports the structured payload verbatim alongside any prose.</td><td>Paraphrases as "max ≈ 1, looks right" and drops the JSON.</td></tr>
+      <tr><td>Re-calls the MCP when <code>problem.json</code> changes.</td><td>Recycles the prior answer — treats the first call as a memo, not a tool.</td></tr>
+      <tr><td>Treats the MCP as the source of truth.</td><td>Cross-checks with an inline scipy solve, then second-guesses the MCP.</td></tr>
+    </table>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · closing -->
+  <section class="slide">
+    <h3>Exercise 5 · closing</h3>
+    <h1>MCP = capability that survives the session</h1>
+    <p>The artifact this exercise produced is not the Laplace solver. It is the <i>registered tool name</i> — <code>toy-laplace:solve_laplace</code> — that any future session in this folder can invoke without setup, without re-explaining, without re-implementing.</p>
+    <div class="callout">The stretch is where the design compounds: a warm Firedrake worker amortizes the JIT cost across every call in a session. That is the regime where <i>"MCP, not skill"</i> stops being a teaching point and starts being the design that actually wins. The capstone (Exercise 6) is where multiple MCPs meet in a single workflow.</div>
+    <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" title="Previous (←)">‹</button>
+  <span class="nav-label">slide</span>
+  <input class="jump-to" id="jump" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="#">
+  <button id="next" title="Next (→ or Space)">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    document.querySelectorAll('.footer .progress > div').forEach(b => b.style.width = ((i + 1) / slides.length * 100) + '%');
+    document.querySelectorAll('.footer .counter').forEach(c => c.textContent = (i + 1) + ' / ' + slides.length);
+  }
+  document.getElementById('prev').onclick = () => show(i - 1);
+  document.getElementById('next').onclick = () => show(i + 1);
+  document.addEventListener('keydown', e => {
+    if (document.activeElement.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { show(i + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { show(i - 1); e.preventDefault(); }
+  });
+  document.getElementById('jump').addEventListener('change', e => {
+    const n = parseInt(e.target.value, 10);
+    if (!isNaN(n)) show(n - 1);
+    e.target.value = '';
+  });
+  show(0);
+</script>
+</body>
+</html>

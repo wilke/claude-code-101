@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Introduction to ClaudeCode — Sven Leyffer</title>
+<style>
+  :root {
+    --bg: #fbfaf6;
+    --ink: #1c1c1c;
+    --muted: #5b5b5b;
+    --accent: #b8410f;
+    --accent-soft: #e8d8c4;
+    --rule: #d6cfbf;
+    --code-bg: #f1ece1;
+    --code-ink: #1c1c1c;
+    --serif: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", Palatino, Georgia, serif;
+    --sans: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  #deck {
+    position: relative;
+    width: min(96vw, 1180px);
+    aspect-ratio: 16 / 10;
+    max-height: 92vh;
+    background: var(--bg);
+    box-shadow: 0 1px 0 var(--rule);
+    overflow: hidden;
+  }
+  .slide { position: absolute; inset: 0; padding: 56px 72px 72px; display: none; flex-direction: column; overflow: auto; }
+  .slide.active { display: flex; }
+  .slide h1 { font-family: var(--serif); font-weight: 600; font-size: 44px; line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 8px; color: var(--ink); }
+  .slide h2 { font-family: var(--serif); font-weight: 600; font-size: 32px; line-height: 1.2; margin: 0 0 6px; }
+  .slide h3 { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; font-weight: 600; color: var(--accent); margin: 0 0 18px; }
+  .slide p, .slide li { font-size: 21px; line-height: 1.45; }
+  .slide ul, .slide ol { padding-left: 1.2em; margin: 0.4em 0 0.6em; }
+  .slide li { margin: 0.25em 0; }
+  .slide code { font-family: var(--mono); font-size: 0.92em; background: var(--code-bg); padding: 1px 6px; border-radius: 3px; }
+  .slide pre { font-family: var(--mono); background: var(--code-bg); color: var(--code-ink); padding: 16px 20px; border-radius: 4px; font-size: 15.5px; line-height: 1.45; overflow: auto; margin: 8px 0; border-left: 3px solid var(--accent); }
+  .slide pre code { background: transparent; padding: 0; font-size: inherit; }
+  .slide .lede { font-size: 24px; color: var(--muted); margin-top: 0; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 8px; }
+  .two-col .col h4 { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; color: var(--muted); margin: 0 0 8px; }
+  .callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 16px; margin: 12px 0; font-size: 18px; line-height: 1.45; }
+  .section-divider { background: var(--ink); color: var(--bg); }
+  .section-divider .kicker { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent-soft); }
+  .section-divider h1 { color: var(--bg); font-size: 64px; }
+  .title-slide { justify-content: center; background: var(--bg); }
+  .title-slide .kicker { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent); margin-bottom: 18px; }
+  .title-slide h1 { font-size: 64px; line-height: 1.05; max-width: 18ch; }
+  .title-slide .sub { font-size: 22px; color: var(--muted); margin-top: 18px; max-width: 56ch; }
+  .footer { position: absolute; bottom: 18px; left: 72px; right: 72px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; pointer-events: none; }
+  .footer .progress { flex: 1; height: 2px; background: var(--rule); margin: 0 18px; align-self: center; position: relative; }
+  .footer .progress > div { position: absolute; inset: 0 auto 0 0; background: var(--accent); width: 0%; transition: width 200ms ease; }
+  .nav { position: fixed; bottom: 14px; right: 18px; display: flex; gap: 6px; align-items: center; z-index: 10; }
+  .nav button { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 10px; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); cursor: pointer; }
+  .nav button:hover { background: var(--accent-soft); }
+  .badge { display: inline-block; font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; color: var(--bg); background: var(--accent); padding: 2px 8px; border-radius: 2px; vertical-align: middle; margin-right: 8px; }
+  .small { font-size: 16px; color: var(--muted); }
+  table.matrix { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 17px; }
+  table.matrix th, table.matrix td { border: 1px solid var(--rule); padding: 8px 12px; text-align: left; vertical-align: top; }
+  table.matrix th { background: var(--code-bg); font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+  @media (max-width: 800px) {
+    .slide { padding: 32px 28px 56px; }
+    .slide h1 { font-size: 32px; }
+    .slide h2 { font-size: 24px; }
+    .slide p, .slide li { font-size: 17px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <!-- 1. Title -->
+  <section class="slide title-slide active">
+    <div class="kicker">Argonne National Laboratory · June 8, 2026</div>
+    <h1>Introduction to ClaudeCode</h1>
+    <p class="sub" style="font-size: 26px; color: var(--ink); margin-top: 8px; margin-bottom: 6px;">Sven Leyffer</p>
+    <p class="sub" style="font-size: 20px; margin-top: 0; margin-bottom: 18px;">Argonne National Laboratory</p>
+    <p class="sub" style="font-size: 16px; color: var(--muted);">Supported by U.S. Department of Energy: Office of Science, ASCR</p>
+    <div class="footer"><span>Introduction to ClaudeCode · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 2. Outline -->
+  <section class="slide">
+    <h3>Overview</h3>
+    <h1>Outline</h1>
+    <ol>
+      <li>Prerequisites</li>
+      <li>Getting Started</li>
+      <li>Starting a Project</li>
+      <li>Tracking Changes</li>
+      <li>CLAUDE.md Template</li>
+    </ol>
+    <div class="footer"><span>Introduction to ClaudeCode · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 3. Prerequisites -->
+  <section class="slide">
+    <h3>Prerequisites</h3>
+    <h1>Prerequisites at Argonne</h1>
+    <p>Laptop running <code>linux</code> or MacOS, <strong>or access to our compute nodes</strong></p>
+    <ol>
+      <li>ssh keys to access ANL accounts: <a href="https://help.cels.anl.gov/?s=ssh" style="color: var(--accent);">https://help.cels.anl.gov/?s=ssh</a></li>
+      <li>Create file <code>~/.ssh/config</code> replacing <code>YourName</code> with your userID:
+        <pre>Host *.cels.anl.gov !logins.cels.anl.gov
+    ProxyJump YourName@logins.cels.anl.gov
+Host login-gce
+    User YourName
+    Hostname logins.cels.anl.gov
+    ControlMaster auto
+    ControlPersist yes
+    LogLevel FATAL
+Host homes-gce
+    User YourName
+    Hostname homes.cels.anl.gov
+    ProxyCommand ssh login-gce -q -W %h:%p
+    ForwardX11 yes</pre>
+      </li>
+      <li>DUO MFA set up for using ssh keys: <a href="https://help.cels.anl.gov/?s=duo+mfa" style="color: var(--accent);">https://help.cels.anl.gov/?s=duo+mfa</a></li>
+    </ol>
+    <div class="footer"><span>Introduction to ClaudeCode · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 4. Getting Started -->
+  <section class="slide">
+    <h3>Setup</h3>
+    <h1>Getting Started with ClaudeCode</h1>
+    <ol>
+      <li>Go to <a href="https://claude.com/product/claude-code" style="color: var(--accent);">https://claude.com/product/claude-code</a></li>
+      <li>Install: <code>curl -fsSL https://claude.ai/install.sh | bash</code></li>
+      <li>Copy/paste the line generated by curl to update your path</li>
+      <li>Edit <code>nano ~/.claude/settings.json</code> by adding:
+        <pre>{
+  "env": {
+    "ANTHROPIC_API_KEY": "ANL-username",
+    "ANTHROPIC_BASE_URL": "https://apps-dev.inside.anl.gov/argoapi",
+    "CLAUDE_CODE_SKIP_ANTHROPIC_AUTH": "1"
+  },
+  "model": "sonnet[1m]"
+}</pre>
+      </li>
+    </ol>
+    <div class="callout"><strong>You're ready to use ClaudeCode!</strong> &nbsp; Questions? Slack: <code>#ai-help-no-bad-questions</code></div>
+    <div class="footer"><span>Introduction to ClaudeCode · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 4. Starting a Project -->
+  <section class="slide">
+    <h3>CLI</h3>
+    <h1>Starting a Project with Claude</h1>
+    <p>Start a CLI session by typing:</p>
+    <pre>claude</pre>
+    <p>Useful commands inside ClaudeCode:</p>
+    <table class="matrix">
+      <tr><th>Command</th><th>Description</th></tr>
+      <tr><td><code>/init</code></td><td>Read directory &amp; create <code>CLAUDE.md</code></td></tr>
+      <tr><td><code>/plan</code></td><td>Enter planning mode</td></tr>
+      <tr><td><code>/model</code></td><td>Switch to a different model</td></tr>
+      <tr><td><code>/exit</code></td><td>End the session</td></tr>
+    </table>
+    <div class="footer"><span>Introduction to ClaudeCode · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 5. Using Files to Track Changes -->
+  <section class="slide">
+    <h3>Session management</h3>
+    <h1>Using Files to Track Changes</h1>
+    <div class="two-col">
+      <div class="col">
+        <h4>Three files to track each session</h4>
+        <ul>
+          <li><code>MEMORY.md</code> &mdash; log of changes</li>
+          <li><code>plans/</code> &mdash; plans created by <code>/plan</code></li>
+          <li><code>STATUS.md</code> &mdash; current project status</li>
+        </ul>
+        <p style="font-size: 18px;">Updated at end of each session<br>
+        &rArr; requirement added to <code>CLAUDE.md</code></p>
+      </div>
+      <div class="col">
+        <h4>At the start of each session, read:</h4>
+        <ol>
+          <li><code>CLAUDE.md</code>, <code>README.md</code></li>
+          <li><code>MEMORY.md</code>, <code>STATUS.md</code></li>
+          <li>Any LaTeX files describing the project</li>
+        </ol>
+        <p style="font-size: 18px;">Optionally update <code>CLAUDE.md</code>:</p>
+        <pre>/init</pre>
+      </div>
+    </div>
+    <div class="footer"><span>Introduction to ClaudeCode · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 7. CLAUDE.md Template -->
+  <section class="slide">
+    <h3>CLAUDE.md Template</h3>
+    <h1>Useful Addition to <code style="font-size: 0.75em;">CLAUDE.md</code></h1>
+    <p>Add the following to the <strong>start</strong> of your <code>CLAUDE.md</code> file:</p>
+    <pre>## REQUIRED: Session Protocol
+
+Mandatory rules must be followed in every session without exception.
+
+### Session start -- read these files before doing anything else
+
+1. `CLAUDE.md` (this file)
+2. `MEMORY.md` -- log of prior session changes
+3. `STATUS.md` -- current project status
+
+### Session end -- before exiting, always do all three steps
+
+1. **Update `MEMORY.md`** -- append a dated entry summarising this session.
+2. **Replace `STATUS.md`** -- detailed capture of current state of project.
+3. **Ask the user** whether a new plan file should be written to `plans/`.</pre>
+    <div class="footer"><span>Introduction to ClaudeCode · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" title="Previous (←)">‹</button>
+  <span class="nav-label">slide</span>
+  <input class="jump-to" id="jump" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="#">
+  <button id="next" title="Next (→ or Space)">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    document.querySelectorAll('.footer .progress > div').forEach(b => b.style.width = ((i + 1) / slides.length * 100) + '%');
+    document.querySelectorAll('.footer .counter').forEach(c => c.textContent = (i + 1) + ' / ' + slides.length);
+  }
+  document.getElementById('prev').onclick = () => show(i - 1);
+  document.getElementById('next').onclick = () => show(i + 1);
+  document.addEventListener('keydown', e => {
+    if (document.activeElement.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { show(i + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { show(i - 1); e.preventDefault(); }
+  });
+  document.getElementById('jump').addEventListener('change', e => {
+    const n = parseInt(e.target.value, 10);
+    if (!isNaN(n)) show(n - 1);
+    e.target.value = '';
+  });
+  show(0);
+</script>
+</body>
+</html>

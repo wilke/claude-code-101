@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Optimization supplement — Claude Code workshop</title>
+<style>
+  :root {
+    --bg: #fbfaf6;
+    --ink: #1c1c1c;
+    --muted: #5b5b5b;
+    --accent: #b8410f;
+    --accent-soft: #e8d8c4;
+    --rule: #d6cfbf;
+    --code-bg: #f1ece1;
+    --code-ink: #1c1c1c;
+    --serif: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", Palatino, Georgia, serif;
+    --sans: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  #deck {
+    position: relative;
+    width: min(96vw, 1180px);
+    aspect-ratio: 16 / 10;
+    max-height: 92vh;
+    background: var(--bg);
+    box-shadow: 0 1px 0 var(--rule);
+    overflow: hidden;
+  }
+  .slide { position: absolute; inset: 0; padding: 56px 72px 72px; display: none; flex-direction: column; overflow: auto; }
+  .slide.active { display: flex; }
+  .slide h1 { font-family: var(--serif); font-weight: 600; font-size: 44px; line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 8px; color: var(--ink); }
+  .slide h2 { font-family: var(--serif); font-weight: 600; font-size: 32px; line-height: 1.2; margin: 0 0 6px; }
+  .slide h3 { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; font-weight: 600; color: var(--accent); margin: 0 0 18px; }
+  .slide p, .slide li { font-size: 21px; line-height: 1.45; }
+  .slide ul, .slide ol { padding-left: 1.2em; margin: 0.4em 0 0.6em; }
+  .slide li { margin: 0.25em 0; }
+  .slide code { font-family: var(--mono); font-size: 0.92em; background: var(--code-bg); padding: 1px 6px; border-radius: 3px; }
+  .slide pre { font-family: var(--mono); background: var(--code-bg); color: var(--code-ink); padding: 16px 20px; border-radius: 4px; font-size: 15.5px; line-height: 1.45; overflow: auto; margin: 8px 0; border-left: 3px solid var(--accent); }
+  .slide pre code { background: transparent; padding: 0; font-size: inherit; }
+  .slide .lede { font-size: 24px; color: var(--muted); margin-top: 0; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 8px; }
+  .two-col .col h4 { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; color: var(--muted); margin: 0 0 8px; }
+  .callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 16px; margin: 12px 0; font-size: 18px; line-height: 1.45; }
+  .section-divider { background: var(--ink); color: var(--bg); }
+  .section-divider .kicker { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent-soft); }
+  .section-divider h1 { color: var(--bg); font-size: 64px; }
+  .title-slide { justify-content: center; background: var(--bg); }
+  .title-slide .kicker { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent); margin-bottom: 18px; }
+  .title-slide h1 { font-size: 64px; line-height: 1.05; max-width: 18ch; }
+  .title-slide .sub { font-size: 22px; color: var(--muted); margin-top: 18px; max-width: 56ch; }
+  .footer { position: absolute; bottom: 18px; left: 72px; right: 72px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; pointer-events: none; }
+  .footer .progress { flex: 1; height: 2px; background: var(--rule); margin: 0 18px; align-self: center; position: relative; }
+  .footer .progress > div { position: absolute; inset: 0 auto 0 0; background: var(--accent); width: 0%; transition: width 200ms ease; }
+  .nav { position: fixed; bottom: 14px; right: 18px; display: flex; gap: 6px; align-items: center; z-index: 10; }
+  .nav button { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 10px; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); cursor: pointer; }
+  .nav button:hover { background: var(--accent-soft); }
+  .badge { display: inline-block; font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; color: var(--bg); background: var(--accent); padding: 2px 8px; border-radius: 2px; vertical-align: middle; margin-right: 8px; }
+  .small { font-size: 16px; color: var(--muted); }
+  table.matrix { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 17px; }
+  table.matrix th, table.matrix td { border: 1px solid var(--rule); padding: 8px 12px; text-align: left; vertical-align: top; }
+  table.matrix th { background: var(--code-bg); font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+  @media (max-width: 800px) {
+    .slide { padding: 32px 28px 56px; }
+    .slide h1 { font-size: 32px; }
+    .slide h2 { font-size: 24px; }
+    .slide p, .slide li { font-size: 17px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <!-- 1. Title -->
+  <section class="slide title-slide active">
+    <div class="kicker">Supplement · optimization</div>
+    <h1>Optimization supplement</h1>
+    <p class="sub" style="font-size: 28px; color: var(--ink); margin-top: 8px; margin-bottom: 18px;">Exercise walkthroughs for the optimization track</p>
+    <p class="sub">Companion to the main workshop deck. Slot in this supplement during the exercise blocks if your group is working in the optimization track. The main deck covers the concepts (CLAUDE.md, plans, MEMORY.md, skills, MCP); this supplement walks through the optimization-flavored variant of each exercise and supplies the framing the main deck deliberately leaves out.</p>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 2. SECTION: Exercise 1 -->
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 1 · CLAUDE.md</div>
+    <h1>Write your first CLAUDE.md</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Your first contact with file-based collaboration. Encode your conventions for a small SciPy optimization in a single markdown file, then watch the assistant respect them on the second try.</p>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 3. Why CLAUDE.md matters for optimization -->
+  <section class="slide">
+    <h3>Exercise 1 · framing</h3>
+    <h1>Why an optimization researcher needs CLAUDE.md</h1>
+    <p>Optimization research is full of recurring micro-decisions — small, stable choices that shape every result and that you don't want to re-justify in every prompt. CLAUDE.md is where those live.</p>
+    <table class="matrix">
+      <tr><th>Decision</th><th>Why it belongs in CLAUDE.md</th></tr>
+      <tr><td>Variable naming (primal, dual, multipliers)</td><td>Pinned by the math. Letting the assistant pick its own letters mid-project breaks readability across files and notes.</td></tr>
+      <tr><td>Solver choice and modeling stack</td><td>Pyomo vs CasADi vs raw scipy.optimize. IPOPT vs BARON vs HiGHS. Each comes with assumptions about problem shape; switching silently is silently wrong.</td></tr>
+      <tr><td>Tolerances and termination</td><td>One number with outsized effect on what counts as "converged". Easy to set wrong, easy to change without noticing.</td></tr>
+      <tr><td>Figure conventions for convergence plots</td><td>Semilog axes, ‖∇f‖ vs iteration, file format, output directory. Three of these wrong and the figure is unusable in a paper.</td></tr>
+      <tr><td>Sanity-check values</td><td>Final gradient norm, function value at optimum, KKT residual. Eyeball-able numbers that distinguish "solved" from "lucky".</td></tr>
+    </table>
+    <p class="small" style="margin-top: 8px;">CLAUDE.md is read at the start of every session. The assistant doesn't re-derive your conventions — it inherits them.</p>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 4. Exercise 1 walkthrough — moved verbatim from slides_edited.html (former slide 12) -->
+  <section class="slide">
+    <h3>Exercise 1 <span class="badge">10 min</span></h3>
+    <h1>Write your own CLAUDE.md</h1>
+    <ol>
+      <li><code>cd exercises/01-claude-md/</code></li>
+      <li>Read the included <code>rosenbrock.py</code> — a deliberately under-tested SciPy solve.</li>
+      <li>Run <code>claude</code> and ask: <code>/init</code>. Read the generated CLAUDE.md.</li>
+      <li>Edit it. Add: project goal, your preferred tolerance, and one "don't" rule.</li>
+      <li>Then ask Claude: <code>add a convergence plot for rosenbrock.py using our conventions</code>.</li>
+    </ol>
+    <div class="callout">Discussion: did Claude follow your conventions? What did it miss? Add the missing rule to CLAUDE.md and try again — that's the whole loop.</div>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 5. Exercise 1 — what to look for -->
+  <section class="slide">
+    <h3>Exercise 1 · debrief</h3>
+    <h1>What to look for in Claude's output</h1>
+    <p>The improvement that respects a well-written CLAUDE.md should look something like this. Use it as a checklist, not an answer key.</p>
+    <table class="matrix">
+      <tr><th>Convention you wrote</th><th>What it produces in the code</th></tr>
+      <tr><td>Tolerance pinned (e.g., 1e-8)</td><td>Solver call passes <code>tol=1e-8</code> rather than defaulting silently. Iteration count and final gradient norm reported in the script's output.</td></tr>
+      <tr><td>Convergence plot conventions</td><td>Semilog y-axis on ‖∇f‖, linear x-axis on iteration count, with axis labels matching what your CLAUDE.md specified.</td></tr>
+      <tr><td>Figures saved, never shown</td><td>No <code>plt.show()</code>; output goes to <code>figures/convergence.pdf</code> (or whatever path you pinned).</td></tr>
+      <tr><td>Gradient history captured</td><td>A callback passed to <code>minimize</code> that records ‖∇f‖ at each iteration, then plotted — not a hand-rolled second solve.</td></tr>
+      <tr><td>"Don't" rule respected</td><td>Whatever you forbade (e.g., no extra imports, no <code>scipy.optimize.minimize</code> for constrained problems) actually doesn't appear in the diff.</td></tr>
+    </table>
+    <p class="small" style="margin-top: 8px;">If Claude missed a convention on the first try, add a sharper rule and ask again — that's the whole loop.</p>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- 6. SECTION: Exercise 2 — PLACEHOLDER -->
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 2 · plan mode · TODO</div>
+    <h1>Find an optimization example that mirrors the PDE example well</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Placeholder — fill before running this supplement.</p>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · section divider -->
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 3 · skills</div>
+    <h1>Verify a KKT point with a skill</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Skills are the workshop's mechanism for packaging the check your team runs every project. The check is the pretext; the skill is the artifact.</p>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · framing -->
+  <section class="slide">
+    <h3>Exercise 3 · framing</h3>
+    <h1>Why a skill (and not just a function)?</h1>
+    <p>A skill is a folder Claude loads on demand — <code>SKILL.md</code> plus helper scripts. The shape is simple; what makes it earn its keep is four properties that a private function or a <code>CLAUDE.md</code> note do not have.</p>
+    <table class="matrix">
+      <tr><th>Property</th><th>Why it earns the skill its keep</th></tr>
+      <tr><td>Triggered by description, not import</td><td>Claude routes a natural-language prompt to the skill via the <code>description:</code> field — you do not tell it which file to run.</td></tr>
+      <tr><td>Stateless and deterministic</td><td>Same input gives the same output. No external service to be down, no license dance — unlike an MCP.</td></tr>
+      <tr><td>Versioned in the repo</td><td>The check travels with the project. <code>git clone</code> brings the team's KKT check along, no per-developer setup.</td></tr>
+      <tr><td>The description is the contract</td><td>Extend the helper and the description must change too. An extension that does not change the description is invisible to future natural-language requests.</td></tr>
+    </table>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · walkthrough -->
+  <section class="slide">
+    <h3>Exercise 3 <span class="badge">15 min</span></h3>
+    <h1>Run the exercise</h1>
+    <ol>
+      <li><code>cd exercises/03-skills</code></li>
+      <li>Install the skills into the project-local hidden directory:
+        <pre>mkdir -p .claude
+cp -R skills .claude/</pre>
+      </li>
+      <li>Launch <code>claude</code>. The helper is pure Python + NumPy — no container needed for this exercise.</li>
+      <li>Paste the prompt — note that it does <i>not</i> name the skill; description-routing is what is being tested:
+        <pre>Verify the candidate solution in solution.json against the QP
+defined in problem.py.</pre>
+      </li>
+      <li>Approve the shell call when Claude prompts you (default permission policy flags new commands). Read the <code>PASS</code> output — all five KKT residuals near machine precision.</li>
+      <li>Edit <code>solution.json</code>: change <code>z[0]</code> from <code>0.0</code> to <code>0.5</code>. Re-ask. Confirm <code>FAIL</code> with non-zero stationarity and complementarity residuals.</li>
+      <li>Restore. Re-run. Back to <code>PASS</code>.</li>
+    </ol>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · debrief -->
+  <section class="slide">
+    <h3>Exercise 3 · debrief</h3>
+    <h1>What you should see</h1>
+    <p>Read Claude's <i>behavior</i> as much as the skill's output. The pass / fail / restore loop is deterministic; what varies between learners is how cleanly the skill mechanism worked end-to-end.</p>
+    <table class="matrix">
+      <tr><th>What you should see</th><th>Detail</th></tr>
+      <tr><td>Passing run</td><td>All five residuals at or near machine precision: <code>stationarity ~ 1e-17</code>, <code>eq feas = 0</code>, <code>min x_i &gt; 0</code>, <code>min z_i &gt;= 0</code>, <code>complementarity = 0</code>. Verdict <code>PASS</code>.</td></tr>
+      <tr><td>Failing run</td><td>After corrupting <code>z[0]</code>: stationarity jumps to <code>~5e-1</code>, complementarity to <code>~7e-2</code>. The two residuals that flip localize the defect to the dual block.</td></tr>
+      <tr><td>What flipped</td><td>The lead (<code>PASS</code> → <code>FAIL</code>) and exactly the residuals that depend on <code>z</code>. The other three are unchanged — that is the whole point of the per-block layout.</td></tr>
+      <tr><td>Behavior to watch</td><td>Did Claude run the skill, or recompute the KKT residuals inline? Did it show the full output, or paraphrase? Did it second-guess the verdict?</td></tr>
+    </table>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 3 · closing -->
+  <section class="slide">
+    <h3>Exercise 3 · closing</h3>
+    <h1>Skills as your team's checklists</h1>
+    <p>Every research group has a small set of checks they re-derive every project — KKT residuals, CFL bounds, convergence-rate fits, mesh-quality reports, citation-format validators. Skills are the place those checks earn back their authorship cost. The price is small (a <code>SKILL.md</code> and a script); the payoff is that everyone in the group, and every future Claude session, runs the same check the same way.</p>
+    <div class="callout">If you only remember one rule about skills: <b>the description is the contract</b>. When you extend a skill, update its description in the same commit — otherwise the new capability is invisible to natural-language routing, and the next person to ask for it will silently re-derive what you already built.</div>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 4 · placeholder -->
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 4 · MEMORY.md · TODO</div>
+    <h1>Adapt the optimization-track MEMORY.md exercise</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Placeholder — fill before running this supplement. The PDE-track Ex04 uses three dated FEM lab notebooks (convergence study, L-shape graded refinement, graded-mesh + wave dead end) synthesized into a four-section MEMORY.md, with a next-experiment prompt and the end-of-session ritual that overwrites STATUS.md. The optimization-track analog needs its own notebooks and synthesis target.</p>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <section class="slide section-divider">
+    <div class="kicker">Exercise 5 · MCP</div>
+    <h1>Wrap a toy QP solver as an MCP server</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">An MCP exposes a capability to <i>every</i> future session in this project. Register once; invoke by tool name forever.</p>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · framing -->
+  <section class="slide">
+    <h3>Exercise 5 · framing</h3>
+    <h1>MCP vs skill vs <code>CLAUDE.md</code> note</h1>
+    <p>Three places to put a capability. They overlap, but each one earns its keep in a different regime.</p>
+    <table class="matrix">
+      <tr><th>Mechanism</th><th>When it earns its keep</th></tr>
+      <tr><td><code>CLAUDE.md</code> note</td><td>One-shot conventions ("always normalize <code>Q</code> before <code>solve_qp</code>"). No code needed; Claude reads <code>CLAUDE.md</code> every session.</td></tr>
+      <tr><td>Skill</td><td>Stateless, reusable inside this project, ships in the repo. The KKT-residual check from Exercise 3 is the canonical shape.</td></tr>
+      <tr><td>MCP</td><td>Persistent state worth keeping warm across calls; or it talks to something Claude can't run inline (a licensed solver, a remote cluster); or it needs to be available to many sessions across many projects.</td></tr>
+    </table>
+    <div class="callout" style="background: #8a1f1f; color: #fbfaf6; border-left-color: #4a0e0e; font-weight: 500;">The toy in this exercise is honestly <i>skill-shaped</i> — the MCP shell is what's being taught. The stretch (swap <code>cvxpy</code> for a warmed-up PETSc/TAO process) is where the persistent-state justification actually bites.</div>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · walkthrough -->
+  <section class="slide">
+    <h3>Exercise 5 <span class="badge">15 min</span></h3>
+    <h1>Run the exercise</h1>
+    <ol>
+      <li><code>cd exercises/05-mcp/</code> and <code>pip install -r requirements.txt</code>.</li>
+      <li>Open <code>toy_solver_mcp.py</code> — a ~60-line MCP server exposing <code>solve_qp(Q, c, A, b)</code> via <code>cvxpy</code>.</li>
+      <li>Register the server:
+        <pre>claude mcp add toy-solver --command python --args toy_solver_mcp.py</pre>
+        <p style="color: #8a1f1f; font-weight: 500; font-size: 16px; margin: 6px 0 0;">⚠ Verify before running live: recent <code>claude</code> versions removed the <code>--command</code>/<code>--args</code> flags in favor of <code>claude mcp add toy-solver -- python3 toy_solver_mcp.py</code>. Run <code>claude mcp add --help</code> to confirm the syntax on your install. On Homebrew macOS, only <code>python3</code> is on PATH (no <code>python</code>).</p>
+      </li>
+      <li>Launch <code>claude</code> in this directory and paste:
+        <pre>Solve the QP in problem.json using the toy-solver MCP and report
+the structured result.</pre>
+      </li>
+      <li>Edit <code>problem.json</code> (change <code>c</code>, or perturb a row of <code>A</code>) and re-prompt. Confirm Claude re-calls the MCP rather than recycling the prior answer.</li>
+    </ol>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · debrief -->
+  <section class="slide">
+    <h3>Exercise 5 · debrief</h3>
+    <h1>What "MCP routing" looks like</h1>
+    <p>The artifact to inspect is not the optimum — it is the <i>call</i>. Read what Claude did against this checklist.</p>
+    <table class="matrix">
+      <tr><th>Good routing</th><th>What to push back on</th></tr>
+      <tr><td>Calls <code>toy-solver:solve_qp</code> by name.</td><td>Solves the QP inline with <code>cvxpy</code> — bypasses the MCP entirely.</td></tr>
+      <tr><td>Arguments at the wire match <code>problem.json</code> verbatim — <code>Q</code>, <code>c</code>, <code>A</code>, <code>b</code> all in the right shape.</td><td>Reshaped <code>Q</code>, rounded entries, or symmetrized inputs in passing without telling you.</td></tr>
+      <tr><td>Reports the structured payload (status, optimum, primal, dual) verbatim alongside any prose.</td><td>Paraphrases as "optimal, value ≈ -3.2, looks fine" and drops the JSON.</td></tr>
+      <tr><td>Re-calls the MCP when <code>problem.json</code> changes.</td><td>Recycles the prior answer — treats the first call as a memo, not a tool.</td></tr>
+      <tr><td>Treats the MCP as the source of truth.</td><td>Cross-checks with an inline <code>cvxpy</code> solve, then second-guesses the MCP.</td></tr>
+    </table>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Exercise 5 · closing -->
+  <section class="slide">
+    <h3>Exercise 5 · closing</h3>
+    <h1>MCP = capability that survives the session</h1>
+    <p>The artifact this exercise produced is not the QP solver. It is the <i>registered tool name</i> — <code>toy-solver:solve_qp</code> — that any future session in this folder can invoke without setup, without re-explaining, without re-implementing.</p>
+    <div class="callout">The stretch is where the design compounds: swap <code>cvxpy</code> for PETSc/TAO with a warmed-up solver process and the MCP starts amortizing setup cost across every call. That is the regime where <i>"MCP, not skill"</i> stops being a teaching point and starts being the design that actually wins. The capstone (Exercise 6) is where multiple MCPs meet in a single workflow.</div>
+    <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" title="Previous (←)">‹</button>
+  <span class="nav-label">slide</span>
+  <input class="jump-to" id="jump" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="#">
+  <button id="next" title="Next (→ or Space)">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    document.querySelectorAll('.footer .progress > div').forEach(b => b.style.width = ((i + 1) / slides.length * 100) + '%');
+    document.querySelectorAll('.footer .counter').forEach(c => c.textContent = (i + 1) + ' / ' + slides.length);
+  }
+  document.getElementById('prev').onclick = () => show(i - 1);
+  document.getElementById('next').onclick = () => show(i + 1);
+  document.addEventListener('keydown', e => {
+    if (document.activeElement.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { show(i + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { show(i - 1); e.preventDefault(); }
+  });
+  document.getElementById('jump').addEventListener('change', e => {
+    const n = parseInt(e.target.value, 10);
+    if (!isNaN(n)) show(n - 1);
+    e.target.value = '';
+  });
+  show(0);
+</script>
+</body>
+</html>

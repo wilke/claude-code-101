@@ -19,7 +19,8 @@
             └── example-output.md
 ```
 
-The `paper-summary` skill is used in the literature stretch goal of the capstone and in the dedicated literature exercise in `../../LITERATURE.md`.
+The `paper-summary` skill is used in the literature stretch goal of the capstone 
+and in the dedicated literature exercise in `../../LITERATURE.md`.
 
 Before running the exercise, install the skill into `.claude/skills/`:
 
@@ -60,7 +61,7 @@ Specific data is in `problem.py`. The candidate KKT point in `solution.json` is 
 
 ## Stretch
 
-Ask Claude:
+Ask Claude (in plan mode):
 
 ```
 extend the kkt-checker skill so it also reports the active set
@@ -74,3 +75,9 @@ Read the diff carefully before accepting. The `check_kkt.py` script and the SKIL
 
 - What other recurring checks in your work could become skills?
 - What's the smallest skill that would still pay for itself?
+
+## Stretch
+
+- Extend the kkt-checker skill to general nonlinear optimization problems.
+- What would you need, if only primal variables were given/avaibable?
+- Ask claude to generate a plan ... 

@@ -9,12 +9,10 @@
   04-memory/
   ├── README.md
   ├── SOLUTION.md
-  ├── images/
   ├── plans/
   │   ├── 2026-05-08-filter.md
   │   ├...
   │   └── 2026-06-03-movie.md
-  ├── results/
   ├── src/
   │   ├── FilterADMM.py
   │   ├...

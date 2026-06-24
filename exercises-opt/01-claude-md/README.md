@@ -17,8 +17,8 @@ interface but deliberately omits the geometric meaning of the variables.
 
 ```bash
 cd exercises/01-claude-md
-conda create -n conopt-opt python=3.11 numpy scipy matplotlib
-conda activate conopt-opt
+conda create -n optimization python=3.11 numpy scipy matplotlib
+conda activate optimization
 pip install unopy
 ```
 

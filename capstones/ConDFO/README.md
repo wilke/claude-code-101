@@ -28,6 +28,8 @@ where
 - $X$ is a *simple* closed and convex set
 Plan to allow for more structure such as linear constraints that the solver can exploit.
 
+**Novelty:** Derivative-free or simulation-based optimization is a well-studied area. However, most solvers assume that the constraints $c(x)$ are either absent or simple (e.g. bounds, or affine). This project tackles **constrained** derivative-free optimization.
+
 ## Suggested Approach
 
 We will use a model-based approach that solves a *sequence of easier subproblems* where $f(x), c(x)$ are replaced by *model functions* with known approximation properties. 
@@ -63,6 +65,12 @@ For fun, you can simply ask `claude` to implement the plan below ... or do it st
 6. Test the solver on some academic and real test problems (ask Jeff, Matt, ...).
 7. Finish the paper: Can you write a convergence analysis for the filter method?
 8. Submit to SISC and win the SIAM Best Paper Prize :-)
+
+## Possible Publication Outlets
+
+* [Mathematical Programming Computation](https://link.springer.com/journal/12532) ... emphasizes computation/implementation
+* [SIAM Journal on Optimization](https://www.siam.org/publications/siam-journals/siam-journal-on-optimization/) ... more theory
+* [Computational Optimization and Applications](https://link.springer.com/journal/10589) ... good second choice
 
 *Good Luck!*
 

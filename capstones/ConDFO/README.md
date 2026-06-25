@@ -17,9 +17,9 @@ Build a constrained derivative-free optimization solver
 ## Problem Statement
 
 Develop a **constrained** derivative-free optinmization solver for the following problem:
-$$
+\[
 \min_x \; f(x) \quad \text{s.t.} \; l \le c(x) \le u, \; x \in X,
-$$
+\]
 where
 - $f(x)$ and $c(x)$ are nonlinear functions that involve a simulation (**derivatives not available**) 
 - $l, u$ are bounds (can be infinite)
@@ -30,9 +30,11 @@ Plan to allow for more structure such as linear constraints that the solver can 
 
 We will use a model-based approach that solves a *sequence of easier subproblems* where $f(x), c(x)$ are replaced by *model functions* with known approximation properties. 
 Letting $m^f(x), m^c(x)$ denote the models constructed at the current iterate $x_k$, the algorithm solves the following subproblem for a possible new iterate, $\hat{x}$:
+
 $$
 \min_x \; m^f(x) \quad \text{s.t.} \; l \le m^c(x) \le u, \; x \in X, \; \| x - x_k \| \le \Delta_k
 $$
+
 where $\Delta_k>0$ is a trust-region radius.
 
 ### Algorithmic Choices 

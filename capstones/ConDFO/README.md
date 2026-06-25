@@ -6,7 +6,7 @@ Build a constrained derivative-free optimization solver
 
 ## Background
 
-- **Key Reference:** Larson, menickelly, Wild. "Derivative-free optimization methods". Acta Numerica. 2019;28:287-404. doi:10.1017/S0962492919000060
+- **Key Reference:** Larson, Menickelly, Wild. "Derivative-free optimization methods". Acta Numerica. 2019;28:287-404. [doi:10.1017/S0962492919000060](https://www.cambridge.org/core/journals/acta-numerica/article/derivativefree-optimization-methods/84479E2B03A9BFFE0F9CD46CF9FCD289). 2019.
 - **Related Solvers:**
   - [libEnsemble: concurrent evaluation](https://libensemble.readthedocs.io/en/main/index.html)
     - [Optimization with APOSSM](https://libensemble.readthedocs.io/en/main/tutorials/aposmm_tutorial.html#)

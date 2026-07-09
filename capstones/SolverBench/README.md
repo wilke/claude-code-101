@@ -1,4 +1,4 @@
-# Capstone Project: Solver & Preconditioner Benchmarking for PDEs
+# SolverBench - Solver & Preconditioner Benchmarking for PDEs
 
 ## Purpose
 

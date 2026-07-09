@@ -9,7 +9,7 @@ Extend [scicomp-research-skills](https://github.com/a-attia/scicomp-research-ski
 2. Search a set of authors for a given expertise, useful for finding speakers for a PI meeting.
 3. Other type of searches that you feel could be useful.
 
-Incorporates aspects of verified citation and background tools such as:
+Add a harness to the searches, using aspects of verified citation and background tools such as:
 * Rob Ross' [ref-checker](https://github.com/rbross-hpc/ref-checker) to verify citations.
 * Sven's *half-assed* [scholar-report](https://github.com/leyffer/scholar-report) to get ORCID and search for authors (requires some work, but may be useful).
 

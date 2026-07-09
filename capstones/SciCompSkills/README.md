@@ -7,7 +7,7 @@ Starting from [scicomp-research-skills](https://github.com/a-attia/scicomp-resea
 
 Extend [scicomp-research-skills](https://github.com/a-attia/scicomp-research-skills) by adding new skills such as a literature search that incorporates parts of Rob Ross' [ref-checker](https://github.com/rbross-hpc/ref-checker) to verify citations. Where else can such a skill be used.
 
-Look at [EXERCISES.md] and [SOLUTIONS.md] for other ideas on how to extend this work.
+Look at [EXERCISES.md](EXERCISES.md) and [SOLUTIONS.md](SOLUTIONS.md) for other ideas on how to extend this work.
 
 ### Outcome 
 

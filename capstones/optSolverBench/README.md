@@ -418,3 +418,7 @@ step.
 * A reproducible arXiv preprint / workshop proceedings — the fastest honest home for a two-afternoon study
 
 *Good luck — and don't let the gradient lie to you.*
+
+---
+
+*Based on an idea contributed by Rebecca Durst and Sven Leyffer.*

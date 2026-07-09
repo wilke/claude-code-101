@@ -65,11 +65,15 @@ def argonne_css(doe_uri: str, argonne_uri: str) -> str:
   * {{ box-sizing: border-box; }}
   html, body {{ height: 100%; margin: 0; padding: 0; background: #e9edf1; color: var(--ink); font-family: var(--serif); }}
   body {{ display: flex; align-items: center; justify-content: center; overflow: hidden; }}
+  body.presenting {{ background: #0d1117; }}  /* dark backdrop in full-screen */
+  /* Fixed 16:9 design canvas; a script scales the whole deck to fill the
+     viewport (windowed or full-screen), so text scales with it — no gray cap. */
   #deck {{
     position: relative;
-    width: min(96vw, 1180px);
-    aspect-ratio: 16 / 9;
-    max-height: 92vh;
+    width: 1180px;
+    height: 664px;
+    flex: 0 0 auto;
+    transform-origin: center center;
     background: var(--bg);
     box-shadow: 0 2px 14px rgba(0,0,0,0.18);
     overflow: hidden;
@@ -187,26 +191,24 @@ def argonne_css(doe_uri: str, argonne_uri: str) -> str:
   table.matrix tr:nth-child(even) td {{ background: #f4f7fa; }}
   .small {{ font-size: 16px; color: var(--muted); }}
   .kbd {{ font-family: var(--mono); font-size: 13px; background: #fff; border: 1px solid var(--rule); border-bottom-width: 2px; padding: 1px 6px; border-radius: 3px; }}
-  @media (max-width: 800px) {{
-    .slide {{ padding: 30px 26px 56px 34px; }}
-    .slide h1 {{ font-size: 30px; }}
-    .slide h2 {{ font-size: 23px; }}
-    .slide p, .slide li {{ font-size: 16px; }}
-    .two-col {{ grid-template-columns: 1fr; }}
-    .footer::before {{ width: 130px; }}
-    .footer::after {{ width: 78px; }}
-  }}
+  /* No responsive breakpoints needed: the deck is a fixed 1180x664 canvas
+     scaled to fit any viewport, so proportions hold on phone, laptop, and TV. */
 """
 
 
 FIT_JS = r"""<script>
-/* Shrink-to-fit: wrap each slide's content and scale it down so a dense slide
-   never clips at 16:9 (or on a small laptop). Only scales down, never up. */
+/* Presentation scaling for the Argonne deck:
+   1. deck-fit  — scale the whole 1180x664 canvas to fill the viewport (windowed
+      or full-screen) so it goes edge-to-edge with proportional text.
+   2. slide-fit — inside the canvas, scale a dense slide's content down so it
+      never clips at 16:9. Only ever scales down.
+   3. full screen — a ⛶ button and the `f` key toggle the Fullscreen API. */
 (function () {
   var deck = document.getElementById('deck');
   if (!deck) return;
+  var DES_W = 1180, DES_H = 664;
 
-  // wrap every slide's non-footer content in a .fit container
+  // --- wrap every slide's non-footer content so we can scale it ---
   deck.querySelectorAll('.slide').forEach(function (s) {
     if (s.querySelector(':scope > .fit')) return;
     var footer = s.querySelector(':scope > .footer');
@@ -235,7 +237,46 @@ FIT_JS = r"""<script>
     if (a) fitSlide(a);
   }
 
-  // run fit after every slide change, and on resize (window / TV / fullscreen)
+  // --- scale the whole canvas to fill the viewport ---
+  function fitDeck() {
+    var full = !!document.fullscreenElement;
+    var margin = full ? 1 : 0.965;  // small breathing room when windowed
+    var k = Math.min(window.innerWidth / DES_W, window.innerHeight / DES_H) * margin;
+    deck.style.transform = 'scale(' + k + ')';
+  }
+  function fitAll() { fitDeck(); fitActive(); }
+
+  // --- full screen ---
+  function toggleFull() {
+    if (document.fullscreenElement) {
+      if (document.exitFullscreen) document.exitFullscreen();
+    } else {
+      var el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    }
+  }
+  var fsBtn = null;
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    fsBtn = document.createElement('button');
+    fsBtn.textContent = '⛶ Full';
+    fsBtn.setAttribute('aria-label', 'Toggle full screen (f)');
+    fsBtn.addEventListener('click', toggleFull);
+    nav.insertBefore(fsBtn, document.getElementById('help-btn') || null);
+  }
+  document.addEventListener('fullscreenchange', function () {
+    var full = !!document.fullscreenElement;
+    document.body.classList.toggle('presenting', full);
+    if (fsBtn) fsBtn.textContent = full ? '⛶ Exit' : '⛶ Full';
+    fitAll();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.target && e.target.tagName === 'INPUT') return;
+    if (e.key === 'f' || e.key === 'F') { toggleFull(); e.preventDefault(); }
+  });
+
+  // --- hook slide changes + resize ---
   if (typeof window.show === 'function') {
     var _show = window.show;
     window.show = function (n) { _show(n); fitActive(); };
@@ -243,9 +284,9 @@ FIT_JS = r"""<script>
   var raf = null;
   window.addEventListener('resize', function () {
     if (raf) cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(fitActive);
+    raf = requestAnimationFrame(fitAll);
   });
-  fitActive();
+  fitAll();
 })();
 </script>"""
 
@@ -275,6 +316,13 @@ def main():
     html = html.replace(
         "<title>Files, not chats — Claude Code for mathematicians</title>",
         "<title>Files, not chats — Claude Code for mathematicians (Argonne theme)</title>",
+    )
+    # document the full-screen key in the help overlay
+    html = html.replace(
+        "<tr><td>?</td><td>Show this help</td></tr>",
+        "<tr><td>f</td><td>Toggle full screen</td></tr>\n"
+        "      <tr><td>?</td><td>Show this help</td></tr>",
+        1,
     )
     # the source deck is authored at 16:10; Argonne template is 16:9 (shorter), so
     # dense slides can overflow. Inject a shrink-to-fit pass so every slide's

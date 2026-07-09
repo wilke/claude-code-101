@@ -1,4 +1,4 @@
-# Build Scientific Computing Research Skill
+# SciComSkill - Build Scientific Computing Research Skill
 
 Starting from [scicomp-research-skills](https://github.com/a-attia/scicomp-research-skills), a set of agent skills and workflow templates for research in scientific computing -- both research papers (drafts, literature surveys, reviewer responses) and research software (libraries, codes, reproducibility infrastructure). **The goal of this project is to extend and personalize these research skills.**
 

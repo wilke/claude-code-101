@@ -1,4 +1,4 @@
-# BQPD-Cpp - Create a threat-safe C++ version of Roger Fletchers robust QP solver
+# BQPD-Cpp - Create a thread-safe C++ version of Roger Fletchers robust QP solver
 
 ## Background
 

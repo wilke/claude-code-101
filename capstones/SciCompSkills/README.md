@@ -11,8 +11,7 @@ Extend [scicomp-research-skills](https://github.com/a-attia/scicomp-research-ski
 
 Incorporates aspects of verified citation and background tools such as:
 * Rob Ross' [ref-checker](https://github.com/rbross-hpc/ref-checker) to verify citations.
-* Sven's *half-assed* [scholar_report](https://github.com/leyffer/scholar-report) to get ORCID and search for authors.
-the second tool still requires some work, but may be useful
+* Sven's *half-assed* [scholar-report](https://github.com/leyffer/scholar-report) to get ORCID and search for authors (requires some work, but may be useful).
 
 ### Output
 

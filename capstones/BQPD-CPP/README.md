@@ -18,3 +18,18 @@ The solver uses `common` blocks to pass information, which means it is **not thr
 
 Develop a thread-safe `c++` implemenatation of `bqpd` and test it on the examples (`avgasa.s` and `avgasa.d`). As **stretch goal** consider addding BQPD-Cpp to [UNO, our unified nonlinear optimizer](https://github.com/cvanaret/Uno)
 
+## Outline
+
+1. Add the references to the new git repo where you will start youir work as background.
+2. Create a `CLAUDE.md` file, and edit it.
+3. Add a `plans/` directory.
+4. Learn about coding conventions: What parts are double precision, what parts are integers (the code is written in a way to allow a simple switch to single precision by editing only a few lines of code).
+5. Make sure you preserve these conding conventions.
+6. The subroutines `denseA.f` and `sparseA.f` implement two different representations of the matrix A (and also g).
+7. The subroutines `denseL.f` and `sparseF.f` implement dense/sparse factorizations (and work with both As!).
+8. The subroutine `gdotx.f` implements a solver-agnostic call-back for Hessian-vector factors $G x$.
+9. The goal is to preserve this flexibility, and not let `claude` simplify things.
+10. What are copyright issues with code translated by `claude`?
+11. Will the new BQPD-CPP work with UNO (and reprduce thhe same resuklts)?
+
+FWIW, this is a project that Sven and others wilkl be working on anyway soon. 

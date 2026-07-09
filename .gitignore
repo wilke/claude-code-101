@@ -5,3 +5,15 @@ __pycache__/
 venv/
 *.egg-info/
 .ipynb_checkpoints/
+
+# Argonne-branded binaries — regenerable from docs/slides/ + the template.
+# Kept out of the public repo; build locally with scripts/build_pptx.py.
+templates/*.potx
+templates/*.pptx
+*.pptx
+
+# working memory (kept local, per global CLAUDE.md)
+scratchpad.md
+
+# local Claude Code settings
+.claude/settings.local.json

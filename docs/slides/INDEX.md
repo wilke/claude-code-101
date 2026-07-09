@@ -1,0 +1,63 @@
+# Slide ground truth — "Files, not chats"
+
+This directory is the **markdown source of truth** for the workshop deck. The
+content here is authoritative; the rendered decks are generated/derived from it:
+
+- **`../../slides.html`** — the original browser deck (house serif theme).
+- **`../../slides-argonne.html`** — the same content restyled to the Argonne template.
+- **`../../slides-argonne.pptx`** — a PowerPoint built on the Argonne 16×9 template,
+  generated from these files by [`../../scripts/build_pptx.py`](../../scripts/build_pptx.py).
+
+## Files (in deck order)
+
+| File | Slides | Covers |
+|---|---|---|
+| [`01-intro.md`](01-intro.md) | 1–7 | Title, audience, roadmap, workshop organization, exercise setup, what Claude Code is, where it helps |
+| [`02-session-basics.md`](02-session-basics.md) | 8–10 | Context window, what persists, save/resume/clear |
+| [`03-claude-md.md`](03-claude-md.md) | 11–15 | Part 1 · CLAUDE.md + Exercise 1 |
+| [`04-planning.md`](04-planning.md) | 16–22 | Part 2 · Planning, plans as artifacts + Exercise 2 |
+| [`05-skills.md`](05-skills.md) | 23–27 | Part 3 · Skills + Exercise 3 |
+| [`06-memory.md`](06-memory.md) | 28–33 | Part 4 · MEMORY.md, STATUS.md handoff + Exercise 4 |
+| [`07-literature.md`](07-literature.md) | 34–35 | Literature as the fifth artifact, RAG |
+| [`08-power-features.md`](08-power-features.md) | 36–39 | Part 5 · Checkpoints, subagents/hooks, non-interactive mode |
+| [`09-working-sustainably.md`](09-working-sustainably.md) | 40–46 | Part 6 · Git hygiene, reverting, tests, loop detection |
+| [`10-wrap-up.md`](10-wrap-up.md) | 47–50 | Seven habits, native mapping, resources, capstone |
+
+**50 slides total.**
+
+## Slide format
+
+Each slide starts with an HTML comment carrying its metadata, followed by clean markdown:
+
+```
+<!--slide n=8 layout=content kicker="Session basics"-->
+# Slide title
+_Optional lede / subtitle (single emphasized line)_
+
+- body bullets, `1.` numbered lists
+- fenced ``` code blocks, | pipe tables |, > callouts
+
+:::columns
+### Column A heading
+- ...
+### Column B heading
+- ...
+:::
+```
+
+- **`layout`** ∈ `title` · `section` · `content` · `closing`.
+  - `title` → Argonne "Title Slide" (aerial-photo background).
+  - `section` → Argonne "*Section Break" (used for part dividers, exercise dividers).
+  - `content` → Argonne "*Title and Subtitle Only" — the white base slide with the blue
+    left bar; body shapes are laid out below the title.
+  - `closing` → Argonne "Closing slide".
+- **`kicker`** → the small uppercase label (rendered as the accent-blue subtitle strip in
+  content slides; as the eyebrow line on section/title slides).
+- The first `_emphasized line_` immediately under the `#` title is treated as the lede/subtitle.
+- `> blockquote` → callout box. `:::columns` with `### ` sub-headings → side-by-side columns.
+
+To rebuild the PowerPoint after editing any file here:
+
+```
+python scripts/build_pptx.py
+```

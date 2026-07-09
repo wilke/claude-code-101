@@ -7,6 +7,12 @@ UNO [Unifying Nonlinear Optimization](https://github.com/cvanaret/Uno) Uno break
 UNO's goal is to provide a single executable that can be changed at run-time to be many Newton-like solvers: interior-point, SQP, with different globalization mechanisms (line-search vs. trust-region), and globalization strategies. No one has explored these different possibilities; instead, we have implemented existing methods as `presets`. It would be interesting to see whether there are combinations that had not been explored that work significantly better for certain classes of problems.
 
 
+<p align="center">
+   <img src="wheel.png" alt="Uno's wheel of strategies" width="40%" />
+</p>
+
+UNO's Wheel of Strategies ... *How many are there?*
+
 ## Possible Project Outline
 
 1. Install [UNO](https://github.com/cvanaret/Uno) in your workspace *(not here :-)*

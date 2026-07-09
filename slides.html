@@ -667,14 +667,14 @@ Open questions:
     <h3>Planning</h3>
     <h1>Plans as artifacts: the four-file architecture</h1>
     <p>A plan is the fourth kind of file in the project — alongside CLAUDE.md, MEMORY.md, STATUS.md. Each has its own lifecycle.</p>
-    <table class="matrix">
+    <table class="matrix" style="font-size: 14px;">
       <tr><th>File</th><th>Says</th><th>Lifecycle</th></tr>
       <tr><td>CLAUDE.md</td><td>How the project works</td><td>Stable; rarely edited</td></tr>
       <tr><td>plans/&lt;date&gt;-&lt;slug&gt;.md</td><td>What's going to happen next</td><td>Created → active → executed/abandoned/revised</td></tr>
       <tr><td>MEMORY.md</td><td>What's been learned</td><td>Append-only; references plans by filename</td></tr>
       <tr><td>STATUS.md</td><td>Where I am right now</td><td>Overwritten each session; points at the active plan</td></tr>
     </table>
-    <pre><code>project/
+    <pre style="font-size: 18px; padding: 20px 24px;"><code>project/
 ├── CLAUDE.md
 ├── MEMORY.md          # references plan outcomes
 ├── STATUS.md          # points at the active plan

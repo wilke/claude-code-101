@@ -83,9 +83,12 @@ def argonne_css(doe_uri: str, argonne_uri: str) -> str:
   .slide {{
     position: absolute; inset: 0;
     padding: 46px 64px 70px 72px;
-    display: none; flex-direction: column; overflow: auto;
+    display: none; flex-direction: column; overflow: hidden;
   }}
   .slide.active {{ display: flex; }}
+  /* content wrapper that the fit-to-slide script scales down on dense slides */
+  .slide > .fit {{ display: flex; flex-direction: column; width: 100%; transform-origin: top left; }}
+  .slide > .fit > pre, .slide > .fit > table.matrix {{ flex-shrink: 0; }}
   .slide h1 {{
     font-family: var(--serif); font-weight: 700;
     font-size: 40px; line-height: 1.12; letter-spacing: -0.005em;
@@ -196,6 +199,57 @@ def argonne_css(doe_uri: str, argonne_uri: str) -> str:
 """
 
 
+FIT_JS = r"""<script>
+/* Shrink-to-fit: wrap each slide's content and scale it down so a dense slide
+   never clips at 16:9 (or on a small laptop). Only scales down, never up. */
+(function () {
+  var deck = document.getElementById('deck');
+  if (!deck) return;
+
+  // wrap every slide's non-footer content in a .fit container
+  deck.querySelectorAll('.slide').forEach(function (s) {
+    if (s.querySelector(':scope > .fit')) return;
+    var footer = s.querySelector(':scope > .footer');
+    var fit = document.createElement('div');
+    fit.className = 'fit';
+    Array.prototype.slice.call(s.childNodes).forEach(function (n) {
+      if (n !== footer) fit.appendChild(n);
+    });
+    s.insertBefore(fit, footer || null);
+  });
+
+  function fitSlide(s) {
+    var fit = s.querySelector(':scope > .fit');
+    if (!fit) return;
+    fit.style.transform = '';
+    var cs = getComputedStyle(s);
+    var availH = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var availW = s.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    var h = fit.scrollHeight, w = fit.scrollWidth;
+    if (!h || !w) return;
+    var k = Math.min(1, availH / h, availW / w);
+    if (k < 1) fit.style.transform = 'scale(' + k + ')';
+  }
+  function fitActive() {
+    var a = deck.querySelector('.slide.active');
+    if (a) fitSlide(a);
+  }
+
+  // run fit after every slide change, and on resize (window / TV / fullscreen)
+  if (typeof window.show === 'function') {
+    var _show = window.show;
+    window.show = function (n) { _show(n); fitActive(); };
+  }
+  var raf = null;
+  window.addEventListener('resize', function () {
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(fitActive);
+  });
+  fitActive();
+})();
+</script>"""
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--template", default=None)
@@ -222,8 +276,10 @@ def main():
         "<title>Files, not chats — Claude Code for mathematicians</title>",
         "<title>Files, not chats — Claude Code for mathematicians (Argonne theme)</title>",
     )
-    # the source deck is authored at 16:10; Argonne template is 16:9. The CSS above
-    # already sets aspect-ratio 16/9, so nothing else to change.
+    # the source deck is authored at 16:10; Argonne template is 16:9 (shorter), so
+    # dense slides can overflow. Inject a shrink-to-fit pass so every slide's
+    # content scales down to fit at any viewport size (TV or small laptop).
+    html = html.replace("</body>", FIT_JS + "\n</body>", 1)
 
     Path(args.out).write_text(html, encoding="utf-8")
     print(f"Wrote {args.out}  (Argonne-themed reskin of {Path(args.src).name})")

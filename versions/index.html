@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Slide deck versions — Files, not chats</title>
+<style>
+  :root { color-scheme: light dark; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: "Iowan Old Style", Palatino, Georgia, serif;
+    background: #fbfaf6; color: #1c1c1c;
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px 20px;
+  }
+  .card {
+    width: min(92vw, 640px);
+    border: 1px solid #d6cfbf; border-radius: 8px;
+    background: #fff; padding: 32px 36px;
+    box-shadow: 0 1px 0 #d6cfbf;
+  }
+  h1 { font-size: 30px; margin: 0 0 4px; }
+  .sub { color: #5b5b5b; margin: 0 0 24px; font-size: 17px; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { padding: 16px 0; border-top: 1px solid #ece7db; }
+  li:first-child { border-top: 0; }
+  a.deck { font-size: 20px; color: #b8410f; text-decoration: none; font-weight: 600; }
+  a.deck:hover { text-decoration: underline; }
+  .tag { font-family: "SF Mono", Menlo, monospace; font-size: 13px; color: #5b5b5b; }
+  .note { font-size: 15px; color: #5b5b5b; margin-top: 4px; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #17150f; color: #ece7db; }
+    .card { background: #1f1c14; border-color: #3a352a; box-shadow: none; }
+    .sub, .tag, .note { color: #b3ab97; }
+    li { border-top-color: #2d2921; }
+    a.deck { color: #e08a4f; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Slide deck versions</h1>
+  <p class="sub">“Files, not chats” — Claude Code for mathematicians</p>
+  <ul>
+    <li>
+      <a class="deck" href="../slides.html">Current deck →</a>
+      <span class="tag">latest on <code>main</code></span>
+      <div class="note">Streamlined story: redundancy trimmed, wording fixed, capstone updated, exercises reordered.</div>
+    </li>
+    <li>
+      <a class="deck" href="v0.9.0/slides.html">v0.9.0 (archived) →</a>
+      <span class="tag">tag v0.9.0</span>
+      <div class="note">Snapshot before the story cleanup. Frozen for comparison; not maintained.</div>
+    </li>
+  </ul>
+</div>
+</body>
+</html>

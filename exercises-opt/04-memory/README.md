@@ -135,4 +135,4 @@ python3 FilterADMM.py --nelx 60 --nely 20                 # larger mesh
 ## Stretch
 
 1. Split MEMORY.md into a directory: `memory/decisions.md`, `memory/parameters.md`, `memory/dead-ends.md`, plus a `memory/INDEX.md`. Ask Claude to maintain the index automatically when it appends new entries.
-2. Try solving a 120x40 example, and observe that FilterADMM fails to converge. Can you fix this?
+2. Try solving a 120x40 example, and observe that FilterADMM fails to converge. Can you fix this (this could be a capstone)? *If you do, then make sure to add Dominic Yang as a co-author!*

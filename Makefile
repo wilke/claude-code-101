@@ -1,12 +1,13 @@
 # Build the workshop slide decks.
 #
-# Content sources (edit these):
-#   archive/slides-classic.html  – slide markup + nav JS (also the original serif deck)
-#   docs/slides/*.md             – markdown ground truth for the PowerPoint
+# Single source of truth (edit these):
+#   docs/slides/*.md             – markdown ground truth for BOTH decks
 #
 # Generated outputs:
 #   slides.html                  – Argonne-themed browser deck (served by GitHub Pages)
 #   slides-argonne.pptx          – Argonne PowerPoint (git-ignored)
+#
+# (archive/slides-classic.html is the retired serif deck, kept for reference only.)
 #
 # Both generators need the Argonne template; they auto-find it at
 # templates/Argonne_16x9_template.potx or ~/Downloads/, or pass ARGONNE_TEMPLATE=…
@@ -20,7 +21,7 @@ PORT ?= 8117
 all: slides                ## build both decks (HTML + PowerPoint)
 slides: html pptx
 
-html:                      ## build slides.html (Argonne theme) from archive/slides-classic.html
+html:                      ## build slides.html (Argonne theme) from docs/slides/*.md
 	$(PY) scripts/build_html.py
 
 pptx:                      ## build slides-argonne.pptx from docs/slides/*.md

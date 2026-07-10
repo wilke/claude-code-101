@@ -1,28 +1,34 @@
 #!/usr/bin/env python3
-"""Build slides.html — the workshop deck on the Argonne 16x9 template
+"""Build slides.html — the workshop browser deck on the Argonne 16x9 template
 (white base slide with the blue left bar, Arial, Argonne-blue titles, gold
 section eyebrows, DOE + Argonne logos, scale-to-fill + full-screen).
 
-The slide CONTENT + navigation JS live in archive/slides-classic.html (the
-original serif deck, kept as the build source). This script reuses that markup
-verbatim and only swaps the stylesheet, injects the presentation-scaling script,
-and inlines the two Argonne logos (extracted from the template). Edit content in
-archive/slides-classic.html, then rebuild.
+Rendered from the SAME source as the PowerPoint: the markdown ground truth in
+docs/slides/*.md (parsed by slides_md.py). This is the single source of truth —
+edit the markdown, then rebuild both decks with `make`.
 
 Usage:
-    python scripts/build_html.py [--template PATH] [--src SRC.html] [--out OUT.html]
-    # defaults: --src archive/slides-classic.html  --out slides.html
+    python scripts/build_html.py [--template PATH] [--slides DIR] [--out OUT.html]
+    # defaults: --slides docs/slides  --out slides.html
 """
 from __future__ import annotations
 
 import argparse
 import base64
+import html as htmllib
 import os
 import re
+import sys
 import zipfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from slides_md import (  # noqa: E402  shared markdown parser (single source of truth)
+    column_is_links, load_all_slides,
+)
+
 REPO = Path(__file__).resolve().parent.parent
+SLIDES_DIR = REPO / "docs" / "slides"
 TEMPLATE_CANDIDATES = [
     os.environ.get("ARGONNE_TEMPLATE", ""),
     str(REPO / "templates" / "Argonne_16x9_template.potx"),
@@ -102,8 +108,8 @@ def argonne_css(doe_uri: str, argonne_uri: str) -> str:
     margin: 0 0 10px; color: var(--accent);
   }}
   .slide h2 {{ font-family: var(--serif); font-weight: 700; font-size: 30px; line-height: 1.2; margin: 0 0 6px; color: var(--accent); }}
-  /* content-slide kicker → Argonne blue strip */
-  .slide > h3 {{
+  /* content-slide kicker → Argonne blue strip (h3 lives inside .fit after wrapping) */
+  .slide h3 {{
     display: inline-block; align-self: flex-start;
     font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.11em;
     font-size: 12px; font-weight: 700; color: #fff;
@@ -293,10 +299,301 @@ FIT_JS = r"""<script>
 </script>"""
 
 
+# ---------------------------------------------------------------------------
+# Markdown block model -> HTML
+# ---------------------------------------------------------------------------
+INLINE_RE = re.compile(
+    r"\*\*(.+?)\*\*"                    # 1 bold
+    r"|`([^`]+)`"                       # 2 code
+    r"|\[([^\]]+)\]\(([^)]+)\)"         # 3 link text  4 link url
+    r"|(?<!\w)_([^_]+)_(?!\w)"          # 5 italic (underscore)
+    r"|(?<![\w*])\*([^*]+)\*(?![\w*])"  # 6 italic (asterisk)
+)
+
+
+def esc(s, quote=False):
+    return htmllib.escape(str(s), quote)
+
+
+def render_inline(text: str) -> str:
+    out, pos = [], 0
+    for m in INLINE_RE.finditer(text):
+        out.append(esc(text[pos:m.start()]))
+        if m.group(1) is not None:
+            out.append("<b>" + esc(m.group(1)) + "</b>")
+        elif m.group(2) is not None:
+            out.append("<code>" + esc(m.group(2)) + "</code>")
+        elif m.group(3) is not None:
+            out.append(f'<a href="{esc(m.group(4), True)}" target="_blank" '
+                       f'rel="noopener">{esc(m.group(3))}</a>')
+        elif m.group(5) is not None:
+            out.append("<i>" + esc(m.group(5)) + "</i>")
+        elif m.group(6) is not None:
+            out.append("<i>" + esc(m.group(6)) + "</i>")
+        pos = m.end()
+    out.append(esc(text[pos:]))
+    return "".join(out)
+
+
+def render_bullets(items) -> str:
+    out, i, n = ["<ul>"], 0, len(items)
+    while i < n:
+        text = render_inline(items[i]["text"])
+        j = i + 1
+        subs = []
+        while j < n and items[j]["level"] == 1:
+            subs.append(items[j]); j += 1
+        if subs:
+            out.append("<li>" + text + "<ul>"
+                       + "".join("<li>" + render_inline(s["text"]) + "</li>" for s in subs)
+                       + "</ul></li>")
+        else:
+            out.append("<li>" + text + "</li>")
+        i = j
+    out.append("</ul>")
+    return "".join(out)
+
+
+def render_table(rows) -> str:
+    out = ['<table class="matrix">']
+    for ri, row in enumerate(rows):
+        tag = "th" if ri == 0 else "td"
+        out.append("<tr>" + "".join(f"<{tag}>{render_inline(c)}</{tag}>" for c in row) + "</tr>")
+    out.append("</table>")
+    return "".join(out)
+
+
+def render_columns(cols) -> str:
+    if cols and all(column_is_links(c) for c in cols):
+        out = ['<div class="exlinks">']
+        for c in cols:
+            out.append('<div class="col"><h4>' + esc(c["heading"]) + "</h4>")
+            out += [render_inline(it) for it in c["items"]]
+            out.append("</div>")
+        out.append("</div>")
+        return "".join(out)
+    out = ['<div class="two-col">']
+    for c in cols:
+        out.append('<div class="col"><h4>' + esc(c["heading"]) + "</h4><ul>")
+        out += ["<li>" + render_inline(it) + "</li>" for it in c["items"]]
+        out.append("</ul></div>")
+    out.append("</div>")
+    return "".join(out)
+
+
+def render_block(b) -> str:
+    t = b["type"]
+    if t == "para":
+        return "<p>" + render_inline(b["text"]) + "</p>"
+    if t == "bullets":
+        return render_bullets(b["items"])
+    if t == "numbered":
+        return "<ol>" + "".join("<li>" + render_inline(it) + "</li>" for it in b["items"]) + "</ol>"
+    if t == "code":
+        return "<pre><code>" + "\n".join(esc(ln) for ln in b["lines"]) + "</code></pre>"
+    if t == "callout":
+        return '<div class="callout">' + render_inline(b["text"]) + "</div>"
+    if t == "table":
+        return render_table(b["rows"])
+    if t == "columns":
+        return render_columns(b["cols"])
+    return ""
+
+
+FOOTER = ('<div class="footer"><span>Workshop · v1</span>'
+          '<div class="progress"><div></div></div><span class="counter"></span></div>')
+
+
+def render_slide(attrs, data) -> str:
+    layout = attrs.get("layout", "content")
+    kicker = attrs.get("kicker", "")
+    title = data.get("title") or ""
+    lede = data.get("lede")
+    out = []
+
+    if layout == "title":
+        out.append('<section class="slide title-slide">')
+        if kicker:
+            out.append(f'<div class="kicker">{esc(kicker)}</div>')
+        out.append(f"<h1>{render_inline(title)}</h1>")
+        if lede:
+            out.append('<p class="sub" style="font-size:26px;color:var(--ink);'
+                       f'margin-top:6px;margin-bottom:14px;">{render_inline(lede)}</p>')
+        for b in data["blocks"]:
+            if b["type"] == "para" and b["text"].startswith("Contributors:"):
+                names = b["text"].split(":", 1)[1].strip()
+                out.append('<p class="sub" style="font-size:16px;margin-top:22px;">'
+                           '<span style="text-transform:uppercase;letter-spacing:0.14em;'
+                           'font-size:12px;color:var(--accent);font-weight:700;">Contributors</span>'
+                           f"<br>{render_inline(names)}</p>")
+            elif b["type"] == "para":
+                out.append(f'<p class="sub">{render_inline(b["text"])}</p>')
+            else:
+                out.append(render_block(b))
+    elif layout in ("section", "closing"):
+        out.append('<section class="slide section-divider">')
+        if kicker:
+            out.append(f'<div class="kicker">{esc(kicker)}</div>')
+        out.append(f"<h1>{render_inline(title)}</h1>")
+        if lede:
+            out.append(f'<p class="lede">{render_inline(lede)}</p>')
+        for b in data["blocks"]:
+            out.append(render_block(b))
+    else:  # content
+        out.append('<section class="slide">')
+        if kicker:
+            out.append(f"<h3>{esc(kicker)}</h3>")
+        out.append(f"<h1>{render_inline(title)}</h1>")
+        if lede:
+            out.append(f'<p class="lede">{render_inline(lede)}</p>')
+        for b in data["blocks"]:
+            out.append(render_block(b))
+
+    out.append(FOOTER)
+    out.append("</section>")
+    return "\n".join(out)
+
+
+# ---------------------------------------------------------------------------
+# Page chrome (nav controls + help overlay + navigation script)
+# ---------------------------------------------------------------------------
+NAV_MARKUP = """<div class="nav">
+  <span class="nav-label">go to</span>
+  <input type="number" id="jump-to" class="jump-to" min="1" placeholder="#" aria-label="Jump to slide number">
+  <button id="prev" aria-label="Previous slide">← Prev</button>
+  <button id="next" aria-label="Next slide">Next →</button>
+  <button id="auto-toggle" aria-label="Toggle auto-advance">▶ Auto</button>
+  <button id="help-btn" aria-label="Help" title="Keyboard shortcuts (?)">?</button>
+</div>
+
+<div id="help-overlay" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+  <div class="panel">
+    <h2>Keyboard shortcuts</h2>
+    <table>
+      <tr><td>← → Space</td><td>Previous / next slide</td></tr>
+      <tr><td>Home / End</td><td>First / last slide</td></tr>
+      <tr><td>(digits) Enter</td><td>Jump to slide N</td></tr>
+      <tr><td>g</td><td>Focus the "go to" input</td></tr>
+      <tr><td>t</td><td>Toggle auto-advance (5 s)</td></tr>
+      <tr><td>T</td><td>Set custom auto-advance interval</td></tr>
+      <tr><td>f</td><td>Toggle full screen</td></tr>
+      <tr><td>?</td><td>Show this help</td></tr>
+      <tr><td>Esc</td><td>Close help / cancel jump</td></tr>
+    </table>
+    <div class="close-hint">Press any key to dismiss</div>
+  </div>
+</div>"""
+
+NAV_JS = """<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let i = 0, timer = null, intervalMs = 5000, digitBuffer = '', digitTimeout = null;
+
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    const active = slides[i];
+    const counter = active.querySelector('.counter');
+    if (counter) counter.textContent = (i + 1) + ' / ' + slides.length;
+    const bar = active.querySelector('.progress > div');
+    if (bar) bar.style.width = (((i + 1) / slides.length) * 100) + '%';
+    history.replaceState(null, '', '#' + (i + 1));
+    const jumpInput = document.getElementById('jump-to');
+    if (jumpInput && document.activeElement !== jumpInput) jumpInput.value = i + 1;
+    if (timer && i >= slides.length - 1) stopTimer();
+  }
+  function startTimer() {
+    if (timer) return;
+    timer = setInterval(() => { if (i < slides.length - 1) show(i + 1); else stopTimer(); }, intervalMs);
+    const btn = document.getElementById('auto-toggle');
+    btn.textContent = '⏸ Stop (' + (intervalMs / 1000) + 's)';
+    btn.classList.add('active');
+  }
+  function stopTimer() {
+    if (timer) { clearInterval(timer); timer = null; }
+    const btn = document.getElementById('auto-toggle');
+    btn.textContent = '▶ Auto';
+    btn.classList.remove('active');
+  }
+  function toggleTimer() { timer ? stopTimer() : startTimer(); }
+  function showHelp() { document.getElementById('help-overlay').classList.add('show'); }
+  function hideHelp() { document.getElementById('help-overlay').classList.remove('show'); }
+  function flushDigitBuffer() {
+    if (!digitBuffer) return;
+    const n = parseInt(digitBuffer, 10);
+    if (isFinite(n) && n > 0) show(n - 1);
+    digitBuffer = '';
+    if (digitTimeout) { clearTimeout(digitTimeout); digitTimeout = null; }
+  }
+  document.getElementById('prev').addEventListener('click', () => { stopTimer(); show(i - 1); });
+  document.getElementById('next').addEventListener('click', () => { stopTimer(); show(i + 1); });
+  document.getElementById('auto-toggle').addEventListener('click', toggleTimer);
+  document.getElementById('help-btn').addEventListener('click', showHelp);
+  document.getElementById('help-overlay').addEventListener('click', hideHelp);
+  const jumpInput = document.getElementById('jump-to');
+  jumpInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const n = parseInt(jumpInput.value, 10);
+      if (isFinite(n) && n > 0) { stopTimer(); show(n - 1); jumpInput.blur(); }
+      e.preventDefault();
+    } else if (e.key === 'Escape') { jumpInput.value = i + 1; jumpInput.blur(); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.target === jumpInput) return;
+    const overlay = document.getElementById('help-overlay');
+    if (overlay.classList.contains('show')) { hideHelp(); e.preventDefault(); return; }
+    if (/^[0-9]$/.test(e.key)) {
+      digitBuffer += e.key;
+      if (digitTimeout) clearTimeout(digitTimeout);
+      digitTimeout = setTimeout(() => { digitBuffer = ''; }, 1500);
+      e.preventDefault(); return;
+    }
+    if (e.key === 'Enter') { flushDigitBuffer(); e.preventDefault(); return; }
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { stopTimer(); show(i + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { stopTimer(); show(i - 1); e.preventDefault(); }
+    else if (e.key === 'Home') { stopTimer(); show(0); }
+    else if (e.key === 'End') { stopTimer(); show(slides.length - 1); }
+    else if (e.key === 't') { toggleTimer(); e.preventDefault(); }
+    else if (e.key === 'T') {
+      const v = prompt('Auto-advance interval in seconds:', String(intervalMs / 1000));
+      const secs = parseFloat(v);
+      if (isFinite(secs) && secs > 0) { intervalMs = Math.round(secs * 1000); if (timer) { stopTimer(); startTimer(); } }
+    }
+    else if (e.key === 'g') { jumpInput.focus(); jumpInput.select(); e.preventDefault(); }
+    else if (e.key === '?') { showHelp(); e.preventDefault(); }
+    else if (e.key === 'Escape') { stopTimer(); digitBuffer = ''; }
+    else { digitBuffer = ''; }
+  });
+  const initial = parseInt((location.hash || '#1').slice(1), 10);
+  show(isFinite(initial) && initial > 0 ? initial - 1 : 0);
+</script>"""
+
+
+def render_document(slides, css: str) -> str:
+    sections = "\n".join(render_slide(attrs, data) for attrs, data in slides)
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Files, not chats — Claude Code for mathematicians</title>
+<style>{css}</style>
+</head>
+<body>
+<div id="deck">
+{sections}
+</div>
+{NAV_MARKUP}
+{NAV_JS}
+{FIT_JS}
+</body>
+</html>
+"""
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--template", default=None)
-    ap.add_argument("--src", default=str(REPO / "archive" / "slides-classic.html"))
+    ap.add_argument("--slides", default=str(SLIDES_DIR))
     ap.add_argument("--out", default=str(REPO / "slides.html"))
     args = ap.parse_args()
 
@@ -307,27 +604,12 @@ def main():
 
     doe = data_uri(potx, DOE_LOGO)
     arg = data_uri(potx, ARGONNE_LOGO)
-
-    html = Path(args.src).read_text(encoding="utf-8")
-
-    # swap the stylesheet
     css = argonne_css(doe, arg)
-    html = re.sub(r"<style>.*?</style>", f"<style>{css}</style>", html, count=1, flags=re.S)
 
-    # document the full-screen key in the help overlay
-    html = html.replace(
-        "<tr><td>?</td><td>Show this help</td></tr>",
-        "<tr><td>f</td><td>Toggle full screen</td></tr>\n"
-        "      <tr><td>?</td><td>Show this help</td></tr>",
-        1,
-    )
-    # the source deck is authored at 16:10; Argonne template is 16:9 (shorter), so
-    # dense slides can overflow. Inject a shrink-to-fit pass so every slide's
-    # content scales down to fit at any viewport size (TV or small laptop).
-    html = html.replace("</body>", FIT_JS + "\n</body>", 1)
-
-    Path(args.out).write_text(html, encoding="utf-8")
-    print(f"Wrote {args.out}  (Argonne theme, from {Path(args.src).name})")
+    slides = load_all_slides(Path(args.slides))
+    doc = render_document(slides, css)
+    Path(args.out).write_text(doc, encoding="utf-8")
+    print(f"Wrote {args.out}  (Argonne theme, {len(slides)} slides from {Path(args.slides).name}/)")
 
 
 if __name__ == "__main__":

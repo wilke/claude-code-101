@@ -40,6 +40,11 @@ try:
 except ImportError:  # pragma: no cover
     sys.exit("python-pptx is required:  pip install python-pptx")
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from slides_md import (  # noqa: E402  shared markdown parser (single source of truth)
+    LINK_RE, TOKEN_RE, strip_inline, load_all_slides,
+)
+
 REPO = Path(__file__).resolve().parent.parent
 SLIDES_DIR = REPO / "docs" / "slides"
 DEFAULT_TEMPLATE_CANDIDATES = [
@@ -72,167 +77,8 @@ BODY_BOTTOM = Inches(6.88)
 
 
 # ---------------------------------------------------------------------------
-# Markdown parsing
+# Inline formatting -> runs  (markdown parsing lives in slides_md.py)
 # ---------------------------------------------------------------------------
-META_RE = re.compile(r"<!--slide\s+(.*?)-->", re.S)
-ATTR_RE = re.compile(r'(\w+)=(?:"([^"]*)"|(\S+))')
-
-
-def parse_attrs(raw: str) -> dict:
-    out = {}
-    for m in ATTR_RE.finditer(raw):
-        out[m.group(1)] = m.group(2) if m.group(2) is not None else m.group(3)
-    return out
-
-
-def split_slides(text: str):
-    """Yield (attrs, body_lines) for each slide in a markdown file."""
-    parts = META_RE.split(text)
-    # parts = [pre, attrs1, body1, attrs2, body2, ...]
-    it = iter(parts[1:])
-    for attrs_raw, body in zip(it, it):
-        yield parse_attrs(attrs_raw), body.splitlines()
-
-
-def is_emph_line(line: str) -> bool:
-    s = line.strip()
-    return len(s) >= 2 and s.startswith("_") and s.endswith("_")
-
-
-def parse_body(lines: list[str]) -> dict:
-    """Return {title, lede, blocks}. blocks is a list of typed dicts."""
-    title = None
-    lede = None
-    blocks = []
-    i = 0
-    n = len(lines)
-
-    # title = first '# ' line
-    while i < n and not lines[i].strip():
-        i += 1
-    if i < n and lines[i].startswith("# "):
-        title = lines[i][2:].strip()
-        i += 1
-    # optional lede = first emphasized line
-    while i < n and not lines[i].strip():
-        i += 1
-    if i < n and is_emph_line(lines[i]):
-        lede = lines[i].strip()[1:-1].strip()
-        i += 1
-
-    para: list[str] = []
-
-    def flush_para():
-        nonlocal para
-        if para:
-            blocks.append({"type": "para", "text": " ".join(para).strip()})
-            para = []
-
-    while i < n:
-        line = lines[i]
-        s = line.strip()
-        if not s:
-            flush_para()
-            i += 1
-            continue
-        # fenced code
-        if s.startswith("```"):
-            flush_para()
-            i += 1
-            code = []
-            while i < n and not lines[i].strip().startswith("```"):
-                code.append(lines[i])
-                i += 1
-            i += 1  # closing fence
-            blocks.append({"type": "code", "lines": code})
-            continue
-        # columns
-        if s == ":::columns":
-            flush_para()
-            i += 1
-            cols = []
-            cur = None
-            while i < n and lines[i].strip() != ":::":
-                cs = lines[i].strip()
-                if cs.startswith("### "):
-                    cur = {"heading": cs[4:].strip(), "items": []}
-                    cols.append(cur)
-                elif cs.startswith("- ") and cur is not None:
-                    cur["items"].append(cs[2:].strip())
-                elif cs and cur is not None:
-                    cur["items"].append(cs)
-                i += 1
-            i += 1  # closing :::
-            blocks.append({"type": "columns", "cols": cols})
-            continue
-        # table
-        if s.startswith("|"):
-            flush_para()
-            rows = []
-            while i < n and lines[i].strip().startswith("|"):
-                rows.append(lines[i].strip())
-                i += 1
-            blocks.append({"type": "table", "rows": parse_table(rows)})
-            continue
-        # callout
-        if s.startswith("> "):
-            flush_para()
-            buf = []
-            while i < n and lines[i].strip().startswith("> "):
-                buf.append(lines[i].strip()[2:])
-                i += 1
-            blocks.append({"type": "callout", "text": " ".join(buf).strip()})
-            continue
-        # bullet list (supports one level of nesting via indentation)
-        if re.match(r"^\s*- ", line):
-            flush_para()
-            items = []
-            while i < n and re.match(r"^\s*- ", lines[i]):
-                indent = len(lines[i]) - len(lines[i].lstrip())
-                items.append({"level": 1 if indent >= 4 else 0,
-                              "text": lines[i].strip()[2:].strip()})
-                i += 1
-            blocks.append({"type": "bullets", "items": items})
-            continue
-        # numbered list
-        if re.match(r"^\s*\d+\. ", line):
-            flush_para()
-            items = []
-            while i < n and re.match(r"^\s*\d+\. ", lines[i]):
-                items.append(re.sub(r"^\s*\d+\.\s*", "", lines[i]).strip())
-                i += 1
-            blocks.append({"type": "numbered", "items": items})
-            continue
-        # plain paragraph
-        para.append(s)
-        i += 1
-    flush_para()
-    return {"title": title, "lede": lede, "blocks": blocks}
-
-
-def parse_table(rows: list[str]):
-    def cells(r):
-        return [c.strip() for c in r.strip().strip("|").split("|")]
-    parsed = [cells(r) for r in rows]
-    # drop the |---|---| separator row
-    parsed = [r for r in parsed if not all(set(c) <= set("-: ") for c in r)]
-    return parsed
-
-
-# ---------------------------------------------------------------------------
-# Inline formatting -> runs
-# ---------------------------------------------------------------------------
-LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
-TOKEN_RE = re.compile(r"(\*\*.+?\*\*|`[^`]+`)")
-
-
-def strip_inline(text: str) -> str:
-    text = LINK_RE.sub(r"\1", text)
-    text = text.replace("**", "").replace("`", "")
-    text = re.sub(r"(?<!\w)_([^_]+)_(?!\w)", r"\1", text)
-    return text
-
-
 def add_runs(paragraph, text: str, base_size: int, color=INK,
              font=SANS, bold_default=False):
     """Add richly-formatted runs, honoring **bold** and `code` and [links]."""
@@ -661,16 +507,6 @@ def render_table(slide, rows, left, top, width, height, fs=1.0):
 # ---------------------------------------------------------------------------
 # Driver
 # ---------------------------------------------------------------------------
-def load_all_slides():
-    files = sorted(SLIDES_DIR.glob("[0-9][0-9]-*.md"))
-    slides = []
-    for f in files:
-        text = f.read_text(encoding="utf-8")
-        for attrs, body in split_slides(text):
-            data = parse_body(body)
-            slides.append((attrs, data))
-    slides.sort(key=lambda s: int(s[0].get("n", 0)))
-    return slides
 
 
 def main():
@@ -705,7 +541,7 @@ def main():
         "closing": section_layout,
     }
 
-    slides = load_all_slides()
+    slides = load_all_slides(SLIDES_DIR)
     for attrs, data in slides:
         kind = attrs.get("layout", "content")
         kicker = attrs.get("kicker", "")

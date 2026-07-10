@@ -59,8 +59,8 @@
     margin: 0 0 10px; color: var(--accent);
   }
   .slide h2 { font-family: var(--serif); font-weight: 700; font-size: 30px; line-height: 1.2; margin: 0 0 6px; color: var(--accent); }
-  /* content-slide kicker → Argonne blue strip */
-  .slide > h3 {
+  /* content-slide kicker → Argonne blue strip (h3 lives inside .fit after wrapping) */
+  .slide h3 {
     display: inline-block; align-self: flex-start;
     font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.11em;
     font-size: 12px; font-weight: 700; color: #fff;
@@ -157,205 +157,77 @@
 </head>
 <body>
 <div id="deck">
-  <!-- 1. Title -->
-  <section class="slide title-slide active">
-    <div class="kicker">Workshop · ~2 hours</div>
-    <h1>Files, not chats</h1>
-    <p class="sub" style="font-size: 28px; color: var(--ink); margin-top: 8px; margin-bottom: 18px;">Claude Code as a co-scientist <span style="color: var(--muted); font-size: 22px;">— for mathematicians</span></p>
-    <p class="sub">A hands-on workshop for researchers in computational mathematics — numerical PDEs, optimization, etc. The four-file architecture (CLAUDE.md, plans/, MEMORY.md, STATUS.md), skills, version control, testing, and literature workflows — with runnable exercises.</p>
-    <p class="sub" style="font-size: 17px; margin-top: 24px; font-family: var(--sans);"><span style="text-transform: uppercase; letter-spacing: 0.14em; font-size: 12px; color: var(--accent);">Contributors</span><br>Rebecca Durst · Srini Eswar · Sven Leyffer · Andreas Wilke</p>
-    <div class="footer">
-      <span>Workshop · v1</span>
-      <div class="progress"><div></div></div>
-      <span class="counter"></span>
-    </div>
-  </section>
-
-  <!-- 2. Who this is for -->
-  <section class="slide">
-    <h3>Audience</h3>
-    <h1>Who this workshop is for</h1>
-    <p class="lede">You don't need any AI experience. You do need the kind of work that benefits from a focused collaborator.</p>
-    <div class="two-col">
-      <div class="col">
-        <h4>You're in the right room if</h4>
-        <ul>
-          <li>You write or apply numerical solvers.</li>
-          <li>You're comfortable with Python and the command line.</li>
-          <li>You want less yak-shaving (plot scripts, log parsing, refactors) and more research.</li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>Out of scope</h4>
-        <ul>
-          <li>Training or fine-tuning models.</li>
-          <li>Building chatbots or web apps.</li>
-          <li>"Replace your solver with an LLM." We won't.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 3. What you'll learn -->
-  <section class="slide">
-    <h3>Roadmap</h3>
-    <h1>What you'll leave with</h1>
-    <p class="lede">Central insight: durable AI collaboration is built from <i>files</i>, not from chat history. The whole workshop is a tour of which files to keep and how they fit together.</p>
-    <ol>
-      <li><b>The four-file architecture</b> — <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward-looking), <code>MEMORY.md</code> (durable knowledge), <code>STATUS.md</code> (current state).</li>
-      <li><b>Skills</b> — packaging recurring domain logic (KKT checks, performance profiles) as reusable artifacts.</li>
-      <li><b>Sustainable habits</b> — version control, recognizing whack-a-mole loops, ending sessions cleanly.</li>
-      <li><b>A capstone</b> — an open-ended project applying everything to your own research, or one of several provided briefs (constrained derivative-free optimization, PDE solver/preconditioner benchmarking, a dependency-free CUTEst in C).</li>
-    </ol>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Workshop organization -->
-  <section class="slide">
-    <h3>Organization</h3>
-    <h1>How the workshop is structured</h1>
-    <p class="lede">Two stages: short guided exercises first, then an open-ended capstone where you put the tools to work on your own research.</p>
-    <div class="two-col">
-      <div class="col">
-        <div style="font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent); margin-bottom: 4px;">Stage 1</div>
-        <h2 style="font-size: 34px; margin-bottom: 10px;">Exercises</h2>
-        <ul>
-          <li>Small, self-contained examples that show how individual Claude features work — CLAUDE.md, plan mode, skills, MEMORY.md.</li>
-          <li>These are <i>not</i> "you must only use it this way" prescriptions. They're starting points.</li>
-          <li>During each exercise, keep asking yourself: <i>how could a tool like this help me in my own research?</i> The answer will look different for everyone.</li>
-        </ul>
-      </div>
-      <div class="col">
-        <div style="font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--accent); margin-bottom: 4px;">Stage 2</div>
-        <h2 style="font-size: 34px; margin-bottom: 10px;">Capstone</h2>
-        <ul>
-          <li>Open-ended time to try the tools on your own — your code, your problem.</li>
-          <li>Push past what you saw in the exercises. The exercises show the shape; the capstone is where you stretch it.</li>
-          <li>Goal: actually accomplish a piece of research with Claude as your collaborator, not just rehearse a feature.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Working the exercises — keep the answer key out of reach -->
-  <section class="slide">
-    <h3>Organization</h3>
-    <h1>Setting up each exercise</h1>
-    <p class="lede">Every exercise ships a <code>README.md</code> (the instructions) and a <code>SOLUTION.md</code> (the walkthrough). Those are for <em>you</em> — not for Claude.</p>
-    <ul>
-      <li>Keep <code>README.md</code> and <code>SOLUTION.md</code> <strong>outside</strong> the directory where you run <code>claude</code>. If Claude can see them, it reads ahead and the exercise loses its point.</li>
-      <li>As you work through an exercise, <strong>manually copy only the code and data files you need</strong> into your working directory — e.g. <code>max_conopt.py</code>, <code>matrix_A.npy</code>, <code>laplace_square.py</code>.</li>
-    </ul>
-    <div class="callout">Rule of thumb: Claude should see the <em>problem</em>, never the <em>solution</em>.</div>
-    <div class="exlinks">
-      <div class="col">
-        <h4>Optimization</h4>
-        <a href="slides-supplemental/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a>
-        <a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">Exercise opt 01 — CLAUDE.md</a>
-        <a href="exercises-opt/02-planning/" target="_blank" rel="noopener">Exercise opt 02 — planning</a>
-        <a href="exercises-opt/03-skills/" target="_blank" rel="noopener">Exercise opt 03 — skills</a>
-        <a href="exercises-opt/04-memory/" target="_blank" rel="noopener">Exercise opt 04 — memory</a>
-      </div>
-      <div class="col">
-        <h4>PDE / FEM</h4>
-        <a href="slides-supplemental/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a>
-        <a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">Exercise pde 01 — CLAUDE.md</a>
-        <a href="exercises-pde/02-planning/" target="_blank" rel="noopener">Exercise pde 02 — planning</a>
-        <a href="exercises-pde/03-skills/" target="_blank" rel="noopener">Exercise pde 03 — skills</a>
-        <a href="exercises-pde/04-memory/" target="_blank" rel="noopener">Exercise pde 04 — memory</a>
-      </div>
-      <div class="col">
-        <h4>Linear algebra</h4>
-        <a href="slides-supplemental/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a>
-        <a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">Exercise lin_alg 01 — CLAUDE.md</a>
-        <a href="exercises-lin_alg/02-planning/" target="_blank" rel="noopener">Exercise lin_alg 02 — planning</a>
-        <a href="exercises-lin_alg/03-skills/" target="_blank" rel="noopener">Exercise lin_alg 03 — skills</a>
-        <a href="exercises-lin_alg/04-memory/" target="_blank" rel="noopener">Exercise lin_alg 04 — memory</a>
-      </div>
-    </div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 4. What is Claude Code -->
-  <section class="slide">
-    <h3>Concept</h3>
-    <h1>What is Claude Code?</h1>
-    <p>An <b>agentic coding assistant</b> in your terminal: it reads and writes files, runs commands you approve, and works through multi-step tasks the way you would.</p>
-    <ul>
-      <li>Not autocomplete — it plans, reads context, edits files, runs tests.</li>
-      <li>You stay in control: every edit and command is reviewable.</li>
-      <li>Runs locally; nothing leaves your machine without your action.</li>
-    </ul>
-    <div class="callout">Our framing throughout: <b>Claude Code as a co-scientist</b> — a collaborator who has read the manual for every library you use but needs you to specify the problem precisely. The four files from the roadmap are how you brief it.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 7. Why mathematicians -->
-  <section class="slide">
-    <h3>Motivation</h3>
-    <h1>Where it actually helps you</h1>
-    <div class="two-col">
-      <div class="col">
-        <h4>Routine work it absorbs</h4>
-        <ul>
-          <li>Plotting helpers (semilog convergence, performance profiles).</li>
-          <li>Parsing solver logs into a tidy DataFrame.</li>
-          <li>Translating between Pyomo ↔ AMPL ↔ JuMP.</li>
-          <li>CUTEst-style test harnesses.</li>
-          <li>LaTeX-ing derivations to paper-ready form.</li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>Research work it accelerates</h4>
-        <ul>
-          <li>"What line-search rule does Wächter–Biegler 2006 use?" — answered from the codebase.</li>
-          <li>Rescaling a primal-dual update.</li>
-          <li>Large CUTEst sweeps with consistent logging.</li>
-          <li>Glue between PETSc, your driver, and your benchmark DB.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Session basics — context window -->
-  <section class="slide">
-    <h3>Session basics</h3>
-    <h1>How a session works</h1>
-    <p class="lede">Everything Claude reads and writes in a session lives in one finite buffer — the <i>context window</i>.</p>
-    <ul>
-      <li>Every prompt, file read, and tool output goes into the same window.</li>
-      <li>Large but bounded — the context window is model-specific.</li>
-      <li style="color: #c0392b;">Near the limit, Claude Code <b>auto-compacts</b>: older messages are summarized to make room.</li>
-      <li>Compaction is lossy — details from early turns can fade. Keep anything that matters on disk.</li>
-    </ul>
-    <div class="callout">Long sessions are fine — but because compaction is lossy, treat the running conversation as ephemeral. Anything that matters belongs on disk.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: What persists, what doesn't -->
-  <section class="slide">
-    <h3>Session basics</h3>
-    <h1>What persists, what doesn't</h1>
-    <table class="matrix">
-      <tr><th></th><th>Survives a new session?</th><th>Survives auto-compact?</th></tr>
-      <tr><td>Files in your project (code, MEMORY.md)</td><td>Yes</td><td>Yes — they're on disk</td></tr>
-      <tr><td>CLAUDE.md</td><td>Yes — auto-loaded each session</td><td>Yes — kept in context</td></tr>
-      <tr><td>Skills</td><td>Yes — loaded on demand by description match</td><td>Re-loaded as needed</td></tr>
-      <tr><td>The conversation itself</td><td>Only with <code>--resume</code></td><td>Compressed to a summary</td></tr>
-      <tr><td>"Mental notes" Claude has in-conversation</td><td>No — they vanish</td><td>Often lost</td></tr>
-    </table>
-    <p class="small" style="margin-top: 8px;">If a fact matters tomorrow, write it to MEMORY.md today. If it's a reusable procedure, lift it into a skill. <b>The conversation is scratch paper.</b></p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Save, resume, clear -->
-  <section class="slide">
-    <h3>Session basics</h3>
-    <h1>Save, resume, clear</h1>
-    <pre><code># Resume the most recent session in this project
+<section class="slide title-slide">
+<div class="kicker">Workshop · ~2 hours</div>
+<h1>Files, not chats</h1>
+<p class="sub" style="font-size:26px;color:var(--ink);margin-top:6px;margin-bottom:14px;">Claude Code as a co-scientist — for mathematicians</p>
+<p class="sub">A hands-on workshop for researchers in computational mathematics — numerical PDEs, optimization, etc. The four-file architecture (CLAUDE.md, plans/, MEMORY.md, STATUS.md), skills, version control, testing, and literature workflows — with runnable exercises.</p>
+<p class="sub" style="font-size:16px;margin-top:22px;"><span style="text-transform:uppercase;letter-spacing:0.14em;font-size:12px;color:var(--accent);font-weight:700;">Contributors</span><br>Rebecca Durst · Srini Eswar · Sven Leyffer · Andreas Wilke</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Audience</h3>
+<h1>Who this workshop is for</h1>
+<p class="lede">You don't need any AI experience. You do need the kind of work that benefits from a focused collaborator.</p>
+<div class="two-col"><div class="col"><h4>You're in the right room if</h4><ul><li>You write or apply numerical solvers.</li><li>You're comfortable with Python and the command line.</li><li>You want less yak-shaving (plot scripts, log parsing, refactors) and more research.</li></ul></div><div class="col"><h4>Out of scope</h4><ul><li>Training or fine-tuning models.</li><li>Building chatbots or web apps.</li><li>"Replace your solver with an LLM." We won't.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Roadmap</h3>
+<h1>What you'll leave with</h1>
+<p class="lede">Central insight: durable AI collaboration is built from files, not from chat history. The whole workshop is a tour of which files to keep and how they fit together.</p>
+<ol><li><b>The four-file architecture</b> — <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward-looking), <code>MEMORY.md</code> (durable knowledge), <code>STATUS.md</code> (current state).</li><li><b>Skills</b> — packaging recurring domain logic (KKT checks, performance profiles) as reusable artifacts.</li><li><b>Sustainable habits</b> — version control, recognizing whack-a-mole loops, ending sessions cleanly.</li><li><b>A capstone</b> — an open-ended project applying everything to your own research, or one of several provided briefs (constrained derivative-free optimization, PDE solver/preconditioner benchmarking, a dependency-free CUTEst in C).</li></ol>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Organization</h3>
+<h1>How the workshop is structured</h1>
+<p class="lede">Two stages: short guided exercises first, then an open-ended capstone where you put the tools to work on your own research.</p>
+<div class="two-col"><div class="col"><h4>Stage 1 · Exercises</h4><ul><li>Small, self-contained examples that show how individual Claude features work — CLAUDE.md, plan mode, skills, MEMORY.md.</li><li>These are <i>not</i> "you must only use it this way" prescriptions. They're starting points.</li><li>During each exercise, keep asking: <i>how could a tool like this help me in my own research?</i> The answer looks different for everyone.</li></ul></div><div class="col"><h4>Stage 2 · Capstone</h4><ul><li>Open-ended time to try the tools on your own — your code, your problem.</li><li>Push past what you saw in the exercises. The exercises show the shape; the capstone is where you stretch it.</li><li>Goal: actually accomplish a piece of research with Claude as your collaborator, not just rehearse a feature.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Organization</h3>
+<h1>Setting up each exercise</h1>
+<p class="lede">Every exercise ships a README.md (the instructions) and a SOLUTION.md (the walkthrough). Those are for you — not for Claude.</p>
+<ul><li>Keep <code>README.md</code> and <code>SOLUTION.md</code> <b>outside</b> the directory where you run <code>claude</code>. If Claude can see them, it reads ahead and the exercise loses its point.</li><li>As you work through an exercise, <b>manually copy only the code and data files you need</b> into your working directory — e.g. <code>max_conopt.py</code>, <code>matrix_A.npy</code>, <code>laplace_square.py</code>.</li></ul>
+<div class="callout">Rule of thumb: Claude should see the <i>problem</i>, never the <i>solution</i>.</div>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="slides-supplemental/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">Exercise opt 01 — CLAUDE.md</a><a href="exercises-opt/02-planning/" target="_blank" rel="noopener">Exercise opt 02 — planning</a><a href="exercises-opt/03-skills/" target="_blank" rel="noopener">Exercise opt 03 — skills</a><a href="exercises-opt/04-memory/" target="_blank" rel="noopener">Exercise opt 04 — memory</a></div><div class="col"><h4>PDE / FEM</h4><a href="slides-supplemental/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">Exercise pde 01 — CLAUDE.md</a><a href="exercises-pde/02-planning/" target="_blank" rel="noopener">Exercise pde 02 — planning</a><a href="exercises-pde/03-skills/" target="_blank" rel="noopener">Exercise pde 03 — skills</a><a href="exercises-pde/04-memory/" target="_blank" rel="noopener">Exercise pde 04 — memory</a></div><div class="col"><h4>Linear algebra</h4><a href="slides-supplemental/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">Exercise lin_alg 01 — CLAUDE.md</a><a href="exercises-lin_alg/02-planning/" target="_blank" rel="noopener">Exercise lin_alg 02 — planning</a><a href="exercises-lin_alg/03-skills/" target="_blank" rel="noopener">Exercise lin_alg 03 — skills</a><a href="exercises-lin_alg/04-memory/" target="_blank" rel="noopener">Exercise lin_alg 04 — memory</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Concept</h3>
+<h1>What is Claude Code?</h1>
+<p>An <b>agentic coding assistant</b> in your terminal: it reads and writes files, runs commands you approve, and works through multi-step tasks the way you would.</p>
+<ul><li>Not autocomplete — it plans, reads context, edits files, runs tests.</li><li>You stay in control: every edit and command is reviewable.</li><li>Runs locally; nothing leaves your machine without your action.</li></ul>
+<div class="callout">Our framing throughout: <b>Claude Code as a co-scientist</b> — a collaborator who has read the manual for every library you use but needs you to specify the problem precisely. The four files from the roadmap are how you brief it.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Motivation</h3>
+<h1>Where it actually helps you</h1>
+<div class="two-col"><div class="col"><h4>Routine work it absorbs</h4><ul><li>Plotting helpers (semilog convergence, performance profiles).</li><li>Parsing solver logs into a tidy DataFrame.</li><li>Translating between Pyomo ↔ AMPL ↔ JuMP.</li><li>CUTEst-style test harnesses.</li><li>LaTeX-ing derivations to paper-ready form.</li></ul></div><div class="col"><h4>Research work it accelerates</h4><ul><li>"What line-search rule does Wächter–Biegler 2006 use?" — answered from the codebase.</li><li>Rescaling a primal-dual update.</li><li>Large CUTEst sweeps with consistent logging.</li><li>Glue between PETSc, your driver, and your benchmark DB.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Session basics</h3>
+<h1>How a session works</h1>
+<p class="lede">Everything Claude reads and writes in a session lives in one finite buffer — the context window.</p>
+<ul><li>Every prompt, file read, and tool output goes into the same window.</li><li>Large but bounded — the context window is model-specific.</li><li>Near the limit, Claude Code <b>auto-compacts</b>: older messages are summarized to make room.</li><li>Compaction is lossy — details from early turns can fade. Keep anything that matters on disk.</li></ul>
+<div class="callout">Long sessions are fine — but because compaction is lossy, treat the running conversation as ephemeral. Anything that matters belongs on disk.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Session basics</h3>
+<h1>What persists, what doesn't</h1>
+<table class="matrix"><tr><th></th><th>Survives a new session?</th><th>Survives auto-compact?</th></tr><tr><td>Files in your project (code, MEMORY.md)</td><td>Yes</td><td>Yes — they're on disk</td></tr><tr><td>CLAUDE.md</td><td>Yes — auto-loaded each session</td><td>Yes — kept in context</td></tr><tr><td>Skills</td><td>Yes — loaded on demand by description match</td><td>Re-loaded as needed</td></tr><tr><td>The conversation itself</td><td>Only with <code>--resume</code></td><td>Compressed to a summary</td></tr><tr><td>"Mental notes" Claude has in-conversation</td><td>No — they vanish</td><td>Often lost</td></tr></table>
+<p>If a fact matters tomorrow, write it to MEMORY.md today. If it's a reusable procedure, lift it into a skill. <b>The conversation is scratch paper.</b></p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Session basics</h3>
+<h1>Save, resume, clear</h1>
+<pre><code># Resume the most recent session in this project
 claude --continue
 
 # Pick from a list of past sessions
@@ -364,51 +236,36 @@ claude --resume
 # Inside a session
 /clear      # wipe the conversation; keep CLAUDE.md, skills, files
 /compact    # manually summarize older turns to free context space</code></pre>
-    <p>Sessions are stored locally under <code>~/.claude/projects/&lt;hash&gt;/</code>. They're plain files; you can grep them.</p>
-    <div class="callout"><b>Don't lean on <code>--resume</code> to remember decisions</b> — it's brittle. Persist anything that matters to files. We'll cover the end-of-session ritual with MEMORY.md and STATUS.md in Part 4.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 8. SECTION: CLAUDE.md -->
-  <section class="slide section-divider">
-    <div class="kicker">Part 1 · The brief</div>
-    <h1>CLAUDE.md</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">A markdown file at the root of your project. Claude Code reads it at the start of every session. Treat it as the briefing document for a new collaborator.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 9. What is CLAUDE.md -->
-  <section class="slide">
-    <h3>CLAUDE.md</h3>
-    <h1>CLAUDE.md, in practice</h1>
-    <p>Two details make it more than a static readme:</p>
-    <ul>
-      <li>Keep a personal one at <code>~/.claude/CLAUDE.md</code> for cross-project preferences.</li>
-      <li>It can reference other files: <code>see <i>memory/solvers.md</i> for our notation</code>.</li>
-    </ul>
-    <div class="callout">Mental model: the README that's specifically for the AI — it sits beside your README, doesn't replace it.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 10. Why for math -->
-  <section class="slide">
-    <h3>CLAUDE.md</h3>
-    <h1>Why mathematicians need one</h1>
-    <p>Without one, every session starts from zero. With one, Claude knows your conventions before it writes a line — notation, tooling, tolerances, tests, and hard "don'ts":</p>
-    <ul>
-      <li><b>Notation.</b> <code>x</code> primal, <code>λ</code> equality mult., <code>μ</code> inequality mult.</li>
-      <li><b>Tooling &amp; tolerances.</b> Pyomo / IPOPT / BARON / petsc4py; tolerances default to 1e-8.</li>
-      <li><b>Don'ts.</b> "No <code>scipy.optimize.minimize</code> for constrained problems — it ignores active sets near the boundary in our setup."</li>
-    </ul>
-    <p class="small">Each exercise supplement opens with the domain-specific version of this list.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 11. Anatomy -->
-  <section class="slide">
-    <h3>CLAUDE.md</h3>
-    <h1>Anatomy of a good CLAUDE.md</h1>
-    <pre><code># Project: Inertia-Corrected Interior-Point Method
+<p>Sessions are stored locally under <code>~/.claude/projects/&lt;hash&gt;/</code>. They're plain files; you can grep them.</p>
+<div class="callout"><b>Don't lean on `--resume` to remember decisions</b> — it's brittle. Persist anything that matters to files. We'll cover the end-of-session ritual with MEMORY.md and STATUS.md in Part 4.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 1 · The brief</div>
+<h1>CLAUDE.md</h1>
+<p class="lede">A markdown file at the root of your project. Claude Code reads it at the start of every session. Treat it as the briefing document for a new collaborator.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>CLAUDE.md</h3>
+<h1>CLAUDE.md, in practice</h1>
+<p>Two details make it more than a static readme:</p>
+<ul><li>Keep a personal one at <code>~/.claude/CLAUDE.md</code> for cross-project preferences.</li><li>It can reference other files: <code>see memory/solvers.md for our notation</code>.</li></ul>
+<div class="callout">Mental model: the README that's specifically for the AI — it sits beside your README, doesn't replace it.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>CLAUDE.md</h3>
+<h1>Why mathematicians need one</h1>
+<p>Without one, every session starts from zero. With one, Claude knows your conventions before it writes a line — notation, tooling, tolerances, tests, and hard "don'ts":</p>
+<ul><li><b>Notation.</b> <code>x</code> primal, <code>λ</code> equality mult., <code>μ</code> inequality mult.</li><li><b>Tooling &amp; tolerances.</b> Pyomo / IPOPT / BARON / petsc4py; tolerances default to 1e-8.</li><li><b>Don'ts.</b> "No <code>scipy.optimize.minimize</code> for constrained problems — it ignores active sets near the boundary in our setup."</li></ul>
+<p>Each exercise supplement opens with the domain-specific version of this list.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>CLAUDE.md</h3>
+<h1>Anatomy of a good CLAUDE.md</h1>
+<pre><code># Project: Inertia-Corrected Interior-Point Method
 
 ## Goal
 Develop a primal-dual IPM with inertia correction for nonconvex NLPs.
@@ -432,72 +289,42 @@ Develop a primal-dual IPM with inertia correction for nonconvex NLPs.
 - memory/decisions.md — solver and parameter choices
 - memory/dead-ends.md — things we tried and why they failed
 - docs/derivations.tex — the math in publishable form</code></pre>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 12. Exercise 1 — pointer to supplemental deck -->
-  <section class="slide section-divider">
-    <h1>Exercise 1</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Please refer to your supplemental slide deck. Open your track's exercise:</p>
-    <div class="exlinks">
-      <div class="col"><h4>Optimization</h4>
-        <a href="slides-supplemental/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a>
-        <a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">exercises-opt/01-claude-md/</a>
-      </div>
-      <div class="col"><h4>PDE / FEM</h4>
-        <a href="slides-supplemental/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a>
-        <a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">exercises-pde/01-claude-md/</a>
-      </div>
-      <div class="col"><h4>Linear algebra</h4>
-        <a href="slides-supplemental/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a>
-        <a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">exercises-lin_alg/01-claude-md/</a>
-      </div>
-    </div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 13. SECTION: Planning -->
-  <section class="slide section-divider">
-    <div class="kicker">Part 2 · Think first</div>
-    <h1>Planning</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Multi-step algorithmic work goes badly without a plan. Plan mode forces Claude to lay out every step before touching a file.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 14. Why plan -->
-  <section class="slide">
-    <h3>Planning</h3>
-    <h1>Why plan first?</h1>
-    <p>Research code has tightly coupled steps — formulation, discretization, scheme, parameters, verification. Without a plan, the assistant fixes one and breaks another.</p>
-    <ul>
-      <li>A written specification before any code — the plan is itself a deliverable.</li>
-      <li>You catch wrong assumptions on a screen, not in a debugger three hours later.</li>
-    </ul>
-    <div class="callout">Same discipline as writing pseudocode before implementing a new method — same payoff.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 15. Plan mode -->
-  <section class="slide">
-    <h3>Planning</h3>
-    <h1>Plan mode in Claude Code</h1>
-    <ul>
-      <li>Press <span class="kbd">Shift</span>+<span class="kbd">Tab</span> twice — the footer turns into <i>plan mode</i>.</li>
-      <li>State the task; Claude reads context, asks clarifying questions, proposes a plan.</li>
-      <li>Approve to execute, or revise.</li>
-    </ul>
-    <p class="small">Or start directly by typing <code>plan: &lt;task&gt;</code> at the prompt.</p>
-    <pre><code>plan: implement a filter line search for our IPM driver,
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Exercise 1</h1>
+<p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="slides-supplemental/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">exercises-opt/01-claude-md/</a></div><div class="col"><h4>PDE / FEM</h4><a href="slides-supplemental/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">exercises-pde/01-claude-md/</a></div><div class="col"><h4>Linear algebra</h4><a href="slides-supplemental/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">exercises-lin_alg/01-claude-md/</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 2 · Think first</div>
+<h1>Planning</h1>
+<p class="lede">Multi-step algorithmic work goes badly without a plan. Plan mode forces Claude to lay out every step before touching a file.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>Why plan first?</h1>
+<p>Research code has tightly coupled steps — formulation, discretization, scheme, parameters, verification. Without a plan, the assistant fixes one and breaks another.</p>
+<ul><li>A written specification before any code — the plan is itself a deliverable.</li><li>You catch wrong assumptions on a screen, not in a debugger three hours later.</li></ul>
+<div class="callout">Same discipline as writing pseudocode before implementing a new method — same payoff.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>Plan mode in Claude Code</h1>
+<ul><li>Press Shift+Tab twice — the footer turns into <i>plan mode</i>.</li><li>State the task; Claude reads context, asks clarifying questions, proposes a plan.</li><li>Approve to execute, or revise.</li></ul>
+<p>Or start directly by typing <code>plan: &lt;task&gt;</code> at the prompt.</p>
+<pre><code>plan: implement a filter line search for our IPM driver,
        then add a CUTEst-style test for problem HS071 with
        tolerances matching memory/decisions.md.</code></pre>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 16. Example plan -->
-  <section class="slide">
-    <h3>Planning</h3>
-    <h1>What a good plan looks like</h1>
-    <pre><code>Plan: filter line search for IPM
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>What a good plan looks like</h1>
+<pre><code>Plan: filter line search for IPM
 1. Read driver.py and identify the current Armijo step.
 2. Add `filter.py` with the (theta, phi) pair and a switching condition.
 3. Modify driver to call filter.accept(...) instead of armijo.accept(...).
@@ -508,23 +335,15 @@ Files to be modified: driver.py, filter.py (new), tests/test_linesearch.py
 Open questions:
   - Filter envelope parameters: use Wächter–Biegler defaults?
   - Should we record filter contents in MEMORY.md after each run?</code></pre>
-    <p class="small">Read the open questions before approving — that's where most surprises live.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Plans as artifacts -->
-  <section class="slide">
-    <h3>Planning</h3>
-    <h1>Plans as artifacts: the four-file architecture</h1>
-    <p>A plan is the fourth kind of file in the project — alongside CLAUDE.md, MEMORY.md, STATUS.md. Each has its own lifecycle.</p>
-    <table class="matrix" style="font-size: 14px;">
-      <tr><th>File</th><th>Says</th><th>Lifecycle</th></tr>
-      <tr><td>CLAUDE.md</td><td>How the project works</td><td>Stable; rarely edited</td></tr>
-      <tr><td>plans/&lt;date&gt;-&lt;slug&gt;.md</td><td>What's going to happen next</td><td>Created → active → executed/abandoned/revised</td></tr>
-      <tr><td>MEMORY.md</td><td>What's been learned</td><td>Append-only; references plans by filename</td></tr>
-      <tr><td>STATUS.md</td><td>Where I am right now</td><td>Overwritten each session; points at the active plan</td></tr>
-    </table>
-    <pre style="font-size: 15px; padding: 20px 24px;"><code>project/
+<p>Read the open questions before approving — that's where most surprises live.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>Plans as artifacts: the four-file architecture</h1>
+<p>A plan is the fourth kind of file in the project — alongside CLAUDE.md, MEMORY.md, STATUS.md. Each has its own lifecycle.</p>
+<table class="matrix"><tr><th>File</th><th>Says</th><th>Lifecycle</th></tr><tr><td>CLAUDE.md</td><td>How the project works</td><td>Stable; rarely edited</td></tr><tr><td>plans/&lt;date&gt;-&lt;slug&gt;.md</td><td>What's going to happen next</td><td>Created → active → executed/abandoned/revised</td></tr><tr><td>MEMORY.md</td><td>What's been learned</td><td>Append-only; references plans by filename</td></tr><tr><td>STATUS.md</td><td>Where I am right now</td><td>Overwritten each session; points at the active plan</td></tr></table>
+<pre><code>project/
 ├── CLAUDE.md
 ├── MEMORY.md          # references plan outcomes
 ├── STATUS.md          # points at the active plan
@@ -532,16 +351,14 @@ Open questions:
     ├── 2026-04-08-filter-linesearch.md   executed
     ├── 2026-04-22-tikhonov.md            abandoned
     └── 2026-05-07-tao-implementation.md  active</code></pre>
-    <div class="callout" style="font-size: 15px;">Rule: <b>plan files are evidence; MEMORY.md is the index.</b> The reasoning lives in the plan, the fact lives in MEMORY.md, the file pointer ties them together.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Prompt cookbook for the four-file architecture -->
-  <section class="slide">
-    <h3>Planning</h3>
-    <h1>Prompts that set up and maintain the architecture</h1>
-    <p class="small">Copy these into your sessions — they're the operational moves that keep the four-file structure honest.</p>
-    <pre><code># Set up the structure in a fresh project
+<div class="callout">Rule: <b>plan files are evidence; MEMORY.md is the index.</b> The reasoning lives in the plan, the fact lives in MEMORY.md, the file pointer ties them together.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>Prompts that set up and maintain the architecture</h1>
+<p>Copy these into your sessions — they're the operational moves that keep the four-file structure honest.</p>
+<pre><code># Set up the structure in a fresh project
 &gt; create CLAUDE.md, MEMORY.md, STATUS.md, and a plans/ directory
   in this project, using the workshop conventions. Leave each file
   as a clearly-marked template I'll fill in.
@@ -564,57 +381,41 @@ Open questions:
 &gt; add an "Abandoned: 2026-05-09, reason: ..." header to
   plans/2026-04-22-tikhonov.md, and append a Dead Ends entry in
   MEMORY.md that references it.</code></pre>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- Exercise 2 — pointer to supplemental deck (closes Planning) -->
-  <section class="slide section-divider">
-    <h1>Exercise 2</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Please refer to your supplemental slide deck. Open your track's exercise:</p>
-    <div class="exlinks">
-      <div class="col"><h4>Optimization</h4><a href="exercises-opt/02-planning/" target="_blank" rel="noopener">exercises-opt/02-planning/</a></div>
-      <div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/02-planning/" target="_blank" rel="noopener">exercises-pde/02-planning/</a></div>
-      <div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/02-planning/" target="_blank" rel="noopener">exercises-lin_alg/02-planning/</a></div>
-    </div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 18. SECTION: Skills -->
-  <section class="slide section-divider">
-    <div class="kicker">Part 3 · Reusable expertise</div>
-    <h1>Skills</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">A skill is a folder. It contains instructions and helper scripts for one specific kind of task. Claude loads it on demand when the task fits.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 19. What are skills -->
-  <section class="slide">
-    <h3>Skills</h3>
-    <h1>What are skills?</h1>
-    <ul>
-      <li>A <b>skill</b> is a folder named after the capability, with a <code>SKILL.md</code> at its root — YAML front-matter (<code>name</code>, <code>description</code>) plus instructions, snippets, references.</li>
-      <li>The <code>description</code> triggers it: when the task matches, Claude loads the body.</li>
-      <li>Lives in <code>.claude/skills/</code> (project) or <code>~/.claude/skills/</code> (global).</li>
-    </ul>
-    <p class="small">Skills package "the thing my lab always does" — once — and reuse it across projects, students, and papers.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 21. Skill anatomy -->
-  <section class="slide">
-    <h3>Skills</h3>
-    <h1>Anatomy of a skill</h1>
-    <pre><code>.claude/skills/kkt-checker/
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Exercise 2</h1>
+<p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="exercises-opt/02-planning/" target="_blank" rel="noopener">exercises-opt/02-planning/</a></div><div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/02-planning/" target="_blank" rel="noopener">exercises-pde/02-planning/</a></div><div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/02-planning/" target="_blank" rel="noopener">exercises-lin_alg/02-planning/</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 3 · Reusable expertise</div>
+<h1>Skills</h1>
+<p class="lede">A skill is a folder. It contains instructions and helper scripts for one specific kind of task. Claude loads it on demand when the task fits.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Skills</h3>
+<h1>What are skills?</h1>
+<ul><li>A <b>skill</b> is a folder named after the capability, with a <code>SKILL.md</code> at its root — YAML front-matter (<code>name</code>, <code>description</code>) plus instructions, snippets, references.</li><li>The <code>description</code> triggers it: when the task matches, Claude loads the body.</li><li>Lives in <code>.claude/skills/</code> (project) or <code>~/.claude/skills/</code> (global).</li></ul>
+<p>Skills package "the thing my lab always does" — once — and reuse it across projects, students, and papers.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Skills</h3>
+<h1>Anatomy of a skill</h1>
+<pre><code>.claude/skills/kkt-checker/
 ├── SKILL.md           # front-matter + instructions
 ├── check_kkt.py       # the actual implementation
 └── references/
     └── nocedal-wright-12.4.md</code></pre>
-    <pre><code>---
+<pre><code>---
 name: kkt-checker
 origin: workshop
 description: |
   Verify that a candidate primal-dual point (x, y, z) satisfies the KKT
-  conditions for an NLP `min f(x) s.t. g(x) = 0, h(x) <= 0`. Use this
+  conditions for an NLP `min f(x) s.t. g(x) = 0, h(x) &lt;= 0`. Use this
   whenever the user reports a "solution" and wants to confirm it is
   actually a KKT point, or wants residuals component-by-component.
 ---
@@ -623,91 +424,46 @@ description: |
 
 Run `python .claude/skills/kkt-checker/check_kkt.py --problem PATH ...`
 Returns max residuals for stationarity, feasibility, complementarity.</code></pre>
-    <p class="small"><code>origin:</code> tags skills you wrote (<code>workshop</code>, <code>mygroup</code>) versus imported ones (<code>community</code>) — handy when the directory grows and you need to know what's safe to modify.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 22. Built-in vs custom -->
-  <section class="slide">
-    <h3>Skills</h3>
-    <h1>Built-in skills you already have</h1>
-    <div class="two-col">
-      <div class="col">
-        <h4>Document-creation built-ins</h4>
-        <ul>
-          <li><b>pdf</b> — extract text and tables from papers; build/fill PDFs.</li>
-          <li><b>docx</b> — produce Word reports (referee replies, grant text).</li>
-          <li><b>pptx</b> — generate slides from results.</li>
-          <li><b>xlsx</b> — turn a benchmark log into a workbook with charts.</li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>When custom beats built-in</h4>
-        <ul>
-          <li>The same domain check appears across projects.</li>
-          <li>The recipe involves exact CLI calls (PETSc, GAMS) you don't want to re-discover.</li>
-          <li>You want to encode "house style" — figure dimensions, log binning, etc.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 23. Exercise 3 — pointer to supplemental deck -->
-  <section class="slide section-divider">
-    <h1>Exercise 3</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Please refer to your supplemental slide deck. Open your track's exercise:</p>
-    <div class="exlinks">
-      <div class="col"><h4>Optimization</h4><a href="exercises-opt/03-skills/" target="_blank" rel="noopener">exercises-opt/03-skills/</a></div>
-      <div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/03-skills/" target="_blank" rel="noopener">exercises-pde/03-skills/</a></div>
-      <div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/03-skills/" target="_blank" rel="noopener">exercises-lin_alg/03-skills/</a></div>
-    </div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 24. SECTION: MEMORY.md -->
-  <section class="slide section-divider">
-    <div class="kicker">Part 4 · The diary</div>
-    <h1>MEMORY.md</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Long-running research generates decisions, dead-ends, and parameter folklore. MEMORY.md is where those facts live so the next session can use them.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 25. CLAUDE.md vs MEMORY.md -->
-  <section class="slide">
-    <h3>MEMORY.md</h3>
-    <h1>CLAUDE.md vs MEMORY.md</h1>
-    <table class="matrix">
-      <tr><th></th><th>CLAUDE.md</th><th>MEMORY.md</th></tr>
-      <tr><td>Lifespan</td><td>Stable across the project</td><td>Evolves with the research</td></tr>
-      <tr><td>Content</td><td>Conventions, commands, do/don't</td><td>Decisions, parameter values, dead-ends</td></tr>
-      <tr><td>Edited by</td><td>You, deliberately</td><td>You and Claude — at the end of each session</td></tr>
-    </table>
-    <p class="small">Small projects: one MEMORY.md. Larger ones: a <code>memory/</code> directory (<code>solvers.md</code>, <code>experiments.md</code>, <code>dead-ends.md</code>) with an <code>INDEX.md</code>. (The exercise supplement revisits this distinction.)</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 26. What to put in MEMORY.md -->
-  <section class="slide">
-    <h3>MEMORY.md</h3>
-    <h1>What to record</h1>
-    <ul>
-      <li><b>Decisions.</b> "IPOPT over SNOPT for license reasons — 2026-03-12, issue #41."</li>
-      <li><b>Parameter folklore.</b> "<code>mu_init=1e-2</code> fastest on our cohort; <code>1e-4</code> diverges on the catalysis problem."</li>
-      <li><b>Dead ends.</b> "Newton + Tikhonov on inverse Poisson converges but multipliers are noise. Don't repeat."</li>
-      <li><b>Open questions.</b> "Is the inertia-correction threshold problem-dependent? Re-check HS071, HS099."</li>
-      <li><b>Run logs.</b> "Best so far: <code>runs/2026-04-22T1430</code>, ‖∇f‖ = 3.7e-9."</li>
-    </ul>
-    <div class="callout">Keep it append-only and dated — MEMORY.md is a log, not a document you rewrite. Capturing these entries is part of the end-of-session ritual (next slide, with STATUS.md).</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: STATUS.md — handoff between sessions -->
-  <section class="slide">
-    <h3>MEMORY.md</h3>
-    <h1>Handoff: STATUS.md, not MEMORY.md</h1>
-    <p>MEMORY.md holds durable knowledge and grows. <b>Don't put session handoff in it</b> — "mid-debug on X, next step Y" is true today, noise next week. Use a small, separate, <i>overwritten</i> file:</p>
-    <pre><code># STATUS — 2026-05-07 17:42
+<p><code>origin:</code> tags skills you wrote (<code>workshop</code>, <code>mygroup</code>) versus imported ones (<code>community</code>) — handy when the directory grows and you need to know what's safe to modify.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Skills</h3>
+<h1>Built-in skills you already have</h1>
+<div class="two-col"><div class="col"><h4>Document-creation built-ins</h4><ul><li><b>pdf</b> — extract text and tables from papers; build/fill PDFs.</li><li><b>docx</b> — produce Word reports (referee replies, grant text).</li><li><b>pptx</b> — generate slides from results.</li><li><b>xlsx</b> — turn a benchmark log into a workbook with charts.</li></ul></div><div class="col"><h4>When custom beats built-in</h4><ul><li>The same domain check appears across projects.</li><li>The recipe involves exact CLI calls (PETSc, GAMS) you don't want to re-discover.</li><li>You want to encode "house style" — figure dimensions, log binning, etc.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Exercise 3</h1>
+<p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="exercises-opt/03-skills/" target="_blank" rel="noopener">exercises-opt/03-skills/</a></div><div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/03-skills/" target="_blank" rel="noopener">exercises-pde/03-skills/</a></div><div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/03-skills/" target="_blank" rel="noopener">exercises-lin_alg/03-skills/</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 4 · The diary</div>
+<h1>MEMORY.md</h1>
+<p class="lede">Long-running research generates decisions, dead-ends, and parameter folklore. MEMORY.md is where those facts live so the next session can use them.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>MEMORY.md</h3>
+<h1>CLAUDE.md vs MEMORY.md</h1>
+<table class="matrix"><tr><th></th><th>CLAUDE.md</th><th>MEMORY.md</th></tr><tr><td>Lifespan</td><td>Stable across the project</td><td>Evolves with the research</td></tr><tr><td>Content</td><td>Conventions, commands, do/don't</td><td>Decisions, parameter values, dead-ends</td></tr><tr><td>Edited by</td><td>You, deliberately</td><td>You and Claude — at the end of each session</td></tr></table>
+<p>Small projects: one MEMORY.md. Larger ones: a <code>memory/</code> directory (<code>solvers.md</code>, <code>experiments.md</code>, <code>dead-ends.md</code>) with an <code>INDEX.md</code>. (The exercise supplement revisits this distinction.)</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>MEMORY.md</h3>
+<h1>What to record</h1>
+<ul><li><b>Decisions.</b> "IPOPT over SNOPT for license reasons — 2026-03-12, issue #41."</li><li><b>Parameter folklore.</b> "<code>mu_init=1e-2</code> fastest on our cohort; <code>1e-4</code> diverges on the catalysis problem."</li><li><b>Dead ends.</b> "Newton + Tikhonov on inverse Poisson converges but multipliers are noise. Don't repeat."</li><li><b>Open questions.</b> "Is the inertia-correction threshold problem-dependent? Re-check HS071, HS099."</li><li><b>Run logs.</b> "Best so far: <code>runs/2026-04-22T1430</code>, ‖∇f‖ = 3.7e-9."</li></ul>
+<div class="callout">Keep it append-only and dated — MEMORY.md is a log, not a document you rewrite. Capturing these entries is part of the end-of-session ritual (next slide, with STATUS.md).</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>MEMORY.md</h3>
+<h1>Handoff: STATUS.md, not MEMORY.md</h1>
+<p>MEMORY.md holds durable knowledge and grows. <b>Don't put session handoff in it</b> — "mid-debug on X, next step Y" is true today, noise next week. Use a small, separate, <i>overwritten</i> file:</p>
+<pre><code># STATUS — 2026-05-07 17:42
 
 ## What I'm working on
 Filter line search for the IPM driver. PR branch: filter-linesearch.
@@ -720,50 +476,29 @@ Filter line search for the IPM driver. PR branch: filter-linesearch.
 ## Next step
 Read filter.py:43-67. If theta_max not set in __init__, add it.
 Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
-    <div class="callout">End-of-session ritual: <code>append a dated entry to MEMORY.md and overwrite STATUS.md with where we are now</code>. Two minutes. Next session: read STATUS.md and you're back in flight.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Handoff reliability gradient -->
-  <section class="slide">
-    <h3>MEMORY.md</h3>
-    <h1>Handoff mechanisms, ordered by reliability</h1>
-    <table class="matrix">
-      <tr><th>Mechanism</th><th>Reliability</th><th>Notes</th></tr>
-      <tr><td>STATUS.md you wrote</td><td>Highest</td><td>You control it; survives anything.</td></tr>
-      <tr><td>Branch name</td><td>High</td><td><code>git branch --show-current</code> tells you what's in flight.</td></tr>
-      <tr><td>Last commit message</td><td>High</td><td>A WIP commit is a one-line handoff for free.</td></tr>
-      <tr><td><code>claude --continue</code></td><td>Medium</td><td>Brings back the conversation. Brittle: may already be compacted; gone if you switch machines.</td></tr>
-    </table>
-    <p class="small" style="margin-top: 8px;">The pattern: rely most on what's in <i>files</i> (top three rows). Rely least on what's only in chat state (last row). The deck of files — CLAUDE.md, MEMORY.md, STATUS.md — is what survives whatever a session throws at you.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- Exercise 4 — pointer to supplemental deck -->
-  <section class="slide section-divider">
-    <h1>Exercise 4</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Please refer to your supplemental slide deck. Open your track's exercise:</p>
-    <div class="exlinks">
-      <div class="col"><h4>Optimization</h4><a href="exercises-opt/04-memory/" target="_blank" rel="noopener">exercises-opt/04-memory/</a></div>
-      <div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/04-memory/" target="_blank" rel="noopener">exercises-pde/04-memory/</a></div>
-      <div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/04-memory/" target="_blank" rel="noopener">exercises-lin_alg/04-memory/</a></div>
-    </div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Literature as the fifth artifact -->
-  <section class="slide">
-    <h3>Literature</h3>
-    <h1>Literature: the fifth artifact</h1>
-    <p class="lede" style="font-size: 19px;">Literature reading is daily work for computational mathematicians — and the highest-leverage place Claude as a <i>co-scientist</i> beats Claude as a <i>programmer</i>. Treat it as first class.</p>
-    <table class="matrix">
-      <tr><th></th><th>Claude does well</th><th>Claude does badly</th></tr>
-      <tr><td>PDFs</td><td>Extract text, equations, tables (built-in <code>pdf</code> skill)</td><td>Decide what a result <i>really means</i> — that's still you</td></tr>
-      <tr><td>Notation</td><td>Translate between Nocedal–Wright / Conn–Gould–Toint / Boyd–Vandenberghe</td><td>Catch subtle distinctions (B- vs. M- vs. S-stationarity) without your verification</td></tr>
-      <tr><td>Citations</td><td>Resolve fragments via an <code>arxiv</code> / <code>semantic-scholar</code> lookup</td><td>Emit citations from memory — these are often <b>plausible-looking and wrong</b></td></tr>
-    </table>
-    <p style="font-size: 19px;">Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.</p>
-    <pre style="font-size: 17px;"><code>project/
+<div class="callout">End-of-session ritual: <code>append a dated entry to MEMORY.md and overwrite STATUS.md with where we are now</code>. Two minutes. Next session: read STATUS.md and you're back in flight.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>MEMORY.md</h3>
+<h1>Handoff mechanisms, ordered by reliability</h1>
+<table class="matrix"><tr><th>Mechanism</th><th>Reliability</th><th>Notes</th></tr><tr><td>STATUS.md you wrote</td><td>Highest</td><td>You control it; survives anything.</td></tr><tr><td>Branch name</td><td>High</td><td><code>git branch --show-current</code> tells you what's in flight.</td></tr><tr><td>Last commit message</td><td>High</td><td>A WIP commit is a one-line handoff for free.</td></tr><tr><td><code>claude --continue</code></td><td>Medium</td><td>Brings back the conversation. Brittle: may already be compacted; gone if you switch machines.</td></tr></table>
+<p>The pattern: rely most on what's in <i>files</i> (top three rows). Rely least on what's only in chat state (last row). The deck of files — CLAUDE.md, MEMORY.md, STATUS.md — is what survives whatever a session throws at you.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Exercise 4</h1>
+<p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="exercises-opt/04-memory/" target="_blank" rel="noopener">exercises-opt/04-memory/</a></div><div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/04-memory/" target="_blank" rel="noopener">exercises-pde/04-memory/</a></div><div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/04-memory/" target="_blank" rel="noopener">exercises-lin_alg/04-memory/</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Literature</h3>
+<h1>Literature: the fifth artifact</h1>
+<p class="lede">Literature reading is daily work for computational mathematicians — and the highest-leverage place Claude as a co-scientist beats Claude as a programmer. Treat it as first class.</p>
+<table class="matrix"><tr><th></th><th>Claude does well</th><th>Claude does badly</th></tr><tr><td>PDFs</td><td>Extract text, equations, tables (built-in <code>pdf</code> skill)</td><td>Decide what a result <i>really means</i> — that's still you</td></tr><tr><td>Notation</td><td>Translate between Nocedal–Wright / Conn–Gould–Toint / Boyd–Vandenberghe</td><td>Catch subtle distinctions (B- vs. M- vs. S-stationarity) without your verification</td></tr><tr><td>Citations</td><td>Resolve fragments via an <code>arxiv</code> / <code>semantic-scholar</code> lookup</td><td>Emit citations from memory — these are often <b>plausible-looking and wrong</b></td></tr></table>
+<p>Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.</p>
+<pre><code>project/
 ├── CLAUDE.md
 ├── MEMORY.md          # cites plans/ AND literature/
 ├── STATUS.md
@@ -772,83 +507,54 @@ Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
     ├── wachter-biegler-2006.md
     ├── nocedal-wright-12.md
     └── INDEX.md       # contents page once it grows past ~10</code></pre>
-    <div class="callout">CLAUDE.md hard rule: <code>never emit a citation from memory. Resolve via a literature search, or quote the local PDF, or mark [citation needed]</code>. One line; the single biggest defense against hallucinated bibliographies.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: RAG and wiki-rag -->
-  <section class="slide">
-    <h3>Literature</h3>
-    <h1>When the corpus outgrows context: RAG</h1>
-    <p>Your group's PDFs, lab wiki, and shared notes don't fit in one Claude session. <b>Retrieval-Augmented Generation</b> (RAG) is the standard answer: index the corpus into a vector database; for each question, retrieve the most relevant chunks; feed only those into the model.</p>
-    <ul>
-      <li>You stop relying on what Claude was trained on, and start relying on what you actually have.</li>
-      <li>Citations come back as document IDs you can verify, not paraphrases of training data.</li>
-      <li>The corpus grows without inflating your context window.</li>
-    </ul>
-    <p><b>Concrete example: <code>moodlehq/wiki-rag</code>.</b> Experimental RAG that ingests any MediaWiki site via API, indexes into Milvus with hybrid (vector + keyword) retrieval and fusion reranking, exposes an <i>OpenAI-compatible API</i>, and ships a Docker image.</p>
-    <pre><code>     Your lab MediaWiki  →  wiki-rag (Milvus + LangGraph)
+<div class="callout">CLAUDE.md hard rule: <code>never emit a citation from memory. Resolve via a literature search, or quote the local PDF, or mark [citation needed]</code>. One line; the single biggest defense against hallucinated bibliographies.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Literature</h3>
+<h1>When the corpus outgrows context: RAG</h1>
+<p>Your group's PDFs, lab wiki, and shared notes don't fit in one Claude session. <b>Retrieval-Augmented Generation</b> (RAG) is the standard answer: index the corpus into a vector database; for each question, retrieve the most relevant chunks; feed only those into the model.</p>
+<ul><li>You stop relying on what Claude was trained on, and start relying on what you actually have.</li><li>Citations come back as document IDs you can verify, not paraphrases of training data.</li><li>The corpus grows without inflating your context window.</li></ul>
+<p><b>Concrete example: `moodlehq/wiki-rag`.</b> Experimental RAG that ingests any MediaWiki site via API, indexes into Milvus with hybrid (vector + keyword) retrieval and fusion reranking, exposes an <i>OpenAI-compatible API</i>, and ships a Docker image.</p>
+<pre><code>     Your lab MediaWiki  →  wiki-rag (Milvus + LangGraph)
                               │  exposes /v1/chat/completions
                               ▼
                             Custom tool wrapper
                               │  tool: query_lab_wiki(question)
                               ▼
                           Claude Code session</code></pre>
-    <p class="small">Pattern: any RAG that speaks the OpenAI API can become a Claude Code tool in ten lines. Now Claude has searchable access to your group's institutional knowledge — and so does every collaborator who runs the workshop's setup.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW SECTION: Power features -->
-  <section class="slide section-divider">
-    <div class="kicker">Part 5 · Power features</div>
-    <h1>Beyond the basics</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Four mechanisms that change what's possible: checkpoints for reversible exploration, subagents for context-isolated work, hooks for deterministic enforcement, and non-interactive mode for fan-out at scale.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Checkpoints and rewind -->
-  <section class="slide">
-    <h3>Power features</h3>
-    <h1>Checkpoints — try, rewind, try again</h1>
-    <p>Every action Claude takes creates a checkpoint. Press <span class="kbd">Esc</span><span class="kbd">Esc</span> (or run <code>/rewind</code>) to open a menu and restore prior state.</p>
-    <ul>
-      <li><b>Restore conversation only</b> — get back the chat, keep the code as it is.</li>
-      <li><b>Restore code only</b> — undo Claude's file edits, keep the conversation history.</li>
-      <li><b>Restore both</b> — full rewind to a prior moment.</li>
-      <li><b>Persists across sessions</b> — you can close the terminal and rewind tomorrow.</li>
-    </ul>
-    <p>Two reverting tools at different scales: <b>git</b> for committed history, <b>/rewind</b> for in-session backtracks. Use them together.</p>
-    <div class="callout">Practical pattern: have Claude try something risky; if the diff isn't right, rewind and re-ask with the lesson learned. The cost of a wrong direction drops to near zero.</div>
-    <p class="small">Caveat: <code>/rewind</code> tracks changes <i>made by Claude</i>. External edits, build artifacts, and database state are out of scope. Don't treat it as a replacement for git.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Subagents and hooks -->
-  <section class="slide">
-    <h3>Power features</h3>
-    <h1>Subagents and hooks</h1>
-    <table class="matrix">
-      <tr><th></th><th>Skill</th><th>Subagent</th><th>Hook</th></tr>
-      <tr><td>Lives in</td><td><code>.claude/skills/</code></td><td><code>.claude/agents/</code></td><td><code>.claude/settings.json</code></td></tr>
-      <tr><td>Context</td><td>Loads into your main session</td><td>Runs in a separate window — reports back a summary</td><td>None — just runs a script</td></tr>
-      <tr><td>Best for</td><td>Recurring domain logic (KKT check)</td><td>Investigative reads (research a 200-file solver)</td><td>Things that must happen <i>every time</i></td></tr>
-      <tr><td>Trigger</td><td>Description-match on the task</td><td>You ask Claude to delegate</td><td>Specific events (PostToolUse, etc.)</td></tr>
-      <tr><td>Reliability</td><td>Advisory — usually loaded</td><td>Advisory — when delegated</td><td><b>Deterministic</b> — guaranteed to fire</td></tr>
-    </table>
-    <p>Mathematician examples:</p>
-    <ul>
-      <li><b>Subagent.</b> A <code>solver-archaeologist</code> (<code>tools: Read, Grep, Glob</code>) that reads 200 files of inherited solver code and writes a one-page summary — your main session never sees the 200 files.</li>
-      <li><b>Hook.</b> Promote "run <code>pytest -q</code> after every edit" from a CLAUDE.md rule (advisory) to a hook (deterministic) — it fires whether Claude remembers or not.</li>
-    </ul>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Non-interactive mode and fan-out -->
-  <section class="slide">
-    <h3>Power features</h3>
-    <h1>Non-interactive mode — fan-out at scale</h1>
-    <p><code>claude -p "prompt"</code> runs Claude without a session — single shot, machine-readable output. This is what makes Claude usable as a step in a pipeline rather than a chat partner.</p>
-    <pre><code># Run a solver across the CUTEst small cohort, log per-problem
+<p>Pattern: any RAG that speaks the OpenAI API can become a Claude Code tool in ten lines. Now Claude has searchable access to your group's institutional knowledge — and so does every collaborator who runs the workshop's setup.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 5 · Power features</div>
+<h1>Beyond the basics</h1>
+<p class="lede">Four mechanisms that change what's possible: checkpoints for reversible exploration, subagents for context-isolated work, hooks for deterministic enforcement, and non-interactive mode for fan-out at scale.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Power features</h3>
+<h1>Checkpoints — try, rewind, try again</h1>
+<p>Every action Claude takes creates a checkpoint. Press Esc Esc (or run <code>/rewind</code>) to open a menu and restore prior state.</p>
+<ul><li><b>Restore conversation only</b> — get back the chat, keep the code as it is.</li><li><b>Restore code only</b> — undo Claude's file edits, keep the conversation history.</li><li><b>Restore both</b> — full rewind to a prior moment.</li><li><b>Persists across sessions</b> — you can close the terminal and rewind tomorrow.</li></ul>
+<p>Two reverting tools at different scales: <b>git</b> for committed history, <b>/rewind</b> for in-session backtracks. Use them together.</p>
+<div class="callout">Practical pattern: have Claude try something risky; if the diff isn't right, rewind and re-ask with the lesson learned. The cost of a wrong direction drops to near zero.</div>
+<p>Caveat: <code>/rewind</code> tracks changes <i>made by Claude</i>. External edits, build artifacts, and database state are out of scope. Don't treat it as a replacement for git.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Power features</h3>
+<h1>Subagents and hooks</h1>
+<table class="matrix"><tr><th></th><th>Skill</th><th>Subagent</th><th>Hook</th></tr><tr><td>Lives in</td><td><code>.claude/skills/</code></td><td><code>.claude/agents/</code></td><td><code>.claude/settings.json</code></td></tr><tr><td>Context</td><td>Loads into your main session</td><td>Runs in a separate window — reports back a summary</td><td>None — just runs a script</td></tr><tr><td>Best for</td><td>Recurring domain logic (KKT check)</td><td>Investigative reads (research a 200-file solver)</td><td>Things that must happen <i>every time</i></td></tr><tr><td>Trigger</td><td>Description-match on the task</td><td>You ask Claude to delegate</td><td>Specific events (PostToolUse, etc.)</td></tr><tr><td>Reliability</td><td>Advisory — usually loaded</td><td>Advisory — when delegated</td><td><b>Deterministic</b> — guaranteed to fire</td></tr></table>
+<p>Mathematician examples:</p>
+<ul><li><b>Subagent.</b> A <code>solver-archaeologist</code> (<code>tools: Read, Grep, Glob</code>) that reads 200 files of inherited solver code and writes a one-page summary — your main session never sees the 200 files.</li><li><b>Hook.</b> Promote "run <code>pytest -q</code> after every edit" from a CLAUDE.md rule (advisory) to a hook (deterministic) — it fires whether Claude remembers or not.</li></ul>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Power features</h3>
+<h1>Non-interactive mode — fan-out at scale</h1>
+<p><code>claude -p "prompt"</code> runs Claude without a session — single shot, machine-readable output. This is what makes Claude usable as a step in a pipeline rather than a chat partner.</p>
+<pre><code># Run a solver across the CUTEst small cohort, log per-problem
 for prob in $(cat cutest_small.txt); do
   claude -p "solve $prob with mu_init=1e-2 using our IPM driver. \
              Report status, iters, KKT residual as JSON." \
@@ -858,34 +564,21 @@ done
 
 # Pipe data in directly
 cat error.log | claude -p "extract the failing test names as a list"</code></pre>
-    <ul>
-      <li><b><code>--allowedTools</code></b> scopes permissions for unattended runs.</li>
-      <li><b><code>--output-format json</code></b> for parseable results; <code>stream-json</code> for real-time consumption.</li>
-      <li><b><code>--permission-mode auto</code></b> lets a classifier handle approvals; aborts if it repeatedly blocks (no human to fall back to).</li>
-    </ul>
-    <div class="callout">For optimization research this is the unlock: a parameter sweep that used to take 20 manual steps becomes a shell loop. Combined with the <code>kkt-checker</code> skill, you can run a 1300-problem CUTEst study overnight with consistent output.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- SECTION: Working sustainably -->
-  <section class="slide section-divider">
-    <div class="kicker">Part 6 · Habits</div>
-    <h1>Working sustainably</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Version control, reverting, and recognizing when you're whack-a-mole-ing your own code. The unglamorous habits that make the rest of the workshop pay off.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Git hygiene -->
-  <section class="slide">
-    <h3>Working sustainably</h3>
-    <h1>Git hygiene with an AI collaborator</h1>
-    <ul>
-      <li><b>Start every session with a clean working tree</b> (or a fresh branch). You want any change Claude makes to be visible in <code>git diff</code>.</li>
-      <li><b>Commit small, atomic changes.</b> One logical step per commit makes reverting precise.</li>
-      <li><b>Review the diff before continuing.</b> If you keep prompting on top of code you haven't read, you lose track of what's in your repo.</li>
-      <li><b>Branch for risky work.</b> A solver rewrite or a new formulation goes on its own branch — easy to throw away if it doesn't pan out.</li>
-    </ul>
-    <pre><code># Before a session
+<ul><li><b>`--allowedTools`</b> scopes permissions for unattended runs.</li><li><b>`--output-format json`</b> for parseable results; <code>stream-json</code> for real-time consumption.</li><li><b>`--permission-mode auto`</b> lets a classifier handle approvals; aborts if it repeatedly blocks (no human to fall back to).</li></ul>
+<div class="callout">For optimization research this is the unlock: a parameter sweep that used to take 20 manual steps becomes a shell loop. Combined with the <code>kkt-checker</code> skill, you can run a 1300-problem CUTEst study overnight with consistent output.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 6 · Habits</div>
+<h1>Working sustainably</h1>
+<p class="lede">Version control, reverting, and recognizing when you're whack-a-mole-ing your own code. The unglamorous habits that make the rest of the workshop pay off.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Git hygiene with an AI collaborator</h1>
+<ul><li><b>Start every session with a clean working tree</b> (or a fresh branch). You want any change Claude makes to be visible in <code>git diff</code>.</li><li><b>Commit small, atomic changes.</b> One logical step per commit makes reverting precise.</li><li><b>Review the diff before continuing.</b> If you keep prompting on top of code you haven't read, you lose track of what's in your repo.</li><li><b>Branch for risky work.</b> A solver rewrite or a new formulation goes on its own branch — easy to throw away if it doesn't pan out.</li></ul>
+<pre><code># Before a session
 git status                       # confirm clean
 git checkout -b filter-linesearch  # branch for this task
 
@@ -893,14 +586,12 @@ git checkout -b filter-linesearch  # branch for this task
 git diff                         # always read this
 git add -p                       # stage hunks selectively
 git commit -m "Add filter line search; HS071 test passes"</code></pre>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Reverting -->
-  <section class="slide">
-    <h3>Working sustainably</h3>
-    <h1>Reverting when Claude went the wrong way</h1>
-    <pre><code># Undo edits to one file (uncommitted)
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Reverting when Claude went the wrong way</h1>
+<pre><code># Undo edits to one file (uncommitted)
 git restore path/to/file.py
 
 # Undo all uncommitted changes
@@ -918,156 +609,75 @@ git reset --hard HEAD~1
 
 # Try a different approach in parallel without disturbing main
 git worktree add ../alt-approach
-cd ../alt-approach && claude</code></pre>
-    <p class="small">Worktrees are particularly useful with Claude: you can have one tree exploring a regularization scheme and another exploring an SQP variant, without merge headaches.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Tests do double duty -->
-  <section class="slide">
-    <h3>Working sustainably</h3>
-    <h1>Verification first — tests are how Claude checks itself</h1>
-    <p class="lede"><b>The highest-leverage thing you can do is give Claude a way to verify its own work.</b> Without it, you are the only feedback loop; tests let Claude run, see, and fix. For a mathematician, they do double duty:</p>
-    <table class="matrix">
-      <tr><th></th><th>As a programmer</th><th>As a co-scientist</th></tr>
-      <tr><td>What it checks</td><td>Code does what it's supposed to</td><td>Results haven't degraded</td></tr>
-      <tr><td>Example</td><td><code>assert filter.accept(x) == True</code></td><td>"On HS071, IPOPT converges in ≤ 50 iters with <code>mu_init=1e-2</code>"</td></tr>
-      <tr><td>Frequency</td><td>Every commit</td><td>Nightly, or before a paper</td></tr>
-      <tr><td>Lives in</td><td><code>tests/</code></td><td><code>bench/</code> (or <code>tests/</code> with a marker)</td></tr>
-    </table>
-    <p>Both protect future-you. Both let Claude prove a change is correct without you reading every diff.</p>
-    <div class="callout">Skills as oracles: the <code>kkt-checker</code>, <code>perf-profile</code>, and <code>convergence-rate-fitter</code> skills aren't only one-off tools — they're the predicate that powers an entire family of tests. One predicate, many invocations.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Test patterns with Claude -->
-  <section class="slide">
-    <h3>Working sustainably</h3>
-    <h1>Test patterns with Claude in the loop</h1>
-    <ul>
-      <li><b>Test-first prompting.</b> "Write the test for X first, confirm it fails, then implement X." Forces specification before code.</li>
-      <li><b>Hard rule in CLAUDE.md.</b> "Run <code>pytest -q</code> after every edit; surface failures before continuing." Removes the most common failure mode — claimed success without verification.</li>
-      <li><b>Test the dead end, not just the success.</b> Assert the failure mode (e.g. Tikhonov) so a well-meaning future fix can't silently re-enable the bug.</li>
-      <li><b>Cite tests in commits and decisions.</b> MEMORY.md decisions reference the test that catches their regression.</li>
-    </ul>
-    <pre><code># In CLAUDE.md
+cd ../alt-approach &amp;&amp; claude</code></pre>
+<p>Worktrees are particularly useful with Claude: you can have one tree exploring a regularization scheme and another exploring an SQP variant, without merge headaches.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Verification first — tests are how Claude checks itself</h1>
+<p class="lede">The highest-leverage thing you can do is give Claude a way to verify its own work. Without it, you are the only feedback loop; tests let Claude run, see, and fix. For a mathematician, they do double duty:</p>
+<table class="matrix"><tr><th></th><th>As a programmer</th><th>As a co-scientist</th></tr><tr><td>What it checks</td><td>Code does what it's supposed to</td><td>Results haven't degraded</td></tr><tr><td>Example</td><td><code>assert filter.accept(x) == True</code></td><td>"On HS071, IPOPT converges in ≤ 50 iters with <code>mu_init=1e-2</code>"</td></tr><tr><td>Frequency</td><td>Every commit</td><td>Nightly, or before a paper</td></tr><tr><td>Lives in</td><td><code>tests/</code></td><td><code>bench/</code> (or <code>tests/</code> with a marker)</td></tr></table>
+<p>Both protect future-you. Both let Claude prove a change is correct without you reading every diff.</p>
+<div class="callout">Skills as oracles: the <code>kkt-checker</code>, <code>perf-profile</code>, and <code>convergence-rate-fitter</code> skills aren't only one-off tools — they're the predicate that powers an entire family of tests. One predicate, many invocations.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Test patterns with Claude in the loop</h1>
+<ul><li><b>Test-first prompting.</b> "Write the test for X first, confirm it fails, then implement X." Forces specification before code.</li><li><b>Hard rule in CLAUDE.md.</b> "Run <code>pytest -q</code> after every edit; surface failures before continuing." Removes the most common failure mode — claimed success without verification.</li><li><b>Test the dead end, not just the success.</b> Assert the failure mode (e.g. Tikhonov) so a well-meaning future fix can't silently re-enable the bug.</li><li><b>Cite tests in commits and decisions.</b> MEMORY.md decisions reference the test that catches their regression.</li></ul>
+<pre><code># In CLAUDE.md
 ## Conventions
 - After any code edit: run `pytest -q tests/`. Surface failures
   in the next reply; don't claim done.
 - For changes touching solver behavior, also run
   `python bench/run.py --suite cohort_smoke` and report iters/time.</code></pre>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Loop detection -->
-  <section class="slide">
-    <h3>Working sustainably</h3>
-    <h1>The whack-a-mole loop — how to spot it</h1>
-    <p>Symptom: every fix breaks something else. Fix A → B fails → fix B → C fails → fix C → A fails again.</p>
-    <div class="two-col">
-      <div class="col">
-        <h4>Signs to watch for</h4>
-        <ul>
-          <li>The same files reappear in <code>git status</code> across attempts.</li>
-          <li>Tests flip between passing and failing on essentially the same code.</li>
-          <li>Claude proposes a fix you remember rejecting two turns ago.</li>
-          <li>Diffs grow but the bug count is stable.</li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>Underlying causes</h4>
-        <ul>
-          <li>A missing invariant — e.g., "the multipliers should always sum to zero" — that no test enforces.</li>
-          <li>Conflicting requirements between two modules.</li>
-          <li>Silent fallback paths (a try/except hiding the actual failure).</li>
-        </ul>
-      </div>
-    </div>
-    <pre><code>git log --oneline -20            # any file touched repeatedly?
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>The whack-a-mole loop — how to spot it</h1>
+<p>Symptom: every fix breaks something else. Fix A → B fails → fix B → C fails → fix C → A fails again.</p>
+<div class="two-col"><div class="col"><h4>Signs to watch for</h4><ul><li>The same files reappear in <code>git status</code> across attempts.</li><li>Tests flip between passing and failing on essentially the same code.</li><li>Claude proposes a fix you remember rejecting two turns ago.</li><li>Diffs grow but the bug count is stable.</li></ul></div><div class="col"><h4>Underlying causes</h4><ul><li>A missing invariant — e.g., "the multipliers should always sum to zero" — that no test enforces.</li><li>Conflicting requirements between two modules.</li><li>Silent fallback paths (a try/except hiding the actual failure).</li></ul></div></div>
+<pre><code>git log --oneline -20            # any file touched repeatedly?
 git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Breaking out -->
-  <section class="slide">
-    <h3>Working sustainably</h3>
-    <h1>Breaking out of a stuck session</h1>
-    <ol>
-      <li><b>Stop prompting "fix this too."</b> More turns won't help; you need to step back.</li>
-      <li><b>Ask Claude to summarize.</b> <code>summarize everything we've tried in this session and why each attempt failed.</code> Read the summary.</li>
-      <li><b>Step away from the keyboard.</b> Write down — on paper — the actual invariants the code must satisfy.</li>
-      <li><b>Reset.</b> <code>/clear</code>. Open a fresh session with the invariants explicit in the prompt or appended to CLAUDE.md.</li>
-      <li><b>Re-plan.</b> Plan mode, with the new invariants. Don't accept a plan that doesn't address them.</li>
-      <li><b>Test the invariants.</b> Add a regression test for each one. Now the loop becomes a stable solution: future sessions can't re-break what's tested.</li>
-    </ol>
-    <div class="callout">Mathematician's variant: the loop usually means you haven't formalized something. Once you write the invariant in math, the fix becomes obvious — even to you.</div>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 36. Best practices -->
-  <section class="slide">
-    <h3>Wrap-up</h3>
-    <h1>Seven habits worth keeping</h1>
-    <ol>
-      <li><b>Set up the four-file architecture early.</b> <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward), <code>MEMORY.md</code> (learned), <code>STATUS.md</code> (current). One job per file; don't conflate them.</li>
-      <li><b>Plan before you build.</b> Plan mode for anything beyond a one-line edit. Save the plan to <code>plans/&lt;date&gt;-&lt;slug&gt;.md</code> before you implement.</li>
-      <li><b>Promote recurring tasks to skills.</b> Anything you do twice — KKT check, perf profile, log parsing — becomes a SKILL.md.</li>
-      <li><b>Commit before you prompt.</b> A clean working tree means every Claude change is visible in <code>git diff</code> and reversible in one command.</li>
-      <li><b>Test both code and results.</b> Unit tests in <code>tests/</code> for correctness; experimental-regression tests in <code>bench/</code> for result quality. A CLAUDE.md rule that says "run pytest after every edit" removes the most common failure mode.</li>
-      <li><b>End every session with the two-line ritual.</b> Append a dated entry to MEMORY.md if anything was decided; overwrite STATUS.md with the next concrete step. Two minutes.</li>
-      <li><b>When you're whack-a-mole-ing, stop and formalize.</b> Loops mean an invariant is unwritten. Write it, test it, and the loop ends.</li>
-    </ol>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- NEW: Mapping to native Claude Code -->
-  <section class="slide">
-    <h3>Reference</h3>
-    <h1>Files vs. built-ins: how this maps to Claude Code</h1>
-    <p class="lede" style="font-size: 20px;">Two of the four files are the official path; two deliberately turn <i>ephemeral</i> built-ins into durable, versioned files.</p>
-    <table class="matrix">
-      <tr><th>This deck</th><th>Claude Code natively</th></tr>
-      <tr><td><code>CLAUDE.md</code></td><td>The native memory file — hierarchy + <code>@import</code>. <b>Same thing.</b></td></tr>
-      <tr><td>Skills</td><td>Native, loaded on demand. <b>Same thing.</b></td></tr>
-      <tr><td><code>plans/</code></td><td>Plan mode is a permission mode — <b>ephemeral</b>, never written to disk. We persist it.</td></tr>
-      <tr><td><code>MEMORY.md</code></td><td>CLAUDE.md <i>is</i> the memory; we split durable facts into a file it points at. (Name clashes with Claude Code's own auto-memory <code>MEMORY.md</code>.)</td></tr>
-      <tr><td><code>STATUS.md</code></td><td><code>--resume</code> / checkpoints are <b>machine-local</b> — a committed file crosses machines, CI, and collaborators.</td></tr>
-    </table>
-    <div class="callout">Same diagnosis as the official guide — context degrades as it fills — but a different remedy: <b>write it to disk</b>. Strongest when work crosses sessions, machines, or people; redundant when it doesn't.</div>
-    <p class="small">Full comparison: <code>docs/native-claude-code-mapping.md</code>. Official guide: <code>docs.claude.com/en/best-practices</code>.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- 37. Resources -->
-  <section class="slide">
-    <h3>Resources</h3>
-    <h1>Where to go from here</h1>
-    <ul>
-      <li><b>Authoritative reference: <code>docs.claude.com/en/best-practices</code></b> — Anthropic's official guide. Read it after this workshop; our four-file architecture and literature material are opinion-laden extensions of it.</li>
-      <li>Documentation: <code>docs.claude.com/claude-code</code></li>
-      <li>Source &amp; issues: <code>github.com/anthropics/claude-code</code></li>
-      <li>Skills examples: the <code>.claude/skills/</code> in this workshop's exercises folder</li>
-      <li>A power-user reference setup: <code>github.com/affaan-m/everything-claude-code</code> — heavy on software-engineering skills; useful as a layout example, not a starting point.</li>
-      <li>Optimization-specific:
-        <ul>
-          <li>PETSc/TAO: <code>petsc.org</code> — the user manual chapter on TAO is short and excellent.</li>
-          <li>Pyomo: <code>pyomo.readthedocs.io</code></li>
-          <li>CasADi: <code>casadi.org</code></li>
-          <li>CUTEst: <code>github.com/ralna/CUTEst</code></li>
-        </ul>
-      </li>
-    </ul>
-    <p class="small" style="margin-top: 12px;">Questions, or stories of what worked: keep notes in MEMORY.md. The next session will thank you.</p>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- Capstone (final slide) -->
-  <section class="slide section-divider">
-    <h1>Capstone</h1>
-    <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Breaking out of a stuck session</h1>
+<ol><li><b>Stop prompting "fix this too."</b> More turns won't help; you need to step back.</li><li><b>Ask Claude to summarize.</b> <code>summarize everything we've tried in this session and why each attempt failed.</code> Read the summary.</li><li><b>Step away from the keyboard.</b> Write down — on paper — the actual invariants the code must satisfy.</li><li><b>Reset.</b> <code>/clear</code>. Open a fresh session with the invariants explicit in the prompt or appended to CLAUDE.md.</li><li><b>Re-plan.</b> Plan mode, with the new invariants. Don't accept a plan that doesn't address them.</li><li><b>Test the invariants.</b> Add a regression test for each one. Now the loop becomes a stable solution: future sessions can't re-break what's tested.</li></ol>
+<div class="callout">Mathematician's variant: the loop usually means you haven't formalized something. Once you write the invariant in math, the fix becomes obvious — even to you.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Wrap-up</h3>
+<h1>Seven habits worth keeping</h1>
+<ol><li><b>Set up the four-file architecture early.</b> <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward), <code>MEMORY.md</code> (learned), <code>STATUS.md</code> (current). One job per file; don't conflate them.</li><li><b>Plan before you build.</b> Plan mode for anything beyond a one-line edit. Save the plan to <code>plans/&lt;date&gt;-&lt;slug&gt;.md</code> before you implement.</li><li><b>Promote recurring tasks to skills.</b> Anything you do twice — KKT check, perf profile, log parsing — becomes a SKILL.md.</li><li><b>Commit before you prompt.</b> A clean working tree means every Claude change is visible in <code>git diff</code> and reversible in one command.</li><li><b>Test both code and results.</b> Unit tests in <code>tests/</code> for correctness; experimental-regression tests in <code>bench/</code> for result quality. A CLAUDE.md rule that says "run pytest after every edit" removes the most common failure mode.</li><li><b>End every session with the two-line ritual.</b> Append a dated entry to MEMORY.md if anything was decided; overwrite STATUS.md with the next concrete step. Two minutes.</li><li><b>When you're whack-a-mole-ing, stop and formalize.</b> Loops mean an invariant is unwritten. Write it, test it, and the loop ends.</li></ol>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Reference</h3>
+<h1>Files vs. built-ins: how this maps to Claude Code</h1>
+<p class="lede">Two of the four files are the official path; two deliberately turn ephemeral built-ins into durable, versioned files.</p>
+<table class="matrix"><tr><th>This deck</th><th>Claude Code natively</th></tr><tr><td><code>CLAUDE.md</code></td><td>The native memory file — hierarchy + <code>@import</code>. <b>Same thing.</b></td></tr><tr><td>Skills</td><td>Native, loaded on demand. <b>Same thing.</b></td></tr><tr><td><code>plans/</code></td><td>Plan mode is a permission mode — <b>ephemeral</b>, never written to disk. We persist it.</td></tr><tr><td><code>MEMORY.md</code></td><td>CLAUDE.md <i>is</i> the memory; we split durable facts into a file it points at. (Name clashes with Claude Code's own auto-memory <code>MEMORY.md</code>.)</td></tr><tr><td><code>STATUS.md</code></td><td><code>--resume</code> / checkpoints are <b>machine-local</b> — a committed file crosses machines, CI, and collaborators.</td></tr></table>
+<div class="callout">Same diagnosis as the official guide — context degrades as it fills — but a different remedy: <b>write it to disk</b>. Strongest when work crosses sessions, machines, or people; redundant when it doesn't.</div>
+<p>Full comparison: <code>docs/native-claude-code-mapping.md</code>. Official guide: <code>docs.claude.com/en/best-practices</code>.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Resources</h3>
+<h1>Where to go from here</h1>
+<ul><li><b>Authoritative reference: `docs.claude.com/en/best-practices`</b> — Anthropic's official guide. Read it after this workshop; our four-file architecture and literature material are opinion-laden extensions of it.</li><li>Documentation: <code>docs.claude.com/claude-code</code></li><li>Source &amp; issues: <code>github.com/anthropics/claude-code</code></li><li>Skills examples: the <code>.claude/skills/</code> in this workshop's exercises folder</li><li>A power-user reference setup: <code>github.com/affaan-m/everything-claude-code</code> — heavy on software-engineering skills; useful as a layout example, not a starting point.</li><li>Optimization-specific:<ul><li>PETSc/TAO: <code>petsc.org</code> — the user manual chapter on TAO is short and excellent.</li><li>Pyomo: <code>pyomo.readthedocs.io</code></li><li>CasADi: <code>casadi.org</code></li><li>CUTEst: <code>github.com/ralna/CUTEst</code></li></ul></li></ul>
+<p>Questions, or stories of what worked: keep notes in MEMORY.md. The next session will thank you.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Capstone</h1>
+<p class="lede">Open-ended time. Your code, your problem — Claude as collaborator. Put the four files, skills, and habits to work on real research.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
 </div>
-
 <div class="nav">
   <span class="nav-label">go to</span>
   <input type="number" id="jump-to" class="jump-to" min="1" placeholder="#" aria-label="Jump to slide number">
@@ -1094,14 +704,9 @@ git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre
     <div class="close-hint">Press any key to dismiss</div>
   </div>
 </div>
-
 <script>
   const slides = Array.from(document.querySelectorAll('.slide'));
-  let i = 0;
-  let timer = null;
-  let intervalMs = 5000;
-  let digitBuffer = '';
-  let digitTimeout = null;
+  let i = 0, timer = null, intervalMs = 5000, digitBuffer = '', digitTimeout = null;
 
   function show(n) {
     i = Math.max(0, Math.min(slides.length - 1, n));
@@ -1114,33 +719,24 @@ git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre
     history.replaceState(null, '', '#' + (i + 1));
     const jumpInput = document.getElementById('jump-to');
     if (jumpInput && document.activeElement !== jumpInput) jumpInput.value = i + 1;
-    // Stop auto-advance at the last slide
     if (timer && i >= slides.length - 1) stopTimer();
   }
-
   function startTimer() {
     if (timer) return;
-    timer = setInterval(() => {
-      if (i < slides.length - 1) show(i + 1);
-      else stopTimer();
-    }, intervalMs);
+    timer = setInterval(() => { if (i < slides.length - 1) show(i + 1); else stopTimer(); }, intervalMs);
     const btn = document.getElementById('auto-toggle');
     btn.textContent = '⏸ Stop (' + (intervalMs / 1000) + 's)';
     btn.classList.add('active');
   }
-
   function stopTimer() {
     if (timer) { clearInterval(timer); timer = null; }
     const btn = document.getElementById('auto-toggle');
     btn.textContent = '▶ Auto';
     btn.classList.remove('active');
   }
-
   function toggleTimer() { timer ? stopTimer() : startTimer(); }
-
   function showHelp() { document.getElementById('help-overlay').classList.add('show'); }
   function hideHelp() { document.getElementById('help-overlay').classList.remove('show'); }
-
   function flushDigitBuffer() {
     if (!digitBuffer) return;
     const n = parseInt(digitBuffer, 10);
@@ -1148,68 +744,45 @@ git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre
     digitBuffer = '';
     if (digitTimeout) { clearTimeout(digitTimeout); digitTimeout = null; }
   }
-
-  // Nav buttons
   document.getElementById('prev').addEventListener('click', () => { stopTimer(); show(i - 1); });
   document.getElementById('next').addEventListener('click', () => { stopTimer(); show(i + 1); });
   document.getElementById('auto-toggle').addEventListener('click', toggleTimer);
   document.getElementById('help-btn').addEventListener('click', showHelp);
   document.getElementById('help-overlay').addEventListener('click', hideHelp);
-
-  // Jump-to input
   const jumpInput = document.getElementById('jump-to');
   jumpInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       const n = parseInt(jumpInput.value, 10);
       if (isFinite(n) && n > 0) { stopTimer(); show(n - 1); jumpInput.blur(); }
       e.preventDefault();
-    } else if (e.key === 'Escape') {
-      jumpInput.value = i + 1;
-      jumpInput.blur();
-    }
+    } else if (e.key === 'Escape') { jumpInput.value = i + 1; jumpInput.blur(); }
   });
-
   document.addEventListener('keydown', (e) => {
-    // Don't intercept while typing in the jump-to input
     if (e.target === jumpInput) return;
-
-    // Help overlay: any key dismisses it
     const overlay = document.getElementById('help-overlay');
     if (overlay.classList.contains('show')) { hideHelp(); e.preventDefault(); return; }
-
-    // Digit accumulation for jump-to-slide via keyboard
     if (/^[0-9]$/.test(e.key)) {
       digitBuffer += e.key;
       if (digitTimeout) clearTimeout(digitTimeout);
       digitTimeout = setTimeout(() => { digitBuffer = ''; }, 1500);
-      e.preventDefault();
-      return;
+      e.preventDefault(); return;
     }
     if (e.key === 'Enter') { flushDigitBuffer(); e.preventDefault(); return; }
-
-    // Navigation
-    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
-      stopTimer(); show(i + 1); e.preventDefault();
-    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-      stopTimer(); show(i - 1); e.preventDefault();
-    } else if (e.key === 'Home') { stopTimer(); show(0); }
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { stopTimer(); show(i + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { stopTimer(); show(i - 1); e.preventDefault(); }
+    else if (e.key === 'Home') { stopTimer(); show(0); }
     else if (e.key === 'End') { stopTimer(); show(slides.length - 1); }
     else if (e.key === 't') { toggleTimer(); e.preventDefault(); }
     else if (e.key === 'T') {
       const v = prompt('Auto-advance interval in seconds:', String(intervalMs / 1000));
       const secs = parseFloat(v);
-      if (isFinite(secs) && secs > 0) {
-        intervalMs = Math.round(secs * 1000);
-        if (timer) { stopTimer(); startTimer(); }
-      }
+      if (isFinite(secs) && secs > 0) { intervalMs = Math.round(secs * 1000); if (timer) { stopTimer(); startTimer(); } }
     }
     else if (e.key === 'g') { jumpInput.focus(); jumpInput.select(); e.preventDefault(); }
     else if (e.key === '?') { showHelp(); e.preventDefault(); }
     else if (e.key === 'Escape') { stopTimer(); digitBuffer = ''; }
     else { digitBuffer = ''; }
   });
-
-  // Init from URL hash
   const initial = parseInt((location.hash || '#1').slice(1), 10);
   show(isFinite(initial) && initial > 0 ? initial - 1 : 0);
 </script>

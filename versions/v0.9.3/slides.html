@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Files, not chats — Claude Code for mathematicians</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #1c1c1c;
+    --muted: #5b5b5b;
+    --accent: #00609c;        /* Argonne dark blue */
+    --accent-bright: #0082ca; /* Argonne primary blue */
+    --gold: #f8b200;
+    --accent-soft: #dbe7f2;   /* light blue: callout bg / light text on blue */
+    --rule: #cdd8e2;
+    --code-bg: #eef2f6;
+    --code-ink: #1c1c1c;
+    --bar: #00609c;
+    --serif: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    --sans: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    --mono: "Consolas", "SF Mono", "Cascadia Mono", Menlo, monospace;
+    --divider: linear-gradient(135deg, #0082ca 0%, #00609c 55%, #004a7a 100%);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; padding: 0; background: #e9edf1; color: var(--ink); font-family: var(--serif); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  body.presenting { background: #0d1117; }  /* dark backdrop in full-screen */
+  /* Fixed 16:9 design canvas; a script scales the whole deck to fill the
+     viewport (windowed or full-screen), so text scales with it — no gray cap. */
+  #deck {
+    position: relative;
+    width: 1180px;
+    height: 664px;
+    flex: 0 0 auto;
+    transform-origin: center center;
+    background: var(--bg);
+    box-shadow: 0 2px 14px rgba(0,0,0,0.18);
+    overflow: hidden;
+  }
+  /* the Argonne blue left bar — present on every slide */
+  #deck::before {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0; width: 15px;
+    background: var(--bar); z-index: 6; pointer-events: none;
+  }
+  .slide {
+    position: absolute; inset: 0;
+    padding: 46px 64px 70px 72px;
+    display: none; flex-direction: column; overflow: hidden;
+  }
+  .slide.active { display: flex; }
+  /* content wrapper that the fit-to-slide script scales down on dense slides */
+  .slide > .fit { display: flex; flex-direction: column; width: 100%; transform-origin: top left; }
+  .slide > .fit > pre, .slide > .fit > table.matrix { flex-shrink: 0; }
+  .slide h1 {
+    font-family: var(--serif); font-weight: 700;
+    font-size: 40px; line-height: 1.12; letter-spacing: -0.005em;
+    margin: 0 0 10px; color: var(--accent);
+  }
+  .slide h2 { font-family: var(--serif); font-weight: 700; font-size: 30px; line-height: 1.2; margin: 0 0 6px; color: var(--accent); }
+  /* content-slide kicker → Argonne blue strip (h3 lives inside .fit after wrapping) */
+  .slide h3 {
+    display: inline-block; align-self: flex-start;
+    font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.11em;
+    font-size: 12px; font-weight: 700; color: #fff;
+    background: var(--accent); padding: 6px 13px; border-radius: 2px;
+    margin: 0 0 16px;
+  }
+  .slide p, .slide li { font-size: 20px; line-height: 1.42; }
+  .slide ul, .slide ol { padding-left: 1.2em; margin: 0.4em 0 0.6em; }
+  .slide li { margin: 0.25em 0; }
+  .slide li::marker { color: var(--accent-bright); }
+  .slide code { font-family: var(--mono); font-size: 0.9em; background: var(--code-bg); padding: 1px 6px; border-radius: 3px; }
+  .slide pre {
+    font-family: var(--mono); background: var(--code-bg); color: var(--code-ink);
+    padding: 16px 20px; border-radius: 4px; font-size: 15px; line-height: 1.45;
+    overflow: auto; margin: 8px 0; border-left: 4px solid var(--accent-bright);
+  }
+  .slide pre code { background: transparent; padding: 0; font-size: inherit; }
+  .slide .lede { font-size: 23px; color: var(--muted); margin-top: 0; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 8px; }
+  .two-col .col h4 { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; color: var(--accent); margin: 0 0 8px; }
+  .callout {
+    border-left: 4px solid var(--accent-bright); background: var(--accent-soft);
+    padding: 12px 16px; margin: 12px 0; font-size: 18px; line-height: 1.45; color: #143a5a;
+  }
+  .exlinks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 28px; margin: 16px 0 4px; }
+  .exlinks .col h4 { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; color: var(--accent); margin: 0 0 8px; }
+  .exlinks a { display: block; font-family: var(--mono); font-size: 14px; line-height: 1.5; color: var(--accent-bright); text-decoration: none; border-bottom: 1px solid transparent; width: fit-content; }
+  .exlinks a:hover { border-bottom-color: var(--accent-bright); }
+  /* section / exercise dividers → Argonne blue */
+  .section-divider { background: var(--divider); color: #fff; }
+  .section-divider h1 { color: #fff; font-size: 60px; }
+  .section-divider .kicker { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--gold); font-weight: 700; }
+  .section-divider .lede { color: #eaf2f8; }
+  .section-divider .exlinks { max-width: 860px; margin-top: 20px; }
+  .section-divider .exlinks .col h4 { color: var(--gold); }
+  .section-divider .exlinks a { color: #eaf2f8; }
+  .section-divider .exlinks a:hover { border-bottom-color: #eaf2f8; }
+  /* capstone showcase: all titles in the left column, rotating description on the right */
+  .caps-rotator { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 14px 46px; margin-top: 22px; align-items: start; }
+  .caps-list { display: flex; flex-direction: column; gap: 7px; }
+  .caps-item { font-family: var(--sans); font-size: 19px; font-weight: 600; line-height: 1.25; color: var(--muted); cursor: pointer; transition: color 0.3s; }
+  .caps-item.active { color: var(--accent); }
+  .section-divider .caps-item { color: #a9c7e0; }
+  .section-divider .caps-item.active { color: var(--gold); }
+  .caps-desc-panel { position: relative; min-height: 150px; }
+  .caps-desc-page { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+  .caps-desc-page.show { opacity: 1; pointer-events: auto; }
+  .caps-desc-name { font-family: var(--sans); font-weight: 700; font-size: 24px; color: var(--accent); margin-bottom: 8px; }
+  .caps-desc-text { font-size: 21px; line-height: 1.45; color: var(--muted); }
+  .section-divider .caps-desc-name { color: #fff; }
+  .section-divider .caps-desc-text { color: #eaf2f8; }
+  /* title slide → white base with blue bar, blue title, gold eyebrow */
+  .title-slide { justify-content: center; background: var(--bg); }
+  .title-slide .kicker { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--gold); font-weight: 700; margin-bottom: 18px; }
+  .title-slide h1 { font-size: 62px; line-height: 1.04; max-width: 18ch; color: var(--accent); }
+  .title-slide .sub { font-size: 22px; color: var(--muted); margin-top: 18px; max-width: 58ch; }
+  /* footer band + logos (DOE left, Argonne right) on every slide */
+  .footer {
+    position: absolute; bottom: 14px; left: 72px; right: 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--sans); font-size: 11px; color: var(--muted);
+    letter-spacing: 0.08em; text-transform: uppercase; pointer-events: none; gap: 16px;
+  }
+  .footer::before {
+    content: ""; flex: 0 0 auto; width: 188px; height: 30px;
+    background: url("data:image/png;base64,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") no-repeat left center / contain;
+  }
+  .footer::after {
+    content: ""; flex: 0 0 auto; width: 104px; height: 30px;
+    background: url("data:image/png;base64,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") no-repeat right center / contain;
+  }
+  .section-divider .footer, .section-divider .footer .counter { color: #cfe0ee; }
+  /* logo chips stay legible on the blue dividers */
+  .section-divider .footer::before, .section-divider .footer::after {
+    background-color: rgba(255,255,255,0.94); border-radius: 4px; padding: 3px 7px;
+    background-origin: content-box;
+  }
+  .footer .progress { flex: 1 1 auto; height: 2px; background: var(--rule); margin: 0 6px; align-self: center; position: relative; }
+  .section-divider .footer .progress { background: rgba(255,255,255,0.35); }
+  .footer .progress > div { position: absolute; inset: 0 auto 0 0; background: var(--accent-bright); width: 0%; transition: width 200ms ease; }
+  .section-divider .footer .progress > div { background: var(--gold); }
+  .footer .counter, .footer > span:first-of-type { flex: 0 0 auto; }
+  .nav { position: fixed; bottom: 14px; right: 18px; display: flex; gap: 6px; align-items: center; z-index: 10; }
+  .nav button { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 10px; background: #fff; color: var(--ink); border: 1px solid var(--rule); cursor: pointer; }
+  .nav button:hover { background: var(--accent-soft); }
+  .nav button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .nav input.jump-to { font-family: var(--mono); font-size: 12px; width: 56px; padding: 5px 8px; border: 1px solid var(--rule); background: #fff; color: var(--ink); text-align: center; }
+  .nav input.jump-to:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .nav .nav-label { font-family: var(--sans); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-right: 2px; }
+  #help-overlay { position: fixed; inset: 0; background: rgba(0,48,87,0.9); color: #fff; display: none; align-items: center; justify-content: center; z-index: 100; font-family: var(--sans); }
+  #help-overlay.show { display: flex; }
+  #help-overlay .panel { background: #003057; border: 1px solid var(--accent-bright); padding: 28px 36px; max-width: 520px; color: #fff; }
+  #help-overlay h2 { font-family: var(--serif); margin: 0 0 14px; color: var(--gold); }
+  #help-overlay table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  #help-overlay td { padding: 4px 0; vertical-align: top; }
+  #help-overlay td:first-child { color: var(--gold); padding-right: 16px; white-space: nowrap; font-family: var(--mono); }
+  #help-overlay .close-hint { margin-top: 14px; font-size: 11px; color: var(--accent-soft); text-transform: uppercase; letter-spacing: 0.1em; }
+  .badge { display: inline-block; font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; color: #fff; background: var(--accent); padding: 2px 8px; border-radius: 2px; vertical-align: middle; margin-right: 8px; }
+  table.matrix { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 17px; }
+  table.matrix th, table.matrix td { border: 1px solid var(--rule); padding: 8px 12px; text-align: left; vertical-align: top; }
+  table.matrix th { background: var(--accent); color: #fff; font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; border-color: var(--accent); }
+  table.matrix tr:nth-child(even) td { background: #f4f7fa; }
+  .small { font-size: 16px; color: var(--muted); }
+  .kbd { font-family: var(--mono); font-size: 13px; background: #fff; border: 1px solid var(--rule); border-bottom-width: 2px; padding: 1px 6px; border-radius: 3px; }
+  /* No responsive breakpoints needed: the deck is a fixed 1180x664 canvas
+     scaled to fit any viewport, so proportions hold on phone, laptop, and TV. */
+</style>
+</head>
+<body>
+<div id="deck">
+<section class="slide title-slide">
+<div class="kicker">Workshop · ~2 hours</div>
+<h1>Files, not chats</h1>
+<p class="sub" style="font-size:26px;color:var(--ink);margin-top:6px;margin-bottom:14px;">Claude Code as a co-scientist — for mathematicians</p>
+<p class="sub">A hands-on workshop for researchers in computational mathematics — numerical PDEs, optimization, etc. The four-file architecture (CLAUDE.md, plans/, MEMORY.md, STATUS.md), skills, version control, testing, and literature workflows — with runnable exercises.</p>
+<p class="sub" style="font-size:16px;margin-top:22px;"><span style="text-transform:uppercase;letter-spacing:0.14em;font-size:12px;color:var(--accent);font-weight:700;">Contributors</span><br>Rebecca Durst · Srini Eswar · Sven Leyffer · Andreas Wilke</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Audience</h3>
+<h1>Who this workshop is for</h1>
+<p class="lede">You don't need any AI experience. You do need the kind of work that benefits from a focused collaborator.</p>
+<div class="two-col"><div class="col"><h4>You're in the right room if</h4><ul><li>You write or apply numerical solvers.</li><li>You're comfortable with Python and the command line.</li><li>You want less yak-shaving (plot scripts, log parsing, refactors) and more research.</li></ul></div><div class="col"><h4>Out of scope</h4><ul><li>Training or fine-tuning models.</li><li>Building chatbots or web apps.</li><li>"Replace your solver with an LLM." We won't.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Roadmap</h3>
+<h1>What you'll leave with</h1>
+<p class="lede">Central insight: durable AI collaboration is built from files, not from chat history. The whole workshop is a tour of which files to keep and how they fit together.</p>
+<ol><li><b>The four-file architecture</b> — <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward-looking), <code>MEMORY.md</code> (durable knowledge), <code>STATUS.md</code> (current state).</li><li><b>Skills</b> — packaging recurring domain logic (KKT checks, performance profiles) as reusable artifacts.</li><li><b>Sustainable habits</b> — version control, recognizing whack-a-mole loops, ending sessions cleanly.</li><li><b>A capstone</b> — an open-ended project applying everything to your own research, or one of several provided briefs (constrained derivative-free optimization, PDE solver/preconditioner benchmarking, a dependency-free CUTEst in C).</li></ol>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Organization</h3>
+<h1>How the workshop is structured</h1>
+<p class="lede">Two stages: short guided exercises first, then an open-ended capstone where you put the tools to work on your own research.</p>
+<div class="two-col"><div class="col"><h4>Stage 1 · Exercises</h4><ul><li>Small, self-contained examples that show how individual Claude features work — CLAUDE.md, plan mode, skills, MEMORY.md.</li><li>These are <i>not</i> "you must only use it this way" prescriptions. They're starting points.</li><li>During each exercise, keep asking: <i>how could a tool like this help me in my own research?</i> The answer looks different for everyone.</li></ul></div><div class="col"><h4>Stage 2 · Capstone</h4><ul><li>Open-ended time to try the tools on your own — your code, your problem.</li><li>Push past what you saw in the exercises. The exercises show the shape; the capstone is where you stretch it.</li><li>Goal: actually accomplish a piece of research with Claude as your collaborator, not just rehearse a feature.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Organization</h3>
+<h1>Setting up each exercise</h1>
+<p class="lede">Every exercise ships a README.md (the instructions) and a SOLUTION.md (the walkthrough). Those are for you — not for Claude.</p>
+<ul><li>Keep <code>README.md</code> and <code>SOLUTION.md</code> <b>outside</b> the directory where you run <code>claude</code>. If Claude can see them, it reads ahead and the exercise loses its point.</li><li>As you work through an exercise, <b>manually copy only the code and data files you need</b> into your working directory — e.g. <code>max_conopt.py</code>, <code>matrix_A.npy</code>, <code>laplace_square.py</code>.</li></ul>
+<div class="callout">Rule of thumb: Claude should see the <i>problem</i>, never the <i>solution</i>.</div>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="slides-supplemental/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">Exercise opt 01 — CLAUDE.md</a><a href="exercises-opt/02-planning/" target="_blank" rel="noopener">Exercise opt 02 — planning</a><a href="exercises-opt/03-skills/" target="_blank" rel="noopener">Exercise opt 03 — skills</a><a href="exercises-opt/04-memory/" target="_blank" rel="noopener">Exercise opt 04 — memory</a></div><div class="col"><h4>PDE / FEM</h4><a href="slides-supplemental/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">Exercise pde 01 — CLAUDE.md</a><a href="exercises-pde/02-planning/" target="_blank" rel="noopener">Exercise pde 02 — planning</a><a href="exercises-pde/03-skills/" target="_blank" rel="noopener">Exercise pde 03 — skills</a><a href="exercises-pde/04-memory/" target="_blank" rel="noopener">Exercise pde 04 — memory</a></div><div class="col"><h4>Linear algebra</h4><a href="slides-supplemental/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">Exercise lin_alg 01 — CLAUDE.md</a><a href="exercises-lin_alg/02-planning/" target="_blank" rel="noopener">Exercise lin_alg 02 — planning</a><a href="exercises-lin_alg/03-skills/" target="_blank" rel="noopener">Exercise lin_alg 03 — skills</a><a href="exercises-lin_alg/04-memory/" target="_blank" rel="noopener">Exercise lin_alg 04 — memory</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Concept</h3>
+<h1>What is Claude Code?</h1>
+<p>An <b>agentic coding assistant</b> in your terminal: it reads and writes files, runs commands you approve, and works through multi-step tasks the way you would.</p>
+<ul><li>Not autocomplete — it plans, reads context, edits files, runs tests.</li><li>You stay in control: every edit and command is reviewable.</li><li>Runs locally; nothing leaves your machine without your action.</li></ul>
+<div class="callout">Our framing throughout: <b>Claude Code as a co-scientist</b> — a collaborator who has read the manual for every library you use but needs you to specify the problem precisely. The four files from the roadmap are how you brief it.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Motivation</h3>
+<h1>Where it actually helps you</h1>
+<div class="two-col"><div class="col"><h4>Routine work it absorbs</h4><ul><li>Plotting helpers (semilog convergence, performance profiles).</li><li>Parsing solver logs into a tidy DataFrame.</li><li>Translating between Pyomo ↔ AMPL ↔ JuMP.</li><li>CUTEst-style test harnesses.</li><li>LaTeX-ing derivations to paper-ready form.</li></ul></div><div class="col"><h4>Research work it accelerates</h4><ul><li>"What line-search rule does Wächter–Biegler 2006 use?" — answered from the codebase.</li><li>Rescaling a primal-dual update.</li><li>Large CUTEst sweeps with consistent logging.</li><li>Glue between PETSc, your driver, and your benchmark DB.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Session basics</h3>
+<h1>How a session works</h1>
+<p class="lede">Everything Claude reads and writes in a session lives in one finite buffer — the context window.</p>
+<ul><li>Every prompt, file read, and tool output goes into the same window.</li><li>Large but bounded — the context window is model-specific.</li><li>Near the limit, Claude Code <b>auto-compacts</b>: older messages are summarized to make room.</li><li>Compaction is lossy — details from early turns can fade. Keep anything that matters on disk.</li></ul>
+<div class="callout">Long sessions are fine — but because compaction is lossy, treat the running conversation as ephemeral. Anything that matters belongs on disk.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Session basics</h3>
+<h1>What persists, what doesn't</h1>
+<table class="matrix"><tr><th></th><th>Survives a new session?</th><th>Survives auto-compact?</th></tr><tr><td>Files in your project (code, MEMORY.md)</td><td>Yes</td><td>Yes — they're on disk</td></tr><tr><td>CLAUDE.md</td><td>Yes — auto-loaded each session</td><td>Yes — kept in context</td></tr><tr><td>Skills</td><td>Yes — loaded on demand by description match</td><td>Re-loaded as needed</td></tr><tr><td>The conversation itself</td><td>Only with <code>--resume</code></td><td>Compressed to a summary</td></tr><tr><td>"Mental notes" Claude has in-conversation</td><td>No — they vanish</td><td>Often lost</td></tr></table>
+<p>If a fact matters tomorrow, write it to MEMORY.md today. If it's a reusable procedure, lift it into a skill. <b>The conversation is scratch paper.</b></p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Session basics</h3>
+<h1>Save, resume, clear</h1>
+<pre><code># Resume the most recent session in this project
+claude --continue
+
+# Pick from a list of past sessions
+claude --resume
+
+# Inside a session
+/clear      # wipe the conversation; keep CLAUDE.md, skills, files
+/compact    # manually summarize older turns to free context space</code></pre>
+<p>Sessions are stored locally under <code>~/.claude/projects/&lt;hash&gt;/</code>. They're plain files; you can grep them.</p>
+<div class="callout"><b>Don't lean on `--resume` to remember decisions</b> — it's brittle. Persist anything that matters to files. We'll cover the end-of-session ritual with MEMORY.md and STATUS.md in Part 4.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 1 · The brief</div>
+<h1>CLAUDE.md</h1>
+<p class="lede">A markdown file at the root of your project. Claude Code reads it at the start of every session. Treat it as the briefing document for a new collaborator.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>CLAUDE.md</h3>
+<h1>CLAUDE.md, in practice</h1>
+<p>Two details make it more than a static readme:</p>
+<ul><li>Keep a personal one at <code>~/.claude/CLAUDE.md</code> for cross-project preferences.</li><li>It can reference other files: <code>see memory/solvers.md for our notation</code>.</li></ul>
+<div class="callout">Mental model: the README that's specifically for the AI — it sits beside your README, doesn't replace it.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>CLAUDE.md</h3>
+<h1>Why mathematicians need one</h1>
+<p>Without one, every session starts from zero. With one, Claude knows your conventions before it writes a line — notation, tooling, tolerances, tests, and hard "don'ts":</p>
+<ul><li><b>Notation.</b> <code>x</code> primal, <code>λ</code> equality mult., <code>μ</code> inequality mult.</li><li><b>Tooling &amp; tolerances.</b> Pyomo / IPOPT / BARON / petsc4py; tolerances default to 1e-8.</li><li><b>Don'ts.</b> "No <code>scipy.optimize.minimize</code> for constrained problems — it ignores active sets near the boundary in our setup."</li></ul>
+<p>Each exercise supplement opens with the domain-specific version of this list.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>CLAUDE.md</h3>
+<h1>Anatomy of a good CLAUDE.md</h1>
+<pre><code># Project: Inertia-Corrected Interior-Point Method
+
+## Goal
+Develop a primal-dual IPM with inertia correction for nonconvex NLPs.
+
+## Stack
+- Python 3.11, Pyomo for modeling, casadi for AD where Pyomo is awkward
+- petsc4py for sparse linear algebra; mumps via PETSc as the default solver
+- pytest for tests; matplotlib for figures (semilog by default)
+
+## Commands
+- `pytest -q tests/`
+- `python bench/run.py --suite cutest_small`
+- `python paper/figures/perf_profile.py`
+
+## Conventions
+- Variables: x (primal), y (eq mult), z (ineq mult). Use these names.
+- Tolerances default to 1e-8.
+- Never call scipy.optimize for constrained problems (see memory/decisions.md).
+
+## Pointers
+- memory/decisions.md — solver and parameter choices
+- memory/dead-ends.md — things we tried and why they failed
+- docs/derivations.tex — the math in publishable form</code></pre>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Exercise 1</h1>
+<p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="slides-supplemental/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">exercises-opt/01-claude-md/</a></div><div class="col"><h4>PDE / FEM</h4><a href="slides-supplemental/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">exercises-pde/01-claude-md/</a></div><div class="col"><h4>Linear algebra</h4><a href="slides-supplemental/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">exercises-lin_alg/01-claude-md/</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 2 · Think first</div>
+<h1>Planning</h1>
+<p class="lede">Multi-step algorithmic work goes badly without a plan. Plan mode forces Claude to lay out every step before touching a file.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>Why plan first?</h1>
+<p>Research code has tightly coupled steps — formulation, discretization, scheme, parameters, verification. Without a plan, the assistant fixes one and breaks another.</p>
+<ul><li>A written specification before any code — the plan is itself a deliverable.</li><li>You catch wrong assumptions on a screen, not in a debugger three hours later.</li></ul>
+<div class="callout">Same discipline as writing pseudocode before implementing a new method — same payoff.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>Plan mode in Claude Code</h1>
+<ul><li>Press Shift+Tab twice — the footer turns into <i>plan mode</i>.</li><li>State the task; Claude reads context, asks clarifying questions, proposes a plan.</li><li>Approve to execute, or revise.</li></ul>
+<p>Or start directly by typing <code>plan: &lt;task&gt;</code> at the prompt.</p>
+<pre><code>plan: implement a filter line search for our IPM driver,
+       then add a CUTEst-style test for problem HS071 with
+       tolerances matching memory/decisions.md.</code></pre>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>What a good plan looks like</h1>
+<pre><code>Plan: filter line search for IPM
+1. Read driver.py and identify the current Armijo step.
+2. Add `filter.py` with the (theta, phi) pair and a switching condition.
+3. Modify driver to call filter.accept(...) instead of armijo.accept(...).
+4. Update tests/test_linesearch.py: add filter-acceptance tests on
+   (i) a synthetic 2D problem, (ii) HS071 from CUTEst.
+5. Run pytest -q tests/test_linesearch.py and report.
+Files to be modified: driver.py, filter.py (new), tests/test_linesearch.py
+Open questions:
+  - Filter envelope parameters: use Wächter–Biegler defaults?
+  - Should we record filter contents in MEMORY.md after each run?</code></pre>
+<p>Read the open questions before approving — that's where most surprises live.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>Plans as artifacts: the four-file architecture</h1>
+<p>A plan is the fourth kind of file in the project — alongside CLAUDE.md, MEMORY.md, STATUS.md. Each has its own lifecycle.</p>
+<table class="matrix"><tr><th>File</th><th>Says</th><th>Lifecycle</th></tr><tr><td>CLAUDE.md</td><td>How the project works</td><td>Stable; rarely edited</td></tr><tr><td>plans/&lt;date&gt;-&lt;slug&gt;.md</td><td>What's going to happen next</td><td>Created → active → executed/abandoned/revised</td></tr><tr><td>MEMORY.md</td><td>What's been learned</td><td>Append-only; references plans by filename</td></tr><tr><td>STATUS.md</td><td>Where I am right now</td><td>Overwritten each session; points at the active plan</td></tr></table>
+<pre><code>project/
+├── CLAUDE.md
+├── MEMORY.md          # references plan outcomes
+├── STATUS.md          # points at the active plan
+└── plans/
+    ├── 2026-04-08-filter-linesearch.md   executed
+    ├── 2026-04-22-tikhonov.md            abandoned
+    └── 2026-05-07-tao-implementation.md  active</code></pre>
+<div class="callout">Rule: <b>plan files are evidence; MEMORY.md is the index.</b> The reasoning lives in the plan, the fact lives in MEMORY.md, the file pointer ties them together.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Planning</h3>
+<h1>Prompts that set up and maintain the architecture</h1>
+<p>Copy these into your sessions — they're the operational moves that keep the four-file structure honest.</p>
+<pre><code># Set up the structure in a fresh project
+&gt; create CLAUDE.md, MEMORY.md, STATUS.md, and a plans/ directory
+  in this project, using the workshop conventions. Leave each file
+  as a clearly-marked template I'll fill in.
+
+# At the end of a planning session
+&gt; save the plan to plans/$(date +%Y-%m-%d)-tao-implementation.md
+  and update STATUS.md to point to it as the active plan. Don't
+  implement yet.
+
+# At the end of an execution session
+&gt; append a dated decision to MEMORY.md citing
+  plans/2026-05-07-tao-implementation.md, then overwrite STATUS.md
+  with the next concrete step inside that plan.
+
+# When revising a plan mid-flight
+&gt; save the revised plan as plans/2026-05-07-tao-implementation-v2.md
+  and update STATUS.md. Leave v1 in place as history.
+
+# When abandoning a plan
+&gt; add an "Abandoned: 2026-05-09, reason: ..." header to
+  plans/2026-04-22-tikhonov.md, and append a Dead Ends entry in
+  MEMORY.md that references it.</code></pre>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Exercise 2</h1>
+<p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="exercises-opt/02-planning/" target="_blank" rel="noopener">exercises-opt/02-planning/</a></div><div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/02-planning/" target="_blank" rel="noopener">exercises-pde/02-planning/</a></div><div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/02-planning/" target="_blank" rel="noopener">exercises-lin_alg/02-planning/</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 3 · Reusable expertise</div>
+<h1>Skills</h1>
+<p class="lede">A skill is a folder. It contains instructions and helper scripts for one specific kind of task. Claude loads it on demand when the task fits.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Skills</h3>
+<h1>What are skills?</h1>
+<ul><li>A <b>skill</b> is a folder named after the capability, with a <code>SKILL.md</code> at its root — YAML front-matter (<code>name</code>, <code>description</code>) plus instructions, snippets, references.</li><li>The <code>description</code> triggers it: when the task matches, Claude loads the body.</li><li>Lives in <code>.claude/skills/</code> (project) or <code>~/.claude/skills/</code> (global).</li></ul>
+<p>Skills package "the thing my lab always does" — once — and reuse it across projects, students, and papers.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Skills</h3>
+<h1>Anatomy of a skill</h1>
+<pre><code>.claude/skills/kkt-checker/
+├── SKILL.md           # front-matter + instructions
+├── check_kkt.py       # the actual implementation
+└── references/
+    └── nocedal-wright-12.4.md</code></pre>
+<pre><code>---
+name: kkt-checker
+origin: workshop
+description: |
+  Verify that a candidate primal-dual point (x, y, z) satisfies the KKT
+  conditions for an NLP `min f(x) s.t. g(x) = 0, h(x) &lt;= 0`. Use this
+  whenever the user reports a "solution" and wants to confirm it is
+  actually a KKT point, or wants residuals component-by-component.
+---
+
+# KKT checker
+
+Run `python .claude/skills/kkt-checker/check_kkt.py --problem PATH ...`
+Returns max residuals for stationarity, feasibility, complementarity.</code></pre>
+<p><code>origin:</code> tags skills you wrote (<code>workshop</code>, <code>mygroup</code>) versus imported ones (<code>community</code>) — handy when the directory grows and you need to know what's safe to modify.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Skills</h3>
+<h1>Built-in skills you already have</h1>
+<div class="two-col"><div class="col"><h4>Document-creation built-ins</h4><ul><li><b>pdf</b> — extract text and tables from papers; build/fill PDFs.</li><li><b>docx</b> — produce Word reports (referee replies, grant text).</li><li><b>pptx</b> — generate slides from results.</li><li><b>xlsx</b> — turn a benchmark log into a workbook with charts.</li></ul></div><div class="col"><h4>When custom beats built-in</h4><ul><li>The same domain check appears across projects.</li><li>The recipe involves exact CLI calls (PETSc, GAMS) you don't want to re-discover.</li><li>You want to encode "house style" — figure dimensions, log binning, etc.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Exercise 3</h1>
+<p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="exercises-opt/03-skills/" target="_blank" rel="noopener">exercises-opt/03-skills/</a></div><div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/03-skills/" target="_blank" rel="noopener">exercises-pde/03-skills/</a></div><div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/03-skills/" target="_blank" rel="noopener">exercises-lin_alg/03-skills/</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 4 · The diary</div>
+<h1>MEMORY.md</h1>
+<p class="lede">Long-running research generates decisions, dead-ends, and parameter folklore. MEMORY.md is where those facts live so the next session can use them.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>MEMORY.md</h3>
+<h1>CLAUDE.md vs MEMORY.md</h1>
+<table class="matrix"><tr><th></th><th>CLAUDE.md</th><th>MEMORY.md</th></tr><tr><td>Lifespan</td><td>Stable across the project</td><td>Evolves with the research</td></tr><tr><td>Content</td><td>Conventions, commands, do/don't</td><td>Decisions, parameter values, dead-ends</td></tr><tr><td>Edited by</td><td>You, deliberately</td><td>You and Claude — at the end of each session</td></tr></table>
+<p>Small projects: one MEMORY.md. Larger ones: a <code>memory/</code> directory (<code>solvers.md</code>, <code>experiments.md</code>, <code>dead-ends.md</code>) with an <code>INDEX.md</code>. (The exercise supplement revisits this distinction.)</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>MEMORY.md</h3>
+<h1>What to record</h1>
+<ul><li><b>Decisions.</b> "IPOPT over SNOPT for license reasons — 2026-03-12, issue #41."</li><li><b>Parameter folklore.</b> "<code>mu_init=1e-2</code> fastest on our cohort; <code>1e-4</code> diverges on the catalysis problem."</li><li><b>Dead ends.</b> "Newton + Tikhonov on inverse Poisson converges but multipliers are noise. Don't repeat."</li><li><b>Open questions.</b> "Is the inertia-correction threshold problem-dependent? Re-check HS071, HS099."</li><li><b>Run logs.</b> "Best so far: <code>runs/2026-04-22T1430</code>, ‖∇f‖ = 3.7e-9."</li></ul>
+<div class="callout">Keep it append-only and dated — MEMORY.md is a log, not a document you rewrite. Capturing these entries is part of the end-of-session ritual (next slide, with STATUS.md).</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>MEMORY.md</h3>
+<h1>Handoff: STATUS.md, not MEMORY.md</h1>
+<p>MEMORY.md holds durable knowledge and grows. <b>Don't put session handoff in it</b> — "mid-debug on X, next step Y" is true today, noise next week. Use a small, separate, <i>overwritten</i> file:</p>
+<pre><code># STATUS — 2026-05-07 17:42
+
+## What I'm working on
+Filter line search for the IPM driver. PR branch: filter-linesearch.
+
+## Current state
+- driver.py and filter.py compile, unit tests pass on synthetic 2D.
+- HS071 fails with KeyError: 'theta_max' in filter.accept(...).
+- Haven't read filter.py:43-67 yet.
+
+## Next step
+Read filter.py:43-67. If theta_max not set in __init__, add it.
+Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
+<div class="callout">End-of-session ritual: <code>append a dated entry to MEMORY.md and overwrite STATUS.md with where we are now</code>. Two minutes. Next session: read STATUS.md and you're back in flight.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>MEMORY.md</h3>
+<h1>Handoff mechanisms, ordered by reliability</h1>
+<table class="matrix"><tr><th>Mechanism</th><th>Reliability</th><th>Notes</th></tr><tr><td>STATUS.md you wrote</td><td>Highest</td><td>You control it; survives anything.</td></tr><tr><td>Branch name</td><td>High</td><td><code>git branch --show-current</code> tells you what's in flight.</td></tr><tr><td>Last commit message</td><td>High</td><td>A WIP commit is a one-line handoff for free.</td></tr><tr><td><code>claude --continue</code></td><td>Medium</td><td>Brings back the conversation. Brittle: may already be compacted; gone if you switch machines.</td></tr></table>
+<p>The pattern: rely most on what's in <i>files</i> (top three rows). Rely least on what's only in chat state (last row). The deck of files — CLAUDE.md, MEMORY.md, STATUS.md — is what survives whatever a session throws at you.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Exercise 4</h1>
+<p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="exercises-opt/04-memory/" target="_blank" rel="noopener">exercises-opt/04-memory/</a></div><div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/04-memory/" target="_blank" rel="noopener">exercises-pde/04-memory/</a></div><div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/04-memory/" target="_blank" rel="noopener">exercises-lin_alg/04-memory/</a></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Checkpoint</h3>
+<h1>Report back</h1>
+<p class="lede">Before the capstone, each team shares what came out of the exercises — 2–3 minutes each.</p>
+<div class="two-col"><div class="col"><h4>Share</h4><ul><li>What did you get working? (CLAUDE.md, a plan, a skill, MEMORY.md)</li><li>What surprised you — good or bad?</li><li>Where did Claude go wrong, and how did you catch it?</li></ul></div><div class="col"><h4>Discuss</h4><ul><li>Which file — CLAUDE.md, plans/, MEMORY.md, STATUS.md — earned its keep?</li><li>What will you try on your own research?</li><li>Open questions for the room.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Capstone</h1>
+<p class="lede">Open-ended time. Your code, your problem — Claude as collaborator. Or pick a provided brief:</p>
+<div class="caps-rotator" data-interval="3200"><div class="caps-list"><div class="caps-item active" data-i="0">BQPD-CPP</div><div class="caps-item" data-i="1">CUTEst-C</div><div class="caps-item" data-i="2">ConDFO</div><div class="caps-item" data-i="3">OptiUNO</div><div class="caps-item" data-i="4">PrecisionBench</div><div class="caps-item" data-i="5">SciCompSkills</div><div class="caps-item" data-i="6">SolverBench</div><div class="caps-item" data-i="7">diffBLAS</div><div class="caps-item" data-i="8">optSolverBench</div></div><div class="caps-desc-panel"><div class="caps-desc-page show"><div class="caps-desc-name">BQPD-CPP</div><div class="caps-desc-text">A thread-safe C++ port of Fletcher's robust QP solver.</div></div><div class="caps-desc-page"><div class="caps-desc-name">CUTEst-C</div><div class="caps-desc-text">A clean, dependency-free C implementation of CUTEst.</div></div><div class="caps-desc-page"><div class="caps-desc-name">ConDFO</div><div class="caps-desc-text">A derivative-free optimization solver for constrained problems.</div></div><div class="caps-desc-page"><div class="caps-desc-name">OptiUNO</div><div class="caps-desc-text">Run-time-configurable Newton-like solvers, hunting better combinations.</div></div><div class="caps-desc-page"><div class="caps-desc-name">PrecisionBench</div><div class="caps-desc-text">Mixed-precision benchmarking for numerical linear algebra.</div></div><div class="caps-desc-page"><div class="caps-desc-name">SciCompSkills</div><div class="caps-desc-text">A hallucination-resistant verified-literature-search skill.</div></div><div class="caps-desc-page"><div class="caps-desc-name">SolverBench</div><div class="caps-desc-text">A reproducible benchmark of solvers &amp; preconditioners for PDEs.</div></div><div class="caps-desc-page"><div class="caps-desc-name">diffBLAS</div><div class="caps-desc-text">Adapt differentiated BLAS routines to AD activity contexts.</div></div><div class="caps-desc-page"><div class="caps-desc-name">optSolverBench</div><div class="caps-desc-text">Benchmark optimizers &amp; solvers for PDE-constrained optimization.</div></div></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 5 · The fifth artifact</div>
+<h1>Literature</h1>
+<p class="lede">Reading and citing the literature is daily work for computational mathematicians — and where Claude as a co-scientist earns its keep. Treat it as a first-class artifact, alongside the four files.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Literature</h3>
+<h1>What Claude does well — and doesn't</h1>
+<p class="lede">Lean on it for extraction and lookup; keep the judgment yourself — and never trust a citation from memory.</p>
+<table class="matrix"><tr><th></th><th>Claude does well</th><th>Claude does badly</th></tr><tr><td>PDFs</td><td>Extract text, equations, tables (built-in <code>pdf</code> skill)</td><td>Decide what a result <i>really means</i> — that's still you</td></tr><tr><td>Notation</td><td>Translate between Nocedal–Wright / Conn–Gould–Toint / Boyd–Vandenberghe</td><td>Catch subtle distinctions (B- vs. M- vs. S-stationarity) without your verification</td></tr><tr><td>Citations</td><td>Resolve fragments via an <code>arxiv</code> / <code>semantic-scholar</code> lookup</td><td>Emit citations from memory — these are often <b>plausible-looking and wrong</b></td></tr></table>
+<p>Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.</p>
+<pre><code>project/
+├── CLAUDE.md
+├── MEMORY.md          # cites plans/ AND literature/
+├── STATUS.md
+├── plans/
+└── literature/
+    ├── wachter-biegler-2006.md
+    ├── nocedal-wright-12.md
+    └── INDEX.md       # contents page once it grows past ~10</code></pre>
+<div class="callout">CLAUDE.md hard rule: <code>never emit a citation from memory. Resolve via a literature search, or quote the local PDF, or mark [citation needed]</code>. One line; the single biggest defense against hallucinated bibliographies.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Literature</h3>
+<h1>When the corpus outgrows context: RAG</h1>
+<p>Your group's PDFs, lab wiki, and shared notes don't fit in one Claude session. <b>Retrieval-Augmented Generation</b> (RAG) is the standard answer: index the corpus into a vector database; for each question, retrieve the most relevant chunks; feed only those into the model.</p>
+<ul><li>You stop relying on what Claude was trained on, and start relying on what you actually have.</li><li>Citations come back as document IDs you can verify, not paraphrases of training data.</li><li>The corpus grows without inflating your context window.</li></ul>
+<p><b>Concrete example: `moodlehq/wiki-rag`.</b> Experimental RAG that ingests any MediaWiki site via API, indexes into Milvus with hybrid (vector + keyword) retrieval and fusion reranking, exposes an <i>OpenAI-compatible API</i>, and ships a Docker image.</p>
+<pre><code>     Your lab MediaWiki  →  wiki-rag (Milvus + LangGraph)
+                              │  exposes /v1/chat/completions
+                              ▼
+                            Custom tool wrapper
+                              │  tool: query_lab_wiki(question)
+                              ▼
+                          Claude Code session</code></pre>
+<p>Pattern: any RAG that speaks the OpenAI API can become a Claude Code tool in ten lines. Now Claude has searchable access to your group's institutional knowledge — and so does every collaborator who runs the workshop's setup.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 6 · Power features</div>
+<h1>Beyond the basics</h1>
+<p class="lede">Four mechanisms that change what's possible: checkpoints for reversible exploration, subagents for context-isolated work, hooks for deterministic enforcement, and non-interactive mode for fan-out at scale.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Power features</h3>
+<h1>Checkpoints — try, rewind, try again</h1>
+<p>Every action Claude takes creates a checkpoint. Press Esc Esc (or run <code>/rewind</code>) to open a menu and restore prior state.</p>
+<ul><li><b>Restore conversation only</b> — get back the chat, keep the code as it is.</li><li><b>Restore code only</b> — undo Claude's file edits, keep the conversation history.</li><li><b>Restore both</b> — full rewind to a prior moment.</li><li><b>Persists across sessions</b> — you can close the terminal and rewind tomorrow.</li></ul>
+<p>Two reverting tools at different scales: <b>git</b> for committed history, <b>/rewind</b> for in-session backtracks. Use them together.</p>
+<div class="callout">Practical pattern: have Claude try something risky; if the diff isn't right, rewind and re-ask with the lesson learned. The cost of a wrong direction drops to near zero.</div>
+<p>Caveat: <code>/rewind</code> tracks changes <i>made by Claude</i>. External edits, build artifacts, and database state are out of scope. Don't treat it as a replacement for git.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Power features</h3>
+<h1>Subagents and hooks</h1>
+<table class="matrix"><tr><th></th><th>Skill</th><th>Subagent</th><th>Hook</th></tr><tr><td>Lives in</td><td><code>.claude/skills/</code></td><td><code>.claude/agents/</code></td><td><code>.claude/settings.json</code></td></tr><tr><td>Context</td><td>Loads into your main session</td><td>Runs in a separate window — reports back a summary</td><td>None — just runs a script</td></tr><tr><td>Best for</td><td>Recurring domain logic (KKT check)</td><td>Investigative reads (research a 200-file solver)</td><td>Things that must happen <i>every time</i></td></tr><tr><td>Trigger</td><td>Description-match on the task</td><td>You ask Claude to delegate</td><td>Specific events (PostToolUse, etc.)</td></tr><tr><td>Reliability</td><td>Advisory — usually loaded</td><td>Advisory — when delegated</td><td><b>Deterministic</b> — guaranteed to fire</td></tr></table>
+<p>Mathematician examples:</p>
+<ul><li><b>Subagent.</b> A <code>solver-archaeologist</code> (<code>tools: Read, Grep, Glob</code>) that reads 200 files of inherited solver code and writes a one-page summary — your main session never sees the 200 files.</li><li><b>Hook.</b> Promote "run <code>pytest -q</code> after every edit" from a CLAUDE.md rule (advisory) to a hook (deterministic) — it fires whether Claude remembers or not.</li></ul>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Power features</h3>
+<h1>Non-interactive mode — fan-out at scale</h1>
+<p><code>claude -p "prompt"</code> runs Claude without a session — single shot, machine-readable output. This is what makes Claude usable as a step in a pipeline rather than a chat partner.</p>
+<pre><code># Run a solver across the CUTEst small cohort, log per-problem
+for prob in $(cat cutest_small.txt); do
+  claude -p "solve $prob with mu_init=1e-2 using our IPM driver. \
+             Report status, iters, KKT residual as JSON." \
+    --allowedTools "Bash(python *),Read,Write" \
+    --output-format json &gt;&gt; runs/cohort_2026-05-07.jsonl
+done
+
+# Pipe data in directly
+cat error.log | claude -p "extract the failing test names as a list"</code></pre>
+<ul><li><b>`--allowedTools`</b> scopes permissions for unattended runs.</li><li><b>`--output-format json`</b> for parseable results; <code>stream-json</code> for real-time consumption.</li><li><b>`--permission-mode auto`</b> lets a classifier handle approvals; aborts if it repeatedly blocks (no human to fall back to).</li></ul>
+<div class="callout">For optimization research this is the unlock: a parameter sweep that used to take 20 manual steps becomes a shell loop. Combined with the <code>kkt-checker</code> skill, you can run a 1300-problem CUTEst study overnight with consistent output.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 7 · Habits</div>
+<h1>Working sustainably</h1>
+<p class="lede">Version control, reverting, and recognizing when you're whack-a-mole-ing your own code. The unglamorous habits that make the rest of the workshop pay off.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Git hygiene with an AI collaborator</h1>
+<ul><li><b>Start every session with a clean working tree</b> (or a fresh branch). You want any change Claude makes to be visible in <code>git diff</code>.</li><li><b>Commit small, atomic changes.</b> One logical step per commit makes reverting precise.</li><li><b>Review the diff before continuing.</b> If you keep prompting on top of code you haven't read, you lose track of what's in your repo.</li><li><b>Branch for risky work.</b> A solver rewrite or a new formulation goes on its own branch — easy to throw away if it doesn't pan out.</li></ul>
+<pre><code># Before a session
+git status                       # confirm clean
+git checkout -b filter-linesearch  # branch for this task
+
+# After Claude makes changes
+git diff                         # always read this
+git add -p                       # stage hunks selectively
+git commit -m "Add filter line search; HS071 test passes"</code></pre>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Reverting when Claude went the wrong way</h1>
+<pre><code># Undo edits to one file (uncommitted)
+git restore path/to/file.py
+
+# Undo all uncommitted changes
+git restore .
+
+# Set aside half-baked work for later
+git stash push -m "WIP filter rewrite"
+git stash pop
+
+# Throw away the last commit but keep its changes
+git reset --soft HEAD~1
+
+# Nuclear: drop the last commit and its changes (only if pushed nowhere)
+git reset --hard HEAD~1
+
+# Try a different approach in parallel without disturbing main
+git worktree add ../alt-approach
+cd ../alt-approach &amp;&amp; claude</code></pre>
+<p>Worktrees are particularly useful with Claude: you can have one tree exploring a regularization scheme and another exploring an SQP variant, without merge headaches.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Verification first — tests are how Claude checks itself</h1>
+<p class="lede">The highest-leverage thing you can do is give Claude a way to verify its own work. Without it, you are the only feedback loop; tests let Claude run, see, and fix. For a mathematician, they do double duty:</p>
+<table class="matrix"><tr><th></th><th>As a programmer</th><th>As a co-scientist</th></tr><tr><td>What it checks</td><td>Code does what it's supposed to</td><td>Results haven't degraded</td></tr><tr><td>Example</td><td><code>assert filter.accept(x) == True</code></td><td>"On HS071, IPOPT converges in ≤ 50 iters with <code>mu_init=1e-2</code>"</td></tr><tr><td>Frequency</td><td>Every commit</td><td>Nightly, or before a paper</td></tr><tr><td>Lives in</td><td><code>tests/</code></td><td><code>bench/</code> (or <code>tests/</code> with a marker)</td></tr></table>
+<p>Both protect future-you. Both let Claude prove a change is correct without you reading every diff.</p>
+<div class="callout">Skills as oracles: the <code>kkt-checker</code>, <code>perf-profile</code>, and <code>convergence-rate-fitter</code> skills aren't only one-off tools — they're the predicate that powers an entire family of tests. One predicate, many invocations.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Test patterns with Claude in the loop</h1>
+<ul><li><b>Test-first prompting.</b> "Write the test for X first, confirm it fails, then implement X." Forces specification before code.</li><li><b>Hard rule in CLAUDE.md.</b> "Run <code>pytest -q</code> after every edit; surface failures before continuing." Removes the most common failure mode — claimed success without verification.</li><li><b>Test the dead end, not just the success.</b> Assert the failure mode (e.g. Tikhonov) so a well-meaning future fix can't silently re-enable the bug.</li><li><b>Cite tests in commits and decisions.</b> MEMORY.md decisions reference the test that catches their regression.</li></ul>
+<pre><code># In CLAUDE.md
+## Conventions
+- After any code edit: run `pytest -q tests/`. Surface failures
+  in the next reply; don't claim done.
+- For changes touching solver behavior, also run
+  `python bench/run.py --suite cohort_smoke` and report iters/time.</code></pre>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>The whack-a-mole loop — how to spot it</h1>
+<p>Symptom: every fix breaks something else. Fix A → B fails → fix B → C fails → fix C → A fails again.</p>
+<div class="two-col"><div class="col"><h4>Signs to watch for</h4><ul><li>The same files reappear in <code>git status</code> across attempts.</li><li>Tests flip between passing and failing on essentially the same code.</li><li>Claude proposes a fix you remember rejecting two turns ago.</li><li>Diffs grow but the bug count is stable.</li></ul></div><div class="col"><h4>Underlying causes</h4><ul><li>A missing invariant — e.g., "the multipliers should always sum to zero" — that no test enforces.</li><li>Conflicting requirements between two modules.</li><li>Silent fallback paths (a try/except hiding the actual failure).</li></ul></div></div>
+<pre><code>git log --oneline -20            # any file touched repeatedly?
+git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Working sustainably</h3>
+<h1>Breaking out of a stuck session</h1>
+<ol><li><b>Stop prompting "fix this too."</b> More turns won't help; you need to step back.</li><li><b>Ask Claude to summarize.</b> <code>summarize everything we've tried in this session and why each attempt failed.</code> Read the summary.</li><li><b>Step away from the keyboard.</b> Write down — on paper — the actual invariants the code must satisfy.</li><li><b>Reset.</b> <code>/clear</code>. Open a fresh session with the invariants explicit in the prompt or appended to CLAUDE.md.</li><li><b>Re-plan.</b> Plan mode, with the new invariants. Don't accept a plan that doesn't address them.</li><li><b>Test the invariants.</b> Add a regression test for each one. Now the loop becomes a stable solution: future sessions can't re-break what's tested.</li></ol>
+<div class="callout">Mathematician's variant: the loop usually means you haven't formalized something. Once you write the invariant in math, the fix becomes obvious — even to you.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Wrap-up</h3>
+<h1>Seven habits worth keeping</h1>
+<ol><li><b>Set up the four-file architecture early.</b> <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward), <code>MEMORY.md</code> (learned), <code>STATUS.md</code> (current). One job per file; don't conflate them.</li><li><b>Plan before you build.</b> Plan mode for anything beyond a one-line edit. Save the plan to <code>plans/&lt;date&gt;-&lt;slug&gt;.md</code> before you implement.</li><li><b>Promote recurring tasks to skills.</b> Anything you do twice — KKT check, perf profile, log parsing — becomes a SKILL.md.</li><li><b>Commit before you prompt.</b> A clean working tree means every Claude change is visible in <code>git diff</code> and reversible in one command.</li><li><b>Test both code and results.</b> Unit tests in <code>tests/</code> for correctness; experimental-regression tests in <code>bench/</code> for result quality. A CLAUDE.md rule that says "run pytest after every edit" removes the most common failure mode.</li><li><b>End every session with the two-line ritual.</b> Append a dated entry to MEMORY.md if anything was decided; overwrite STATUS.md with the next concrete step. Two minutes.</li><li><b>When you're whack-a-mole-ing, stop and formalize.</b> Loops mean an invariant is unwritten. Write it, test it, and the loop ends.</li></ol>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Reference</h3>
+<h1>Files vs. built-ins: how this maps to Claude Code</h1>
+<p class="lede">Two of the four files are the official path; two deliberately turn ephemeral built-ins into durable, versioned files.</p>
+<table class="matrix"><tr><th>This deck</th><th>Claude Code natively</th></tr><tr><td><code>CLAUDE.md</code></td><td>The native memory file — hierarchy + <code>@import</code>. <b>Same thing.</b></td></tr><tr><td>Skills</td><td>Native, loaded on demand. <b>Same thing.</b></td></tr><tr><td><code>plans/</code></td><td>Plan mode is a permission mode — <b>ephemeral</b>, never written to disk. We persist it.</td></tr><tr><td><code>MEMORY.md</code></td><td>CLAUDE.md <i>is</i> the memory; we split durable facts into a file it points at. (Name clashes with Claude Code's own auto-memory <code>MEMORY.md</code>.)</td></tr><tr><td><code>STATUS.md</code></td><td><code>--resume</code> / checkpoints are <b>machine-local</b> — a committed file crosses machines, CI, and collaborators.</td></tr></table>
+<div class="callout">Same diagnosis as the official guide — context degrades as it fills — but a different remedy: <b>write it to disk</b>. Strongest when work crosses sessions, machines, or people; redundant when it doesn't.</div>
+<p>Full comparison: <code>docs/native-claude-code-mapping.md</code>. Official guide: <code>docs.claude.com/en/best-practices</code>.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Resources</h3>
+<h1>Where to go from here</h1>
+<ul><li><b>Authoritative reference: `docs.claude.com/en/best-practices`</b> — Anthropic's official guide. Read it after this workshop; our four-file architecture and literature material are opinion-laden extensions of it.</li><li>Documentation: <code>docs.claude.com/claude-code</code></li><li>Source &amp; issues: <code>github.com/anthropics/claude-code</code></li><li>Skills examples: the <code>.claude/skills/</code> in this workshop's exercises folder</li><li>A power-user reference setup: <code>github.com/affaan-m/everything-claude-code</code> — heavy on software-engineering skills; useful as a layout example, not a starting point.</li><li>Optimization-specific:<ul><li>PETSc/TAO: <code>petsc.org</code> — the user manual chapter on TAO is short and excellent.</li><li>Pyomo: <code>pyomo.readthedocs.io</code></li><li>CasADi: <code>casadi.org</code></li><li>CUTEst: <code>github.com/ralna/CUTEst</code></li></ul></li></ul>
+<p>Questions, or stories of what worked: keep notes in MEMORY.md. The next session will thank you.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+</div>
+<div class="nav">
+  <span class="nav-label">go to</span>
+  <input type="number" id="jump-to" class="jump-to" min="1" placeholder="#" aria-label="Jump to slide number">
+  <button id="prev" aria-label="Previous slide">← Prev</button>
+  <button id="next" aria-label="Next slide">Next →</button>
+  <button id="auto-toggle" aria-label="Toggle auto-advance">▶ Auto</button>
+  <button id="help-btn" aria-label="Help" title="Keyboard shortcuts (?)">?</button>
+</div>
+
+<div id="help-overlay" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+  <div class="panel">
+    <h2>Keyboard shortcuts</h2>
+    <table>
+      <tr><td>← → Space</td><td>Previous / next slide</td></tr>
+      <tr><td>Home / End</td><td>First / last slide</td></tr>
+      <tr><td>(digits) Enter</td><td>Jump to slide N</td></tr>
+      <tr><td>g</td><td>Focus the "go to" input</td></tr>
+      <tr><td>t</td><td>Toggle auto-advance (5 s)</td></tr>
+      <tr><td>T</td><td>Set custom auto-advance interval</td></tr>
+      <tr><td>f</td><td>Toggle full screen</td></tr>
+      <tr><td>?</td><td>Show this help</td></tr>
+      <tr><td>Esc</td><td>Close help / cancel jump</td></tr>
+    </table>
+    <div class="close-hint">Press any key to dismiss</div>
+  </div>
+</div>
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let i = 0, timer = null, intervalMs = 5000, digitBuffer = '', digitTimeout = null;
+
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    const active = slides[i];
+    const counter = active.querySelector('.counter');
+    if (counter) counter.textContent = (i + 1) + ' / ' + slides.length;
+    const bar = active.querySelector('.progress > div');
+    if (bar) bar.style.width = (((i + 1) / slides.length) * 100) + '%';
+    history.replaceState(null, '', '#' + (i + 1));
+    const jumpInput = document.getElementById('jump-to');
+    if (jumpInput && document.activeElement !== jumpInput) jumpInput.value = i + 1;
+    if (timer && i >= slides.length - 1) stopTimer();
+  }
+  function startTimer() {
+    if (timer) return;
+    timer = setInterval(() => { if (i < slides.length - 1) show(i + 1); else stopTimer(); }, intervalMs);
+    const btn = document.getElementById('auto-toggle');
+    btn.textContent = '⏸ Stop (' + (intervalMs / 1000) + 's)';
+    btn.classList.add('active');
+  }
+  function stopTimer() {
+    if (timer) { clearInterval(timer); timer = null; }
+    const btn = document.getElementById('auto-toggle');
+    btn.textContent = '▶ Auto';
+    btn.classList.remove('active');
+  }
+  function toggleTimer() { timer ? stopTimer() : startTimer(); }
+  function showHelp() { document.getElementById('help-overlay').classList.add('show'); }
+  function hideHelp() { document.getElementById('help-overlay').classList.remove('show'); }
+  function flushDigitBuffer() {
+    if (!digitBuffer) return;
+    const n = parseInt(digitBuffer, 10);
+    if (isFinite(n) && n > 0) show(n - 1);
+    digitBuffer = '';
+    if (digitTimeout) { clearTimeout(digitTimeout); digitTimeout = null; }
+  }
+  document.getElementById('prev').addEventListener('click', () => { stopTimer(); show(i - 1); });
+  document.getElementById('next').addEventListener('click', () => { stopTimer(); show(i + 1); });
+  document.getElementById('auto-toggle').addEventListener('click', toggleTimer);
+  document.getElementById('help-btn').addEventListener('click', showHelp);
+  document.getElementById('help-overlay').addEventListener('click', hideHelp);
+  const jumpInput = document.getElementById('jump-to');
+  jumpInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const n = parseInt(jumpInput.value, 10);
+      if (isFinite(n) && n > 0) { stopTimer(); show(n - 1); jumpInput.blur(); }
+      e.preventDefault();
+    } else if (e.key === 'Escape') { jumpInput.value = i + 1; jumpInput.blur(); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.target === jumpInput) return;
+    const overlay = document.getElementById('help-overlay');
+    if (overlay.classList.contains('show')) { hideHelp(); e.preventDefault(); return; }
+    if (/^[0-9]$/.test(e.key)) {
+      digitBuffer += e.key;
+      if (digitTimeout) clearTimeout(digitTimeout);
+      digitTimeout = setTimeout(() => { digitBuffer = ''; }, 1500);
+      e.preventDefault(); return;
+    }
+    if (e.key === 'Enter') { flushDigitBuffer(); e.preventDefault(); return; }
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { stopTimer(); show(i + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { stopTimer(); show(i - 1); e.preventDefault(); }
+    else if (e.key === 'Home') { stopTimer(); show(0); }
+    else if (e.key === 'End') { stopTimer(); show(slides.length - 1); }
+    else if (e.key === 't') { toggleTimer(); e.preventDefault(); }
+    else if (e.key === 'T') {
+      const v = prompt('Auto-advance interval in seconds:', String(intervalMs / 1000));
+      const secs = parseFloat(v);
+      if (isFinite(secs) && secs > 0) { intervalMs = Math.round(secs * 1000); if (timer) { stopTimer(); startTimer(); } }
+    }
+    else if (e.key === 'g') { jumpInput.focus(); jumpInput.select(); e.preventDefault(); }
+    else if (e.key === '?') { showHelp(); e.preventDefault(); }
+    else if (e.key === 'Escape') { stopTimer(); digitBuffer = ''; }
+    else { digitBuffer = ''; }
+  });
+  const initial = parseInt((location.hash || '#1').slice(1), 10);
+  show(isFinite(initial) && initial > 0 ? initial - 1 : 0);
+</script>
+<script>
+/* Presentation scaling for the Argonne deck:
+   1. deck-fit  — scale the whole 1180x664 canvas to fill the viewport (windowed
+      or full-screen) so it goes edge-to-edge with proportional text.
+   2. slide-fit — inside the canvas, scale a dense slide's content down so it
+      never clips at 16:9. Only ever scales down.
+   3. full screen — a ⛶ button and the `f` key toggle the Fullscreen API. */
+(function () {
+  var deck = document.getElementById('deck');
+  if (!deck) return;
+  var DES_W = 1180, DES_H = 664;
+
+  // --- wrap every slide's non-footer content so we can scale it ---
+  deck.querySelectorAll('.slide').forEach(function (s) {
+    if (s.querySelector(':scope > .fit')) return;
+    var footer = s.querySelector(':scope > .footer');
+    var fit = document.createElement('div');
+    fit.className = 'fit';
+    Array.prototype.slice.call(s.childNodes).forEach(function (n) {
+      if (n !== footer) fit.appendChild(n);
+    });
+    s.insertBefore(fit, footer || null);
+  });
+
+  function fitSlide(s) {
+    var fit = s.querySelector(':scope > .fit');
+    if (!fit) return;
+    fit.style.transform = '';
+    var cs = getComputedStyle(s);
+    var availH = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var availW = s.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    var h = fit.scrollHeight, w = fit.scrollWidth;
+    if (!h || !w) return;
+    var k = Math.min(1, availH / h, availW / w);
+    if (k < 1) fit.style.transform = 'scale(' + k + ')';
+  }
+  function fitActive() {
+    var a = deck.querySelector('.slide.active');
+    if (a) fitSlide(a);
+  }
+
+  // --- scale the whole canvas to fill the viewport ---
+  function fitDeck() {
+    // fill the viewport edge-to-edge (16:9 is preserved; the limiting axis wins)
+    var k = Math.min(window.innerWidth / DES_W, window.innerHeight / DES_H);
+    deck.style.transform = 'scale(' + k + ')';
+  }
+  function fitAll() { fitDeck(); fitActive(); }
+
+  // --- full screen ---
+  function toggleFull() {
+    if (document.fullscreenElement) {
+      if (document.exitFullscreen) document.exitFullscreen();
+    } else {
+      var el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    }
+  }
+  var fsBtn = null;
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    fsBtn = document.createElement('button');
+    fsBtn.textContent = '⛶ Full';
+    fsBtn.setAttribute('aria-label', 'Toggle full screen (f)');
+    fsBtn.addEventListener('click', toggleFull);
+    nav.insertBefore(fsBtn, document.getElementById('help-btn') || null);
+  }
+  document.addEventListener('fullscreenchange', function () {
+    var full = !!document.fullscreenElement;
+    document.body.classList.toggle('presenting', full);
+    if (fsBtn) fsBtn.textContent = full ? '⛶ Exit' : '⛶ Full';
+    fitAll();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.target && e.target.tagName === 'INPUT') return;
+    if (e.key === 'f' || e.key === 'F') { toggleFull(); e.preventDefault(); }
+  });
+
+  // --- hook slide changes + resize ---
+  if (typeof window.show === 'function') {
+    var _show = window.show;
+    window.show = function (n) { _show(n); fitActive(); };
+  }
+  var raf = null;
+  window.addEventListener('resize', function () {
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(fitAll);
+  });
+  fitAll();
+})();
+</script>
+<script>
+  /* Capstone showcase: highlight each title in turn and crossfade its description.
+     Clicking a title jumps to it and restarts the rotation. */
+  document.querySelectorAll('.caps-rotator').forEach(function (r) {
+    var items = Array.prototype.slice.call(r.querySelectorAll('.caps-item'));
+    var pages = Array.prototype.slice.call(r.querySelectorAll('.caps-desc-page'));
+    if (pages.length < 2) return;
+    var idx = 0, timer = null;
+    var interval = parseInt(r.getAttribute('data-interval') || '3200', 10);
+    function go(n) {
+      if (items[idx]) items[idx].classList.remove('active');
+      if (pages[idx]) pages[idx].classList.remove('show');
+      idx = (n + pages.length) % pages.length;
+      if (items[idx]) items[idx].classList.add('active');
+      if (pages[idx]) pages[idx].classList.add('show');
+    }
+    function start() { timer = setInterval(function () { go(idx + 1); }, interval); }
+    items.forEach(function (it, k) {
+      it.addEventListener('click', function () { clearInterval(timer); go(k); start(); });
+    });
+    start();
+  });
+</script>
+</body>
+</html>

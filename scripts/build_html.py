@@ -147,17 +147,20 @@ def argonne_css(doe_uri: str, argonne_uri: str) -> str:
   .section-divider .exlinks .col h4 {{ color: var(--gold); }}
   .section-divider .exlinks a {{ color: #eaf2f8; }}
   .section-divider .exlinks a:hover {{ border-bottom-color: #eaf2f8; }}
-  /* rotating capstone showcase (two columns, crossfades through all projects) */
-  .caps-rotator {{ position: relative; width: 100%; min-height: 170px; margin-top: 22px; }}
-  .caps-page {{ position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 44px; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }}
-  .caps-page.show {{ opacity: 1; pointer-events: auto; }}
-  .caps-name {{ font-family: var(--sans); font-weight: 700; font-size: 23px; color: var(--accent); }}
-  .caps-desc {{ font-size: 18px; color: var(--muted); margin-top: 5px; line-height: 1.4; }}
-  .section-divider .caps-name {{ color: #fff; }}
-  .section-divider .caps-desc {{ color: #eaf2f8; }}
-  .caps-dots {{ position: absolute; bottom: -14px; left: 0; display: flex; gap: 7px; }}
-  .caps-dots span {{ width: 7px; height: 7px; border-radius: 50%; background: var(--rule); transition: background 0.3s; }}
-  .caps-dots span.on {{ background: var(--gold); }}
+  /* capstone showcase: all titles in the left column, rotating description on the right */
+  .caps-rotator {{ display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 14px 46px; margin-top: 22px; align-items: start; }}
+  .caps-list {{ display: flex; flex-direction: column; gap: 7px; }}
+  .caps-item {{ font-family: var(--sans); font-size: 19px; font-weight: 600; line-height: 1.25; color: var(--muted); cursor: pointer; transition: color 0.3s; }}
+  .caps-item.active {{ color: var(--accent); }}
+  .section-divider .caps-item {{ color: #a9c7e0; }}
+  .section-divider .caps-item.active {{ color: var(--gold); }}
+  .caps-desc-panel {{ position: relative; min-height: 150px; }}
+  .caps-desc-page {{ position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }}
+  .caps-desc-page.show {{ opacity: 1; pointer-events: auto; }}
+  .caps-desc-name {{ font-family: var(--sans); font-weight: 700; font-size: 24px; color: var(--accent); margin-bottom: 8px; }}
+  .caps-desc-text {{ font-size: 21px; line-height: 1.45; color: var(--muted); }}
+  .section-divider .caps-desc-name {{ color: #fff; }}
+  .section-divider .caps-desc-text {{ color: #eaf2f8; }}
   /* title slide → white base with blue bar, blue title, gold eyebrow */
   .title-slide {{ justify-content: center; background: var(--bg); }}
   .title-slide .kicker {{ font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--gold); font-weight: 700; margin-bottom: 18px; }}
@@ -413,19 +416,18 @@ def render_block(b) -> str:
     return ""
 
 
-def render_capstones(items, per=2) -> str:
-    pages = [items[k:k + per] for k in range(0, len(items), per)]
-    out = ['<div class="caps-rotator" data-interval="3400">']
-    for pi, pg in enumerate(pages):
-        out.append(f'<div class="caps-page{" show" if pi == 0 else ""}">')
-        for it in pg:
-            out.append('<div class="caps-cell">'
-                       f'<div class="caps-name">{render_inline(it["name"])}</div>'
-                       f'<div class="caps-desc">{render_inline(it["desc"])}</div></div>')
-        out.append("</div>")
-    dots = "".join(f'<span class="{"on" if k == 0 else ""}"></span>' for k in range(len(pages)))
-    out.append(f'<div class="caps-dots">{dots}</div>')
-    out.append("</div>")
+def render_capstones(items) -> str:
+    # left: every title (the active one highlights); right: its description, rotating
+    out = ['<div class="caps-rotator" data-interval="3200">', '<div class="caps-list">']
+    for k, it in enumerate(items):
+        out.append(f'<div class="caps-item{" active" if k == 0 else ""}" data-i="{k}">'
+                   f'{render_inline(it["name"])}</div>')
+    out.append('</div><div class="caps-desc-panel">')
+    for k, it in enumerate(items):
+        out.append(f'<div class="caps-desc-page{" show" if k == 0 else ""}">'
+                   f'<div class="caps-desc-name">{render_inline(it["name"])}</div>'
+                   f'<div class="caps-desc-text">{render_inline(it["desc"])}</div></div>')
+    out.append("</div></div>")
     return "".join(out)
 
 
@@ -597,17 +599,26 @@ NAV_JS = """<script>
 </script>"""
 
 ROTATOR_JS = """<script>
-  /* Crossfade the capstone showcase through all projects, two at a time. */
+  /* Capstone showcase: highlight each title in turn and crossfade its description.
+     Clicking a title jumps to it and restarts the rotation. */
   document.querySelectorAll('.caps-rotator').forEach(function (r) {
-    var pages = Array.prototype.slice.call(r.querySelectorAll('.caps-page'));
-    var dots = Array.prototype.slice.call(r.querySelectorAll('.caps-dots span'));
+    var items = Array.prototype.slice.call(r.querySelectorAll('.caps-item'));
+    var pages = Array.prototype.slice.call(r.querySelectorAll('.caps-desc-page'));
     if (pages.length < 2) return;
-    var idx = 0;
-    setInterval(function () {
-      pages[idx].classList.remove('show'); if (dots[idx]) dots[idx].classList.remove('on');
-      idx = (idx + 1) % pages.length;
-      pages[idx].classList.add('show'); if (dots[idx]) dots[idx].classList.add('on');
-    }, parseInt(r.getAttribute('data-interval') || '3400', 10));
+    var idx = 0, timer = null;
+    var interval = parseInt(r.getAttribute('data-interval') || '3200', 10);
+    function go(n) {
+      if (items[idx]) items[idx].classList.remove('active');
+      if (pages[idx]) pages[idx].classList.remove('show');
+      idx = (n + pages.length) % pages.length;
+      if (items[idx]) items[idx].classList.add('active');
+      if (pages[idx]) pages[idx].classList.add('show');
+    }
+    function start() { timer = setInterval(function () { go(idx + 1); }, interval); }
+    items.forEach(function (it, k) {
+      it.addEventListener('click', function () { clearInterval(timer); go(k); start(); });
+    });
+    start();
   });
 </script>"""
 

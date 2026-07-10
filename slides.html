@@ -98,17 +98,20 @@
   .section-divider .exlinks .col h4 { color: var(--gold); }
   .section-divider .exlinks a { color: #eaf2f8; }
   .section-divider .exlinks a:hover { border-bottom-color: #eaf2f8; }
-  /* rotating capstone showcase (two columns, crossfades through all projects) */
-  .caps-rotator { position: relative; width: 100%; min-height: 170px; margin-top: 22px; }
-  .caps-page { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 44px; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
-  .caps-page.show { opacity: 1; pointer-events: auto; }
-  .caps-name { font-family: var(--sans); font-weight: 700; font-size: 23px; color: var(--accent); }
-  .caps-desc { font-size: 18px; color: var(--muted); margin-top: 5px; line-height: 1.4; }
-  .section-divider .caps-name { color: #fff; }
-  .section-divider .caps-desc { color: #eaf2f8; }
-  .caps-dots { position: absolute; bottom: -14px; left: 0; display: flex; gap: 7px; }
-  .caps-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--rule); transition: background 0.3s; }
-  .caps-dots span.on { background: var(--gold); }
+  /* capstone showcase: all titles in the left column, rotating description on the right */
+  .caps-rotator { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 14px 46px; margin-top: 22px; align-items: start; }
+  .caps-list { display: flex; flex-direction: column; gap: 7px; }
+  .caps-item { font-family: var(--sans); font-size: 19px; font-weight: 600; line-height: 1.25; color: var(--muted); cursor: pointer; transition: color 0.3s; }
+  .caps-item.active { color: var(--accent); }
+  .section-divider .caps-item { color: #a9c7e0; }
+  .section-divider .caps-item.active { color: var(--gold); }
+  .caps-desc-panel { position: relative; min-height: 150px; }
+  .caps-desc-page { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+  .caps-desc-page.show { opacity: 1; pointer-events: auto; }
+  .caps-desc-name { font-family: var(--sans); font-weight: 700; font-size: 24px; color: var(--accent); margin-bottom: 8px; }
+  .caps-desc-text { font-size: 21px; line-height: 1.45; color: var(--muted); }
+  .section-divider .caps-desc-name { color: #fff; }
+  .section-divider .caps-desc-text { color: #eaf2f8; }
   /* title slide → white base with blue bar, blue title, gold eyebrow */
   .title-slide { justify-content: center; background: var(--bg); }
   .title-slide .kicker { font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--gold); font-weight: 700; margin-bottom: 18px; }
@@ -686,7 +689,7 @@ git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre
 <section class="slide section-divider">
 <h1>Capstone</h1>
 <p class="lede">Open-ended time. Your code, your problem — Claude as collaborator. Or pick a provided brief:</p>
-<div class="caps-rotator" data-interval="3400"><div class="caps-page show"><div class="caps-cell"><div class="caps-name">BQPD-CPP</div><div class="caps-desc">A thread-safe C++ port of Fletcher's robust QP solver.</div></div><div class="caps-cell"><div class="caps-name">CUTEst-C</div><div class="caps-desc">A clean, dependency-free C implementation of CUTEst.</div></div></div><div class="caps-page"><div class="caps-cell"><div class="caps-name">ConDFO</div><div class="caps-desc">A derivative-free optimization solver for constrained problems.</div></div><div class="caps-cell"><div class="caps-name">OptiUNO</div><div class="caps-desc">Run-time-configurable Newton-like solvers, hunting better combinations.</div></div></div><div class="caps-page"><div class="caps-cell"><div class="caps-name">PrecisionBench</div><div class="caps-desc">Mixed-precision benchmarking for numerical linear algebra.</div></div><div class="caps-cell"><div class="caps-name">SciCompSkills</div><div class="caps-desc">A hallucination-resistant verified-literature-search skill.</div></div></div><div class="caps-page"><div class="caps-cell"><div class="caps-name">SolverBench</div><div class="caps-desc">A reproducible benchmark of solvers &amp; preconditioners for PDEs.</div></div><div class="caps-cell"><div class="caps-name">diffBLAS</div><div class="caps-desc">Adapt differentiated BLAS routines to AD activity contexts.</div></div></div><div class="caps-page"><div class="caps-cell"><div class="caps-name">optSolverBench</div><div class="caps-desc">Benchmark optimizers &amp; solvers for PDE-constrained optimization.</div></div></div><div class="caps-dots"><span class="on"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div></div>
+<div class="caps-rotator" data-interval="3200"><div class="caps-list"><div class="caps-item active" data-i="0">BQPD-CPP</div><div class="caps-item" data-i="1">CUTEst-C</div><div class="caps-item" data-i="2">ConDFO</div><div class="caps-item" data-i="3">OptiUNO</div><div class="caps-item" data-i="4">PrecisionBench</div><div class="caps-item" data-i="5">SciCompSkills</div><div class="caps-item" data-i="6">SolverBench</div><div class="caps-item" data-i="7">diffBLAS</div><div class="caps-item" data-i="8">optSolverBench</div></div><div class="caps-desc-panel"><div class="caps-desc-page show"><div class="caps-desc-name">BQPD-CPP</div><div class="caps-desc-text">A thread-safe C++ port of Fletcher's robust QP solver.</div></div><div class="caps-desc-page"><div class="caps-desc-name">CUTEst-C</div><div class="caps-desc-text">A clean, dependency-free C implementation of CUTEst.</div></div><div class="caps-desc-page"><div class="caps-desc-name">ConDFO</div><div class="caps-desc-text">A derivative-free optimization solver for constrained problems.</div></div><div class="caps-desc-page"><div class="caps-desc-name">OptiUNO</div><div class="caps-desc-text">Run-time-configurable Newton-like solvers, hunting better combinations.</div></div><div class="caps-desc-page"><div class="caps-desc-name">PrecisionBench</div><div class="caps-desc-text">Mixed-precision benchmarking for numerical linear algebra.</div></div><div class="caps-desc-page"><div class="caps-desc-name">SciCompSkills</div><div class="caps-desc-text">A hallucination-resistant verified-literature-search skill.</div></div><div class="caps-desc-page"><div class="caps-desc-name">SolverBench</div><div class="caps-desc-text">A reproducible benchmark of solvers &amp; preconditioners for PDEs.</div></div><div class="caps-desc-page"><div class="caps-desc-name">diffBLAS</div><div class="caps-desc-text">Adapt differentiated BLAS routines to AD activity contexts.</div></div><div class="caps-desc-page"><div class="caps-desc-name">optSolverBench</div><div class="caps-desc-text">Benchmark optimizers &amp; solvers for PDE-constrained optimization.</div></div></div></div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 </div>
@@ -891,17 +894,26 @@ git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre
 })();
 </script>
 <script>
-  /* Crossfade the capstone showcase through all projects, two at a time. */
+  /* Capstone showcase: highlight each title in turn and crossfade its description.
+     Clicking a title jumps to it and restarts the rotation. */
   document.querySelectorAll('.caps-rotator').forEach(function (r) {
-    var pages = Array.prototype.slice.call(r.querySelectorAll('.caps-page'));
-    var dots = Array.prototype.slice.call(r.querySelectorAll('.caps-dots span'));
+    var items = Array.prototype.slice.call(r.querySelectorAll('.caps-item'));
+    var pages = Array.prototype.slice.call(r.querySelectorAll('.caps-desc-page'));
     if (pages.length < 2) return;
-    var idx = 0;
-    setInterval(function () {
-      pages[idx].classList.remove('show'); if (dots[idx]) dots[idx].classList.remove('on');
-      idx = (idx + 1) % pages.length;
-      pages[idx].classList.add('show'); if (dots[idx]) dots[idx].classList.add('on');
-    }, parseInt(r.getAttribute('data-interval') || '3400', 10));
+    var idx = 0, timer = null;
+    var interval = parseInt(r.getAttribute('data-interval') || '3200', 10);
+    function go(n) {
+      if (items[idx]) items[idx].classList.remove('active');
+      if (pages[idx]) pages[idx].classList.remove('show');
+      idx = (n + pages.length) % pages.length;
+      if (items[idx]) items[idx].classList.add('active');
+      if (pages[idx]) pages[idx].classList.add('show');
+    }
+    function start() { timer = setInterval(function () { go(idx + 1); }, interval); }
+    items.forEach(function (it, k) {
+      it.addEventListener('click', function () { clearInterval(timer); go(k); start(); });
+    });
+    start();
   });
 </script>
 </body>

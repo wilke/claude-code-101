@@ -328,30 +328,30 @@ def render_section(slide, data, kicker, links_blocks, capstones=None):
                 ip.space_before = Pt(4)
             x += cw + gap
 
-    # capstone showcase — static two-column list (the HTML deck rotates instead)
+    # capstone showcase — static "title | description" columns, row-aligned.
+    # The HTML deck lists the titles and rotates the description instead; here every
+    # description is one line, so two matched-paragraph textboxes stay aligned.
     if capstones:
         items = capstones["items"]
-        gap = 0.5
-        cw = (12.0 - gap) / 2
-        half = -(-len(items) // 2)
         light = RGBColor(0xEA, 0xF2, 0xF8)
-        x = 0.7
-        for col in (items[:half], items[half:]):
-            box = slide.shapes.add_textbox(Inches(x), Inches(2.35), Inches(cw), Inches(4.4))
+        cols = [
+            {"x": 0.7, "w": 3.3, "bold": True, "color": WHITE, "key": "name"},
+            {"x": 4.1, "w": 8.5, "bold": False, "color": light, "key": "desc"},
+        ]
+        for col in cols:
+            box = slide.shapes.add_textbox(Inches(col["x"]), Inches(2.5),
+                                           Inches(col["w"]), Inches(4.2))
             bt = box.text_frame
             set_frame_defaults(bt)
             bt.word_wrap = True
             first = True
-            for it in col:
+            for it in items:
                 p = bt.paragraphs[0] if first else bt.add_paragraph()
                 first = False
-                p.space_after = Pt(9)
-                rn = p.add_run(); rn.text = it["name"]
-                rn.font.size = Pt(15); rn.font.bold = True; rn.font.color.rgb = WHITE; rn.font.name = SANS
-                if it.get("desc"):
-                    rd = p.add_run(); rd.text = " — " + it["desc"]
-                    rd.font.size = Pt(12.5); rd.font.color.rgb = light; rd.font.name = SANS
-            x += cw + gap
+                p.space_after = Pt(10)
+                r = p.add_run(); r.text = it.get(col["key"], "")
+                r.font.size = Pt(14); r.font.bold = col["bold"]
+                r.font.color.rgb = col["color"]; r.font.name = SANS
 
 
 def render_closing(slide, data, kicker):

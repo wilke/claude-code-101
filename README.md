@@ -11,15 +11,15 @@ Open `slides.html` in any modern browser.
 - `t` — toggle auto-advance (5-second timer)
 - the nav bar at the bottom right has the same controls as buttons
 
-The exercises live in `exercises/` and are referenced from the slides.
+The exercises live in `exercises-opt/`, `exercises-pde/`, and `exercises-lin_alg/` (one per track) and are referenced from the slides.
 
 ## How long does this take?
 
-The full deck is **49 slides** with ~85 minutes of exercises (15+15+15+10+30). Three honest pacings:
+The full deck is **52 slides** with ~85 minutes of exercises (15+15+15+10+30). Three honest pacings:
 
 | Format | Total time | What you do |
 |---|---|---|
-| **Talk only** (~75 min) | ~75 min | All 49 slides; exercises assigned as homework. |
+| **Talk only** (~75 min) | ~75 min | All 52 slides; exercises assigned as homework. |
 | **2-hour workshop** (~2 h) | ~110 min | Slides + exercises 1–4; capstone as homework. |
 | **Half-day workshop** (recommended) (~3 h) | ~150 min | Everything in-room, including the capstone. |
 
@@ -37,29 +37,29 @@ claude
 # Minimum Python deps for exercises 1–4
 python -m pip install --user numpy scipy matplotlib pytest
 
-# Capstone has its own install paths — see exercises-opt/06-capstone/INSTALL.md
+# Capstones have their own setup paths — see capstones/README.md and each project's README
 ```
 
 ## Layout
 
 ```
 .
-├── slides.html               # the workshop deck (49 slides)
+├── slides.html               # the workshop deck (52 slides)
 ├── slides-supplemental/      # intro deck + per-track supplement decks (opt / pde / lin_alg)
 ├── README.md                 # this file
 ├── SOLUTIONS.md              # walkthrough index for all tracks
 ├── WORKFLOW.md               # sessions, version control, testing, plans, loops, literature
 ├── LITERATURE.md             # addendum: literature research, RAG, wiki-rag integration
 ├── exercises-opt/            # optimization track (SciPy / Uno / CVXPY, KKT, portfolio NLP)
-│   ├── 01-claude-md/  02-planning/  03-skills/  04-memory/
-│   └── 06-capstone/          # Inverse Poisson with PETSc/TAO (opt only)
+│   └── 01-claude-md/  02-planning/  03-skills/  04-memory/
 ├── exercises-pde/            # PDE/FEM track (Firedrake in Docker; Laplace, wave, CFL)
 │   └── 01-claude-md/  02-planning/  03-skills/  04-memory/
-└── exercises-lin_alg/        # numerical linear algebra track (numpy/scipy; spectra, SVD)
-    └── 01-claude-md/  02-planning/  03-skills/  04-memory/
+├── exercises-lin_alg/        # numerical linear algebra track (numpy/scipy; spectra, SVD)
+│   └── 01-claude-md/  02-planning/  03-skills/  04-memory/
+└── capstones/                # open-ended project briefs (README index + one dir per project)
 ```
 
-Each track follows the same numbered progression (`01-claude-md` … `04-memory`); only the optimization track adds a capstone.
+Each track follows the same numbered progression (`01-claude-md` … `04-memory`); the open-ended capstone projects live in the shared top-level `capstones/` directory.
 
 ## How to use the exercises
 
@@ -75,7 +75,7 @@ Inside Claude Code, follow the steps in that exercise's `README.md`.
 ## Speaker notes
 
 - **Pacing.** Pick the table row above that fits your slot. The deck is dense and growing; you'll need to pick what to cut, not what to add. See "What to cut for a shorter slot" below.
-- **Section dividers** (Parts 1 through 8) introduce each section; use them to take questions.
+- **Section dividers** (Parts 1 through 7) introduce each section; use them to take questions.
 - **Stretch goals** appear in callout boxes labeled "Stretch" — skip them under time pressure.
 - **Power features (Part 6)** is short and reference-y — checkpoints, subagents, hooks, headless mode. If you're tight on time, summarize verbally and point at `WORKFLOW.md`.
 - **WORKFLOW.md and LITERATURE.md** are deeper companions to the deck. Don't try to cover them in slides; assign as reading.
@@ -83,7 +83,7 @@ Inside Claude Code, follow the steps in that exercise's `README.md`.
 ### What to cut for a shorter slot
 
 - **Below 90 min:** Drop Part 6 (Power features) and Part 7 (Working sustainably) entirely; turn them into reading. Keep CLAUDE.md, planning, skills, MEMORY.md, MCP, capstone-as-demo.
-- **Below 60 min:** Drop the literature/RAG slides (Part 4 tail), Power features (Part 6), and Working sustainably (Part 7). Run only one exercise (Exercise 1 — CLAUDE.md). Treat the rest as a guided tour.
+- **Below 60 min:** Drop the literature/RAG slides (Part 5), Power features (Part 6), and Working sustainably (Part 7). Run only one exercise (Exercise 1 — CLAUDE.md). Treat the rest as a guided tour.
 
 ### What never to cut
 

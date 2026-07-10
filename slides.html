@@ -507,9 +507,28 @@ Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
+<h3>Checkpoint</h3>
+<h1>Report back</h1>
+<p class="lede">Before the capstone, each team shares what came out of the exercises — 2–3 minutes each.</p>
+<div class="two-col"><div class="col"><h4>Share</h4><ul><li>What did you get working? (CLAUDE.md, a plan, a skill, MEMORY.md)</li><li>What surprised you — good or bad?</li><li>Where did Claude go wrong, and how did you catch it?</li></ul></div><div class="col"><h4>Discuss</h4><ul><li>Which file — CLAUDE.md, plans/, MEMORY.md, STATUS.md — earned its keep?</li><li>What will you try on your own research?</li><li>Open questions for the room.</li></ul></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<h1>Capstone</h1>
+<p class="lede">Open-ended time. Your code, your problem — Claude as collaborator. Or pick a provided brief:</p>
+<div class="caps-rotator" data-interval="3200"><div class="caps-list"><div class="caps-item active" data-i="0">BQPD-CPP</div><div class="caps-item" data-i="1">CUTEst-C</div><div class="caps-item" data-i="2">ConDFO</div><div class="caps-item" data-i="3">OptiUNO</div><div class="caps-item" data-i="4">PrecisionBench</div><div class="caps-item" data-i="5">SciCompSkills</div><div class="caps-item" data-i="6">SolverBench</div><div class="caps-item" data-i="7">diffBLAS</div><div class="caps-item" data-i="8">optSolverBench</div></div><div class="caps-desc-panel"><div class="caps-desc-page show"><div class="caps-desc-name">BQPD-CPP</div><div class="caps-desc-text">A thread-safe C++ port of Fletcher's robust QP solver.</div></div><div class="caps-desc-page"><div class="caps-desc-name">CUTEst-C</div><div class="caps-desc-text">A clean, dependency-free C implementation of CUTEst.</div></div><div class="caps-desc-page"><div class="caps-desc-name">ConDFO</div><div class="caps-desc-text">A derivative-free optimization solver for constrained problems.</div></div><div class="caps-desc-page"><div class="caps-desc-name">OptiUNO</div><div class="caps-desc-text">Run-time-configurable Newton-like solvers, hunting better combinations.</div></div><div class="caps-desc-page"><div class="caps-desc-name">PrecisionBench</div><div class="caps-desc-text">Mixed-precision benchmarking for numerical linear algebra.</div></div><div class="caps-desc-page"><div class="caps-desc-name">SciCompSkills</div><div class="caps-desc-text">A hallucination-resistant verified-literature-search skill.</div></div><div class="caps-desc-page"><div class="caps-desc-name">SolverBench</div><div class="caps-desc-text">A reproducible benchmark of solvers &amp; preconditioners for PDEs.</div></div><div class="caps-desc-page"><div class="caps-desc-name">diffBLAS</div><div class="caps-desc-text">Adapt differentiated BLAS routines to AD activity contexts.</div></div><div class="caps-desc-page"><div class="caps-desc-name">optSolverBench</div><div class="caps-desc-text">Benchmark optimizers &amp; solvers for PDE-constrained optimization.</div></div></div></div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 5 · The fifth artifact</div>
+<h1>Literature</h1>
+<p class="lede">Reading and citing the literature is daily work for computational mathematicians — and where Claude as a co-scientist earns its keep. Treat it as a first-class artifact, alongside the four files.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
 <h3>Literature</h3>
-<h1>Literature: the fifth artifact</h1>
-<p class="lede">Literature reading is daily work for computational mathematicians — and the highest-leverage place Claude as a co-scientist beats Claude as a programmer. Treat it as first class.</p>
+<h1>What Claude does well — and doesn't</h1>
+<p class="lede">Lean on it for extraction and lookup; keep the judgment yourself — and never trust a citation from memory.</p>
 <table class="matrix"><tr><th></th><th>Claude does well</th><th>Claude does badly</th></tr><tr><td>PDFs</td><td>Extract text, equations, tables (built-in <code>pdf</code> skill)</td><td>Decide what a result <i>really means</i> — that's still you</td></tr><tr><td>Notation</td><td>Translate between Nocedal–Wright / Conn–Gould–Toint / Boyd–Vandenberghe</td><td>Catch subtle distinctions (B- vs. M- vs. S-stationarity) without your verification</td></tr><tr><td>Citations</td><td>Resolve fragments via an <code>arxiv</code> / <code>semantic-scholar</code> lookup</td><td>Emit citations from memory — these are often <b>plausible-looking and wrong</b></td></tr></table>
 <p>Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.</p>
 <pre><code>project/
@@ -541,7 +560,7 @@ Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide section-divider">
-<div class="kicker">Part 5 · Power features</div>
+<div class="kicker">Part 6 · Power features</div>
 <h1>Beyond the basics</h1>
 <p class="lede">Four mechanisms that change what's possible: checkpoints for reversible exploration, subagents for context-isolated work, hooks for deterministic enforcement, and non-interactive mode for fan-out at scale.</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
@@ -583,7 +602,7 @@ cat error.log | claude -p "extract the failing test names as a list"</code></pre
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide section-divider">
-<div class="kicker">Part 6 · Habits</div>
+<div class="kicker">Part 7 · Habits</div>
 <h1>Working sustainably</h1>
 <p class="lede">Version control, reverting, and recognizing when you're whack-a-mole-ing your own code. The unglamorous habits that make the rest of the workshop pay off.</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
@@ -684,12 +703,6 @@ git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre
 <h1>Where to go from here</h1>
 <ul><li><b>Authoritative reference: `docs.claude.com/en/best-practices`</b> — Anthropic's official guide. Read it after this workshop; our four-file architecture and literature material are opinion-laden extensions of it.</li><li>Documentation: <code>docs.claude.com/claude-code</code></li><li>Source &amp; issues: <code>github.com/anthropics/claude-code</code></li><li>Skills examples: the <code>.claude/skills/</code> in this workshop's exercises folder</li><li>A power-user reference setup: <code>github.com/affaan-m/everything-claude-code</code> — heavy on software-engineering skills; useful as a layout example, not a starting point.</li><li>Optimization-specific:<ul><li>PETSc/TAO: <code>petsc.org</code> — the user manual chapter on TAO is short and excellent.</li><li>Pyomo: <code>pyomo.readthedocs.io</code></li><li>CasADi: <code>casadi.org</code></li><li>CUTEst: <code>github.com/ralna/CUTEst</code></li></ul></li></ul>
 <p>Questions, or stories of what worked: keep notes in MEMORY.md. The next session will thank you.</p>
-<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-</section>
-<section class="slide section-divider">
-<h1>Capstone</h1>
-<p class="lede">Open-ended time. Your code, your problem — Claude as collaborator. Or pick a provided brief:</p>
-<div class="caps-rotator" data-interval="3200"><div class="caps-list"><div class="caps-item active" data-i="0">BQPD-CPP</div><div class="caps-item" data-i="1">CUTEst-C</div><div class="caps-item" data-i="2">ConDFO</div><div class="caps-item" data-i="3">OptiUNO</div><div class="caps-item" data-i="4">PrecisionBench</div><div class="caps-item" data-i="5">SciCompSkills</div><div class="caps-item" data-i="6">SolverBench</div><div class="caps-item" data-i="7">diffBLAS</div><div class="caps-item" data-i="8">optSolverBench</div></div><div class="caps-desc-panel"><div class="caps-desc-page show"><div class="caps-desc-name">BQPD-CPP</div><div class="caps-desc-text">A thread-safe C++ port of Fletcher's robust QP solver.</div></div><div class="caps-desc-page"><div class="caps-desc-name">CUTEst-C</div><div class="caps-desc-text">A clean, dependency-free C implementation of CUTEst.</div></div><div class="caps-desc-page"><div class="caps-desc-name">ConDFO</div><div class="caps-desc-text">A derivative-free optimization solver for constrained problems.</div></div><div class="caps-desc-page"><div class="caps-desc-name">OptiUNO</div><div class="caps-desc-text">Run-time-configurable Newton-like solvers, hunting better combinations.</div></div><div class="caps-desc-page"><div class="caps-desc-name">PrecisionBench</div><div class="caps-desc-text">Mixed-precision benchmarking for numerical linear algebra.</div></div><div class="caps-desc-page"><div class="caps-desc-name">SciCompSkills</div><div class="caps-desc-text">A hallucination-resistant verified-literature-search skill.</div></div><div class="caps-desc-page"><div class="caps-desc-name">SolverBench</div><div class="caps-desc-text">A reproducible benchmark of solvers &amp; preconditioners for PDEs.</div></div><div class="caps-desc-page"><div class="caps-desc-name">diffBLAS</div><div class="caps-desc-text">Adapt differentiated BLAS routines to AD activity contexts.</div></div><div class="caps-desc-page"><div class="caps-desc-name">optSolverBench</div><div class="caps-desc-text">Benchmark optimizers &amp; solvers for PDE-constrained optimization.</div></div></div></div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 </div>

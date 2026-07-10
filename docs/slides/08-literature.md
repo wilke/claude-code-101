@@ -1,6 +1,11 @@
-<!--slide n=34 layout=content kicker="Literature"-->
-# Literature: the fifth artifact
-_Literature reading is daily work for computational mathematicians — and the highest-leverage place Claude as a co-scientist beats Claude as a programmer. Treat it as first class._
+<!--slide n=36 layout=section kicker="Part 5 · The fifth artifact"-->
+# Literature
+_Reading and citing the literature is daily work for computational mathematicians — and where Claude as a co-scientist earns its keep. Treat it as a first-class artifact, alongside the four files._
+
+
+<!--slide n=37 layout=content kicker="Literature"-->
+# What Claude does well — and doesn't
+_Lean on it for extraction and lookup; keep the judgment yourself — and never trust a citation from memory._
 
 |  | Claude does well | Claude does badly |
 |---|---|---|
@@ -25,7 +30,7 @@ project/
 > CLAUDE.md hard rule: `never emit a citation from memory. Resolve via a literature search, or quote the local PDF, or mark [citation needed]`. One line; the single biggest defense against hallucinated bibliographies.
 
 
-<!--slide n=35 layout=content kicker="Literature"-->
+<!--slide n=38 layout=content kicker="Literature"-->
 # When the corpus outgrows context: RAG
 Your group's PDFs, lab wiki, and shared notes don't fit in one Claude session. **Retrieval-Augmented Generation** (RAG) is the standard answer: index the corpus into a vector database; for each question, retrieve the most relevant chunks; feed only those into the model.
 

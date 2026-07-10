@@ -112,7 +112,7 @@ The optimization-track version of this exercise leans on `/init` to *recover hid
 
 - Compare the two halves of your Phase 2 review. `/init` recovered the math because it was written into the code; it missed the conventions and safety rules because they weren't. In your own research code, what's the equivalent split — what would `/init` infer for free, and what would you always have to add by hand?
 - This exercise has two safety conventions: *report `max(u_h)`* (so you notice if the solver returned nonsense) and *confirm element order before each convergence run* (so a quiet edit to the polynomial degree doesn't change your reported rates without you knowing). Both protect against the same failure mode — getting a number with the wrong meaning. What's the analog in your own research code?
-- Where is the boundary between CLAUDE.md (stable) and MEMORY.md (evolving)? For this exercise, would you put the choice of mesh sweep `(4, 8, 16, 32, 64)` in CLAUDE.md or MEMORY.md, and why?
+- Where is the boundary between CLAUDE.md (stable) and LOGBOOK.md (evolving)? For this exercise, would you put the choice of mesh sweep `(4, 8, 16, 32, 64)` in CLAUDE.md or LOGBOOK.md, and why?
 
 ## Stretch
 
@@ -123,4 +123,4 @@ suggest three more rules I should add to CLAUDE.md for a research project
 on adaptive finite elements with a posteriori error estimators.
 ```
 
-Read the answer critically — accept maybe two of three. Notice which rules feel like *house style* vs. which feel like *project-specific decisions* — the latter belong in MEMORY.md, not CLAUDE.md.
+Read the answer critically — accept maybe two of three. Notice which rules feel like *house style* vs. which feel like *project-specific decisions* — the latter belong in LOGBOOK.md, not CLAUDE.md.

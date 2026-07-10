@@ -9,7 +9,7 @@ These are walkthroughs of the exercises with the math explained gently for non-m
 | 1 | Write a CLAUDE.md | [exercises-opt/01-claude-md/SOLUTION.md](exercises-opt/01-claude-md/SOLUTION.md) |
 | 2 | Plan a cardinality-constrained portfolio NLP | [exercises-opt/02-planning/solution/SOLUTION.md](exercises-opt/02-planning/solution/SOLUTION.md) |
 | 3 | Verify a KKT point | [exercises-opt/03-skills/SOLUTION.md](exercises-opt/03-skills/SOLUTION.md) |
-| 4 | Bootstrap MEMORY.md | [exercises-opt/04-memory/SOLUTION.md](exercises-opt/04-memory/SOLUTION.md) |
+| 4 | Bootstrap LOGBOOK.md | [exercises-opt/04-memory/SOLUTION.md](exercises-opt/04-memory/SOLUTION.md) |
 | 6 | Capstone — Inverse Poisson (PETSc/TAO) | [exercises-opt/06-capstone/SOLUTION.md](exercises-opt/06-capstone/SOLUTION.md) |
 
 ### PDE / FEM track (`exercises-pde/`)
@@ -19,7 +19,7 @@ These are walkthroughs of the exercises with the math explained gently for non-m
 | 1 | Write a CLAUDE.md (FEM convergence) | [exercises-pde/01-claude-md/SOLUTION.md](exercises-pde/01-claude-md/SOLUTION.md) |
 | 2 | Plan a fix for a broken convergence test | [exercises-pde/02-planning/SOLUTION.md](exercises-pde/02-planning/SOLUTION.md) |
 | 3 | Verify a CFL condition with a skill | [exercises-pde/03-skills/SOLUTION.md](exercises-pde/03-skills/SOLUTION.md) |
-| 4 | Bootstrap MEMORY.md from lab notebooks | [exercises-pde/04-memory/SOLUTION.md](exercises-pde/04-memory/SOLUTION.md) |
+| 4 | Bootstrap LOGBOOK.md from lab notebooks | [exercises-pde/04-memory/SOLUTION.md](exercises-pde/04-memory/SOLUTION.md) |
 
 ### Numerical linear algebra track (`exercises-lin_alg/`)
 
@@ -28,7 +28,7 @@ These are walkthroughs of the exercises with the math explained gently for non-m
 | 1 | Write a CLAUDE.md (matrix spectra) | [exercises-lin_alg/01-claude-md/SOLUTION.md](exercises-lin_alg/01-claude-md/SOLUTION.md) |
 | 2 | Plan an SVD of a matrix-free operator | [exercises-lin_alg/02-planning/SOLUTION.md](exercises-lin_alg/02-planning/SOLUTION.md) |
 | 3 | QR / Lanczos singular-value skills | [exercises-lin_alg/03-skills/SOLUTION.md](exercises-lin_alg/03-skills/SOLUTION.md) |
-| 4 | Bootstrap MEMORY.md | [exercises-lin_alg/04-memory/SOLUTION.md](exercises-lin_alg/04-memory/SOLUTION.md) |
+| 4 | Bootstrap LOGBOOK.md | [exercises-lin_alg/04-memory/SOLUTION.md](exercises-lin_alg/04-memory/SOLUTION.md) |
 
 ## A glossary for non-mathematicians
 
@@ -65,5 +65,5 @@ The linear algebra track adds a few more:
 
 1. **Claude Code amplifies what you put into it.** A blank session asking for "a convergence plot" gives you a generic answer; the same prompt with a CLAUDE.md gives you what you wanted. Every exercise is a variant of this lesson.
 2. **The plan is the deliverable.** Especially in exercise 2 and the capstone — what Claude writes into `plan.md` is often more valuable than the code that follows.
-3. **Friction kills the loop.** If summarizing into MEMORY.md takes ten minutes, you won't do it. The exercises pick conventions short enough that the ritual fits in two minutes.
+3. **Friction kills the loop.** If summarizing into LOGBOOK.md takes ten minutes, you won't do it. The exercises pick conventions short enough that the ritual fits in two minutes.
 4. **MCP at the seams, skills inside the project.** Recurring domain logic (KKT check) goes in a skill. External systems (databases, custom solvers) go behind an MCP. Don't mix the two.

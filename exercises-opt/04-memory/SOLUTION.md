@@ -1,10 +1,10 @@
-# Solution — Exercise 4 (MEMORY.md)
+# Solution — Exercise 4 (LOGBOOK.md)
 
 ## What this exercise is doing
 
-You have existing plan files in `plans/`. Each one is an actual plan created over the course of this project and captures the kind of thing you'd jot down at the end of a research day: what worked, what didn't, what the next question is. The exercise is to consolidate them into a structured `MEMORY.md` that Claude can read on every future session.
+You have existing plan files in `plans/`. Each one is an actual plan created over the course of this project and captures the kind of thing you'd jot down at the end of a research day: what worked, what didn't, what the next question is. The exercise is to consolidate them into a structured `LOGBOOK.md` that Claude can read on every future session.
 
-## A worked MEMORY.md
+## A worked LOGBOOK.md
 
 This is what Claude should produce when you ask it to read `plans/` and synthesize a memory file. Edit it down to the point where every line still earns its place.
 
@@ -136,31 +136,31 @@ Distilled from `plans/`. Each entry cites the plan file it came from.
 
 ## What "next experiment" might look like
 
-After this MEMORY.md exists and you created CLAUDE.md, ask:
+After this LOGBOOK.md exists and you created CLAUDE.md, ask:
 
 ```
-given MEMORY.md and CLAUDE.md, what's the most informative next experiment to run?
+given LOGBOOK.md and CLAUDE.md, what's the most informative next experiment to run?
 Justify in two sentences.
 ```
 
 A reasonable answer would be: *Run FilterADMM.py on the 120×40 mesh with compute_omega timing/iteration counts captured, then sweep omega_tau (e.g. 1/ρ) if it stalls.*
 
-That's the kind of answer you can act on in an afternoon. Not because Claude is clever — because MEMORY.md gave it the context to be specific.
+That's the kind of answer you can act on in an afternoon. Not because Claude is clever — because LOGBOOK.md gave it the context to be specific.
 
-## Where the seam between CLAUDE.md and MEMORY.md sits
+## Where the seam between CLAUDE.md and LOGBOOK.md sits
 
 These two files are easy to confuse. A working rule:
 
 - **CLAUDE.md** answers *"how does this project work?"* — stack, conventions, commands, do-not-do rules. It changes rarely.
-- **MEMORY.md** answers *"what have we learned?"* — decisions with dates and reasons, parameter folklore, dead ends. It grows monotonically.
+- **LOGBOOK.md** answers *"what have we learned?"* — decisions with dates and reasons, parameter folklore, dead ends. It grows monotonically.
 
-A test: if a fact would be true in any session of this project regardless of what you've discovered, it belongs in CLAUDE.md. If knowing it depends on having run experiments, it belongs in MEMORY.md.
+A test: if a fact would be true in any session of this project regardless of what you've discovered, it belongs in CLAUDE.md. If knowing it depends on having run experiments, it belongs in LOGBOOK.md.
 
 ## The two-minute end-of-session ritual
 
-The single highest-leverage habit from this exercise is: at the end of every session, ask Claude to summarize what was decided and append it to MEMORY.md. Two minutes. Pays back in weeks.
+The single highest-leverage habit from this exercise is: at the end of every session, ask Claude to summarize what was decided and append it to LOGBOOK.md. Two minutes. Pays back in weeks.
 
 ```
-summarize what we just did and append a dated entry to MEMORY.md under
+summarize what we just did and append a dated entry to LOGBOOK.md under
 Decisions or Open Questions, whichever fits.
 ```

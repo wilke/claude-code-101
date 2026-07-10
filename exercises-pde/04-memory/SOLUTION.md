@@ -1,17 +1,17 @@
-# Solution — Exercise 04 (MEMORY.md, FEM lab notebooks)
+# Solution — Exercise 04 (LOGBOOK.md, FEM lab notebooks)
 
 ## What this exercise is doing
 
-The learner opens `claude` in `exercises-pde/04-memory/`, pastes a one-line synthesis prompt that asks Claude to read everything under `notebooks/` and produce a `MEMORY.md` with four sections — Decisions, Parameters, Dead Ends, Open Questions — citing the source notebook for every entry. They then trim the result, ask Claude for a next experiment that the new `MEMORY.md` would inform, and close with a two-minute end-of-session ritual that appends a dated entry to `MEMORY.md` and overwrites `STATUS.md`.
+The learner opens `claude` in `exercises-pde/04-memory/`, pastes a one-line synthesis prompt that asks Claude to read everything under `notebooks/` and produce a `LOGBOOK.md` with four sections — Decisions, Parameters, Dead Ends, Open Questions — citing the source notebook for every entry. They then trim the result, ask Claude for a next experiment that the new `LOGBOOK.md` would inform, and close with a two-minute end-of-session ritual that appends a dated entry to `LOGBOOK.md` and overwrites `STATUS.md`.
 
-The pedagogy is **MEMORY.md as the file the next session reads on load**. The synthesis is the pretext; the file is the artifact. Unlike the prior PDE-track exercises, no FEM code runs here — the Claude-as-co-scientist value is editorial (read three loose notebooks, find the durable substance, throw away the rest). The exercise is short on purpose: the workflow is two minutes once you've done it once, and the goal is to make that two-minute habit feel cheap enough to keep.
+The pedagogy is **LOGBOOK.md as the file the next session reads on load**. The synthesis is the pretext; the file is the artifact. Unlike the prior PDE-track exercises, no FEM code runs here — the Claude-as-co-scientist value is editorial (read three loose notebooks, find the durable substance, throw away the rest). The exercise is short on purpose: the workflow is two minutes once you've done it once, and the goal is to make that two-minute habit feel cheap enough to keep.
 
 ## The prompts the learner pastes
 
 Synthesis:
 
 ```
-Read everything under notebooks/ and produce MEMORY.md with the sections:
+Read everything under notebooks/ and produce LOGBOOK.md with the sections:
 Decisions, Parameters, Dead Ends, Open Questions. Each entry should cite
 the notebook file it came from.
 ```
@@ -19,7 +19,7 @@ the notebook file it came from.
 Next experiment, after trimming:
 
 ```
-Given MEMORY.md, what would be the most informative next experiment to
+Given LOGBOOK.md, what would be the most informative next experiment to
 run? Justify in two sentences.
 ```
 
@@ -27,15 +27,15 @@ End-of-session ritual:
 
 ```
 Summarize what we did in this session, append as a dated entry to
-MEMORY.md, and overwrite STATUS.md with where we are now.
+LOGBOOK.md, and overwrite STATUS.md with where we are now.
 ```
 
-## A worked MEMORY.md
+## A worked LOGBOOK.md
 
 The exact wording varies per session and per learner; the *shape* below — four sections, source citations on every entry, dead ends preserving the *why*, total length much smaller than the three source notebooks combined — is what to look for.
 
 ```markdown
-# MEMORY.md — Firedrake testbench for wave propagation on reentrant-corner geometries
+# LOGBOOK.md — Firedrake testbench for wave propagation on reentrant-corner geometries
 
 ## Decisions
 
@@ -128,33 +128,33 @@ What makes this a strong answer: it cites a specific dated entry (twice), the pr
 
 A weak answer to push back on: "Continue investigating convergence behavior on the L-shape." No citation, no scope, no signal — could have been generated without the file. Push back with "name the entry that motivates this, and pick a scope that fits in one session."
 
-## Where the CLAUDE.md ⇄ MEMORY.md seam sits
+## Where the CLAUDE.md ⇄ LOGBOOK.md seam sits
 
-`CLAUDE.md` answers *"how does this project work"* — the stack, the file layout, the conventions, the hard rules. `MEMORY.md` answers *"what have we learned"* — the decisions, parameters, dead ends, and open questions discovered through running experiments. The cleanest test is the **time-machine test**: if the fact would be true in any session of this project regardless of which experiments have been run, it belongs in `CLAUDE.md`; if the fact depends on having run experiments, it belongs in `MEMORY.md`.
+`CLAUDE.md` answers *"how does this project work"* — the stack, the file layout, the conventions, the hard rules. `LOGBOOK.md` answers *"what have we learned"* — the decisions, parameters, dead ends, and open questions discovered through running experiments. The cleanest test is the **time-machine test**: if the fact would be true in any session of this project regardless of which experiments have been run, it belongs in `CLAUDE.md`; if the fact depends on having run experiments, it belongs in `LOGBOOK.md`.
 
-The `dx(degree=4)` rule in the worked MEMORY.md is a great example of the seam moving over time. It began as a discovery in the April notebook ("first attempt used Firedrake's default and assembly hung"), which made it a Parameters entry. Over a few weeks of repetition it became a permanent rule applied even to fresh problems — the moment it stops being contingent on what we've observed and starts being how we always write integrals, it gets promoted into `CLAUDE.md`. A good end-of-quarter habit is to walk the Parameters and Decisions sections looking for entries ready to graduate.
+The `dx(degree=4)` rule in the worked LOGBOOK.md is a great example of the seam moving over time. It began as a discovery in the April notebook ("first attempt used Firedrake's default and assembly hung"), which made it a Parameters entry. Over a few weeks of repetition it became a permanent rule applied even to fresh problems — the moment it stops being contingent on what we've observed and starts being how we always write integrals, it gets promoted into `CLAUDE.md`. A good end-of-quarter habit is to walk the Parameters and Decisions sections looking for entries ready to graduate.
 
 ## The two-minute end-of-session ritual
 
-The highest-leverage habit from the exercise is the closing prompt: summarize the session, append a dated entry to `MEMORY.md`, and overwrite `STATUS.md` with where we are now. It costs two minutes. It pays back in weeks because the next session reads `STATUS.md` before doing anything else, then reads `MEMORY.md` for context, and skips the "what was I working on" reconstruction that otherwise eats the first ten minutes of every resumed session. The append captures durable knowledge; the overwrite captures current state. Both files matter — the append loses value without the state file, and the state file loses value without the long-running decisions index.
+The highest-leverage habit from the exercise is the closing prompt: summarize the session, append a dated entry to `LOGBOOK.md`, and overwrite `STATUS.md` with where we are now. It costs two minutes. It pays back in weeks because the next session reads `STATUS.md` before doing anything else, then reads `LOGBOOK.md` for context, and skips the "what was I working on" reconstruction that otherwise eats the first ten minutes of every resumed session. The append captures durable knowledge; the overwrite captures current state. Both files matter — the append loses value without the state file, and the state file loses value without the long-running decisions index.
 
 ## Where it usually goes wrong on the first try
 
 | What Claude often does | What to push back with |
 |------------------------|------------------------|
-| Synthesizes a file longer than the three source notebooks combined — essentially re-typing rather than consolidating. | "Trim aggressively. Only lines a future session would consult should survive. If `MEMORY.md` is dense, future-me will skip it — half the value of the file is that it stays scan-readable." |
+| Synthesizes a file longer than the three source notebooks combined — essentially re-typing rather than consolidating. | "Trim aggressively. Only lines a future session would consult should survive. If `LOGBOOK.md` is dense, future-me will skip it — half the value of the file is that it stays scan-readable." |
 | Drops the *reason* from the dead-end entry ("abandoned graded+wave") and keeps only the verdict. | "Preserve why each path was abandoned, not just what happened. The reason is what stops the next session from re-running the dead end six months from now." |
 | Cites notebooks vaguely ("see notebooks") or omits citations entirely. | "Cite the specific filename for every entry. Without provenance, the entries can't be updated when the source notebook is revised." |
-| The next-experiment answer paraphrases content from `MEMORY.md` without naming a specific entry. | "Name the entry that motivates this. If you can't, the answer isn't actually using `MEMORY.md`." |
-| The end-of-session append describes the activity ("we discussed `MEMORY.md`") instead of naming the decision. | "Write the decision, not the meeting minutes. 'Discussed' decays to nothing in two months; 'decided to X because Y' carries forward." |
-| The `STATUS.md` overwrite reads like a session recap — narrative, no actionable next step. | "`STATUS.md` is what the next session reads first. It should say what's done, what's pending, and what to do on the next prompt. Recaps belong in the `MEMORY.md` append; current state belongs in `STATUS.md`." |
+| The next-experiment answer paraphrases content from `LOGBOOK.md` without naming a specific entry. | "Name the entry that motivates this. If you can't, the answer isn't actually using `LOGBOOK.md`." |
+| The end-of-session append describes the activity ("we discussed `LOGBOOK.md`") instead of naming the decision. | "Write the decision, not the meeting minutes. 'Discussed' decays to nothing in two months; 'decided to X because Y' carries forward." |
+| The `STATUS.md` overwrite reads like a session recap — narrative, no actionable next step. | "`STATUS.md` is what the next session reads first. It should say what's done, what's pending, and what to do on the next prompt. Recaps belong in the `LOGBOOK.md` append; current state belongs in `STATUS.md`." |
 | Silently merges two notebook entries that disagree (e.g. β=3.0 as standard in one notebook, β=3.0 as the cause of a CFL collapse in another) into a single smoothed-over statement. | "Surface the conflict; don't smooth it. The fact that β=3.0 is good for static elliptic but breaks explicit wave time-stepping *is* the most important entry in the file." |
 | Produces a Decisions section that buries the durable rule behind a narrative ("On 2026-04-15 we observed..."). | "Lead each Decision with the rule itself; the source citation already provides the date and the context." |
 
 ## The paper-summary connection (capstone foreshadowing)
 
-The literature side of `MEMORY.md` — citations of papers that motivated a decision or define a method — typically lives in a separate sub-thread that the `paper-summary` skill from Exercise 03 was pre-positioned to feed; the capstone exercises that path explicitly.
+The literature side of `LOGBOOK.md` — citations of papers that motivated a decision or define a method — typically lives in a separate sub-thread that the `paper-summary` skill from Exercise 03 was pre-positioned to feed; the capstone exercises that path explicitly.
 
 ## How to use this in the workshop
 
-Hand learners the README and the `notebooks/` folder; let them work through the five steps. This `SOLUTION.md` is a reference for the facilitator, not a script: the `MEMORY.md` a learner produces will not match the worked example above, because the texture of "what to keep" varies with how each learner reads the notebooks. What matters is the *shape* (four sections, citations on every entry, total length much shorter than the source notebooks, dead-end *why* preserved) and the *next-experiment answer* (cites a specific entry, scoped to one session). The pitfalls table is the most useful piece of this document in the debrief — every defect there has shown up at least once when this exercise was piloted, so use it to anchor the conversation rather than the worked `MEMORY.md` itself. The two-minute ritual is the takeaway slide; if learners leave the room willing to spend two minutes at the end of their next real session, the exercise has paid for itself.
+Hand learners the README and the `notebooks/` folder; let them work through the five steps. This `SOLUTION.md` is a reference for the facilitator, not a script: the `LOGBOOK.md` a learner produces will not match the worked example above, because the texture of "what to keep" varies with how each learner reads the notebooks. What matters is the *shape* (four sections, citations on every entry, total length much shorter than the source notebooks, dead-end *why* preserved) and the *next-experiment answer* (cites a specific entry, scoped to one session). The pitfalls table is the most useful piece of this document in the debrief — every defect there has shown up at least once when this exercise was piloted, so use it to anchor the conversation rather than the worked `LOGBOOK.md` itself. The two-minute ritual is the takeaway slide; if learners leave the room willing to spend two minutes at the end of their next real session, the exercise has paid for itself.

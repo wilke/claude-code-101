@@ -1,10 +1,10 @@
-# Solution — Exercise 04 (bootstrap a MEMORY.md)
+# Solution — Exercise 04 (bootstrap a LOGBOOK.md)
 
 ## What this exercise is doing
 
-Three dated notebook entries describe one project — a heat-equation testbench with an SVD/POD preconditioner re-initialized every 10 steps. Individually they're a diary; as a set they're unsearchable. The exercise consolidates them into a `MEMORY.md` the next session reads on load. The test is **editorial**: cite sources, trim hard, preserve *why* dead ends died, and surface the trade-off rather than smoothing it over. The model file below is *not* shipped — the learner produces it.
+Three dated notebook entries describe one project — a heat-equation testbench with an SVD/POD preconditioner re-initialized every 10 steps. Individually they're a diary; as a set they're unsearchable. The exercise consolidates them into a `LOGBOOK.md` the next session reads on load. The test is **editorial**: cite sources, trim hard, preserve *why* dead ends died, and surface the trade-off rather than smoothing it over. The model file below is *not* shipped — the learner produces it.
 
-## A worked MEMORY.md
+## A worked LOGBOOK.md
 
 ```markdown
 # MEMORY — heat-equation SVD-preconditioner testbench
@@ -38,13 +38,13 @@ Three dated notebook entries describe one project — a heat-equation testbench 
   does the right rank depend on dt and horizon? [2026-03-05]
 ```
 
-## Where the CLAUDE.md ⇄ MEMORY.md seam sits
+## Where the CLAUDE.md ⇄ LOGBOOK.md seam sits
 
-"Backward Euler + CG is the backbone" is arguably stable enough to be a `CLAUDE.md` convention; "rank 8, cadence 10" is pure experimental residue and belongs in `MEMORY.md`. The rule: if a fact is true in any session regardless of experiments run, it's `CLAUDE.md`; if it depends on having run experiments, it's `MEMORY.md`.
+"Backward Euler + CG is the backbone" is arguably stable enough to be a `CLAUDE.md` convention; "rank 8, cadence 10" is pure experimental residue and belongs in `LOGBOOK.md`. The rule: if a fact is true in any session regardless of experiments run, it's `CLAUDE.md`; if it depends on having run experiments, it's `LOGBOOK.md`.
 
 ## The two-minute end-of-session ritual
 
-`append a dated entry to MEMORY.md, then overwrite STATUS.md with where we are now`. The append names a concrete decision or question (not "we discussed MEMORY.md"); STATUS.md is tight enough that the next session picks up from it without reading anything else first.
+`append a dated entry to LOGBOOK.md, then overwrite STATUS.md with where we are now`. The append names a concrete decision or question (not "we discussed LOGBOOK.md"); STATUS.md is tight enough that the next session picks up from it without reading anything else first.
 
 ## Where it usually goes wrong on the first try
 

@@ -1,6 +1,6 @@
 # Workflow guide — sessions, version control, and breaking loops
 
-Backs the *Session basics* and *Working sustainably* sections of the deck. This is the practical companion to the conceptual material on CLAUDE.md, planning, skills, MEMORY.md, and MCP — i.e., *how to keep doing this for months without your repo going sideways.*
+Backs the *Session basics* and *Working sustainably* sections of the deck. This is the practical companion to the conceptual material on CLAUDE.md, planning, skills, LOGBOOK.md, and MCP — i.e., *how to keep doing this for months without your repo going sideways.*
 
 ## 1. How a session works
 
@@ -10,20 +10,20 @@ When you run `claude`, you start a *session*. Everything Claude reads and writes
 - When the buffer fills, Claude Code performs **auto-compaction**: older messages are replaced with a summary so newer work has room.
 - Auto-compaction is lossy. Specific facts from the early part of a long session can become "we discussed X" in the summary — accurate at the level of topic, vague at the level of detail.
 
-**Mental model.** The conversation is a whiteboard, not a notebook. Anything you'd want to read tomorrow goes into a file (CLAUDE.md, MEMORY.md, source code, a comment), not into the chat.
+**Mental model.** The conversation is a whiteboard, not a notebook. Anything you'd want to read tomorrow goes into a file (CLAUDE.md, LOGBOOK.md, source code, a comment), not into the chat.
 
 ## 2. What persists across sessions
 
 | Item | Reloaded on next session? | Survives auto-compact within a session? |
 |---|---|---|
-| Files in your repo (code, MEMORY.md, runs/) | Yes — they're on disk | Yes |
+| Files in your repo (code, LOGBOOK.md, runs/) | Yes — they're on disk | Yes |
 | `CLAUDE.md` | Yes — auto-loaded at session start | Yes — kept in context |
 | Skills under `.claude/skills/` | Yes — loaded on demand by description match | Re-loaded as needed |
 | Registered MCP servers | Yes — config persists | Connection persists |
 | The chat transcript | Only with `--resume` / `--continue` | Compressed to a summary |
 | Mid-conversation working memory ("remember to also fix that") | No — vanishes | Often lost |
 
-The single most important rule: **if a fact matters tomorrow, write it to MEMORY.md today**. Don't trust the conversation to remember it.
+The single most important rule: **if a fact matters tomorrow, write it to LOGBOOK.md today**. Don't trust the conversation to remember it.
 
 ## 3. Save, resume, clear
 
@@ -45,7 +45,7 @@ Useful patterns:
 
 - **Long focused work.** Use `/compact` at natural break points (e.g., after finishing a feature) so the model keeps space for the next phase.
 - **Switching topics.** Use `/clear` rather than letting the conversation drift across unrelated topics. Each topic gets a clean window.
-- **End of day.** Always end with `summarize what we did and append a dated entry to MEMORY.md`. Two minutes; pays back in weeks.
+- **End of day.** Always end with `summarize what we did and append a dated entry to LOGBOOK.md`. Two minutes; pays back in weeks.
 
 ## 4. Claude Code vs. Cowork
 
@@ -58,19 +58,19 @@ Both are interfaces to the same model family with the same skills system, but th
 | **Reads / writes** | Files in the project; runs shell commands | Files + connectors (Slack, Gmail, Notion, Calendar, Drive) |
 | **Audience** | Developers, researchers writing code | Knowledge workers including non-developers |
 | **Strong fit** | Solver development, experiments, paper LaTeX, anything in a git repo | Grant admin, email triage, briefings that pull from multiple SaaS tools |
-| **Plugins / skills / memory** | Yes — `.claude/skills/`, CLAUDE.md, MEMORY.md | Yes — same conventions; plus connector-aware skills |
+| **Plugins / skills / memory** | Yes — `.claude/skills/`, CLAUDE.md, LOGBOOK.md | Yes — same conventions; plus connector-aware skills |
 
-**For optimization research, Claude Code is the workhorse.** It's where you write the solver, run experiments, build CUTEst harnesses, generate paper figures, manage MEMORY.md.
+**For optimization research, Claude Code is the workhorse.** It's where you write the solver, run experiments, build CUTEst harnesses, generate paper figures, manage LOGBOOK.md.
 
 **Where Cowork helps an optimization researcher.** When the work crosses tools your terminal can't reach: drafting a referee reply that pulls from your Calendar (when's my response due?), Gmail (what did the editor actually ask?), and a Notion outline of your prior responses, in one chat. Or weekly grant-admin work — pulling spend tracking from Drive, due dates from your calendar, status from email.
 
 The two complement each other. You don't pick one.
 
-## 4b. Session handoff: STATUS.md vs. MEMORY.md
+## 4b. Session handoff: STATUS.md vs. LOGBOOK.md
 
-A common early mistake is to use `MEMORY.md` for session-to-session handoff: "I'm in the middle of debugging X; next step is Y." Don't. The two have different lifecycles, and mixing them makes both worse.
+A common early mistake is to use `LOGBOOK.md` for session-to-session handoff: "I'm in the middle of debugging X; next step is Y." Don't. The two have different lifecycles, and mixing them makes both worse.
 
-| | **MEMORY.md** | **STATUS.md** |
+| | **LOGBOOK.md** | **STATUS.md** |
 |---|---|---|
 | Purpose | Durable knowledge | Where you are right now |
 | Lifecycle | Append-only; rarely consolidated | Overwritten each session |
@@ -99,7 +99,7 @@ Then re-run pytest tests/test_linesearch.py -k HS071.
 The split end-of-session ritual:
 
 ```
-> append a dated entry to MEMORY.md with what we decided in this session
+> append a dated entry to LOGBOOK.md with what we decided in this session
 > overwrite STATUS.md with where we are now and the next step
 ```
 
@@ -118,23 +118,23 @@ Then the next session starts with:
 
 The pattern is simple: rely most on what you write into files; rely least on what lives only in chat state.
 
-### Why not put a "currently working on" header in MEMORY.md?
+### Why not put a "currently working on" header in LOGBOOK.md?
 
 Small projects can get away with it. Two failure modes show up at scale:
 
 - The handoff section grows because nobody prunes it. Stale TODOs accumulate.
-- You start scanning MEMORY.md for current state and conflating it with durable decisions, which is exactly what the file structure is trying to prevent.
+- You start scanning LOGBOOK.md for current state and conflating it with durable decisions, which is exactly what the file structure is trying to prevent.
 
 Keep them separate. STATUS.md is cheap.
 
 ## 4c. Plans as artifacts — the four-file architecture
 
-A plan from plan mode is a third long-lived file type, distinct from CLAUDE.md, MEMORY.md, and STATUS.md. Give plans a directory of their own and have the other files reference them by filename.
+A plan from plan mode is a third long-lived file type, distinct from CLAUDE.md, LOGBOOK.md, and STATUS.md. Give plans a directory of their own and have the other files reference them by filename.
 
 ```
 project/
 ├── CLAUDE.md          conventions; rarely edited
-├── MEMORY.md          durable knowledge; references plan outcomes
+├── LOGBOOK.md          durable knowledge; references plan outcomes
 ├── STATUS.md          current state; points at the active plan
 └── plans/
     ├── 2026-04-08-filter-linesearch.md   executed
@@ -142,13 +142,13 @@ project/
     └── 2026-05-07-tao-implementation.md  active
 ```
 
-The lifecycle of a plan file is: created → active → one of {executed, abandoned, revised}. Each transition has a corresponding update to STATUS.md or MEMORY.md.
+The lifecycle of a plan file is: created → active → one of {executed, abandoned, revised}. Each transition has a corresponding update to STATUS.md or LOGBOOK.md.
 
 | File | Says | Updated when |
 |---|---|---|
 | `CLAUDE.md` | How the project works | A convention changes |
 | `plans/<date>-<slug>.md` | What's going to happen next | Plan created, revised, or marked abandoned |
-| `MEMORY.md` | What's been learned | A plan executes or is abandoned, producing a decision or a dead end |
+| `LOGBOOK.md` | What's been learned | A plan executes or is abandoned, producing a decision or a dead end |
 | `STATUS.md` | Where I am right now | Every session, at minimum |
 
 ### How the files reference plans
@@ -170,7 +170,7 @@ plans/2026-05-07-tao-implementation.md — step 3 of 7
 Read plan step 3.b. Use VecGetArray for the conversion, not VecCopy.
 ```
 
-**MEMORY.md references plans selectively** — when a plan made a decision worth remembering, or when a plan was abandoned and you want future-you to skip it.
+**LOGBOOK.md references plans selectively** — when a plan made a decision worth remembering, or when a plan was abandoned and you want future-you to skip it.
 
 ```markdown
 ## Decisions
@@ -185,7 +185,7 @@ Read plan step 3.b. Use VecGetArray for the conversion, not VecCopy.
   notebooks/2026-04-29-tikhonov-deadend.md.
 ```
 
-The pattern: **plan files are evidence; MEMORY.md is the index.** Reasoning lives in the plan, the fact lives in MEMORY.md, the filename ties them together.
+The pattern: **plan files are evidence; LOGBOOK.md is the index.** Reasoning lives in the plan, the fact lives in LOGBOOK.md, the filename ties them together.
 
 ### Two operational rules
 
@@ -198,7 +198,7 @@ These are the operational moves that keep the architecture honest. Copy them int
 
 ```
 # Set up the structure in a fresh project
-> create CLAUDE.md, MEMORY.md, STATUS.md, and a plans/ directory in
+> create CLAUDE.md, LOGBOOK.md, STATUS.md, and a plans/ directory in
   this project. Use the workshop conventions from WORKFLOW.md if
   present, otherwise leave each file as a clearly marked template.
 
@@ -211,7 +211,7 @@ These are the operational moves that keep the architecture honest. Copy them int
   Then read the active plan it references.
 
 # After a step of the plan executes
-> append the run summary to MEMORY.md if anything was decided.
+> append the run summary to LOGBOOK.md if anything was decided.
   Then overwrite STATUS.md with the next concrete step inside the
   active plan.
 
@@ -221,7 +221,7 @@ These are the operational moves that keep the architecture honest. Copy them int
 
 # When you decide to abandon a plan
 > add an "Abandoned: <today>, reason: <one line>" header to the top
-  of plans/<filename>.md. Then append a Dead Ends entry to MEMORY.md
+  of plans/<filename>.md. Then append a Dead Ends entry to LOGBOOK.md
   that references it.
 
 # Reorganize an old project that already has a flat plan.md
@@ -230,7 +230,7 @@ These are the operational moves that keep the architecture honest. Copy them int
   redirect note for two weeks.
 ```
 
-A short habit that pays off: at the end of every session, ask Claude `is anything in STATUS.md or MEMORY.md still referencing a stale plan filename?` Half a second; catches the broken link the day it happens, not three months later.
+A short habit that pays off: at the end of every session, ask Claude `is anything in STATUS.md or LOGBOOK.md still referencing a stale plan filename?` Half a second; catches the broken link the day it happens, not three months later.
 
 ## 4d. Literature research — the fifth artifact
 
@@ -254,7 +254,7 @@ Add a fifth conventional artifact to the four-file architecture:
 ```
 project/
 ├── CLAUDE.md
-├── MEMORY.md         # cites both plans/ AND literature/
+├── LOGBOOK.md         # cites both plans/ AND literature/
 ├── STATUS.md
 ├── plans/
 │   └── 2026-05-07-tao-implementation.md
@@ -267,7 +267,7 @@ project/
 
 Each paper becomes one markdown file, named by BibTeX key. The file follows a consistent template (the `paper-summary` skill enforces this — see below) so the directory is searchable and grep-able.
 
-`MEMORY.md` decisions cite both layers:
+`LOGBOOK.md` decisions cite both layers:
 
 ```markdown
 ## Decisions
@@ -363,7 +363,7 @@ Once registered, Claude Code can ask your wiki questions like any other tool. Th
 1. Find a candidate paper (arXiv MCP, Semantic Scholar MCP, your reading queue).
 2. Drop the PDF into `papers-inbox/`. Run `paper-summary` skill.
 3. Review the resulting `literature/<bibkey>.md`. Edit ruthlessly. Verify pull-quotes against the PDF.
-4. If a decision is being made, append to `MEMORY.md` citing both the active plan and the new literature entry.
+4. If a decision is being made, append to `LOGBOOK.md` citing both the active plan and the new literature entry.
 5. For "what does the field say about X" questions, ask the literature MCP (or a wiki-rag MCP) — never the model from memory.
 
 A small habit that scales: at the end of every session, ask `is anything I cited today still unverified? List unresolved [citation needed] markers.` Half a second; catches sloppy citation early.
@@ -426,7 +426,7 @@ git worktree add ../tikhonov-experiment
 git worktree add ../sqp-experiment
 
 # In each, run claude separately. Each has its own CLAUDE.md
-# (you can fork the file if needed) and its own MEMORY.md.
+# (you can fork the file if needed) and its own LOGBOOK.md.
 ```
 
 ## 6b. Testing for code and for results
@@ -453,7 +453,7 @@ Many of the verification skills suggested in the deck — `kkt-checker`, `strong
 
 - **CLAUDE.md** says how to run them. Make it a hard rule:
   > After any code edit: run `pytest -q tests/`. Surface failures in the next reply; don't claim done. For changes touching solver behavior, also run `python bench/run.py --suite cohort_smoke` and report iters/time.
-- **MEMORY.md decisions** should cite the test that would catch the regression:
+- **LOGBOOK.md decisions** should cite the test that would catch the regression:
   > Decision: `mu_init = 1e-2`. Test: `tests/test_mu_default.py::test_no_divergence_on_cohort`.
 - **plans/** — every step that changes solver behavior pairs with a test step. The capstone plan follows this pattern (step 6 is "smoke test").
 - **STATUS.md** — the *Current state* block should list which tests pass and which fail. That's the single most useful piece of state to hand off.
@@ -539,7 +539,7 @@ Print this. Stick it next to your monitor.
 Before a session:
   □  Clean `git status` (or known WIP on a branch)
   □  CLAUDE.md still reflects the project? Quick read.
-  □  Anything in MEMORY.md from last session that's relevant? Skim.
+  □  Anything in LOGBOOK.md from last session that's relevant? Skim.
 
 During a session:
   □  Read every git diff before continuing
@@ -554,7 +554,7 @@ If you suspect a loop:
   □  /clear, re-plan with invariants explicit, add tests
 
 End of session:
-  □  Append a dated entry to MEMORY.md
+  □  Append a dated entry to LOGBOOK.md
   □  Commit. Push if appropriate.
-  □  Note any open questions (in MEMORY.md, not in your head)
+  □  Note any open questions (in LOGBOOK.md, not in your head)
 ```

@@ -41,7 +41,7 @@ Plan: filter line search for IPM
 Files to be modified: driver.py, filter.py (new), tests/test_linesearch.py
 Open questions:
   - Filter envelope parameters: use Wächter–Biegler defaults?
-  - Should we record filter contents in MEMORY.md after each run?
+  - Should we record filter contents in LOGBOOK.md after each run?
 ```
 
 Read the open questions before approving — that's where most surprises live.
@@ -49,19 +49,19 @@ Read the open questions before approving — that's where most surprises live.
 
 <!--slide n=20 layout=content kicker="Planning"-->
 # Plans as artifacts: the four-file architecture
-A plan is the fourth kind of file in the project — alongside CLAUDE.md, MEMORY.md, STATUS.md. Each has its own lifecycle.
+A plan is the fourth kind of file in the project — alongside CLAUDE.md, LOGBOOK.md, STATUS.md. Each has its own lifecycle.
 
 | File | Says | Lifecycle |
 |---|---|---|
 | CLAUDE.md | How the project works | Stable; rarely edited |
 | plans/<date>-<slug>.md | What's going to happen next | Created → active → executed/abandoned/revised |
-| MEMORY.md | What's been learned | Append-only; references plans by filename |
+| LOGBOOK.md | What's been learned | Append-only; references plans by filename |
 | STATUS.md | Where I am right now | Overwritten each session; points at the active plan |
 
 ```
 project/
 ├── CLAUDE.md
-├── MEMORY.md          # references plan outcomes
+├── LOGBOOK.md          # references plan outcomes
 ├── STATUS.md          # points at the active plan
 └── plans/
     ├── 2026-04-08-filter-linesearch.md   executed
@@ -69,7 +69,7 @@ project/
     └── 2026-05-07-tao-implementation.md  active
 ```
 
-> Rule: **plan files are evidence; MEMORY.md is the index.** The reasoning lives in the plan, the fact lives in MEMORY.md, the file pointer ties them together.
+> Rule: **plan files are evidence; LOGBOOK.md is the index.** The reasoning lives in the plan, the fact lives in LOGBOOK.md, the file pointer ties them together.
 
 
 <!--slide n=21 layout=content kicker="Planning"-->
@@ -78,7 +78,7 @@ Copy these into your sessions — they're the operational moves that keep the fo
 
 ```
 # Set up the structure in a fresh project
-> create CLAUDE.md, MEMORY.md, STATUS.md, and a plans/ directory
+> create CLAUDE.md, LOGBOOK.md, STATUS.md, and a plans/ directory
   in this project, using the workshop conventions. Leave each file
   as a clearly-marked template I'll fill in.
 
@@ -88,7 +88,7 @@ Copy these into your sessions — they're the operational moves that keep the fo
   implement yet.
 
 # At the end of an execution session
-> append a dated decision to MEMORY.md citing
+> append a dated decision to LOGBOOK.md citing
   plans/2026-05-07-tao-implementation.md, then overwrite STATUS.md
   with the next concrete step inside that plan.
 
@@ -99,7 +99,7 @@ Copy these into your sessions — they're the operational moves that keep the fo
 # When abandoning a plan
 > add an "Abandoned: 2026-05-09, reason: ..." header to
   plans/2026-04-22-tikhonov.md, and append a Dead Ends entry in
-  MEMORY.md that references it.
+  LOGBOOK.md that references it.
 ```
 
 

@@ -2,7 +2,7 @@
 # Files, not chats
 _Claude Code as a co-scientist — for mathematicians_
 
-A hands-on workshop for researchers in computational mathematics — numerical PDEs, optimization, etc. The four-file architecture (CLAUDE.md, plans/, MEMORY.md, STATUS.md), skills, version control, testing, and literature workflows — with runnable exercises.
+A hands-on workshop for researchers in computational mathematics — numerical PDEs, optimization, etc. The four-file architecture (CLAUDE.md, plans/, LOGBOOK.md, STATUS.md), skills, version control, testing, and literature workflows — with runnable exercises.
 
 Contributors: Rebecca Durst · Srini Eswar · Sven Leyffer · Andreas Wilke
 
@@ -28,7 +28,7 @@ _You don't need any AI experience. You do need the kind of work that benefits fr
 # What you'll leave with
 _Central insight: durable AI collaboration is built from files, not from chat history. The whole workshop is a tour of which files to keep and how they fit together._
 
-1. **The four-file architecture** — `CLAUDE.md` (conventions), `plans/` (forward-looking), `MEMORY.md` (durable knowledge), `STATUS.md` (current state).
+1. **The four-file architecture** — `CLAUDE.md` (conventions), `plans/` (forward-looking), `LOGBOOK.md` (durable knowledge), `STATUS.md` (current state).
 2. **Skills** — packaging recurring domain logic (KKT checks, performance profiles) as reusable artifacts.
 3. **Sustainable habits** — version control, recognizing whack-a-mole loops, ending sessions cleanly.
 4. **A capstone** — an open-ended project applying everything to your own research, or one of several provided briefs (constrained derivative-free optimization, PDE solver/preconditioner benchmarking, a dependency-free CUTEst in C).
@@ -40,7 +40,7 @@ _Two stages: short guided exercises first, then an open-ended capstone where you
 
 :::columns
 ### Stage 1 · Exercises
-- Small, self-contained examples that show how individual Claude features work — CLAUDE.md, plan mode, skills, MEMORY.md.
+- Small, self-contained examples that show how individual Claude features work — CLAUDE.md, plan mode, skills, LOGBOOK.md.
 - These are *not* "you must only use it this way" prescriptions. They're starting points.
 - During each exercise, keep asking: *how could a tool like this help me in my own research?* The answer looks different for everyone.
 

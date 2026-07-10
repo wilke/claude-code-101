@@ -33,7 +33,7 @@ The four-file architecture from `WORKFLOW.md` extends to literature as follows:
 ```
 project/
 ├── CLAUDE.md           # conventions; includes the literature verification rule
-├── MEMORY.md           # cites both plans/ and literature/
+├── LOGBOOK.md           # cites both plans/ and literature/
 ├── STATUS.md           # current state
 ├── plans/              # forward-looking plans
 └── literature/         # one paper per file, named by BibTeX key
@@ -45,7 +45,7 @@ project/
 
 Each `literature/<bibkey>.md` follows the template in `exercises/03-skills/skills/paper-summary/SKILL.md` (and the worked example in `examples/example-output.md`). The template enforces consistency so the directory is searchable.
 
-`MEMORY.md` decisions cite both `plans/` and `literature/`:
+`LOGBOOK.md` decisions cite both `plans/` and `literature/`:
 
 ```markdown
 ## Decisions
@@ -92,7 +92,7 @@ description: |
   the arxiv or semantic-scholar MCP to verify; never emits a citation
   from memory. Use whenever the user references a paper informally and
   needs the actual reference, or before adding a citation to a paper
-  draft or MEMORY.md.
+  draft or LOGBOOK.md.
 ---
 
 # Citation resolver
@@ -151,8 +151,8 @@ Copy these into your sessions; tweak filenames.
   literature/<bibkey>.md exists and matches the in-text claim. List
   any unverified citations.
 
-# Audit MEMORY.md for unsourced claims
-> scan MEMORY.md for parameter folklore or decisions that don't cite
+# Audit LOGBOOK.md for unsourced claims
+> scan LOGBOOK.md for parameter folklore or decisions that don't cite
   a literature/ entry. List them; suggest which paper would be the
   right citation if known. Mark unknowns as [citation needed].
 
@@ -288,7 +288,7 @@ A concrete week-in-the-life:
 1. **Monday.** Skim arXiv via the arXiv MCP; pull three candidate papers into `papers-inbox/`.
 2. Run the `paper-summary` skill on each. Edit the resulting `literature/*.md` files; verify pull-quotes against the PDFs.
 3. **Tuesday.** Reading session. Use the `tex-equation-extractor` skill to lift one promising derivation into `docs/derivations.tex`.
-4. **Wednesday.** Coding session. The decision to adopt method X gets a `MEMORY.md` entry citing both `plans/2026-XX-method-X.md` and `literature/<paper>.md`.
+4. **Wednesday.** Coding session. The decision to adopt method X gets a `LOGBOOK.md` entry citing both `plans/2026-XX-method-X.md` and `literature/<paper>.md`.
 5. **Thursday.** A question comes up: "what does the field say about saddle-point smoothing for inverse problems?" Ask the `query_lab_wiki` MCP (backed by wiki-rag indexing the group's MediaWiki) for an answer with source IDs. Cross-check the most-cited source against `literature/`.
 6. **Friday.** End-of-week habit: ask Claude to *list every `[citation needed]` marker across all files*. Resolve them or close them as out-of-scope.
 
@@ -325,7 +325,7 @@ Choose a single paper relevant to the capstone — for example, Wächter & Biegl
 
 5. **Edit ruthlessly.** The first draft of any AI-produced summary is too long. Target one screen.
 
-6. **Cite from MEMORY.md.** Pick one decision in your MEMORY.md (or the capstone's MEMORY.md) and add a citation to the new `literature/<bibkey>.md` file.
+6. **Cite from LOGBOOK.md.** Pick one decision in your LOGBOOK.md (or the capstone's LOGBOOK.md) and add a citation to the new `literature/<bibkey>.md` file.
 
 7. **Stretch — wire wiki-rag.** If you have a MediaWiki you can experiment with (or stand one up locally), deploy `moodlehq/wiki-rag` per its README, then register the MCP wrapper from §8. Now ask Claude an open question about that wiki's content and verify the source IDs.
 

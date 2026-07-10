@@ -19,7 +19,7 @@ where it destroys the answer.
 
 This is a *files, not chats* capstone: you develop the entire project from this
 README using the skills from the exercises — a project `CLAUDE.md` for conventions,
-plan mode for the harness, `MEMORY.md` for durable findings, `STATUS.md` for
+plan mode for the harness, `LOGBOOK.md` for durable findings, `STATUS.md` for
 handoffs, and a skill or two for the repetitive parts. Nothing else ships. The code
 is yours to write.
 
@@ -396,7 +396,7 @@ For fun, you can hand this list to `claude` and let it plan — or work it step 
 3. Plan the harness in plan mode; agree on the run-record schema (including the
    precision manifest) before coding.
 4. Solve the well-conditioned baseline; produce the accuracy plot (IR on the fp64 line).
-5. Record durable findings in `MEMORY.md` (which allocations preserve fp64 quality, and
+5. Record durable findings in `LOGBOOK.md` (which allocations preserve fp64 quality, and
    why); overwrite `STATUS.md` with the next step at each handoff.
 6. Raise conditioning; compare the strategies; run the sweep over conditioning, stage
    allocation, and accumulator precision.

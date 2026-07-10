@@ -1,4 +1,4 @@
-# MEMORY — ADMM-Filter project
+# LOGBOOK — ADMM-Filter project
 
 Distilled from `plans/`. Each entry cites the plan file it came from.
 
@@ -29,7 +29,7 @@ Distilled from `plans/`. Each entry cites the plan file it came from.
 - **Movie option mirrors the plot toggle** (off by default, one `movie` flag /
   `--movie`).  (`2026-06-03-movie.md`)
 - **2026-06-24 — Session: bootstrapped project memory & guidance.** Read all
-  seven `plans/` files and synthesized this `MEMORY.md` (Decisions / Parameters /
+  seven `plans/` files and synthesized this `LOGBOOK.md` (Decisions / Parameters /
   Dead Ends / Open Questions, each entry citing its plan); the user then trimmed
   it. Also created `CLAUDE.md` from a codebase analysis — captures the run-from-
   `src/` rule, the "one module = one `__main__` self-test" testing model, the

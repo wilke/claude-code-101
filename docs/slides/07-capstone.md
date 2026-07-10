@@ -4,12 +4,12 @@ _Before the capstone, each team shares what came out of the exercises — 2–3 
 
 :::columns
 ### Share
-- What did you get working? (CLAUDE.md, a plan, a skill, MEMORY.md)
+- What did you get working? (CLAUDE.md, a plan, a skill, LOGBOOK.md)
 - What surprised you — good or bad?
 - Where did Claude go wrong, and how did you catch it?
 
 ### Discuss
-- Which file — CLAUDE.md, plans/, MEMORY.md, STATUS.md — earned its keep?
+- Which file — CLAUDE.md, plans/, LOGBOOK.md, STATUS.md — earned its keep?
 - What will you try on your own research?
 - Open questions for the room.
 :::

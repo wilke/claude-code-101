@@ -88,7 +88,7 @@ plt.rcParams.update({"figure.dpi": 110, "font.size": 11})
 code("""\
 # Problem: 30x10 cantilever at 40% volume.  Smaller than the 60x20 used in
 # admm_walkthrough.ipynb so that both drivers run in ~10 seconds and so this
-# matches the canonical 30x10 oscillation example documented in MEMORY.md.
+# matches the canonical 30x10 oscillation example documented in LOGBOOK.md.
 nelx     = 30
 nely     = 10
 penal    = 3.0

@@ -11,7 +11,7 @@ map** of where each one wins, not folklore.
 
 This is a *files, not chats* capstone: you develop the entire project from this
 README using the skills from the exercises — a project `CLAUDE.md` for
-conventions, plan mode for the harness, `MEMORY.md` for durable findings,
+conventions, plan mode for the harness, `LOGBOOK.md` for durable findings,
 `STATUS.md` for handoffs, and a skill or two for the repetitive parts. Nothing
 else ships. The code is yours to write.
 
@@ -308,7 +308,7 @@ step.
    `CLAUDE.md` (conventions above).
 2. Plan the harness in plan mode; agree on the run-record schema before coding.
 3. Implement the harness + Poisson baseline; produce the mesh-independence plot.
-4. Record durable findings in `MEMORY.md` (which preconditioners ruled in/out,
+4. Record durable findings in `LOGBOOK.md` (which preconditioners ruled in/out,
    and why); overwrite `STATUS.md` with the next step at each handoff.
 5. Swap in Stokes; compare the solver families; run the robustness sweep.
 6. (Optional) Add near-incompressible elasticity as the bridge case.

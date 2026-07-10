@@ -175,7 +175,7 @@
 <div class="kicker">Workshop · ~2 hours</div>
 <h1>Files, not chats</h1>
 <p class="sub" style="font-size:26px;color:var(--ink);margin-top:6px;margin-bottom:14px;">Claude Code as a co-scientist — for mathematicians</p>
-<p class="sub">A hands-on workshop for researchers in computational mathematics — numerical PDEs, optimization, etc. The four-file architecture (CLAUDE.md, plans/, MEMORY.md, STATUS.md), skills, version control, testing, and literature workflows — with runnable exercises.</p>
+<p class="sub">A hands-on workshop for researchers in computational mathematics — numerical PDEs, optimization, etc. The four-file architecture (CLAUDE.md, plans/, LOGBOOK.md, STATUS.md), skills, version control, testing, and literature workflows — with runnable exercises.</p>
 <p class="sub" style="font-size:16px;margin-top:22px;"><span style="text-transform:uppercase;letter-spacing:0.14em;font-size:12px;color:var(--accent);font-weight:700;">Contributors</span><br>Rebecca Durst · Srini Eswar · Sven Leyffer · Andreas Wilke</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
@@ -190,14 +190,14 @@
 <h3>Roadmap</h3>
 <h1>What you'll leave with</h1>
 <p class="lede">Central insight: durable AI collaboration is built from files, not from chat history. The whole workshop is a tour of which files to keep and how they fit together.</p>
-<ol><li><b>The four-file architecture</b> — <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward-looking), <code>MEMORY.md</code> (durable knowledge), <code>STATUS.md</code> (current state).</li><li><b>Skills</b> — packaging recurring domain logic (KKT checks, performance profiles) as reusable artifacts.</li><li><b>Sustainable habits</b> — version control, recognizing whack-a-mole loops, ending sessions cleanly.</li><li><b>A capstone</b> — an open-ended project applying everything to your own research, or one of several provided briefs (constrained derivative-free optimization, PDE solver/preconditioner benchmarking, a dependency-free CUTEst in C).</li></ol>
+<ol><li><b>The four-file architecture</b> — <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward-looking), <code>LOGBOOK.md</code> (durable knowledge), <code>STATUS.md</code> (current state).</li><li><b>Skills</b> — packaging recurring domain logic (KKT checks, performance profiles) as reusable artifacts.</li><li><b>Sustainable habits</b> — version control, recognizing whack-a-mole loops, ending sessions cleanly.</li><li><b>A capstone</b> — an open-ended project applying everything to your own research, or one of several provided briefs (constrained derivative-free optimization, PDE solver/preconditioner benchmarking, a dependency-free CUTEst in C).</li></ol>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
 <h3>Organization</h3>
 <h1>How the workshop is structured</h1>
 <p class="lede">Two stages: short guided exercises first, then an open-ended capstone where you put the tools to work on your own research.</p>
-<div class="two-col"><div class="col"><h4>Stage 1 · Exercises</h4><ul><li>Small, self-contained examples that show how individual Claude features work — CLAUDE.md, plan mode, skills, MEMORY.md.</li><li>These are <i>not</i> "you must only use it this way" prescriptions. They're starting points.</li><li>During each exercise, keep asking: <i>how could a tool like this help me in my own research?</i> The answer looks different for everyone.</li></ul></div><div class="col"><h4>Stage 2 · Capstone</h4><ul><li>Open-ended time to try the tools on your own — your code, your problem.</li><li>Push past what you saw in the exercises. The exercises show the shape; the capstone is where you stretch it.</li><li>Goal: actually accomplish a piece of research with Claude as your collaborator, not just rehearse a feature.</li></ul></div></div>
+<div class="two-col"><div class="col"><h4>Stage 1 · Exercises</h4><ul><li>Small, self-contained examples that show how individual Claude features work — CLAUDE.md, plan mode, skills, LOGBOOK.md.</li><li>These are <i>not</i> "you must only use it this way" prescriptions. They're starting points.</li><li>During each exercise, keep asking: <i>how could a tool like this help me in my own research?</i> The answer looks different for everyone.</li></ul></div><div class="col"><h4>Stage 2 · Capstone</h4><ul><li>Open-ended time to try the tools on your own — your code, your problem.</li><li>Push past what you saw in the exercises. The exercises show the shape; the capstone is where you stretch it.</li><li>Goal: actually accomplish a piece of research with Claude as your collaborator, not just rehearse a feature.</li></ul></div></div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
@@ -234,8 +234,8 @@
 <section class="slide">
 <h3>Session basics</h3>
 <h1>What persists, what doesn't</h1>
-<table class="matrix"><tr><th></th><th>Survives a new session?</th><th>Survives auto-compact?</th></tr><tr><td>Files in your project (code, MEMORY.md)</td><td>Yes</td><td>Yes — they're on disk</td></tr><tr><td>CLAUDE.md</td><td>Yes — auto-loaded each session</td><td>Yes — kept in context</td></tr><tr><td>Skills</td><td>Yes — loaded on demand by description match</td><td>Re-loaded as needed</td></tr><tr><td>The conversation itself</td><td>Only with <code>--resume</code></td><td>Compressed to a summary</td></tr><tr><td>"Mental notes" Claude has in-conversation</td><td>No — they vanish</td><td>Often lost</td></tr></table>
-<p>If a fact matters tomorrow, write it to MEMORY.md today. If it's a reusable procedure, lift it into a skill. <b>The conversation is scratch paper.</b></p>
+<table class="matrix"><tr><th></th><th>Survives a new session?</th><th>Survives auto-compact?</th></tr><tr><td>Files in your project (code, LOGBOOK.md)</td><td>Yes</td><td>Yes — they're on disk</td></tr><tr><td>CLAUDE.md</td><td>Yes — auto-loaded each session</td><td>Yes — kept in context</td></tr><tr><td>Skills</td><td>Yes — loaded on demand by description match</td><td>Re-loaded as needed</td></tr><tr><td>The conversation itself</td><td>Only with <code>--resume</code></td><td>Compressed to a summary</td></tr><tr><td>"Mental notes" Claude has in-conversation</td><td>No — they vanish</td><td>Often lost</td></tr></table>
+<p>If a fact matters tomorrow, write it to LOGBOOK.md today. If it's a reusable procedure, lift it into a skill. <b>The conversation is scratch paper.</b></p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
@@ -251,7 +251,7 @@ claude --resume
 /clear      # wipe the conversation; keep CLAUDE.md, skills, files
 /compact    # manually summarize older turns to free context space</code></pre>
 <p>Sessions are stored locally under <code>~/.claude/projects/&lt;hash&gt;/</code>. They're plain files; you can grep them.</p>
-<div class="callout"><b>Don't lean on `--resume` to remember decisions</b> — it's brittle. Persist anything that matters to files. We'll cover the end-of-session ritual with MEMORY.md and STATUS.md in Part 4.</div>
+<div class="callout"><b>Don't lean on `--resume` to remember decisions</b> — it's brittle. Persist anything that matters to files. We'll cover the end-of-session ritual with LOGBOOK.md and STATUS.md in Part 4.</div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide section-divider">
@@ -348,24 +348,24 @@ Develop a primal-dual IPM with inertia correction for nonconvex NLPs.
 Files to be modified: driver.py, filter.py (new), tests/test_linesearch.py
 Open questions:
   - Filter envelope parameters: use Wächter–Biegler defaults?
-  - Should we record filter contents in MEMORY.md after each run?</code></pre>
+  - Should we record filter contents in LOGBOOK.md after each run?</code></pre>
 <p>Read the open questions before approving — that's where most surprises live.</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
 <h3>Planning</h3>
 <h1>Plans as artifacts: the four-file architecture</h1>
-<p>A plan is the fourth kind of file in the project — alongside CLAUDE.md, MEMORY.md, STATUS.md. Each has its own lifecycle.</p>
-<table class="matrix"><tr><th>File</th><th>Says</th><th>Lifecycle</th></tr><tr><td>CLAUDE.md</td><td>How the project works</td><td>Stable; rarely edited</td></tr><tr><td>plans/&lt;date&gt;-&lt;slug&gt;.md</td><td>What's going to happen next</td><td>Created → active → executed/abandoned/revised</td></tr><tr><td>MEMORY.md</td><td>What's been learned</td><td>Append-only; references plans by filename</td></tr><tr><td>STATUS.md</td><td>Where I am right now</td><td>Overwritten each session; points at the active plan</td></tr></table>
+<p>A plan is the fourth kind of file in the project — alongside CLAUDE.md, LOGBOOK.md, STATUS.md. Each has its own lifecycle.</p>
+<table class="matrix"><tr><th>File</th><th>Says</th><th>Lifecycle</th></tr><tr><td>CLAUDE.md</td><td>How the project works</td><td>Stable; rarely edited</td></tr><tr><td>plans/&lt;date&gt;-&lt;slug&gt;.md</td><td>What's going to happen next</td><td>Created → active → executed/abandoned/revised</td></tr><tr><td>LOGBOOK.md</td><td>What's been learned</td><td>Append-only; references plans by filename</td></tr><tr><td>STATUS.md</td><td>Where I am right now</td><td>Overwritten each session; points at the active plan</td></tr></table>
 <pre><code>project/
 ├── CLAUDE.md
-├── MEMORY.md          # references plan outcomes
+├── LOGBOOK.md          # references plan outcomes
 ├── STATUS.md          # points at the active plan
 └── plans/
     ├── 2026-04-08-filter-linesearch.md   executed
     ├── 2026-04-22-tikhonov.md            abandoned
     └── 2026-05-07-tao-implementation.md  active</code></pre>
-<div class="callout">Rule: <b>plan files are evidence; MEMORY.md is the index.</b> The reasoning lives in the plan, the fact lives in MEMORY.md, the file pointer ties them together.</div>
+<div class="callout">Rule: <b>plan files are evidence; LOGBOOK.md is the index.</b> The reasoning lives in the plan, the fact lives in LOGBOOK.md, the file pointer ties them together.</div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
@@ -373,7 +373,7 @@ Open questions:
 <h1>Prompts that set up and maintain the architecture</h1>
 <p>Copy these into your sessions — they're the operational moves that keep the four-file structure honest.</p>
 <pre><code># Set up the structure in a fresh project
-&gt; create CLAUDE.md, MEMORY.md, STATUS.md, and a plans/ directory
+&gt; create CLAUDE.md, LOGBOOK.md, STATUS.md, and a plans/ directory
   in this project, using the workshop conventions. Leave each file
   as a clearly-marked template I'll fill in.
 
@@ -383,7 +383,7 @@ Open questions:
   implement yet.
 
 # At the end of an execution session
-&gt; append a dated decision to MEMORY.md citing
+&gt; append a dated decision to LOGBOOK.md citing
   plans/2026-05-07-tao-implementation.md, then overwrite STATUS.md
   with the next concrete step inside that plan.
 
@@ -394,7 +394,7 @@ Open questions:
 # When abandoning a plan
 &gt; add an "Abandoned: 2026-05-09, reason: ..." header to
   plans/2026-04-22-tikhonov.md, and append a Dead Ends entry in
-  MEMORY.md that references it.</code></pre>
+  LOGBOOK.md that references it.</code></pre>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide section-divider">
@@ -455,28 +455,29 @@ Returns max residuals for stationarity, feasibility, complementarity.</code></pr
 </section>
 <section class="slide section-divider">
 <div class="kicker">Part 4 · The diary</div>
-<h1>MEMORY.md</h1>
-<p class="lede">Long-running research generates decisions, dead-ends, and parameter folklore. MEMORY.md is where those facts live so the next session can use them.</p>
+<h1>LOGBOOK.md</h1>
+<p class="lede">Long-running research generates decisions, dead-ends, and parameter folklore. LOGBOOK.md is where those facts live so the next session can use them.</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
-<h3>MEMORY.md</h3>
-<h1>CLAUDE.md vs MEMORY.md</h1>
-<table class="matrix"><tr><th></th><th>CLAUDE.md</th><th>MEMORY.md</th></tr><tr><td>Lifespan</td><td>Stable across the project</td><td>Evolves with the research</td></tr><tr><td>Content</td><td>Conventions, commands, do/don't</td><td>Decisions, parameter values, dead-ends</td></tr><tr><td>Edited by</td><td>You, deliberately</td><td>You and Claude — at the end of each session</td></tr></table>
-<p>Small projects: one MEMORY.md. Larger ones: a <code>memory/</code> directory (<code>solvers.md</code>, <code>experiments.md</code>, <code>dead-ends.md</code>) with an <code>INDEX.md</code>. (The exercise supplement revisits this distinction.)</p>
+<h3>LOGBOOK.md</h3>
+<h1>CLAUDE.md vs LOGBOOK.md</h1>
+<table class="matrix"><tr><th></th><th>CLAUDE.md</th><th>LOGBOOK.md</th></tr><tr><td>Lifespan</td><td>Stable across the project</td><td>Evolves with the research</td></tr><tr><td>Content</td><td>Conventions, commands, do/don't</td><td>Decisions, parameter values, dead-ends</td></tr><tr><td>Edited by</td><td>You, deliberately</td><td>You and Claude — at the end of each session</td></tr></table>
+<p>Small projects: one LOGBOOK.md. As it grows: a <code>logbook/</code> directory (<code>solvers.md</code>, <code>experiments.md</code>, <code>dead-ends.md</code>) with an <code>INDEX.md</code>; and when a <i>decision</i> needs to be cited, reviewed, or reversed, promote it to a numbered ADR in <code>decisions/</code>. (See <code>docs/logbook-to-adrs.md</code>.)</p>
+<div class="callout">We call it <code>LOGBOOK.md</code>, not <code>MEMORY.md</code>: Claude Code auto-generates its own machine-local <code>MEMORY.md</code> — keep the two separate. Full contrast in <code>docs/native-claude-code-mapping.md</code>.</div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
-<h3>MEMORY.md</h3>
+<h3>LOGBOOK.md</h3>
 <h1>What to record</h1>
 <ul><li><b>Decisions.</b> "IPOPT over SNOPT for license reasons — 2026-03-12, issue #41."</li><li><b>Parameter folklore.</b> "<code>mu_init=1e-2</code> fastest on our cohort; <code>1e-4</code> diverges on the catalysis problem."</li><li><b>Dead ends.</b> "Newton + Tikhonov on inverse Poisson converges but multipliers are noise. Don't repeat."</li><li><b>Open questions.</b> "Is the inertia-correction threshold problem-dependent? Re-check HS071, HS099."</li><li><b>Run logs.</b> "Best so far: <code>runs/2026-04-22T1430</code>, ‖∇f‖ = 3.7e-9."</li></ul>
-<div class="callout">Keep it append-only and dated — MEMORY.md is a log, not a document you rewrite. Capturing these entries is part of the end-of-session ritual (next slide, with STATUS.md).</div>
+<div class="callout">Keep it append-only and dated — LOGBOOK.md is a log, not a document you rewrite. Capturing these entries is part of the end-of-session ritual (next slide, with STATUS.md).</div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
-<h3>MEMORY.md</h3>
-<h1>Handoff: STATUS.md, not MEMORY.md</h1>
-<p>MEMORY.md holds durable knowledge and grows. <b>Don't put session handoff in it</b> — "mid-debug on X, next step Y" is true today, noise next week. Use a small, separate, <i>overwritten</i> file:</p>
+<h3>LOGBOOK.md</h3>
+<h1>Handoff: STATUS.md, not LOGBOOK.md</h1>
+<p>LOGBOOK.md holds durable knowledge and grows. <b>Don't put session handoff in it</b> — "mid-debug on X, next step Y" is true today, noise next week. Use a small, separate, <i>overwritten</i> file:</p>
 <pre><code># STATUS — 2026-05-07 17:42
 
 ## What I'm working on
@@ -490,14 +491,14 @@ Filter line search for the IPM driver. PR branch: filter-linesearch.
 ## Next step
 Read filter.py:43-67. If theta_max not set in __init__, add it.
 Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
-<div class="callout">End-of-session ritual: <code>append a dated entry to MEMORY.md and overwrite STATUS.md with where we are now</code>. Two minutes. Next session: read STATUS.md and you're back in flight.</div>
+<div class="callout">End-of-session ritual: <code>append a dated entry to LOGBOOK.md and overwrite STATUS.md with where we are now</code>. Two minutes. Next session: read STATUS.md and you're back in flight.</div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
-<h3>MEMORY.md</h3>
+<h3>LOGBOOK.md</h3>
 <h1>Handoff mechanisms, ordered by reliability</h1>
 <table class="matrix"><tr><th>Mechanism</th><th>Reliability</th><th>Notes</th></tr><tr><td>STATUS.md you wrote</td><td>Highest</td><td>You control it; survives anything.</td></tr><tr><td>Branch name</td><td>High</td><td><code>git branch --show-current</code> tells you what's in flight.</td></tr><tr><td>Last commit message</td><td>High</td><td>A WIP commit is a one-line handoff for free.</td></tr><tr><td><code>claude --continue</code></td><td>Medium</td><td>Brings back the conversation. Brittle: may already be compacted; gone if you switch machines.</td></tr></table>
-<p>The pattern: rely most on what's in <i>files</i> (top three rows). Rely least on what's only in chat state (last row). The deck of files — CLAUDE.md, MEMORY.md, STATUS.md — is what survives whatever a session throws at you.</p>
+<p>The pattern: rely most on what's in <i>files</i> (top three rows). Rely least on what's only in chat state (last row). The deck of files — CLAUDE.md, LOGBOOK.md, STATUS.md — is what survives whatever a session throws at you.</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide section-divider">
@@ -510,7 +511,7 @@ Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
 <h3>Checkpoint</h3>
 <h1>Report back</h1>
 <p class="lede">Before the capstone, each team shares what came out of the exercises — 2–3 minutes each.</p>
-<div class="two-col"><div class="col"><h4>Share</h4><ul><li>What did you get working? (CLAUDE.md, a plan, a skill, MEMORY.md)</li><li>What surprised you — good or bad?</li><li>Where did Claude go wrong, and how did you catch it?</li></ul></div><div class="col"><h4>Discuss</h4><ul><li>Which file — CLAUDE.md, plans/, MEMORY.md, STATUS.md — earned its keep?</li><li>What will you try on your own research?</li><li>Open questions for the room.</li></ul></div></div>
+<div class="two-col"><div class="col"><h4>Share</h4><ul><li>What did you get working? (CLAUDE.md, a plan, a skill, LOGBOOK.md)</li><li>What surprised you — good or bad?</li><li>Where did Claude go wrong, and how did you catch it?</li></ul></div><div class="col"><h4>Discuss</h4><ul><li>Which file — CLAUDE.md, plans/, LOGBOOK.md, STATUS.md — earned its keep?</li><li>What will you try on your own research?</li><li>Open questions for the room.</li></ul></div></div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide section-divider">
@@ -530,10 +531,10 @@ Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
 <h1>What Claude does well — and doesn't</h1>
 <p class="lede">Lean on it for extraction and lookup; keep the judgment yourself — and never trust a citation from memory.</p>
 <table class="matrix"><tr><th></th><th>Claude does well</th><th>Claude does badly</th></tr><tr><td>PDFs</td><td>Extract text, equations, tables (built-in <code>pdf</code> skill)</td><td>Decide what a result <i>really means</i> — that's still you</td></tr><tr><td>Notation</td><td>Translate between Nocedal–Wright / Conn–Gould–Toint / Boyd–Vandenberghe</td><td>Catch subtle distinctions (B- vs. M- vs. S-stationarity) without your verification</td></tr><tr><td>Citations</td><td>Resolve fragments via an <code>arxiv</code> / <code>semantic-scholar</code> lookup</td><td>Emit citations from memory — these are often <b>plausible-looking and wrong</b></td></tr></table>
-<p>Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.</p>
+<p>Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. LOGBOOK.md decisions cite both.</p>
 <pre><code>project/
 ├── CLAUDE.md
-├── MEMORY.md          # cites plans/ AND literature/
+├── LOGBOOK.md          # cites plans/ AND literature/
 ├── STATUS.md
 ├── plans/
 └── literature/
@@ -658,7 +659,7 @@ cd ../alt-approach &amp;&amp; claude</code></pre>
 <section class="slide">
 <h3>Working sustainably</h3>
 <h1>Test patterns with Claude in the loop</h1>
-<ul><li><b>Test-first prompting.</b> "Write the test for X first, confirm it fails, then implement X." Forces specification before code.</li><li><b>Hard rule in CLAUDE.md.</b> "Run <code>pytest -q</code> after every edit; surface failures before continuing." Removes the most common failure mode — claimed success without verification.</li><li><b>Test the dead end, not just the success.</b> Assert the failure mode (e.g. Tikhonov) so a well-meaning future fix can't silently re-enable the bug.</li><li><b>Cite tests in commits and decisions.</b> MEMORY.md decisions reference the test that catches their regression.</li></ul>
+<ul><li><b>Test-first prompting.</b> "Write the test for X first, confirm it fails, then implement X." Forces specification before code.</li><li><b>Hard rule in CLAUDE.md.</b> "Run <code>pytest -q</code> after every edit; surface failures before continuing." Removes the most common failure mode — claimed success without verification.</li><li><b>Test the dead end, not just the success.</b> Assert the failure mode (e.g. Tikhonov) so a well-meaning future fix can't silently re-enable the bug.</li><li><b>Cite tests in commits and decisions.</b> LOGBOOK.md decisions reference the test that catches their regression.</li></ul>
 <pre><code># In CLAUDE.md
 ## Conventions
 - After any code edit: run `pytest -q tests/`. Surface failures
@@ -686,14 +687,14 @@ git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre
 <section class="slide">
 <h3>Wrap-up</h3>
 <h1>Seven habits worth keeping</h1>
-<ol><li><b>Set up the four-file architecture early.</b> <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward), <code>MEMORY.md</code> (learned), <code>STATUS.md</code> (current). One job per file; don't conflate them.</li><li><b>Plan before you build.</b> Plan mode for anything beyond a one-line edit. Save the plan to <code>plans/&lt;date&gt;-&lt;slug&gt;.md</code> before you implement.</li><li><b>Promote recurring tasks to skills.</b> Anything you do twice — KKT check, perf profile, log parsing — becomes a SKILL.md.</li><li><b>Commit before you prompt.</b> A clean working tree means every Claude change is visible in <code>git diff</code> and reversible in one command.</li><li><b>Test both code and results.</b> Unit tests in <code>tests/</code> for correctness; experimental-regression tests in <code>bench/</code> for result quality. A CLAUDE.md rule that says "run pytest after every edit" removes the most common failure mode.</li><li><b>End every session with the two-line ritual.</b> Append a dated entry to MEMORY.md if anything was decided; overwrite STATUS.md with the next concrete step. Two minutes.</li><li><b>When you're whack-a-mole-ing, stop and formalize.</b> Loops mean an invariant is unwritten. Write it, test it, and the loop ends.</li></ol>
+<ol><li><b>Set up the four-file architecture early.</b> <code>CLAUDE.md</code> (conventions), <code>plans/</code> (forward), <code>LOGBOOK.md</code> (learned), <code>STATUS.md</code> (current). One job per file; don't conflate them.</li><li><b>Plan before you build.</b> Plan mode for anything beyond a one-line edit. Save the plan to <code>plans/&lt;date&gt;-&lt;slug&gt;.md</code> before you implement.</li><li><b>Promote recurring tasks to skills.</b> Anything you do twice — KKT check, perf profile, log parsing — becomes a SKILL.md.</li><li><b>Commit before you prompt.</b> A clean working tree means every Claude change is visible in <code>git diff</code> and reversible in one command.</li><li><b>Test both code and results.</b> Unit tests in <code>tests/</code> for correctness; experimental-regression tests in <code>bench/</code> for result quality. A CLAUDE.md rule that says "run pytest after every edit" removes the most common failure mode.</li><li><b>End every session with the two-line ritual.</b> Append a dated entry to LOGBOOK.md if anything was decided; overwrite STATUS.md with the next concrete step. Two minutes.</li><li><b>When you're whack-a-mole-ing, stop and formalize.</b> Loops mean an invariant is unwritten. Write it, test it, and the loop ends.</li></ol>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
 <h3>Reference</h3>
 <h1>Files vs. built-ins: how this maps to Claude Code</h1>
 <p class="lede">Two of the four files are the official path; two deliberately turn ephemeral built-ins into durable, versioned files.</p>
-<table class="matrix"><tr><th>This deck</th><th>Claude Code natively</th></tr><tr><td><code>CLAUDE.md</code></td><td>The native memory file — hierarchy + <code>@import</code>. <b>Same thing.</b></td></tr><tr><td>Skills</td><td>Native, loaded on demand. <b>Same thing.</b></td></tr><tr><td><code>plans/</code></td><td>Plan mode is a permission mode — <b>ephemeral</b>, never written to disk. We persist it.</td></tr><tr><td><code>MEMORY.md</code></td><td>CLAUDE.md <i>is</i> the memory; we split durable facts into a file it points at. (Name clashes with Claude Code's own auto-memory <code>MEMORY.md</code>.)</td></tr><tr><td><code>STATUS.md</code></td><td><code>--resume</code> / checkpoints are <b>machine-local</b> — a committed file crosses machines, CI, and collaborators.</td></tr></table>
+<table class="matrix"><tr><th>This deck</th><th>Claude Code natively</th></tr><tr><td><code>CLAUDE.md</code></td><td>The native memory file — hierarchy + <code>@import</code>. <b>Same thing.</b></td></tr><tr><td>Skills</td><td>Native, loaded on demand. <b>Same thing.</b></td></tr><tr><td><code>plans/</code></td><td>Plan mode is a permission mode — <b>ephemeral</b>, never written to disk. We persist it.</td></tr><tr><td><code>LOGBOOK.md</code></td><td>CLAUDE.md <i>is</i> the memory; we split durable facts into a file it points at. We call it <code>LOGBOOK.md</code> (not <code>MEMORY.md</code>) to avoid clashing with Claude Code's own machine-local auto-memory <code>MEMORY.md</code>.</td></tr><tr><td><code>STATUS.md</code></td><td><code>--resume</code> / checkpoints are <b>machine-local</b> — a committed file crosses machines, CI, and collaborators.</td></tr></table>
 <div class="callout">Same diagnosis as the official guide — context degrades as it fills — but a different remedy: <b>write it to disk</b>. Strongest when work crosses sessions, machines, or people; redundant when it doesn't.</div>
 <p>Full comparison: <code>docs/native-claude-code-mapping.md</code>. Official guide: <code>docs.claude.com/en/best-practices</code>.</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
@@ -702,7 +703,7 @@ git log -p path/to/disputed.py   # are the same lines flipping back?</code></pre
 <h3>Resources</h3>
 <h1>Where to go from here</h1>
 <ul><li><b>Authoritative reference: `docs.claude.com/en/best-practices`</b> — Anthropic's official guide. Read it after this workshop; our four-file architecture and literature material are opinion-laden extensions of it.</li><li>Documentation: <code>docs.claude.com/claude-code</code></li><li>Source &amp; issues: <code>github.com/anthropics/claude-code</code></li><li>Skills examples: the <code>.claude/skills/</code> in this workshop's exercises folder</li><li>A power-user reference setup: <code>github.com/affaan-m/everything-claude-code</code> — heavy on software-engineering skills; useful as a layout example, not a starting point.</li><li>Optimization-specific:<ul><li>PETSc/TAO: <code>petsc.org</code> — the user manual chapter on TAO is short and excellent.</li><li>Pyomo: <code>pyomo.readthedocs.io</code></li><li>CasADi: <code>casadi.org</code></li><li>CUTEst: <code>github.com/ralna/CUTEst</code></li></ul></li></ul>
-<p>Questions, or stories of what worked: keep notes in MEMORY.md. The next session will thank you.</p>
+<p>Questions, or stories of what worked: keep notes in LOGBOOK.md. The next session will thank you.</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 </div>

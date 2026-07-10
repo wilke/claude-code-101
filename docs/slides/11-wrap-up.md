@@ -1,4 +1,4 @@
-<!--slide n=47 layout=content kicker="Wrap-up"-->
+<!--slide n=49 layout=content kicker="Wrap-up"-->
 # Seven habits worth keeping
 1. **Set up the four-file architecture early.** `CLAUDE.md` (conventions), `plans/` (forward), `MEMORY.md` (learned), `STATUS.md` (current). One job per file; don't conflate them.
 2. **Plan before you build.** Plan mode for anything beyond a one-line edit. Save the plan to `plans/<date>-<slug>.md` before you implement.
@@ -9,7 +9,7 @@
 7. **When you're whack-a-mole-ing, stop and formalize.** Loops mean an invariant is unwritten. Write it, test it, and the loop ends.
 
 
-<!--slide n=48 layout=content kicker="Reference"-->
+<!--slide n=50 layout=content kicker="Reference"-->
 # Files vs. built-ins: how this maps to Claude Code
 _Two of the four files are the official path; two deliberately turn ephemeral built-ins into durable, versioned files._
 
@@ -26,7 +26,7 @@ _Two of the four files are the official path; two deliberately turn ephemeral bu
 Full comparison: `docs/native-claude-code-mapping.md`. Official guide: `docs.claude.com/en/best-practices`.
 
 
-<!--slide n=49 layout=content kicker="Resources"-->
+<!--slide n=51 layout=content kicker="Resources"-->
 # Where to go from here
 - **Authoritative reference: `docs.claude.com/en/best-practices`** — Anthropic's official guide. Read it after this workshop; our four-file architecture and literature material are opinion-laden extensions of it.
 - Documentation: `docs.claude.com/claude-code`
@@ -40,20 +40,3 @@ Full comparison: `docs/native-claude-code-mapping.md`. Official guide: `docs.cla
     - CUTEst: `github.com/ralna/CUTEst`
 
 Questions, or stories of what worked: keep notes in MEMORY.md. The next session will thank you.
-
-
-<!--slide n=50 layout=closing kicker=""-->
-# Capstone
-_Open-ended time. Your code, your problem — Claude as collaborator. Or pick a provided brief:_
-
-:::capstones
-- **BQPD-CPP** — A thread-safe C++ port of Fletcher's robust QP solver.
-- **CUTEst-C** — A clean, dependency-free C implementation of CUTEst.
-- **ConDFO** — A derivative-free optimization solver for constrained problems.
-- **OptiUNO** — Run-time-configurable Newton-like solvers, hunting better combinations.
-- **PrecisionBench** — Mixed-precision benchmarking for numerical linear algebra.
-- **SciCompSkills** — A hallucination-resistant verified-literature-search skill.
-- **SolverBench** — A reproducible benchmark of solvers & preconditioners for PDEs.
-- **diffBLAS** — Adapt differentiated BLAS routines to AD activity contexts.
-- **optSolverBench** — Benchmark optimizers & solvers for PDE-constrained optimization.
-:::

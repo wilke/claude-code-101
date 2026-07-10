@@ -25,12 +25,13 @@ Build both with `make` (see the repo `Makefile`): `make html`, `make pptx`, or `
 | [`04-planning.md`](04-planning.md) | 16–22 | Part 2 · Planning, plans as artifacts + Exercise 2 |
 | [`05-skills.md`](05-skills.md) | 23–27 | Part 3 · Skills + Exercise 3 |
 | [`06-memory.md`](06-memory.md) | 28–33 | Part 4 · MEMORY.md, STATUS.md handoff + Exercise 4 |
-| [`07-literature.md`](07-literature.md) | 34–35 | Literature as the fifth artifact, RAG |
+| [`07-capstone.md`](07-capstone.md) | 34–35 | Report back (exercise debrief) + Capstone kickoff |
 | [`08-power-features.md`](08-power-features.md) | 36–39 | Part 5 · Checkpoints, subagents/hooks, non-interactive mode |
-| [`09-working-sustainably.md`](09-working-sustainably.md) | 40–46 | Part 6 · Git hygiene, reverting, tests, loop detection |
-| [`10-wrap-up.md`](10-wrap-up.md) | 47–50 | Seven habits, native mapping, resources, capstone |
+| [`09-literature.md`](09-literature.md) | 40–41 | Literature as the fifth artifact, RAG |
+| [`10-working-sustainably.md`](10-working-sustainably.md) | 42–48 | Part 6 · Git hygiene, reverting, tests, loop detection |
+| [`11-wrap-up.md`](11-wrap-up.md) | 49–51 | Seven habits, native mapping, resources |
 
-**50 slides total.**
+**51 slides total.** Flow: exercises → **report back** → **capstone kickoff** → power features → literature → working sustainably → wrap-up.
 
 ## Slide format
 

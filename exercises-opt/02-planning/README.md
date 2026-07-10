@@ -1,4 +1,4 @@
-# Exercise 2 — Plan a small NLP (15 min)
+# Exercise 02 — Plan a small NLP (15 min)
 
 **Goal.** Use plan mode to lay out the structure of a small NLP project before any code is written. The deliverable is the **`plan.md`** itself — the lesson is plan mode as a *design step you control*, where the value is the modeling questions the act of planning forces you to answer before you spend compute.
 
@@ -35,6 +35,16 @@ the prompt or during plan iteration — so that what lands in `plan.md` is your 
 plausible substitute. The scope clause in the prompt below is one example of that structure;
 the critical-reading checklist names the rest.
 
+## Setup
+
+Re-use the environment from Exercise 01 (numpy / scipy / matplotlib / unopy), activated
+**before you start `claude`** so Claude runs Python in it:
+
+```bash
+conda activate optimization        # conda
+# or:  source .venv/bin/activate   # pip + venv  (Windows: .venv\Scripts\activate)
+```
+
 ## Steps
 
 1. `cd exercises-opt/02-planning && claude`
@@ -59,7 +69,13 @@ the critical-reading checklist names the rest.
 
 4. **Read the plan critically. Don't approve it yet.** Work through the critical-reading checklist below.
 
-5. Save the plan: ask Claude to write it to `plan.md`. Discuss with your neighbor: 
+5. **Save it without running the plan.** Approving a plan tells Claude to *implement* it — so don't approve. While still in plan mode, ask:
+
+   ```
+   Write the complete plan to plan.md and stop — do not implement it.
+   ```
+
+   Claude can create a new file in plan mode, so `plan.md` lands on disk; then press **`Shift+Tab` to leave plan mode without approving** — the plan is saved and nothing executes. Discuss with your neighbor:
    - What one assumption would you have made wrong without the plan?
    - Does the plan provide a reasonable strategy for the plot?
 
@@ -77,6 +93,10 @@ the critical-reading checklist names the rest.
 
 - Compare with how you'd write pseudocode before implementing this method.
 - What types of mistake does the plan catch *before* compute time is spent?
+
+## Optional — implement the plan (if time permits)
+
+Approve the plan and let Claude build it. Watch *how it executes*: does it follow the plan's steps in order, or combine or skip them? Does it pause where you'd want to check in, or race straight to the CSV and plot? Pacing is something you can steer — approve edits manually, or add a convention to `CLAUDE.md` — so where Claude rushes is a signal about where to impose more structure, not a result to just accept.
 
 ## Stretch
 

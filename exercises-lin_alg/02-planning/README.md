@@ -4,8 +4,12 @@
 
 ## Setup
 
+Re-use the environment from Exercise 01 (numpy / scipy / matplotlib), activated
+**before you start `claude`** so Claude runs Python in it:
+
 ```bash
-conda activate linalg   # numpy / scipy / matplotlib
+conda activate linalg              # conda
+# or:  source .venv/bin/activate   # pip + venv  (Windows: .venv\Scripts\activate)
 ```
 
 ## The operator
@@ -13,7 +17,7 @@ conda activate linalg   # numpy / scipy / matplotlib
 `heat_operator.py` is one implicit time step of the 2D heat equation on the unit square, exposed as a matrix-free linear operator: it offers `apply(v)` (its action on a vector) and `shape`, and nothing else — no matrix is ever formed. Run it for 10 time steps to see it drive the physics:
 
 ```bash
-python heat_operator.py --steps 10
+python3 heat_operator.py --steps 10
 ```
 
 The peak temperature of a central hot spot decays step by step. `--N` and `--dt` set the grid and time step.
@@ -40,7 +44,13 @@ The catch: the object *behaves* like a matrix (you can hit any vector with it) b
    ```
 
 4. **Read the plan critically.** Work through the checklist below; push back on at least one gap.
-5. Save it: ask Claude to write the plan to `plan.md`. That file is the deliverable.
+5. **Save it without running the plan.** Approving a plan tells Claude to *implement* it — so don't approve. While still in plan mode, ask:
+
+   ```
+   Write the complete plan to plan.md and stop — do not implement it.
+   ```
+
+   Claude can create a new file in plan mode, so `plan.md` lands on disk; then press **`Shift+Tab` to leave plan mode without approving**. That file is the deliverable.
 
 ## Critical-reading checklist
 
@@ -56,6 +66,10 @@ The catch: the object *behaves* like a matrix (you can hit any vector with it) b
 
 - The operator is symmetric positive definite, so its singular values equal its eigenvalues. Does the plan exploit that (`eigsh`), or reach for `svds` anyway — and does it say which and why?
 - Which parts of this plan are matrix-free *because they have to be*, versus choices you made for convenience?
+
+## Optional — implement the plan (if time permits)
+
+Approve the plan and let Claude build the matrix-free SVD, then sanity-check it against a small-`N` dense reference. Watch *how it executes*: does it follow the plan's steps in order, or combine or skip them (e.g. quietly densifying the operator to move faster)? Pacing is something you can steer — approve edits manually, or pin the constraint in `CLAUDE.md` — so where Claude rushes is a signal about where to impose more structure, not a result to just accept.
 
 ## Stretch
 

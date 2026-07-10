@@ -4,7 +4,7 @@
 
 The learner runs a starter (`laplace_lshape.py`) that solves `-Δu = 0` on an L-shaped domain against the canonical L-shape singular manufactured solution `u(r, φ) = r^(2/3) sin(2φ/3)`, with the trace of `u` imposed on the boundary. Uniform `MeshHierarchy` refinement at P1 produces L² rates around `4/3` and H¹ rates around `2/3` — well below the smooth-problem expectations of `2` and `1`. The rate plateau is a consequence of the geometry: the reentrant corner (at the origin of the `[-1,1] × [-1,1]` minus lower-right-quadrant domain) costs regularity, and uniform refinement does not compensate.
 
-The exercise asks Claude to *plan* the fix in plan mode, then implement it, then re-run to verify the rates recover. The canonical a priori fix is graded mesh refinement around the reentrant corner; the goal of the SOLUTION is to give a facilitator a worked model of both the plan and the implementation so they can compare against what learners produce.
+The exercise asks Claude to *plan* the fix in plan mode; the deliverable is the **`plan.md`**. Actually implementing the plan and re-running to verify the rates recover is an **optional step, if time permits**. The canonical a priori fix is graded mesh refinement around the reentrant corner; this SOLUTION gives a facilitator a worked model of both the plan (the deliverable) and the optional implementation, to compare against what learners produce.
 
 ## The prompt the learner pastes
 
@@ -97,7 +97,7 @@ across the refinement levels.
 
 ## Model implementation
 
-After approving the plan, a clean implementation looks like this. The diagnostic step and the graded-meshes helper are the only new code; the rates loop is left intact.
+If you take the optional implement-the-plan step, a clean implementation looks like this. The diagnostic step and the graded-meshes helper are the only new code; the rates loop is left intact.
 
 ```python
 """Laplace solve on an L-shaped domain with corner-graded refinement.

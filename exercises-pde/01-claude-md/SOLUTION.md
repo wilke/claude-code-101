@@ -4,7 +4,7 @@
 
 We start with a tiny script (`laplace_square.py`) that uses Firedrake to solve `-Δu = f` on the unit square `(0, 1)²` with homogeneous Dirichlet boundary conditions. The right-hand side `f` is chosen so that the exact solution is `u_exact(x, y) = sin(πx) sin(πy)`; this is called a *manufactured solution* and means we always know what the answer should be — including that its maximum value is 1. The script is deliberately bare: a single coarse mesh (`UnitSquareMesh(8, 8)`), one solve, hardcoded P1 elements, and `print("solve complete")`. No convergence study, no plot, no error against `u_exact`, no opinion on what polynomial order to use.
 
-The exercise asks Claude Code the same question (*"add a convergence study"*) twice: once with no instructions, once with a CLAUDE.md. The point is to see how much the briefing matters.
+The exercise runs in three phases (matching the other tracks): **Phase 1** — ask cold with no CLAUDE.md; **Phase 2** — let `/init` read the code and draft one; **Phase 3** — add what `/init` couldn't infer, then iterate. `/init` recovers the *math* written into the script (the manufactured solution `u_exact = sin(πx) sin(πy)`, `f = 2π²·u_exact`, and the homogeneous Dirichlet BC), but it has no way to know your *conventions* or *safety rules* — figure format, log-log axes with reference slopes, the `max(u_h)` sanity check, confirming element order — which is exactly what the worked CLAUDE.md below supplies. The point is to see how much the briefing matters, and where `/init` can and cannot help.
 
 ## A worked CLAUDE.md
 
@@ -23,9 +23,9 @@ studies and our standard figure conventions for numerical PDEs.
 - Mesh: built-in UnitSquareMesh; do not load any .msh or .geo file
 
 ## Commands
-- `python laplace_square.py`                          # one solve, prints "solve complete"
-- `python laplace_square.py --convergence`            # writes figures/convergence.pdf
-- `python laplace_square.py --convergence --order 2`  # same, but P2 elements
+- `python3 laplace_square.py`                          # one solve, prints "solve complete"
+- `python3 laplace_square.py --convergence`            # writes figures/convergence.pdf
+- `python3 laplace_square.py --convergence --order 2`  # same, but P2 elements
 
 ## Conventions
 - Element order is configurable via --order (default 1). On every
@@ -167,7 +167,7 @@ if __name__ == "__main__":
 ## What you'd expect to see
 
 ```
-$ python laplace_square.py --convergence
+$ python3 laplace_square.py --convergence
 Element order set to P1. Continue? [y/N] y
    n    dofs      L2 err   L2 rate      H1 err   H1 rate   max(u_h)
    4      25   2.310e-02       —      3.821e-01       —      0.8523

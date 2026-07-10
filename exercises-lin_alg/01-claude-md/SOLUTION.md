@@ -2,7 +2,7 @@
 
 ## What this exercise is doing
 
-Two matrices ship with the exercise: `matrix_A.npy` (a 200×200 dense, **nonsymmetric** real array) and `matrix_B.npz` (a 5000×5000 **sparse, symmetric** matrix in CSR format). Their names and file types are deliberately uninformative about their mathematical structure. The learner asks the same vague question — *"find the spectrum of these matrices"* — twice: once cold, once with a CLAUDE.md. The word "spectrum" hides three separate ambiguities:
+Two matrices ship with the exercise: `matrix_A.npy` (a 200×200 dense, **nonsymmetric** real array) and `matrix_B.npz` (a 5000×5000 **sparse, symmetric** matrix in CSR format). Their names and file types are deliberately uninformative about their mathematical structure. The learner asks the same vague question — *"find the spectrum of these matrices"* — across three phases: once cold (Phase 1), once after `/init` (Phase 2), and once with a hand-written CLAUDE.md (Phase 3). The word "spectrum" hides three separate ambiguities:
 
 1. **Type** — symmetric vs nonsymmetric decides `eigvalsh` vs `eigvals` (and whether eigenvalues are real).
 2. **Storage** — dense vs sparse decides whether you may form the whole matrix or must use an iterative routine; densifying `matrix_B` is a 5000×5000 = 25M-entry mistake.
@@ -10,7 +10,11 @@ Two matrices ship with the exercise: `matrix_A.npy` (a 200×200 dense, **nonsymm
 
 The point is that a good CLAUDE.md converts all three silent guesses into explicit, up-front questions.
 
-## A worked CLAUDE.md
+## Phase 2 — what `/init` produces here (almost nothing)
+
+This folder ships **only data** — `matrix_A.npy` and `matrix_B.npz`, no source code — so `/init` has nothing to read. Expect a thin, generic CLAUDE.md: it cannot state either matrix's type or storage, cannot resolve eig-vs-svd, and cannot pin the routines, because none of that is written anywhere for it to find. That is the lesson in its sharpest form — `/init` infers from *code*, and when the knowledge isn't in the repo, the conventions below are entirely on you.
+
+## A worked CLAUDE.md (Phase 3)
 
 ```markdown
 # Project: Spectra of matrices and operators

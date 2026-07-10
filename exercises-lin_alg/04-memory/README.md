@@ -4,6 +4,8 @@
 
 **Setup.** This is a *writing* exercise — no code runs, no environment needed. The three notebooks are already in `notebooks/`. Just `cd exercises-lin_alg/04-memory && claude`. Keep the `CLAUDE.md` you wrote for Exercises 01–03.
 
+> **Beyond `.md`:** Claude can read almost any file — source code, LaTeX, data — so a whole multi-format project can be distilled into one `MEMORY.md`, not just markdown notebooks. The **optimization track's Exercise 04** does exactly that (from `plans/` + `src/` + `tex/`) — worth a look.
+
 ## The project
 
 The three entries in `notebooks/` (`2026-02-10`, `2026-03-05`, `2026-04-02`) come from one project: a testbench that solves the heat equation over many time steps with an **SVD-based (POD) preconditioner re-initialized every 10 steps**. The entries cover the baseline setup (backward Euler + CG), the SVD-preconditioner design, and a dead end chasing a too-aggressive re-init cadence. Useful individually, unsearchable as a set — the exercise is to consolidate them into a `MEMORY.md` the next session can read on load.

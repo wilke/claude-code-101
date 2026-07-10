@@ -2,7 +2,7 @@
 
 **Goal.** Experience how a CLAUDE.md changes the assistant's behavior on the *same* prompt, in the FEM setting — and see exactly where `/init` can help you and where it can't. `/init` reads your code and infers the *math* that lives there; it cannot infer your *house style* or your *safety conventions*, because those were never in the code. This exercise walks that boundary in three phases: ask cold, let `/init` try, then add what it couldn't have known.
 
-**Setup.** This exercise runs against a containerized Firedrake. If you haven't done the Docker + Firedrake setup yet, follow [`INSTALL.md`](./INSTALL.md) first. The pattern is: `claude` runs on your host (this folder is bind-mounted into the container); `python laplace_square.py` runs inside the container.
+**Setup.** This exercise runs against a containerized Firedrake. If you haven't done the Docker + Firedrake setup yet, follow [`INSTALL.md`](./INSTALL.md) first. The pattern is: `claude` runs on your host (this folder is bind-mounted into the container); `python3 laplace_square.py` runs inside the container.
 
 Open this folder in a Claude Code session on your host:
 

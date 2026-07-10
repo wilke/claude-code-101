@@ -4,6 +4,8 @@
 
 **Setup.** This is a *writing* exercise — no FEM code runs in the main workflow, and **you don't need a Firedrake container**. Just `cd exercises-pde/04-memory && claude`. (To verify a notebook claim by re-running code — a stretch — follow [`../01-claude-md/INSTALL.md`](../01-claude-md/INSTALL.md).) **Keep the `CLAUDE.md` you wrote for Exercises 01–03**; you can extend it with conventions about *how `MEMORY.md` gets maintained*.
 
+> **Beyond `.md`:** Claude can read almost any file — source code, LaTeX, data — so a whole multi-format project can be distilled into one `MEMORY.md`, not just markdown notebooks. The **optimization track's Exercise 04** does exactly that (from `plans/` + `src/` + `tex/`) — worth a look.
+
 ## The problem
 
 *The project.* The three entries in `notebooks/` (`2026-03-18`, `2026-04-15`, `2026-05-15`) come from one ongoing project: an in-house Firedrake testbench for **2D wave propagation in heterogeneous media on geometries with reentrant corners**. The early entries cover the static-Laplace machinery used to verify any new mesh or element setup; the May entry documents what happened when those threads were combined.

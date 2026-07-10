@@ -113,13 +113,12 @@
   <!-- 4. Exercise 1 walkthrough -->
   <section class="slide">
     <h3>Exercise 1 <span class="badge">15 min</span></h3>
-    <h1>Let /init discover your conventions</h1>
+    <h1>Ask cold, let /init try, then add the rest</h1>
     <ol>
-      <li>Open the exercise folder: <code>cd exercises-opt/01-claude-md/</code></li>
-      <li>Read <code>max_conopt.py</code> — a deliberately <i>mysterious</i> constrained optimization (the COPS 3.0 max-area polygon, solved with <code>unopy</code> + multistart). It has no plot, and its docs describe the interface but omit what the variables <i>mean</i> geometrically.</li>
-      <li><b>Phase 1, with no CLAUDE.md.</b> Run <code>claude</code> and ask: <code>add a conopt solution plot and a convergence plot to max_conopt.py</code>. Watch for tells that Claude doesn't know the coordinates are polar: does it plot <code>u, v</code> as raw x/y? do axes run to ~π? is the polygon left open?</li>
-      <li><b>Phase 2.</b> Download the COPS 3.0 PDF, <code>/clear</code>, then run <code>/init</code>. Read the generated CLAUDE.md — did it deduce the polar coordinate system and the conversion formula straight from the code?</li>
-      <li>Re-ask the exact same prompt and compare Phase 1 vs Phase 2.</li>
+      <li>Open <code>cd exercises-opt/01-claude-md/</code>. Read <code>max_conopt.py</code> — a deliberately <i>mysterious</i> constrained optimization (the COPS 3.0 max-area polygon, <code>unopy</code> + multistart); no plot, and the docs omit what the variables <i>mean</i> geometrically.</li>
+      <li><b>Phase 1 — no CLAUDE.md.</b> Run <code>claude</code> and ask <code>add a conopt solution plot and a convergence plot to max_conopt.py</code>. Tells that Claude doesn't know the coordinates are polar: <code>u, v</code> plotted as raw x/y, axes to ~π, polygon left open.</li>
+      <li><b>Phase 2 — let /init try.</b> Download the COPS 3.0 PDF, <code>/clear</code>, run <code>/init</code>. Read the generated CLAUDE.md: did it deduce the polar coordinates and conversion formula from the code? What could it <i>not</i> know — figure conventions, the multistart staircase, closing the polygon?</li>
+      <li><b>Phase 3 — add what /init couldn't know, then iterate.</b> Merge those conventions into the CLAUDE.md, <code>/clear</code>, re-ask, and compare Phase 1 → Phase 3.</li>
     </ol>
     <div class="callout">Discussion: which formula let <code>/init</code> infer the coordinate system? And what would you still have to add by hand that <code>/init</code> can't infer — figure conventions, solver output, house style?</div>
     <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
@@ -128,7 +127,7 @@
   <!-- 5. Exercise 1 — what to look for -->
   <section class="slide">
     <h3>Exercise 1 · debrief</h3>
-    <h1>What /init changed between the two tries</h1>
+    <h1>What /init inferred — and what it didn't</h1>
     <p>The payoff is the contrast. With only the thin docs, Claude guesses; after <code>/init</code> reads the source, it inherits the geometry. Use this as a checklist, not an answer key.</p>
     <table class="matrix">
       <tr><th>Signal</th><th>Phase 1 (no context) → Phase 2 (after /init)</th></tr>
@@ -190,7 +189,8 @@ do not switch solver families. If a reformulation is necessary,
 flag it in the plan rather than adopting it silently.</pre>
       </li>
       <li>Read the plan against the checklist: <b>Σ validated PSD? τ/K parameterized? complementarity kept intact? CSV schema + path? solver &amp; gap defined?</b> Push back on at least one.</li>
-      <li>Save it: ask Claude to write the plan to <code>plan.md</code>. That file is the deliverable.</li>
+      <li><b>Save it without running the plan</b> — approving would make Claude <i>implement</i> it. While still in plan mode, ask it to <code>write the complete plan to plan.md and stop</code>, then press <code>Shift+Tab</code> to leave plan mode without approving. That <code>plan.md</code> is the deliverable.</li>
+      <li><b>Optional (if time permits):</b> approve and let Claude build it — watch <i>how it paces</i> (does it work through the plan's steps in order, or combine/skip them, racing straight to the CSV and plot?).</li>
     </ol>
     <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
@@ -292,8 +292,8 @@ defined in problem.py.</pre>
   <!-- Exercise 4 · section divider -->
   <section class="slide section-divider">
     <div class="kicker">Exercise 4 · MEMORY.md</div>
-    <h1>Bootstrap a MEMORY.md from project plans</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">MEMORY.md is how <i>this</i> session leaves something behind for the <i>next</i> one. The synthesis is the pretext; the file is the artifact.</p>
+    <h1>Bootstrap a MEMORY.md from a whole project</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">MEMORY.md isn't limited to <code>.md</code>: Claude reads the plans, the <code>.py</code> source, and the <code>.tex</code> notes, so a whole multi-format project distills into one memory file. The synthesis is the pretext; the file is the artifact.</p>
     <div class="footer"><span>Optimization supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -319,9 +319,9 @@ defined in problem.py.</pre>
     <ol>
       <li><code>cd exercises-opt/04-memory</code> — a real project's <code>plans/</code> directory is already there (an ADMM filter method for topology optimization), alongside its <code>src/</code> and <code>tex/</code>.</li>
       <li>Launch <code>claude</code> and paste:
-        <pre>read everything under plans/ and produce MEMORY.md with the
-sections: Decisions, Parameters, Dead Ends, Open Questions.
-Each entry should cite the plans/ file it came from.</pre>
+        <pre>read everything under plans/, src/, and tex/ and produce
+MEMORY.md with the sections: Decisions, Parameters, Dead Ends,
+Open Questions. Each entry should cite the file it came from.</pre>
       </li>
       <li><b>Trim aggressively.</b> For each line ask: would a future-me on another session actually consult this? If the file is longer than the source plans combined, push back — that is copying, not synthesis.</li>
       <li>With the trimmed file (and a CLAUDE.md) in place, paste:

@@ -112,12 +112,12 @@
   <!-- 4. Ex1 walkthrough -->
   <section class="slide">
     <h3>Exercise 1 <span class="badge">15 min</span></h3>
-    <h1>Pin type, storage, and meaning</h1>
+    <h1>Ask cold, let /init try, then add the rest</h1>
     <ol>
-      <li><code>cd exercises-lin_alg/01-claude-md</code>. Two matrices ship — <code>matrix_A.npy</code> and <code>matrix_B.npz</code>. One is dense, one is sparse; one is symmetric, one is not. Nothing tells you which.</li>
-      <li><b>Phase 1, no CLAUDE.md.</b> Ask: <code>find the spectrum of these matrices</code>. Watch: does Claude identify type + storage first? does it densify the sparse one? does "spectrum" become eigenvalues or singular values — and does it ask, or just guess?</li>
-      <li><b>Phase 2.</b> Write a CLAUDE.md that forces "identify type and storage, then ask eigenvalues-vs-singular-values and full-vs-dominant-k before computing." <code>/clear</code> and re-ask the same prompt.</li>
-      <li>Compare. Claude should now report that A is dense nonsymmetric and B is large sparse symmetric, then ask what you want before touching the data.</li>
+      <li><code>cd exercises-lin_alg/01-claude-md</code>. Two matrices ship — <code>matrix_A.npy</code> and <code>matrix_B.npz</code>. One is dense, one sparse; one symmetric, one not. Nothing tells you which.</li>
+      <li><b>Phase 1 — no CLAUDE.md.</b> Ask <code>find the spectrum of these matrices</code>. Does Claude identify type + storage first? densify the sparse one? does "spectrum" become eigenvalues or singular values — and does it ask, or guess?</li>
+      <li><b>Phase 2 — let /init try.</b> <code>/clear</code>, run <code>/init</code>. This folder ships <i>only data, no source</i>, so <code>/init</code> has almost nothing to read — expect a thin, generic CLAUDE.md. That's the lesson in the extreme: when the knowledge isn't in the code, it's entirely on you.</li>
+      <li><b>Phase 3 — write what /init couldn't know.</b> Add conventions forcing "identify type + storage, then ask eig-vs-svd and full-vs-dominant-k before computing." <code>/clear</code>, re-ask, and compare — Claude should report A dense nonsymmetric, B sparse symmetric, then ask before touching the data.</li>
     </ol>
     <div class="callout">Discussion: which of the three ambiguities can Claude resolve on its own by inspecting the files, and which does it need you to pin in the CLAUDE.md?</div>
     <div class="footer"><span>Linear algebra supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
@@ -179,7 +179,7 @@
     <h1>Run the exercise</h1>
     <ol>
       <li><code>cd exercises-lin_alg/02-planning</code>. Run it for 10 time steps to see the operator drive the physics:
-        <pre>python heat_operator.py --steps 10</pre>
+        <pre>python3 heat_operator.py --steps 10</pre>
         A central hot spot diffuses; the peak temperature decays step by step.</li>
       <li>Press <code>Shift+Tab</code> twice to enter plan mode.</li>
       <li>Paste the prompt and submit — do <i>not</i> approve yet. It carries a matrix-free scope clause:
@@ -188,7 +188,8 @@ heat_operator.py. The operator is matrix-free: it exposes only
 apply(v). Do not form or densify the matrix.</pre>
       </li>
       <li>Read the plan against four questions: <b>matrix-free?</b> <b>dominant-k?</b> <b>algorithm + cost?</b> <b>parameters pinned?</b> Push back on at least one.</li>
-      <li>Save it to <code>plan.md</code> — that file is the deliverable.</li>
+      <li><b>Save it without running the plan</b> — approving would make Claude <i>implement</i> it. While still in plan mode, ask it to <code>write the complete plan to plan.md and stop</code>, then press <code>Shift+Tab</code> to leave plan mode without approving. That <code>plan.md</code> is the deliverable.</li>
+      <li><b>Optional (if time permits):</b> approve and let Claude build the matrix-free SVD, then sanity-check against a small-<code>N</code> dense reference — watch <i>how it paces</i> (does it follow the plan's steps, or quietly densify to move faster?).</li>
     </ol>
     <div class="footer"><span>Linear algebra supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
@@ -322,6 +323,7 @@ entry citing the notebook it came from.</pre>
       <li>Use it to pick a next experiment — <code>Given MEMORY.md, what's the most informative next experiment? Justify in two sentences.</code> A good answer cites a specific entry.</li>
       <li>Close with the two-minute ritual: <code>append a dated entry to MEMORY.md and overwrite STATUS.md</code>.</li>
     </ol>
+    <div class="callout"><code>MEMORY.md</code> isn't limited to <code>.md</code> — Claude reads source, LaTeX, and data too. The <b>optimization track's Exercise 04</b> distills a whole multi-format project (<code>plans/</code> + <code>src/</code> + <code>tex/</code>) into one memory file — worth a look.</div>
     <div class="footer"><span>Linear algebra supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 

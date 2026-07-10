@@ -1,10 +1,12 @@
 """The three objects from exercises 01-02, exposed for the singular-value skills:
 
-    get_dense()    -> the dense matrix from exercise 01 (matrix_A.npy)
-    get_sparse()   -> the sparse matrix from exercise 01 (matrix_B.npz)
-    get_operator() -> the matrix-free heat-step operator from exercise 02
+    get_dense()    -> the dense matrix                   (matrix_A.npy)
+    get_sparse()   -> the sparse matrix                  (matrix_B.npz)
+    get_operator() -> the matrix-free heat-step operator (heat_operator.py)
 
-Paths are resolved relative to this file, so it works from any cwd.
+All three files are expected in this exercise directory — copy matrix_A.npy,
+matrix_B.npz, and heat_operator.py here alongside problem.py. Paths are resolved
+relative to this file, so it works from any cwd.
 """
 import sys
 from pathlib import Path
@@ -16,15 +18,15 @@ HERE = Path(__file__).resolve().parent
 
 
 def get_dense():
-    return np.load(HERE.parent / "01-claude-md" / "matrix_A.npy")
+    return np.load(HERE / "matrix_A.npy")
 
 
 def get_sparse():
-    return sp.load_npz(HERE.parent / "01-claude-md" / "matrix_B.npz")
+    return sp.load_npz(HERE / "matrix_B.npz")
 
 
 def get_operator():
-    sys.path.insert(0, str(HERE.parent / "02-planning"))
+    sys.path.insert(0, str(HERE))
     from heat_operator import HeatStepOperator
     return HeatStepOperator(N=40, dt=0.01)
 

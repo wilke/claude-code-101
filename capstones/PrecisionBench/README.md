@@ -69,7 +69,7 @@ pip install pychop ml_dtypes pytest
 Verify:
 
 ```bash
-python -c "import numpy, scipy, pychop, ml_dtypes; print('ok')"
+python3 -c "import numpy, scipy, pychop, ml_dtypes; print('ok')"
 ```
 
 ## The research gap

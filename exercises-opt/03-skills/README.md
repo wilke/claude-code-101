@@ -1,4 +1,4 @@
-# Exercise 3 — Use a skill to verify a KKT point (15 min)
+# Exercise 03 — Use a skill to verify a KKT point (15 min)
 
 **Goal.** See how a custom skill encapsulates a recurring research task — here, KKT verification. The check is the pretext; **the skill is the artifact**: a packaged check Claude finds and runs from a plain-language request, without you naming it.
 

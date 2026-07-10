@@ -12,9 +12,9 @@ Two skills compute singular values, split by **storage**, not by mathematics:
 ## How to invoke
 
 ```bash
-python .claude/skills/qr-iteration/qr_svd.py --problem problem.py --k 6 --check
-python .claude/skills/lanczos/lanczos_svd.py --problem problem.py --source sparse   --k 6
-python .claude/skills/lanczos/lanczos_svd.py --problem problem.py --source operator --k 6
+python3 .claude/skills/qr-iteration/qr_svd.py --problem problem.py --k 6 --check
+python3 .claude/skills/lanczos/lanczos_svd.py --problem problem.py --source sparse   --k 6
+python3 .claude/skills/lanczos/lanczos_svd.py --problem problem.py --source operator --k 6
 ```
 
 ## What you'd expect to see

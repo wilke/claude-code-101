@@ -14,6 +14,23 @@ cp -R skills .claude/
 
 After this, `.claude/skills/wave-cfl-checker/SKILL.md` and `.claude/skills/paper-summary/SKILL.md` are visible to Claude.
 
+## What ships
+
+```
+03-skills/
+├── README.md
+├── SOLUTION.md
+├── problem.py                 # layered-medium wave problem (P2 on UnitSquareMesh)
+├── candidate.json             # proposed dt (0.002 — you'll edit it to make it fail)
+└── skills/
+    ├── wave-cfl-checker/      # element-wise CFL bound check (docker-wrapped Firedrake)
+    │   ├── SKILL.md
+    │   └── check_cfl.py
+    └── paper-summary/         # a second skill, for routing contrast
+        ├── SKILL.md
+        └── examples/example-output.md
+```
+
 ## The problem
 
 The 2D acoustic wave equation `u_tt = ∇·(c²∇u)` on the unit square has a **layered medium**: `c = 1` for `y > 0.5` and `c = 2` for `y < 0.5`. The starter `problem.py` defines this with P2 continuous Lagrange triangles on a `UnitSquareMesh(16, 16)`. The interface aligns with a mesh facet, so every triangle lies entirely in one layer.

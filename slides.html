@@ -520,7 +520,47 @@ Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide section-divider">
-<div class="kicker">Part 5 · Power features</div>
+<div class="kicker">Part 5 · The fifth artifact</div>
+<h1>Literature</h1>
+<p class="lede">Reading and citing the literature is daily work for computational mathematicians — and where Claude as a co-scientist earns its keep. Treat it as a first-class artifact, alongside the four files.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Literature</h3>
+<h1>What Claude does well — and doesn't</h1>
+<p class="lede">Lean on it for extraction and lookup; keep the judgment yourself — and never trust a citation from memory.</p>
+<table class="matrix"><tr><th></th><th>Claude does well</th><th>Claude does badly</th></tr><tr><td>PDFs</td><td>Extract text, equations, tables (built-in <code>pdf</code> skill)</td><td>Decide what a result <i>really means</i> — that's still you</td></tr><tr><td>Notation</td><td>Translate between Nocedal–Wright / Conn–Gould–Toint / Boyd–Vandenberghe</td><td>Catch subtle distinctions (B- vs. M- vs. S-stationarity) without your verification</td></tr><tr><td>Citations</td><td>Resolve fragments via an <code>arxiv</code> / <code>semantic-scholar</code> lookup</td><td>Emit citations from memory — these are often <b>plausible-looking and wrong</b></td></tr></table>
+<p>Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.</p>
+<pre><code>project/
+├── CLAUDE.md
+├── MEMORY.md          # cites plans/ AND literature/
+├── STATUS.md
+├── plans/
+└── literature/
+    ├── wachter-biegler-2006.md
+    ├── nocedal-wright-12.md
+    └── INDEX.md       # contents page once it grows past ~10</code></pre>
+<div class="callout">CLAUDE.md hard rule: <code>never emit a citation from memory. Resolve via a literature search, or quote the local PDF, or mark [citation needed]</code>. One line; the single biggest defense against hallucinated bibliographies.</div>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide">
+<h3>Literature</h3>
+<h1>When the corpus outgrows context: RAG</h1>
+<p>Your group's PDFs, lab wiki, and shared notes don't fit in one Claude session. <b>Retrieval-Augmented Generation</b> (RAG) is the standard answer: index the corpus into a vector database; for each question, retrieve the most relevant chunks; feed only those into the model.</p>
+<ul><li>You stop relying on what Claude was trained on, and start relying on what you actually have.</li><li>Citations come back as document IDs you can verify, not paraphrases of training data.</li><li>The corpus grows without inflating your context window.</li></ul>
+<p><b>Concrete example: `moodlehq/wiki-rag`.</b> Experimental RAG that ingests any MediaWiki site via API, indexes into Milvus with hybrid (vector + keyword) retrieval and fusion reranking, exposes an <i>OpenAI-compatible API</i>, and ships a Docker image.</p>
+<pre><code>     Your lab MediaWiki  →  wiki-rag (Milvus + LangGraph)
+                              │  exposes /v1/chat/completions
+                              ▼
+                            Custom tool wrapper
+                              │  tool: query_lab_wiki(question)
+                              ▼
+                          Claude Code session</code></pre>
+<p>Pattern: any RAG that speaks the OpenAI API can become a Claude Code tool in ten lines. Now Claude has searchable access to your group's institutional knowledge — and so does every collaborator who runs the workshop's setup.</p>
+<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
+</section>
+<section class="slide section-divider">
+<div class="kicker">Part 6 · Power features</div>
 <h1>Beyond the basics</h1>
 <p class="lede">Four mechanisms that change what's possible: checkpoints for reversible exploration, subagents for context-isolated work, hooks for deterministic enforcement, and non-interactive mode for fan-out at scale.</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
@@ -561,42 +601,8 @@ cat error.log | claude -p "extract the failing test names as a list"</code></pre
 <div class="callout">For optimization research this is the unlock: a parameter sweep that used to take 20 manual steps becomes a shell loop. Combined with the <code>kkt-checker</code> skill, you can run a 1300-problem CUTEst study overnight with consistent output.</div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
-<section class="slide">
-<h3>Literature</h3>
-<h1>Literature: the fifth artifact</h1>
-<p class="lede">Literature reading is daily work for computational mathematicians — and the highest-leverage place Claude as a co-scientist beats Claude as a programmer. Treat it as first class.</p>
-<table class="matrix"><tr><th></th><th>Claude does well</th><th>Claude does badly</th></tr><tr><td>PDFs</td><td>Extract text, equations, tables (built-in <code>pdf</code> skill)</td><td>Decide what a result <i>really means</i> — that's still you</td></tr><tr><td>Notation</td><td>Translate between Nocedal–Wright / Conn–Gould–Toint / Boyd–Vandenberghe</td><td>Catch subtle distinctions (B- vs. M- vs. S-stationarity) without your verification</td></tr><tr><td>Citations</td><td>Resolve fragments via an <code>arxiv</code> / <code>semantic-scholar</code> lookup</td><td>Emit citations from memory — these are often <b>plausible-looking and wrong</b></td></tr></table>
-<p>Add <code>literature/</code> alongside <code>plans/</code>: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.</p>
-<pre><code>project/
-├── CLAUDE.md
-├── MEMORY.md          # cites plans/ AND literature/
-├── STATUS.md
-├── plans/
-└── literature/
-    ├── wachter-biegler-2006.md
-    ├── nocedal-wright-12.md
-    └── INDEX.md       # contents page once it grows past ~10</code></pre>
-<div class="callout">CLAUDE.md hard rule: <code>never emit a citation from memory. Resolve via a literature search, or quote the local PDF, or mark [citation needed]</code>. One line; the single biggest defense against hallucinated bibliographies.</div>
-<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-</section>
-<section class="slide">
-<h3>Literature</h3>
-<h1>When the corpus outgrows context: RAG</h1>
-<p>Your group's PDFs, lab wiki, and shared notes don't fit in one Claude session. <b>Retrieval-Augmented Generation</b> (RAG) is the standard answer: index the corpus into a vector database; for each question, retrieve the most relevant chunks; feed only those into the model.</p>
-<ul><li>You stop relying on what Claude was trained on, and start relying on what you actually have.</li><li>Citations come back as document IDs you can verify, not paraphrases of training data.</li><li>The corpus grows without inflating your context window.</li></ul>
-<p><b>Concrete example: `moodlehq/wiki-rag`.</b> Experimental RAG that ingests any MediaWiki site via API, indexes into Milvus with hybrid (vector + keyword) retrieval and fusion reranking, exposes an <i>OpenAI-compatible API</i>, and ships a Docker image.</p>
-<pre><code>     Your lab MediaWiki  →  wiki-rag (Milvus + LangGraph)
-                              │  exposes /v1/chat/completions
-                              ▼
-                            Custom tool wrapper
-                              │  tool: query_lab_wiki(question)
-                              ▼
-                          Claude Code session</code></pre>
-<p>Pattern: any RAG that speaks the OpenAI API can become a Claude Code tool in ten lines. Now Claude has searchable access to your group's institutional knowledge — and so does every collaborator who runs the workshop's setup.</p>
-<div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
-</section>
 <section class="slide section-divider">
-<div class="kicker">Part 6 · Habits</div>
+<div class="kicker">Part 7 · Habits</div>
 <h1>Working sustainably</h1>
 <p class="lede">Version control, reverting, and recognizing when you're whack-a-mole-ing your own code. The unglamorous habits that make the rest of the workshop pay off.</p>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>

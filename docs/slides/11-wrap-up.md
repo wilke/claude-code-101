@@ -1,4 +1,4 @@
-<!--slide n=49 layout=content kicker="Wrap-up"-->
+<!--slide n=50 layout=content kicker="Wrap-up"-->
 # Seven habits worth keeping
 1. **Set up the four-file architecture early.** `CLAUDE.md` (conventions), `plans/` (forward), `MEMORY.md` (learned), `STATUS.md` (current). One job per file; don't conflate them.
 2. **Plan before you build.** Plan mode for anything beyond a one-line edit. Save the plan to `plans/<date>-<slug>.md` before you implement.
@@ -9,7 +9,7 @@
 7. **When you're whack-a-mole-ing, stop and formalize.** Loops mean an invariant is unwritten. Write it, test it, and the loop ends.
 
 
-<!--slide n=50 layout=content kicker="Reference"-->
+<!--slide n=51 layout=content kicker="Reference"-->
 # Files vs. built-ins: how this maps to Claude Code
 _Two of the four files are the official path; two deliberately turn ephemeral built-ins into durable, versioned files._
 
@@ -26,7 +26,7 @@ _Two of the four files are the official path; two deliberately turn ephemeral bu
 Full comparison: `docs/native-claude-code-mapping.md`. Official guide: `docs.claude.com/en/best-practices`.
 
 
-<!--slide n=51 layout=content kicker="Resources"-->
+<!--slide n=52 layout=content kicker="Resources"-->
 # Where to go from here
 - **Authoritative reference: `docs.claude.com/en/best-practices`** — Anthropic's official guide. Read it after this workshop; our four-file architecture and literature material are opinion-laden extensions of it.
 - Documentation: `docs.claude.com/claude-code`

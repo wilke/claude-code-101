@@ -1,9 +1,9 @@
-<!--slide n=42 layout=section kicker="Part 6 · Habits"-->
+<!--slide n=43 layout=section kicker="Part 7 · Habits"-->
 # Working sustainably
 _Version control, reverting, and recognizing when you're whack-a-mole-ing your own code. The unglamorous habits that make the rest of the workshop pay off._
 
 
-<!--slide n=43 layout=content kicker="Working sustainably"-->
+<!--slide n=44 layout=content kicker="Working sustainably"-->
 # Git hygiene with an AI collaborator
 - **Start every session with a clean working tree** (or a fresh branch). You want any change Claude makes to be visible in `git diff`.
 - **Commit small, atomic changes.** One logical step per commit makes reverting precise.
@@ -22,7 +22,7 @@ git commit -m "Add filter line search; HS071 test passes"
 ```
 
 
-<!--slide n=44 layout=content kicker="Working sustainably"-->
+<!--slide n=45 layout=content kicker="Working sustainably"-->
 # Reverting when Claude went the wrong way
 ```
 # Undo edits to one file (uncommitted)
@@ -49,7 +49,7 @@ cd ../alt-approach && claude
 Worktrees are particularly useful with Claude: you can have one tree exploring a regularization scheme and another exploring an SQP variant, without merge headaches.
 
 
-<!--slide n=45 layout=content kicker="Working sustainably"-->
+<!--slide n=46 layout=content kicker="Working sustainably"-->
 # Verification first — tests are how Claude checks itself
 _The highest-leverage thing you can do is give Claude a way to verify its own work. Without it, you are the only feedback loop; tests let Claude run, see, and fix. For a mathematician, they do double duty:_
 
@@ -65,7 +65,7 @@ Both protect future-you. Both let Claude prove a change is correct without you r
 > Skills as oracles: the `kkt-checker`, `perf-profile`, and `convergence-rate-fitter` skills aren't only one-off tools — they're the predicate that powers an entire family of tests. One predicate, many invocations.
 
 
-<!--slide n=46 layout=content kicker="Working sustainably"-->
+<!--slide n=47 layout=content kicker="Working sustainably"-->
 # Test patterns with Claude in the loop
 - **Test-first prompting.** "Write the test for X first, confirm it fails, then implement X." Forces specification before code.
 - **Hard rule in CLAUDE.md.** "Run `pytest -q` after every edit; surface failures before continuing." Removes the most common failure mode — claimed success without verification.
@@ -82,7 +82,7 @@ Both protect future-you. Both let Claude prove a change is correct without you r
 ```
 
 
-<!--slide n=47 layout=content kicker="Working sustainably"-->
+<!--slide n=48 layout=content kicker="Working sustainably"-->
 # The whack-a-mole loop — how to spot it
 Symptom: every fix breaks something else. Fix A → B fails → fix B → C fails → fix C → A fails again.
 
@@ -105,7 +105,7 @@ git log -p path/to/disputed.py   # are the same lines flipping back?
 ```
 
 
-<!--slide n=48 layout=content kicker="Working sustainably"-->
+<!--slide n=49 layout=content kicker="Working sustainably"-->
 # Breaking out of a stuck session
 1. **Stop prompting "fix this too."** More turns won't help; you need to step back.
 2. **Ask Claude to summarize.** `summarize everything we've tried in this session and why each attempt failed.` Read the summary.

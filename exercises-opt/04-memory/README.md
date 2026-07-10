@@ -144,7 +144,7 @@ conda activate RASC
 python3 FilterADMM.py
 ```
 
-**3. Try a larger mesh and fix it.** The 120×40 mesh will fail to converge — can you diagnose and fix it?
+**3. Try a larger mesh and fix it.** The 120×40 mesh will fail to converge — can you diagnose and fix it (this could be a capstone!)?
 
 ```bash
 cd src/

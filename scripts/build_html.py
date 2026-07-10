@@ -147,6 +147,17 @@ def argonne_css(doe_uri: str, argonne_uri: str) -> str:
   .section-divider .exlinks .col h4 {{ color: var(--gold); }}
   .section-divider .exlinks a {{ color: #eaf2f8; }}
   .section-divider .exlinks a:hover {{ border-bottom-color: #eaf2f8; }}
+  /* rotating capstone showcase (two columns, crossfades through all projects) */
+  .caps-rotator {{ position: relative; width: 100%; min-height: 170px; margin-top: 22px; }}
+  .caps-page {{ position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 44px; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }}
+  .caps-page.show {{ opacity: 1; pointer-events: auto; }}
+  .caps-name {{ font-family: var(--sans); font-weight: 700; font-size: 23px; color: var(--accent); }}
+  .caps-desc {{ font-size: 18px; color: var(--muted); margin-top: 5px; line-height: 1.4; }}
+  .section-divider .caps-name {{ color: #fff; }}
+  .section-divider .caps-desc {{ color: #eaf2f8; }}
+  .caps-dots {{ position: absolute; bottom: -14px; left: 0; display: flex; gap: 7px; }}
+  .caps-dots span {{ width: 7px; height: 7px; border-radius: 50%; background: var(--rule); transition: background 0.3s; }}
+  .caps-dots span.on {{ background: var(--gold); }}
   /* title slide → white base with blue bar, blue title, gold eyebrow */
   .title-slide {{ justify-content: center; background: var(--bg); }}
   .title-slide .kicker {{ font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.18em; font-size: 13px; color: var(--gold); font-weight: 700; margin-bottom: 18px; }}
@@ -397,7 +408,25 @@ def render_block(b) -> str:
         return render_table(b["rows"])
     if t == "columns":
         return render_columns(b["cols"])
+    if t == "capstones":
+        return render_capstones(b["items"])
     return ""
+
+
+def render_capstones(items, per=2) -> str:
+    pages = [items[k:k + per] for k in range(0, len(items), per)]
+    out = ['<div class="caps-rotator" data-interval="3400">']
+    for pi, pg in enumerate(pages):
+        out.append(f'<div class="caps-page{" show" if pi == 0 else ""}">')
+        for it in pg:
+            out.append('<div class="caps-cell">'
+                       f'<div class="caps-name">{render_inline(it["name"])}</div>'
+                       f'<div class="caps-desc">{render_inline(it["desc"])}</div></div>')
+        out.append("</div>")
+    dots = "".join(f'<span class="{"on" if k == 0 else ""}"></span>' for k in range(len(pages)))
+    out.append(f'<div class="caps-dots">{dots}</div>')
+    out.append("</div>")
+    return "".join(out)
 
 
 FOOTER = ('<div class="footer"><span>Workshop · v1</span>'
@@ -567,6 +596,21 @@ NAV_JS = """<script>
   show(isFinite(initial) && initial > 0 ? initial - 1 : 0);
 </script>"""
 
+ROTATOR_JS = """<script>
+  /* Crossfade the capstone showcase through all projects, two at a time. */
+  document.querySelectorAll('.caps-rotator').forEach(function (r) {
+    var pages = Array.prototype.slice.call(r.querySelectorAll('.caps-page'));
+    var dots = Array.prototype.slice.call(r.querySelectorAll('.caps-dots span'));
+    if (pages.length < 2) return;
+    var idx = 0;
+    setInterval(function () {
+      pages[idx].classList.remove('show'); if (dots[idx]) dots[idx].classList.remove('on');
+      idx = (idx + 1) % pages.length;
+      pages[idx].classList.add('show'); if (dots[idx]) dots[idx].classList.add('on');
+    }, parseInt(r.getAttribute('data-interval') || '3400', 10));
+  });
+</script>"""
+
 
 def render_document(slides, css: str) -> str:
     sections = "\n".join(render_slide(attrs, data) for attrs, data in slides)
@@ -585,6 +629,7 @@ def render_document(slides, css: str) -> str:
 {NAV_MARKUP}
 {NAV_JS}
 {FIT_JS}
+{ROTATOR_JS}
 </body>
 </html>
 """

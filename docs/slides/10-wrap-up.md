@@ -44,4 +44,16 @@ Questions, or stories of what worked: keep notes in MEMORY.md. The next session 
 
 <!--slide n=50 layout=closing kicker=""-->
 # Capstone
-_Open-ended time. Your code, your problem — Claude as collaborator. Put the four files, skills, and habits to work on real research._
+_Open-ended time. Your code, your problem — Claude as collaborator. Or pick a provided brief:_
+
+:::capstones
+- **BQPD-CPP** — A thread-safe C++ port of Fletcher's robust QP solver.
+- **CUTEst-C** — A clean, dependency-free C implementation of CUTEst.
+- **ConDFO** — A derivative-free optimization solver for constrained problems.
+- **OptiUNO** — Run-time-configurable Newton-like solvers, hunting better combinations.
+- **PrecisionBench** — Mixed-precision benchmarking for numerical linear algebra.
+- **SciCompSkills** — A hallucination-resistant verified-literature-search skill.
+- **SolverBench** — A reproducible benchmark of solvers & preconditioners for PDEs.
+- **diffBLAS** — Adapt differentiated BLAS routines to AD activity contexts.
+- **optSolverBench** — Benchmark optimizers & solvers for PDE-constrained optimization.
+:::

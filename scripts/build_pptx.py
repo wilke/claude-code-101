@@ -273,18 +273,25 @@ def render_title(slide, data, kicker):
             p.space_after = Pt(6)
 
 
-def render_section(slide, data, kicker, links_blocks):
+def render_section(slide, data, kicker, links_blocks, capstones=None):
     title_ph = slide.shapes.title
     # standardize the box (keep the template's tall, middle-anchored geometry) so
-    # long ledes wrap comfortably inside the slide instead of hugging the edge
+    # long ledes wrap comfortably inside the slide instead of hugging the edge.
+    # When a capstone list follows, anchor the title/lede to the top instead.
     title_ph.left = Inches(0.6)
-    title_ph.top = Inches(0)
     title_ph.width = Inches(11.9)
-    title_ph.height = Inches(6.55)
+    if capstones:
+        title_ph.top = Inches(0.35)
+        title_ph.height = Inches(1.9)
+    else:
+        title_ph.top = Inches(0)
+        title_ph.height = Inches(6.55)
     tf = title_ph.text_frame
     tf.clear()
     tf.word_wrap = True
     tf.margin_right = Inches(0.1)
+    if capstones:
+        tf.vertical_anchor = MSO_ANCHOR.TOP
     # kicker
     p0 = tf.paragraphs[0]
     if kicker:
@@ -319,6 +326,31 @@ def render_section(slide, data, kicker, links_blocks):
                 ip = bt.add_paragraph()
                 add_runs(ip, it, 12.5, color=WHITE, font=MONO)
                 ip.space_before = Pt(4)
+            x += cw + gap
+
+    # capstone showcase — static two-column list (the HTML deck rotates instead)
+    if capstones:
+        items = capstones["items"]
+        gap = 0.5
+        cw = (12.0 - gap) / 2
+        half = -(-len(items) // 2)
+        light = RGBColor(0xEA, 0xF2, 0xF8)
+        x = 0.7
+        for col in (items[:half], items[half:]):
+            box = slide.shapes.add_textbox(Inches(x), Inches(2.35), Inches(cw), Inches(4.4))
+            bt = box.text_frame
+            set_frame_defaults(bt)
+            bt.word_wrap = True
+            first = True
+            for it in col:
+                p = bt.paragraphs[0] if first else bt.add_paragraph()
+                first = False
+                p.space_after = Pt(9)
+                rn = p.add_run(); rn.text = it["name"]
+                rn.font.size = Pt(15); rn.font.bold = True; rn.font.color.rgb = WHITE; rn.font.name = SANS
+                if it.get("desc"):
+                    rd = p.add_run(); rd.text = " — " + it["desc"]
+                    rd.font.size = Pt(12.5); rd.font.color.rgb = light; rd.font.name = SANS
             x += cw + gap
 
 
@@ -548,18 +580,19 @@ def main():
         layout = layout_map.get(kind) or layout_map["content"]
         slide = prs.slides.add_slide(layout)
 
-        # pull out a links-columns block for exercise dividers
-        links = None
+        # pull out a links-columns block (exercise dividers) / capstones block
+        links = capstones = None
         if kind in ("section", "closing"):
             for b in data["blocks"]:
-                if b["type"] == "columns":
+                if b["type"] == "columns" and links is None:
                     links = b
-                    break
+                elif b["type"] == "capstones" and capstones is None:
+                    capstones = b
 
         if kind == "title":
             render_title(slide, data, kicker)
         elif kind in ("section", "closing"):
-            render_section(slide, data, kicker, links)
+            render_section(slide, data, kicker, links, capstones)
         else:
             render_content(slide, data, kicker)
 

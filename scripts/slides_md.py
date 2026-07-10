@@ -115,6 +115,23 @@ def parse_body(lines: list[str]) -> dict:
             i += 1  # closing :::
             blocks.append({"type": "columns", "cols": cols})
             continue
+        # capstone list: "- **Name** — one-line abstract" per line
+        if s == ":::capstones":
+            flush_para()
+            i += 1
+            items = []
+            while i < n and lines[i].strip() != ":::":
+                cs = lines[i].strip()
+                if cs.startswith("- "):
+                    body_ = cs[2:].strip()
+                    parts = re.split(r"\s+[—–-]\s+", body_, maxsplit=1)
+                    name = re.sub(r"^\*\*(.+?)\*\*$", r"\1", parts[0].strip())
+                    desc = parts[1].strip() if len(parts) > 1 else ""
+                    items.append({"name": name, "desc": desc})
+                i += 1
+            i += 1  # closing :::
+            blocks.append({"type": "capstones", "items": items})
+            continue
         if s.startswith("|"):
             flush_para()
             rows = []

@@ -13,7 +13,7 @@ The solver uses `common` blocks to pass information, which means it is **not thr
 **References:**
 * R. Fletcher. [Resolving degeneracy in quadratic programming](https://link.springer.com/article/10.1007/BF02023102). Ann Oper Res 46, 307–334 (1993).
 * R. Fletcher. [Stable reduced Hessian updates for indefinite quadratic programming](https://link.springer.com/article/10.1007/s101070050113). Math. Program. 87, 251–264 (2000).
-* Source code for `BQPD` is here [src/](/src/)
+* Fortran77 source code for `BQPD` is here [src/](src/)
 
 ## Goal
 

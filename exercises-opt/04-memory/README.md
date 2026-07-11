@@ -1,6 +1,6 @@
-# Exercise 04 — Bootstrap MEMORY.md from notebook entries (10 min)
+# Exercise 4 — Bootstrap LOGBOOK.md from notebook entries (10 min)
 
-**Goal.** Use Claude Code to turn loose lab notebook/plans entries into a structured `MEMORY.md`. The synthesis is the pretext; **the file is the artifact** — how the next session inherits what this one learned.
+**Goal.** Use Claude Code to turn loose lab notebook/plans entries into a structured `LOGBOOK.md`. The synthesis is the pretext; **the file is the artifact** — how the next session inherits what this one learned.
 
 > **`MEMORY.md` isn't limited to `.md`.** Claude can read almost any file — `.py` source, `.tex` notes, plans — so you can distill an entire multi-format project into one memory file, not just a set of markdown notebooks.
 
@@ -43,9 +43,9 @@ s.t. sum(x) ≤ Budget,   x ∈ [ε, 1]^n
 2. Ask:
 
    ```
-   read everything under plans/, src/, and tex/ and produce MEMORY.md
-   with the sections: Decisions, Parameters, Dead Ends, Open Questions.
-   Each entry should cite the file it came from.
+   read everything under plans/ and produce LOGBOOK.md with the
+   sections: Decisions, Parameters, Dead Ends, Open Questions.
+   Each entry should cite the plans/ file it came from.
    ```
 
    (Note that Claude reads the `.py` source and `.tex` notes alongside the `.md` plans — the whole project, not just the markdown.)
@@ -54,10 +54,10 @@ s.t. sum(x) ≤ Budget,   x ∈ [ε, 1]^n
 
 4. Create a `CLAUDE.md` file.
 
-5. Now, with the new `MEMORY.md` and `CLAUDE.md` in place, ask:
+5. Now, with the new `LOGBOOK.md` and `CLAUDE.md` in place, ask:
 
    ```
-   given MEMORY.md and CLAUDE.md, what would be the most informative 
+   given LOGBOOK.md and CLAUDE.md, what would be the most informative 
    next experiment to run? Justify in two sentences.
    ```
 
@@ -67,34 +67,41 @@ s.t. sum(x) ≤ Budget,   x ∈ [ε, 1]^n
 
    ```
    summarize what we did in this session, append it as a dated entry to
-   MEMORY.md (under Decisions or Open Questions, whichever fits, noting
-   that MEMORY.md was edited and CLAUDE.md created), and overwrite
+   LOGBOOK.md (under Decisions or Open Questions, whichever fits, noting
+   that LOGBOOK.md was edited and CLAUDE.md created), and overwrite
    STATUS.md with where we are now.
    ```
 
-   The MEMORY.md append should name a concrete decision or question, not the activity. STATUS.md should be tight enough that the next session can pick up from it without reading anything else first.
+   The LOGBOOK.md append should name a concrete decision or question, not the activity. STATUS.md should be tight enough that the next session can pick up from it without reading anything else first.
 
 ## Critical-reading checklist
 
 | Look for | Why it matters |
 |----------|----------------|
-| Did every entry cite its source file (`plans/`, `src/`, or `tex/`)? | An entry you can't trace back is one you can't revise. |
-| Did Claude actually trim, or is `MEMORY.md` longer than the source files? | Synthesis without trimming is just retyping. |
+| Did every entry cite its source `plans/` file? | An entry you can't trace back is one you can't revise. |
+| Did Claude actually trim, or is `LOGBOOK.md` longer than the source plans? | Synthesis without trimming is just retyping. |
 | Did Dead Ends keep the *reason* a path was abandoned, not just the verdict? | A verdict alone doesn't stop a re-attempt. |
 | Did the next-experiment answer cite a specific entry? | If it doesn't, it could've been written without the file. |
-| Did the end-of-session append name a decision, not the activity? | "We discussed MEMORY.md" decays to nothing. |
+| Did the end-of-session append name a decision, not the activity? | "We discussed LOGBOOK.md" decays to nothing. |
 | Did Claude surface conflicts between plan files, or smooth them over? | A hidden conflict destroys the most important information. |
 
 ## Discussion prompts
 
-- What goes in CLAUDE.md vs MEMORY.md? (Hint: stable conventions vs evolving facts.)
-- How would you index a MEMORY.md that grows past 200 lines?
+- What goes in CLAUDE.md vs LOGBOOK.md? (Hint: stable conventions vs evolving facts.)
+- How would you index a LOGBOOK.md that grows past 200 lines — and when do you promote its *Decisions* into individually-numbered ADRs? (See [`../../docs/logbook-to-adrs.md`](../../docs/logbook-to-adrs.md).)
 - What is the point of the LaTeX files?
 
 ## Stretch (if time permits)
 
 **1. Split MEMORY.md into a directory:** `memory/decisions.md`, `memory/parameters.md`, `memory/dead-ends.md`, plus a `memory/INDEX.md`. Ask Claude to maintain the index automatically when it appends new entries.
 
+The logbook scales in three stages — one file → a topical directory → a directory
+of ADRs. Stretches 1 and 3 walk that path; the full write-up is in
+[`../../docs/logbook-to-adrs.md`](../../docs/logbook-to-adrs.md).
+
+1. **Stage 2 — split into a `logbook/` directory.** Split LOGBOOK.md into `logbook/decisions.md`, `logbook/parameters.md`, `logbook/dead-ends.md`, plus a `logbook/INDEX.md`. Ask Claude to maintain the index automatically when it appends new entries.
+2. **Stage 3 — promote decisions to ADRs.** Your `logbook/decisions.md` is now a list. Ask Claude to lift each decision into `decisions/000N-slug.md` using the ADR template (Status / Date / Context / Decision / Consequences), assign immutable sequential numbers, and build `decisions/INDEX.md`. Then *reverse* one for real: this project already contains a supersession — the fixed-`ρ` baseline `admm.py` does not converge on the 30×10 mesh, while the adaptive-`ρ` `FilterADMM.py` converges in ~14 outer iterations (see the "Running FilterADMM" section above). Write a **new** ADR that adopts adaptive `ρ`, and flip the older fixed-`ρ` ADR's status to `Superseded by ADR-000N`. Notice you never edited the old file — append-only, one level up.
+3. **Fix the failing mesh.** Try solving a 120×40 example, and observe that FilterADMM fails to converge. Can you fix this (this could be a capstone)? *If you do, then make sure to add Dominic Yang as a co-author!*
 **2. Run the project.** Everything above works from *reading* the files; if you want to see the code actually run, set up an environment and drive `FilterADMM`.
 
 Runtime dependencies (also listed in `requirements.txt`):

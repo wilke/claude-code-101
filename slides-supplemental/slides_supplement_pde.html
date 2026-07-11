@@ -292,23 +292,23 @@ for the wave problem defined in problem.py.</pre>
 
   <!-- Exercise 4 · section divider -->
   <section class="slide section-divider">
-    <div class="kicker">Exercise 4 · MEMORY.md</div>
-    <h1>Bootstrap a MEMORY.md from lab notebooks</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">MEMORY.md is how <i>this</i> session leaves something behind for the <i>next</i> one. The synthesis is the pretext; the file is the artifact.</p>
+    <div class="kicker">Exercise 4 · LOGBOOK.md</div>
+    <h1>Bootstrap a LOGBOOK.md from lab notebooks</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">LOGBOOK.md is how <i>this</i> session leaves something behind for the <i>next</i> one. The synthesis is the pretext; the file is the artifact.</p>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
   <!-- Exercise 4 · framing -->
   <section class="slide">
     <h3>Exercise 4 · framing</h3>
-    <h1>Why a MEMORY.md (and not just more CLAUDE.md)?</h1>
+    <h1>Why a LOGBOOK.md (and not just more CLAUDE.md)?</h1>
     <p>Both are markdown files at the project root. Both get read by Claude on session start. They answer different questions, and confusing the two is the most common decay path for both.</p>
     <table class="matrix">
       <tr><th>Question</th><th>Answer</th></tr>
       <tr><td>What does <code>CLAUDE.md</code> answer?</td><td><i>How does this project work.</i> Stack, file layout, conventions, hard rules.</td></tr>
-      <tr><td>What does <code>MEMORY.md</code> answer?</td><td><i>What have we learned.</i> Decisions, parameters, dead ends, open questions.</td></tr>
-      <tr><td>Growth pattern</td><td><code>CLAUDE.md</code> changes rarely. <code>MEMORY.md</code> grows monotonically as experiments accumulate.</td></tr>
-      <tr><td>The test</td><td>If knowing a fact depends on <i>having run experiments</i>, it belongs in <code>MEMORY.md</code>. Otherwise <code>CLAUDE.md</code>.</td></tr>
+      <tr><td>What does <code>LOGBOOK.md</code> answer?</td><td><i>What have we learned.</i> Decisions, parameters, dead ends, open questions.</td></tr>
+      <tr><td>Growth pattern</td><td><code>CLAUDE.md</code> changes rarely. <code>LOGBOOK.md</code> grows monotonically as experiments accumulate.</td></tr>
+      <tr><td>The test</td><td>If knowing a fact depends on <i>having run experiments</i>, it belongs in <code>LOGBOOK.md</code>. Otherwise <code>CLAUDE.md</code>.</td></tr>
     </table>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
@@ -320,19 +320,19 @@ for the wave problem defined in problem.py.</pre>
     <ol>
       <li><code>cd exercises-pde/04-memory</code> — three dated lab-notebook entries are already there. No container needed; this is a writing exercise.</li>
       <li>Launch <code>claude</code> and paste:
-        <pre>Read everything under notebooks/ and produce MEMORY.md with the
+        <pre>Read everything under notebooks/ and produce LOGBOOK.md with the
 sections: Decisions, Parameters, Dead Ends, Open Questions. Each
 entry should cite the notebook file it came from.</pre>
       </li>
       <li><b>Trim aggressively.</b> Drop anything a future session would not consult. If the file is longer than the source notebooks combined, push back — that is copying, not synthesis.</li>
       <li>With the trimmed file in place, paste:
-        <pre>Given MEMORY.md, what would be the most informative next experiment
+        <pre>Given LOGBOOK.md, what would be the most informative next experiment
 to run? Justify in two sentences.</pre>
         A good answer cites a <i>specific</i> dated entry; a hand-wave is a teachable failure.
       </li>
       <li>Close with the two-minute ritual:
         <pre>Summarize what we did in this session, append as a dated entry to
-MEMORY.md, and overwrite STATUS.md with where we are now.</pre>
+LOGBOOK.md, and overwrite STATUS.md with where we are now.</pre>
       </li>
     </ol>
     <div class="callout"><code>MEMORY.md</code> isn't limited to <code>.md</code> — Claude reads source, LaTeX, and data too. The <b>optimization track's Exercise 04</b> distills a whole multi-format project (<code>plans/</code> + <code>src/</code> + <code>tex/</code>) into one memory file — worth a look.</div>
@@ -349,7 +349,7 @@ MEMORY.md, and overwrite STATUS.md with where we are now.</pre>
       <tr><td>Cites the source notebook by filename on every entry.</td><td>"See notebooks" or no citations at all.</td></tr>
       <tr><td>Comes in well under the combined length of the three source notebooks.</td><td>Longer than the inputs — that is re-typing, not synthesis.</td></tr>
       <tr><td>Dead Ends section preserves the <i>why</i> a path was abandoned.</td><td>Verdict only ("abandoned X"). The reason is what stops the re-attempt six months later.</td></tr>
-      <tr><td>Next-experiment answer names a specific dated entry and proposes a one-session scope.</td><td>Generic "more research needed," or a multi-week project that ignores what <code>MEMORY.md</code> said.</td></tr>
+      <tr><td>Next-experiment answer names a specific dated entry and proposes a one-session scope.</td><td>Generic "more research needed," or a multi-week project that ignores what <code>LOGBOOK.md</code> said.</td></tr>
       <tr><td>Surfaces any conflict between two notebooks rather than smoothing it over.</td><td>Silent merge of two entries that disagree — destroys the most valuable information.</td></tr>
     </table>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
@@ -358,9 +358,9 @@ MEMORY.md, and overwrite STATUS.md with where we are now.</pre>
   <!-- Exercise 4 · closing -->
   <section class="slide">
     <h3>Exercise 4 · closing</h3>
-    <h1>MEMORY.md as next-session inheritance</h1>
-    <p>Every session is downstream of a hundred forgotten ones — your own from last month, your colleagues', the one you'll resume on a different machine in three weeks. <code>MEMORY.md</code> is the file that decides what the next session knows. Without it, every resumption pays the same "what was I working on" tax.</p>
-    <div class="callout">The two-minute end-of-session ritual is the workshop's most lopsided ROI move: <code>append a dated entry to MEMORY.md, overwrite STATUS.md with where we are now</code>. Two minutes now; saves the first ten minutes of the next session, every time.</div>
+    <h1>LOGBOOK.md as next-session inheritance</h1>
+    <p>Every session is downstream of a hundred forgotten ones — your own from last month, your colleagues', the one you'll resume on a different machine in three weeks. <code>LOGBOOK.md</code> is the file that decides what the next session knows. Without it, every resumption pays the same "what was I working on" tax.</p>
+    <div class="callout">The two-minute end-of-session ritual is the workshop's most lopsided ROI move: <code>append a dated entry to LOGBOOK.md, overwrite STATUS.md with where we are now</code>. Two minutes now; saves the first ten minutes of the next session, every time.</div>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 

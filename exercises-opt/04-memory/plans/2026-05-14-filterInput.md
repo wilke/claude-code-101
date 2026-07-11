@@ -213,7 +213,7 @@ import …` block.
   derived from `volfrac`.
 - Updating `admm.py` or `admm_walkthrough.ipynb` similarly — neither was
   asked for.
-- Updating `STATUS.md` / `MEMORY.md` — done at end of session per
+- Updating `STATUS.md` / `LOGBOOK.md` — done at end of session per
   project convention, not as part of this plan.
 
 ---

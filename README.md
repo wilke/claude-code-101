@@ -82,8 +82,8 @@ Inside Claude Code, follow the steps in that exercise's `README.md`.
 
 ### What to cut for a shorter slot
 
-- **Below 90 min:** Drop Part 6 (Power features) and Part 7 (Working sustainably) entirely; turn them into reading. Keep CLAUDE.md, planning, skills, MEMORY.md, MCP, capstone-as-demo.
-- **Below 60 min:** Drop the literature/RAG slides (Part 5), Power features (Part 6), and Working sustainably (Part 7). Run only one exercise (Exercise 1 — CLAUDE.md). Treat the rest as a guided tour.
+- **Below 90 min:** Drop Part 6 (Power features) and Part 7 (Working sustainably) entirely; turn them into reading. Keep CLAUDE.md, planning, skills, LOGBOOK.md, MCP, capstone-as-demo.
+- **Below 60 min:** Drop the literature/RAG slides (Part 4 tail), Power features (Part 6), and Working sustainably (Part 7). Run only one exercise (Exercise 1 — CLAUDE.md). Treat the rest as a guided tour.
 
 ### What never to cut
 

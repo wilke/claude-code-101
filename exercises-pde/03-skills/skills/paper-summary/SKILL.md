@@ -24,7 +24,7 @@ Use this skill when:
 2. **Verify the citation.** Use an `arxiv` or `semantic-scholar` MCP if available. If neither is available, fall back to extracting the title/authors/year from the PDF metadata or first page; mark the BibTeX as `unverified` until the user confirms.
 3. Fill the template below. Use literal quotes from the PDF for *Pull-quotes*; paraphrase drops the qualifier that matters.
 4. Save to `literature/<bibkey>.md` where `<bibkey>` is `firstauthor-year` (e.g., `wachter-biegler-2006`).
-5. If a project `MEMORY.md` exists and the paper is being added because of an active decision, ask the user whether to add a citation in the relevant `MEMORY.md` section.
+5. If a project `LOGBOOK.md` exists and the paper is being added because of an active decision, ask the user whether to add a citation in the relevant `LOGBOOK.md` section.
 
 ## Template
 
@@ -86,7 +86,7 @@ might want to cite or refute. Each quote in quotation marks.
 
 - **Never emit a citation from memory.** If the citation cannot be verified, the BibTeX block must be marked `unverified` and the user must be told.
 - **Pull-quotes must be literal.** No paraphrasing. Page numbers required. If the source has no page numbers (preprint, web), use section IDs.
-- **Fit to our problem must reference the project's `MEMORY.md` or `plans/` if relevant.** A paper read for no reason is a paper that won't be cited.
+- **Fit to our problem must reference the project's `LOGBOOK.md` or `plans/` if relevant.** A paper read for no reason is a paper that won't be cited.
 - **Don't summarize what you can't verify.** If the PDF text extraction is partial (scanned PDF, OCR errors), say so explicitly and stop.
 
 ## Example output

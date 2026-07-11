@@ -287,23 +287,23 @@ the sparse matrix, and the operator.</pre>
 
   <!-- 17. SECTION: Exercise 4 -->
   <section class="slide section-divider">
-    <div class="kicker">Exercise 4 · MEMORY.md</div>
-    <h1>Bootstrap a MEMORY.md from lab notebooks</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">MEMORY.md is how <i>this</i> session leaves something behind for the <i>next</i> one. The synthesis is the pretext; the file is the artifact.</p>
+    <div class="kicker">Exercise 4 · LOGBOOK.md</div>
+    <h1>Bootstrap a LOGBOOK.md from lab notebooks</h1>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">LOGBOOK.md is how <i>this</i> session leaves something behind for the <i>next</i> one. The synthesis is the pretext; the file is the artifact.</p>
     <div class="footer"><span>Linear algebra supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
   <!-- 18. Ex4 framing -->
   <section class="slide">
     <h3>Exercise 4 · framing</h3>
-    <h1>Why a MEMORY.md (and not just more CLAUDE.md)?</h1>
+    <h1>Why a LOGBOOK.md (and not just more CLAUDE.md)?</h1>
     <p>Both are markdown files at the project root, both read on session start. They answer different questions, and confusing the two is the most common decay path for both.</p>
     <table class="matrix">
       <tr><th>Question</th><th>Answer</th></tr>
       <tr><td>What does <code>CLAUDE.md</code> answer?</td><td><i>How does this project work.</i> Stack, conventions, hard rules.</td></tr>
-      <tr><td>What does <code>MEMORY.md</code> answer?</td><td><i>What have we learned.</i> Decisions, parameters (rank 8, cadence 10), dead ends, open questions.</td></tr>
-      <tr><td>Growth pattern</td><td><code>CLAUDE.md</code> changes rarely; <code>MEMORY.md</code> grows as experiments accumulate.</td></tr>
-      <tr><td>The test</td><td>If knowing a fact depends on <i>having run experiments</i>, it belongs in <code>MEMORY.md</code>. Otherwise <code>CLAUDE.md</code>.</td></tr>
+      <tr><td>What does <code>LOGBOOK.md</code> answer?</td><td><i>What have we learned.</i> Decisions, parameters (rank 8, cadence 10), dead ends, open questions.</td></tr>
+      <tr><td>Growth pattern</td><td><code>CLAUDE.md</code> changes rarely; <code>LOGBOOK.md</code> grows as experiments accumulate.</td></tr>
+      <tr><td>The test</td><td>If knowing a fact depends on <i>having run experiments</i>, it belongs in <code>LOGBOOK.md</code>. Otherwise <code>CLAUDE.md</code>.</td></tr>
     </table>
     <div class="footer"><span>Linear algebra supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
@@ -315,13 +315,13 @@ the sparse matrix, and the operator.</pre>
     <ol>
       <li><code>cd exercises-lin_alg/04-memory</code> — three dated notebooks (a heat-equation testbench with an SVD preconditioner re-initialized every 10 steps). A writing exercise; no environment needed.</li>
       <li>Paste:
-        <pre>Read everything under notebooks/ and produce MEMORY.md with the
+        <pre>Read everything under notebooks/ and produce LOGBOOK.md with the
 sections Decisions, Parameters, Dead Ends, Open Questions — each
 entry citing the notebook it came from.</pre>
       </li>
       <li><b>Trim aggressively.</b> Drop anything a future session wouldn't consult; if it's longer than the notebooks combined, that's copying, not synthesis.</li>
-      <li>Use it to pick a next experiment — <code>Given MEMORY.md, what's the most informative next experiment? Justify in two sentences.</code> A good answer cites a specific entry.</li>
-      <li>Close with the two-minute ritual: <code>append a dated entry to MEMORY.md and overwrite STATUS.md</code>.</li>
+      <li>Use it to pick a next experiment — <code>Given LOGBOOK.md, what's the most informative next experiment? Justify in two sentences.</code> A good answer cites a specific entry.</li>
+      <li>Close with the two-minute ritual: <code>append a dated entry to LOGBOOK.md and overwrite STATUS.md</code>.</li>
     </ol>
     <div class="callout"><code>MEMORY.md</code> isn't limited to <code>.md</code> — Claude reads source, LaTeX, and data too. The <b>optimization track's Exercise 04</b> distills a whole multi-format project (<code>plans/</code> + <code>src/</code> + <code>tex/</code>) into one memory file — worth a look.</div>
     <div class="footer"><span>Linear algebra supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
@@ -346,9 +346,9 @@ entry citing the notebook it came from.</pre>
   <!-- 21. Ex4 closing -->
   <section class="slide">
     <h3>Exercise 4 · closing</h3>
-    <h1>MEMORY.md as next-session inheritance</h1>
-    <p>Every session is downstream of a hundred forgotten ones — your own from last month, your colleagues', the one you'll resume on a different machine in three weeks. <code>MEMORY.md</code> is the file that decides what the next session knows. Without it, every resumption pays the same "what was I working on" tax.</p>
-    <div class="callout">The two-minute end-of-session ritual is the workshop's most lopsided ROI move: <code>append a dated entry to MEMORY.md, overwrite STATUS.md with where we are now</code>. Two minutes now; saves the first ten minutes of the next session, every time.</div>
+    <h1>LOGBOOK.md as next-session inheritance</h1>
+    <p>Every session is downstream of a hundred forgotten ones — your own from last month, your colleagues', the one you'll resume on a different machine in three weeks. <code>LOGBOOK.md</code> is the file that decides what the next session knows. Without it, every resumption pays the same "what was I working on" tax.</p>
+    <div class="callout">The two-minute end-of-session ritual is the workshop's most lopsided ROI move: <code>append a dated entry to LOGBOOK.md, overwrite STATUS.md with where we are now</code>. Two minutes now; saves the first ten minutes of the next session, every time.</div>
     <div class="footer"><span>Linear algebra supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 

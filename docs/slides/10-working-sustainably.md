@@ -70,7 +70,7 @@ Both protect future-you. Both let Claude prove a change is correct without you r
 - **Test-first prompting.** "Write the test for X first, confirm it fails, then implement X." Forces specification before code.
 - **Hard rule in CLAUDE.md.** "Run `pytest -q` after every edit; surface failures before continuing." Removes the most common failure mode — claimed success without verification.
 - **Test the dead end, not just the success.** Assert the failure mode (e.g. Tikhonov) so a well-meaning future fix can't silently re-enable the bug.
-- **Cite tests in commits and decisions.** MEMORY.md decisions reference the test that catches their regression.
+- **Cite tests in commits and decisions.** LOGBOOK.md decisions reference the test that catches their regression.
 
 ```
 # In CLAUDE.md

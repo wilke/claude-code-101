@@ -1,11 +1,11 @@
 <!--slide n=50 layout=content kicker="Wrap-up"-->
 # Seven habits worth keeping
-1. **Set up the four-file architecture early.** `CLAUDE.md` (conventions), `plans/` (forward), `MEMORY.md` (learned), `STATUS.md` (current). One job per file; don't conflate them.
+1. **Set up the four-file architecture early.** `CLAUDE.md` (conventions), `plans/` (forward), `LOGBOOK.md` (learned), `STATUS.md` (current). One job per file; don't conflate them.
 2. **Plan before you build.** Plan mode for anything beyond a one-line edit. Save the plan to `plans/<date>-<slug>.md` before you implement.
 3. **Promote recurring tasks to skills.** Anything you do twice — KKT check, perf profile, log parsing — becomes a SKILL.md.
 4. **Commit before you prompt.** A clean working tree means every Claude change is visible in `git diff` and reversible in one command.
 5. **Test both code and results.** Unit tests in `tests/` for correctness; experimental-regression tests in `bench/` for result quality. A CLAUDE.md rule that says "run pytest after every edit" removes the most common failure mode.
-6. **End every session with the two-line ritual.** Append a dated entry to MEMORY.md if anything was decided; overwrite STATUS.md with the next concrete step. Two minutes.
+6. **End every session with the two-line ritual.** Append a dated entry to LOGBOOK.md if anything was decided; overwrite STATUS.md with the next concrete step. Two minutes.
 7. **When you're whack-a-mole-ing, stop and formalize.** Loops mean an invariant is unwritten. Write it, test it, and the loop ends.
 
 
@@ -18,7 +18,7 @@ _Two of the four files are the official path; two deliberately turn ephemeral bu
 | `CLAUDE.md` | The native memory file — hierarchy + `@import`. **Same thing.** |
 | Skills | Native, loaded on demand. **Same thing.** |
 | `plans/` | Plan mode is a permission mode — **ephemeral**, never written to disk. We persist it. |
-| `MEMORY.md` | CLAUDE.md *is* the memory; we split durable facts into a file it points at. (Name clashes with Claude Code's own auto-memory `MEMORY.md`.) |
+| `LOGBOOK.md` | CLAUDE.md *is* the memory; we split durable facts into a file it points at. We call it `LOGBOOK.md` (not `MEMORY.md`) to avoid clashing with Claude Code's own machine-local auto-memory `MEMORY.md`. |
 | `STATUS.md` | `--resume` / checkpoints are **machine-local** — a committed file crosses machines, CI, and collaborators. |
 
 > Same diagnosis as the official guide — context degrades as it fills — but a different remedy: **write it to disk**. Strongest when work crosses sessions, machines, or people; redundant when it doesn't.
@@ -39,4 +39,4 @@ Full comparison: `docs/native-claude-code-mapping.md`. Official guide: `docs.cla
     - CasADi: `casadi.org`
     - CUTEst: `github.com/ralna/CUTEst`
 
-Questions, or stories of what worked: keep notes in MEMORY.md. The next session will thank you.
+Questions, or stories of what worked: keep notes in LOGBOOK.md. The next session will thank you.

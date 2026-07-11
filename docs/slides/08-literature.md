@@ -13,12 +13,12 @@ _Lean on it for extraction and lookup; keep the judgment yourself — and never 
 | Notation | Translate between Nocedal–Wright / Conn–Gould–Toint / Boyd–Vandenberghe | Catch subtle distinctions (B- vs. M- vs. S-stationarity) without your verification |
 | Citations | Resolve fragments via an `arxiv` / `semantic-scholar` lookup | Emit citations from memory — these are often **plausible-looking and wrong** |
 
-Add `literature/` alongside `plans/`: one file per paper, named by BibTeX key. MEMORY.md decisions cite both.
+Add `literature/` alongside `plans/`: one file per paper, named by BibTeX key. LOGBOOK.md decisions cite both.
 
 ```
 project/
 ├── CLAUDE.md
-├── MEMORY.md          # cites plans/ AND literature/
+├── LOGBOOK.md          # cites plans/ AND literature/
 ├── STATUS.md
 ├── plans/
 └── literature/

@@ -117,7 +117,7 @@ The optimization and PDE versions of this exercise lean on `/init` to read the *
 ## Discussion prompts
 
 - Which of the three ambiguities (type, storage, eig-vs-svd) is Claude most likely to resolve on its own from the files, and which does it need you to pin?
-- Which of these conventions is *house style* (reusable across projects) versus *this-problem* (belongs in a plan or MEMORY.md)?
+- Which of these conventions is *house style* (reusable across projects) versus *this-problem* (belongs in a plan or LOGBOOK.md)?
 
 ## Stretch
 

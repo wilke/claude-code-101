@@ -21,7 +21,7 @@ of where each one wins, not folklore.
 
 This is a *files, not chats* capstone: you develop the entire project from this
 README using the skills from the exercises — a project `CLAUDE.md` for
-conventions, plan mode for the harness, `MEMORY.md` for durable findings,
+conventions, plan mode for the harness, `LOGBOOK.md` for durable findings,
 `STATUS.md` for handoffs, and a skill or two for the repetitive parts. Nothing
 else ships. The code is yours to write.
 
@@ -401,7 +401,7 @@ step.
 2. Plan the harness in plan mode; agree on the run-record schema before coding.
 3. Implement the harness + the **Taylor-test gate** for the adjoint gradient.
 4. Solve the well-posed baseline; produce the mesh-independence plot.
-5. Record durable findings in `MEMORY.md` (which optimizers/inner-solvers ruled
+5. Record durable findings in `LOGBOOK.md` (which optimizers/inner-solvers ruled
    in/out, and why); overwrite `STATUS.md` with the next step at each handoff.
 6. Turn on the ill-posed regime; compare the optimizer families; run the
    robustness sweep across mesh, `α`, and noise.

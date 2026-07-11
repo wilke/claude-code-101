@@ -14,13 +14,13 @@ _Everything Claude reads and writes in a session lives in one finite buffer — 
 # What persists, what doesn't
 |  | Survives a new session? | Survives auto-compact? |
 |---|---|---|
-| Files in your project (code, MEMORY.md) | Yes | Yes — they're on disk |
+| Files in your project (code, LOGBOOK.md) | Yes | Yes — they're on disk |
 | CLAUDE.md | Yes — auto-loaded each session | Yes — kept in context |
 | Skills | Yes — loaded on demand by description match | Re-loaded as needed |
 | The conversation itself | Only with `--resume` | Compressed to a summary |
 | "Mental notes" Claude has in-conversation | No — they vanish | Often lost |
 
-If a fact matters tomorrow, write it to MEMORY.md today. If it's a reusable procedure, lift it into a skill. **The conversation is scratch paper.**
+If a fact matters tomorrow, write it to LOGBOOK.md today. If it's a reusable procedure, lift it into a skill. **The conversation is scratch paper.**
 
 
 <!--slide n=10 layout=content kicker="Session basics"-->
@@ -39,4 +39,4 @@ claude --resume
 
 Sessions are stored locally under `~/.claude/projects/<hash>/`. They're plain files; you can grep them.
 
-> **Don't lean on `--resume` to remember decisions** — it's brittle. Persist anything that matters to files. We'll cover the end-of-session ritual with MEMORY.md and STATUS.md in Part 4.
+> **Don't lean on `--resume` to remember decisions** — it's brittle. Persist anything that matters to files. We'll cover the end-of-session ritual with LOGBOOK.md and STATUS.md in Part 4.

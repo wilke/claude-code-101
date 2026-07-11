@@ -32,7 +32,7 @@ The paper notes that the global convergence proof requires assumptions stronger 
 
 ## Fit to our problem
 
-We use this algorithm as our default NLP solver (decision in MEMORY.md, 2026-03-12). The filter line search section §4.2 is the source for our `filter.py` implementation in plans/2026-04-08-filter-linesearch.md. Inertia correction strategy in §3.4 is what we're building on for the inertia-corrected IPM project.
+We use this algorithm as our default NLP solver (decision in LOGBOOK.md, 2026-03-12). The filter line search section §4.2 is the source for our `filter.py` implementation in plans/2026-04-08-filter-linesearch.md. Inertia correction strategy in §3.4 is what we're building on for the inertia-corrected IPM project.
 
 ## Pull-quotes
 

@@ -24,7 +24,7 @@ Build both with `make` (see the repo `Makefile`): `make html`, `make pptx`, or `
 | [`03-claude-md.md`](03-claude-md.md) | 11–15 | Part 1 · CLAUDE.md + Exercise 1 |
 | [`04-planning.md`](04-planning.md) | 16–22 | Part 2 · Planning, plans as artifacts + Exercise 2 |
 | [`05-skills.md`](05-skills.md) | 23–27 | Part 3 · Skills + Exercise 3 |
-| [`06-memory.md`](06-memory.md) | 28–33 | Part 4 · MEMORY.md, STATUS.md handoff + Exercise 4 |
+| [`06-memory.md`](06-memory.md) | 28–33 | Part 4 · LOGBOOK.md, STATUS.md handoff + Exercise 4 |
 | [`07-capstone.md`](07-capstone.md) | 34–35 | Report back (exercise debrief) + Capstone kickoff |
 | [`08-literature.md`](08-literature.md) | 36–38 | Part 5 · Literature (the fifth artifact) + RAG |
 | [`09-power-features.md`](09-power-features.md) | 39–42 | Part 6 · Checkpoints, subagents/hooks, non-interactive mode |

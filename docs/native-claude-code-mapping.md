@@ -1,8 +1,14 @@
 # The four-file architecture vs. native Claude Code
 
 How this workshop's opinionated **four-file architecture** (`CLAUDE.md`, `plans/`,
-`MEMORY.md`, `STATUS.md`) relates to what Claude Code ships natively and to
+`LOGBOOK.md`, `STATUS.md`) relates to what Claude Code ships natively and to
 Anthropic's official best-practices guidance.
+
+> **Naming note.** The durable-knowledge file is called **`LOGBOOK.md`**. Earlier
+> revisions of this workshop named it `MEMORY.md`; it was renamed precisely to
+> avoid the collision described in the table below — Claude Code ships its own
+> machine-local auto-memory file that is *also* called `MEMORY.md`. Wherever this
+> doc says `MEMORY.md`, it means Claude Code's native file, not the workshop's.
 
 > **Sources.** Claude Code feature facts below were checked against the official
 > docs (`code.claude.com/docs/en/memory`, `.../permission-modes`,
@@ -32,7 +38,7 @@ extensions" of the official guide.)
 |---|---|---|---|
 | **CLAUDE.md** — conventions, "don'ts", pointers | **Native memory system**: enterprise/user/project hierarchy, `@import`, `/memory`, `/init` | Recommended; keep **< 200 lines**; use `.claude/rules/` for path-scoped detail | **Full alignment.** The deck's "Pointers" bullets ≈ `@import`. |
 | **plans/** — durable, dated plan files ("evidence") | Plan mode is a **permission mode** — ephemeral, never written to disk; **no native `plans/`** | Explore → Plan → Code → Commit via *ephemeral* plan mode; does **not** recommend persisting plans | **Opinionated extension.** Persists what Claude Code keeps transient. |
-| **MEMORY.md** — hand-written durable knowledge | CLAUDE.md **is** the memory file. A native **auto-memory `MEMORY.md`** exists but is auto-generated & machine-local (`~/.claude/projects/…/memory/`) — **not** your repo file, which Claude Code will **not** auto-load | No hand-written MEMORY.md | **Convention, not a feature** — only works if CLAUDE.md points at it. ⚠️ **Name collision** with the native auto-memory `MEMORY.md`. |
+| **LOGBOOK.md** — hand-written durable knowledge | CLAUDE.md **is** the memory file. A native **auto-memory `MEMORY.md`** exists but is auto-generated & machine-local (`~/.claude/projects/…/memory/`) — **not** your repo file, which Claude Code will **not** auto-load | No hand-written durable-knowledge file | **Convention, not a feature** — only works if CLAUDE.md points at it. Named `LOGBOOK.md` **specifically to dodge the name collision** with the native auto-memory `MEMORY.md`. |
 | **STATUS.md** — overwritten per-session handoff | `--continue` / `--resume` + **checkpoints / `/rewind`** — persistent *within a project* but **machine-local**, don't sync across machines/CI, and only track Claude's own edits | Use checkpoints / `/rewind` and `/clear`; **no STATUS.md** | **Sharpest divergence** — and the deck's strongest point (below). |
 | **Skills** | Native, load-on-demand | Recommended | **Full alignment.** |
 | **Literature / RAG** | Not native | Not mentioned | **Pure opinion add.** |
@@ -47,7 +53,7 @@ files are **shared, versioned, and reviewable**. That gap is real:
    nothing. A committed STATUS.md survives all of that. (The deck's "handoff
    reliability" slide ranks a hand-written STATUS.md *above* `--continue` for
    exactly this reason, and that ranking is technically correct.)
-2. **plans/ + MEMORY.md = a git-versioned audit trail.** For reproducible research
+2. **plans/ + LOGBOOK.md = a git-versioned audit trail.** For reproducible research
    and multi-author labs, "why did we pick IPOPT / abandon Tikhonov" belongs in the
    repo — diffable and code-reviewable — not in a machine-local transcript only one
    person can `--resume`.
@@ -56,15 +62,17 @@ files are **shared, versioned, and reviewable**. That gap is real:
 ## Where the deck fights the grain (the costs)
 
 1. **Redundancy.** `plans/` duplicates plan mode; `STATUS.md` duplicates
-   `--resume` + checkpoints; `MEMORY.md` must be manually wired through CLAUDE.md
+   `--resume` + checkpoints; `LOGBOOK.md` must be manually wired through CLAUDE.md
    because it isn't auto-loaded. You re-implement, by discipline, what the tool
    does automatically.
 2. **Automation → manual ritual.** Auto-memory and checkpoints are free; the deck's
-   MEMORY.md / STATUS.md depend on the end-of-session ritual actually being
+   LOGBOOK.md / STATUS.md depend on the end-of-session ritual actually being
    performed. It trades *automatic* for *durable + controlled*.
-3. **The `MEMORY.md` name clash** is a concrete footgun now that Claude Code ships
-   its own auto-memory `MEMORY.md`. Consider renaming the deck's file (e.g.
-   `DECISIONS.md`) or calling out the distinction explicitly.
+3. **The name clash is resolved by the `LOGBOOK.md` name.** Earlier revisions called
+   the file `MEMORY.md`, which was a concrete footgun once Claude Code shipped its
+   own auto-memory `MEMORY.md`. The rename to `LOGBOOK.md` removes the collision;
+   the two files now have distinct names and distinct roles (durable, versioned,
+   hand-written vs. ephemeral, machine-local, auto-generated).
 4. **Predates newer built-ins.** Best practices now lean on `.claude/rules/`
    (path-scoped), `/goal`, and auto-memory — mechanisms the deck could adopt or at
    least acknowledge. Its dense example CLAUDE.md also runs against the "< 200 lines"
@@ -77,6 +85,6 @@ The workshop isn't in conflict with best practices — it's a
 layer**, tuned for *long-horizon, multi-session, multi-person scientific work*
 rather than the single-developer, single-machine loop the built-ins optimize for.
 Two of the four files (**CLAUDE.md, skills**) are exactly the official path; the
-other two (**plans/, MEMORY.md/STATUS.md**) are deliberate, defensible
+other two (**plans/, LOGBOOK.md/STATUS.md**) are deliberate, defensible
 *reifications of ephemeral built-ins* — strongest when work crosses machines, CI,
 or collaborators, and weakest as pure duplication when it doesn't.

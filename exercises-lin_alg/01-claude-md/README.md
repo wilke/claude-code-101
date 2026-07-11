@@ -1,12 +1,30 @@
 # Exercise 01 — Write a CLAUDE.md (15 min)
 
-**Goal.** Experience how a CLAUDE.md changes the assistant's behavior on the *same* vague prompt, in the numerical linear algebra setting. Without conventions, "find the spectrum" is under-specified in three ways at once — the matrix *type*, how it's *stored*, and what "spectrum" even *means*. A CLAUDE.md turns those silent guesses into explicit questions.
+**Goal.** Experience how a CLAUDE.md changes the assistant's behavior on the *same* vague prompt, in the numerical linear algebra setting — and see exactly where `/init` can help you and where it can't. Without conventions, "find the spectrum" is under-specified in three ways at once — the matrix *type*, how it's *stored*, and what "spectrum" even *means*. `/init` infers such things from your *code*, but this folder ships only data (two matrices, no source), so `/init` has almost nothing to read — which makes the point sharply: these conventions are entirely on you. This exercise walks that boundary in three phases: ask cold, let `/init` try, then add what it couldn't have known.
 
 ## Setup
+
+Work in a virtual environment so the exercise's packages stay isolated from your
+system Python and don't clash with other projects. Create and activate it
+**before you start `claude`** — Claude runs Python itself, so it uses whichever
+environment is active. Use conda or pip + venv, whichever you prefer. **On
+Windows, conda or the ANL compute nodes are recommended** — native venv
+activation differs (`.venv\Scripts\activate`). Feel free to run on your own
+machine if that doesn't worry you.
+
+conda:
 
 ```bash
 conda create -n linalg python=3.11 numpy scipy matplotlib
 conda activate linalg
+```
+
+pip + venv:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install numpy scipy matplotlib
 ```
 
 ## The files
@@ -26,16 +44,31 @@ One is dense, one is sparse; one is symmetric, one is not. Part of the exercise 
    find the spectrum of these matrices
    ```
 
-2. Watch what Claude does. Look for:
+2. Watch what Claude does — this is your baseline. Look for:
    - Does it **identify each matrix's type and storage** before computing, or assume?
    - Does it **densify** `matrix_B.npz` (`.toarray()`) — a 5000×5000 array — instead of using a sparse routine?
    - Does "spectrum" become **eigenvalues** or **singular values**? For the nonsymmetric matrix these differ; does Claude notice, or silently pick one?
    - Does it dump all 5000 values, or ask whether you want the **full spectrum or only the dominant few**?
    - Does it **ask you anything at all**, or just guess?
 
-## Phase 2 — With a CLAUDE.md
+## Phase 2 — Let `/init` try
 
-3. Create a `CLAUDE.md` with conventions that force the questions above into the open. A seed to start from:
+The optimization and PDE versions of this exercise lean on `/init` to read the *code* and recover the math living there. This folder is the opposite extreme: it ships only `matrix_A.npy` and `matrix_B.npz` — **no source code at all** — so this phase shows what `/init` can (and can't) do with nothing to read.
+
+3. Reset the conversation and generate a CLAUDE.md from the folder:
+
+   ```
+   /clear
+   ```
+   ```
+   /init
+   ```
+
+4. Read what `/init` produced. With no code to scan, expect a thin, generic CLAUDE.md: it has no way to state each matrix's **type** or **storage**, can't resolve the **eigenvalues-vs-singular-values** ambiguity, and can't pin the routines to use — none of that is written anywhere for it to read. That's the lesson in its sharpest form: **`/init` infers from code; when the knowledge isn't in the repo, it's entirely on you.**
+
+## Phase 3 — Add what `/init` couldn't know, then iterate
+
+5. Write the conventions `/init` had no way to infer into `CLAUDE.md` (merge them into whatever `/init` generated). A seed to start from:
 
    ```markdown
    # Project: Spectra of matrices and operators
@@ -63,13 +96,13 @@ One is dense, one is sparse; one is symmetric, one is not. Part of the exercise 
    - No plt.show(); save figures to figures/.
    ```
 
-4. Reset the conversation (`/clear`) and re-ask the exact same prompt:
+6. Reset the conversation (`/clear`) and re-ask the exact same prompt:
 
    ```
    find the spectrum of these matrices
    ```
 
-5. Compare. With the CLAUDE.md in place, Claude should first report that `matrix_A.npy` is a dense nonsymmetric array and `matrix_B.npz` is a large sparse symmetric matrix, then *ask* whether you want eigenvalues or singular values and how many — before computing.
+7. Compare against your Phase 1 baseline. With the CLAUDE.md in place, Claude should first report that `matrix_A.npy` is a dense nonsymmetric array and `matrix_B.npz` is a large sparse symmetric matrix, then *ask* whether you want eigenvalues or singular values and how many — before computing.
 
 ## Critical-reading checklist
 

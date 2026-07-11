@@ -113,13 +113,12 @@
   <!-- 4. Exercise 1 walkthrough -->
   <section class="slide">
     <h3>Exercise 1 <span class="badge">15 min</span></h3>
-    <h1>Write your own CLAUDE.md</h1>
+    <h1>Ask cold, let /init try, then add the rest</h1>
     <ol>
-      <li>Open the exercise folder: <code>cd exercises-pde/01-claude-md/</code></li>
-      <li>Read <code>laplace_square.py</code> — a deliberately under-specified Firedrake solve on a coarse <code>UnitSquareMesh(8, 8)</code> with hardcoded P1 elements and no convergence study.</li>
-      <li>Run <code>claude</code> on the host. <b>First, with no CLAUDE.md</b>, ask: <code>add a convergence study for laplace_square.py</code>. Note what Claude picks for norms, axes, file paths, and element-order handling.</li>
-      <li>Now write a CLAUDE.md (use <code>/init</code> or copy the seed in <code>README.md</code>). Encode your conventions for: error norms (L² <i>and</i> H¹), table format, figure path and axes, reference slope lines, and how element order is exposed.</li>
-      <li><code>/clear</code> the conversation, re-ask the same prompt, compare.</li>
+      <li>Open <code>cd exercises-pde/01-claude-md/</code>. Read <code>laplace_square.py</code> — a deliberately under-specified Firedrake solve on a coarse <code>UnitSquareMesh(8, 8)</code> with hardcoded P1 and no convergence study.</li>
+      <li><b>Phase 1 — no CLAUDE.md.</b> Run <code>claude</code> on the host and ask <code>add a convergence study for laplace_square.py</code>. Note what Claude picks for norms, axes, file paths, and element order.</li>
+      <li><b>Phase 2 — let /init try.</b> <code>/clear</code>, run <code>/init</code>. It recovers the <i>math</i> in the docstring (manufactured solution, <code>f = 2π²·u_exact</code>, homogeneous Dirichlet BC), but has no way to know your <i>conventions</i> — figure format, log-log with reference slopes, the <code>max(u_h)</code> check, confirming element order.</li>
+      <li><b>Phase 3 — add what /init couldn't know, then iterate.</b> Merge those conventions into the CLAUDE.md, <code>/clear</code>, re-ask, compare. Add any missed rule and repeat.</li>
     </ol>
     <div class="callout">Discussion: which conventions did Claude follow on the second try? Which did it miss? Add the missing rule to CLAUDE.md and ask once more — that's the whole loop.</div>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
@@ -146,7 +145,7 @@
   <section class="slide section-divider">
     <div class="kicker">Exercise 2 · plan mode</div>
     <h1>Plan a fix for a broken convergence test</h1>
-    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">The deliverable is working code, not just a plan. Plan mode is the <i>method</i>; the recovered convergence rate is the <i>artifact</i>. Fifteen minutes from "this is broken" to "it isn't anymore."</p>
+    <p class="lede" style="color: var(--accent-soft); max-width: 60ch;">Here the deliverable is the <code>plan.md</code>, not code. Plan mode is the <i>method</i>; the plan you'd be comfortable approving is the <i>artifact</i>. Actually implementing the fix to watch the convergence rate recover is an optional next step.</p>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -192,7 +191,8 @@ priori mesh refinement strategy in the problem regions.
 The polynomial order is fixed at P1; only the mesh is in scope.</pre>
       </li>
       <li>Read the plan against four highest-leverage questions: <b>diagnostic mechanism?</b> <b>refinement primitive?</b> <b>grading parameters?</b> <b>what is out of scope?</b> Push back on at least one.</li>
-      <li>Approve. Watch the assistant edit <code>laplace_lshape.py</code>. Re-run; the L² rate should climb visibly toward <code>2.0</code>.</li>
+      <li><b>Save it without running the plan</b> — approving would make Claude <i>implement</i> it. While still in plan mode, ask it to <code>write the complete plan to plan.md and stop</code>, then press <code>Shift+Tab</code> to leave plan mode without approving. That <code>plan.md</code> is the deliverable.</li>
+      <li><b>Optional (if time permits):</b> approve and let Claude implement, then re-run — watch <i>how it paces</i> (does it work through the plan's steps in order, or combine/skip them?); the L² rate should climb visibly toward <code>2.0</code>.</li>
     </ol>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
@@ -200,7 +200,7 @@ The polynomial order is fixed at P1; only the mesh is in scope.</pre>
   <!-- 9. Debrief -->
   <section class="slide">
     <h3>Exercise 2 · debrief</h3>
-    <h1>What a good plan + implementation produces</h1>
+    <h1>What a plan worth approving contains</h1>
     <p>A plan that survives review on this exercise has six sections. Each one closes off a class of drift that would otherwise surface during implementation.</p>
     <table class="matrix">
       <tr><th>Plan section</th><th>What it contains for this exercise</th></tr>
@@ -208,7 +208,7 @@ The polynomial order is fixed at P1; only the mesh is in scope.</pre>
       <tr><td>Step-by-step</td><td>Inspect the mesh → implement the element-wise error diagnostic → implement the grading transformation → wire it into the rates loop → run and verify.</td></tr>
       <tr><td>Out of scope</td><td>A posteriori adaptive marking. Dörfler loops. hp-refinement. Alternative element families. Touching the manufactured solution, the BC, or the polynomial order.</td></tr>
     </table>
-    <p class="small" style="margin-top: 8px;">A successful run shows the rates moving visibly in the right direction — not necessarily reaching the textbook constants. Closing the last fraction is FEM-tuning craft and out of scope for this exercise.</p>
+    <p class="small" style="margin-top: 8px;">If you take the optional implement step, a successful run shows the rates moving visibly in the right direction — not necessarily reaching the textbook constants; closing the last fraction is FEM-tuning craft, out of scope here.</p>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
@@ -335,6 +335,7 @@ to run? Justify in two sentences.</pre>
 LOGBOOK.md, and overwrite STATUS.md with where we are now.</pre>
       </li>
     </ol>
+    <div class="callout"><code>MEMORY.md</code> isn't limited to <code>.md</code> — Claude reads source, LaTeX, and data too. The <b>optimization track's Exercise 04</b> distills a whole multi-format project (<code>plans/</code> + <code>src/</code> + <code>tex/</code>) into one memory file — worth a look.</div>
     <div class="footer"><span>PDE supplement · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 

@@ -1,6 +1,6 @@
 # Solution — Cardinality-constrained portfolio with `unopy`
 
-This is the worked solution to Exercise 2. The point of the exercise is the
+This is the worked solution to Exercise 02. The point of the exercise is the
 *plan* (`plan.md`); this file documents the implementation that was built from
 that plan, how to run it, and where it deliberately departed from the literal
 prompt.
@@ -17,25 +17,25 @@ prompt.
 
 ## Environment
 
-`unopy` (UNO 2.7.4) is installed in the **`optimization`** conda env. Either
-activate it or call its interpreter directly:
+`unopy` (UNO 2.7.4) runs in the exercise environment (the `optimization` conda
+env from Exercise 01, or your pip venv). Activate it first, then use `python3`:
 
 ```bash
-PY=/home/leyffer/software/miniconda3/envs/optimization/bin/python
+conda activate optimization        # or: source .venv/bin/activate
 ```
 
 ## How to run
 
 ```bash
 # 1. Validate derivatives + one solve (fast sanity check)
-$PY solve.py
+python3 solve.py
 
 # 2. Run the Pareto sweep -> bench_runs.csv + bench_summary.csv
-$PY benchmark.py                       # full default grid (25 τ, 5 starts)
-$PY benchmark.py --tau-grid "0,0.5,5" --n-starts 2   # quick smoke test
+python3 benchmark.py                       # full default grid (25 τ, 5 starts)
+python3 benchmark.py --tau-grid "0,0.5,5" --n-starts 2   # quick smoke test
 
 # 3. Plot the trade-off -> pareto.png
-$PY plot_pareto.py
+python3 plot_pareto.py
 ```
 
 ### Run-time parameters (`benchmark.py`)

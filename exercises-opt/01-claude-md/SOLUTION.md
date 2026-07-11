@@ -1,10 +1,10 @@
-# Solution — Exercise 1b (/init)
+# Solution — Exercise 01 (CLAUDE.md via /init, largest small polygon)
 
 ## What this exercise is doing
 
-`max_polygon.py` solves a geometric NLP in polar coordinates: `u` is the
+`max_conopt.py` solves a geometric NLP in polar coordinates: `u` is the
 radial coordinate and `v` is the angular coordinate of each free vertex.
-The documentation in `max_polygon.md` never says this. The exercise asks
+The documentation in `max_conopt.md` never says this. The exercise asks
 Claude to add a polygon solution plot and a convergence plot twice — once
 reading only the sparse docs, and once after `/init` has read the source
 code and generated a CLAUDE.md.
@@ -21,7 +21,7 @@ is a y-axis that reaches values above 3. The actual polygon vertices all live
 in the upper half of the unit disk, so both `x` and `y` should be in `[−1, 1]`.
 
 **Failure mode 2 — wrong fixed last vertex.**
-`max_polygon.py` appends `0.0` to `u` and `π` to `v` in several places, but
+`max_conopt.py` appends `0.0` to `u` and `π` to `v` in several places, but
 without `/init` Claude does not know that this corresponds to the Cartesian
 origin `(0, 0)`. It may omit the last vertex entirely, or place it at `(0, π)`.
 
@@ -36,7 +36,7 @@ range — the polygon always lives in the upper half-plane.
 
 ## A worked CLAUDE.md
 
-This is what `/init` should generate after reading `max_polygon.py`.
+This is what `/init` should generate after reading `max_conopt.py`.
 Every claim here can be traced to a specific line in the source.
 
 ```markdown
@@ -58,9 +58,9 @@ z = [u, v], flat array of length 2*(nv-1):
 Polygon lives in the upper half-disk (y >= 0) because all angles are in [0, pi].
 
 ## Commands
-- python max_polygon.py                          # nv=8, 10 restarts
-- python max_polygon.py --nv 12 --nstarts 30    # multistart staircase demo
-- python max_polygon.py --plot                   # solve and write figures/
+- python3 max_conopt.py                          # nv=8, 10 restarts
+- python3 max_conopt.py --nv 12 --nstarts 30    # multistart staircase demo
+- python3 max_conopt.py --plot                   # solve and write figures/
 
 ## Conventions
 - Figures saved to figures/ as PDF, 4 inches wide.
@@ -147,7 +147,7 @@ if args.plot:
 ## What you'd expect to see
 
 ```
-$ python max_polygon.py --nv 8 --nstarts 10 --seed 0 --plot
+$ python3 max_conopt.py --nv 8 --nstarts 10 --seed 0 --plot
 restart   1/10: obj=0.726868 (new best)
 restart   2/10: obj=0.726868
 ...
@@ -167,7 +167,7 @@ discover area values around 0.750, then 0.755, then 0.761.
 
 ## The three formulas /init reads
 
-When `/init` analyzes `max_polygon.py`, it sees:
+When `/init` analyzes `max_conopt.py`, it sees:
 
 1. **Area formula** (in `neg_area`):
    `ui1 * ui * np.sin(vi1 - vi)` — this is the polar shoelace formula. A
@@ -185,10 +185,10 @@ When `/init` analyzes `max_polygon.py`, it sees:
 
 ## The loop
 
-Same as Exercise 1: try → notice what's wrong → fix CLAUDE.md → try again.
-The difference is that `/init` bootstraps the CLAUDE.md automatically from
-the code, so the first attempt is much closer. The remaining manual additions
-are typically:
+The three phases mirror the other tracks: ask cold (Phase 1) → let `/init` read
+the code and draft a CLAUDE.md (Phase 2) → add what `/init` couldn't infer, then
+iterate (Phase 3). `/init` bootstraps the CLAUDE.md from the code, so the first
+attempt is much closer; the remaining manual additions in Phase 3 are typically:
 
 1. Add the `figures/` convention (Claude may save to the working directory).
 2. Specify linear y-axis for convergence (Claude may default to log scale).

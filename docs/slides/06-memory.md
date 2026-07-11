@@ -68,11 +68,11 @@ _Please refer to your supplemental slide deck. Open your track's exercise:_
 
 :::columns
 ### Optimization
-- [exercises-opt/04-memory/](exercises-opt/04-memory/)
+- [exercises-opt/04-logbook/](exercises-opt/04-logbook/)
 
 ### PDE / FEM
-- [exercises-pde/04-memory/](exercises-pde/04-memory/)
+- [exercises-pde/04-logbook/](exercises-pde/04-logbook/)
 
 ### Linear algebra
-- [exercises-lin_alg/04-memory/](exercises-lin_alg/04-memory/)
+- [exercises-lin_alg/04-logbook/](exercises-lin_alg/04-logbook/)
 :::

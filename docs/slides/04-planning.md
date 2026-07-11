@@ -24,7 +24,7 @@ Or start directly by typing `plan: <task>` at the prompt.
 ```
 plan: implement a filter line search for our IPM driver,
        then add a CUTEst-style test for problem HS071 with
-       tolerances matching memory/decisions.md.
+       tolerances matching logbook/decisions.md.
 ```
 
 

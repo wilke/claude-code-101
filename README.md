@@ -51,15 +51,15 @@ python -m pip install --user numpy scipy matplotlib pytest
 ├── WORKFLOW.md               # sessions, version control, testing, plans, loops, literature
 ├── LITERATURE.md             # addendum: literature research, RAG, wiki-rag integration
 ├── exercises-opt/            # optimization track (SciPy / Uno / CVXPY, KKT, portfolio NLP)
-│   └── 01-claude-md/  02-planning/  03-skills/  04-memory/
+│   └── 01-claude-md/  02-planning/  03-skills/  04-logbook/
 ├── exercises-pde/            # PDE/FEM track (Firedrake in Docker; Laplace, wave, CFL)
-│   └── 01-claude-md/  02-planning/  03-skills/  04-memory/
+│   └── 01-claude-md/  02-planning/  03-skills/  04-logbook/
 ├── exercises-lin_alg/        # numerical linear algebra track (numpy/scipy; spectra, SVD)
-│   └── 01-claude-md/  02-planning/  03-skills/  04-memory/
+│   └── 01-claude-md/  02-planning/  03-skills/  04-logbook/
 └── capstones/                # open-ended project briefs (README index + one dir per project)
 ```
 
-Each track follows the same numbered progression (`01-claude-md` … `04-memory`); the open-ended capstone projects live in the shared top-level `capstones/` directory.
+Each track follows the same numbered progression (`01-claude-md` … `04-logbook`); the open-ended capstone projects live in the shared top-level `capstones/` directory.
 
 ## How to use the exercises
 

@@ -2,13 +2,13 @@
 
 **Goal.** Use Claude Code to turn loose lab notebook/plans entries into a structured `LOGBOOK.md`. The synthesis is the pretext; **the file is the artifact** — how the next session inherits what this one learned.
 
-> **`MEMORY.md` isn't limited to `.md`.** Claude can read almost any file — `.py` source, `.tex` notes, plans — so you can distill an entire multi-format project into one memory file, not just a set of markdown notebooks.
+> **`LOGBOOK.md` isn't limited to `.md`.** Claude can read almost any file — `.py` source, `.tex` notes, plans — so you can distill an entire multi-format project into one logbook file, not just a set of markdown notebooks.
 
 **Background** These are actual plans from a project that is briefly described next (skip to **Exercise Steps** to start the exercise). The project tried to implement an ADMM filter method for topology optimization.
 
 ## What's here (abbreviated)
 ```
-  04-memory/
+  04-logbook/
   ├── README.md
   ├── SOLUTION.md
   ├── plans/
@@ -92,8 +92,6 @@ s.t. sum(x) ≤ Budget,   x ∈ [ε, 1]^n
 - What is the point of the LaTeX files?
 
 ## Stretch (if time permits)
-
-**1. Split MEMORY.md into a directory:** `memory/decisions.md`, `memory/parameters.md`, `memory/dead-ends.md`, plus a `memory/INDEX.md`. Ask Claude to maintain the index automatically when it appends new entries.
 
 The logbook scales in three stages — one file → a topical directory → a directory
 of ADRs. Stretches 1 and 3 walk that path; the full write-up is in

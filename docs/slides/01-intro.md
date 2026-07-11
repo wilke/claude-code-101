@@ -62,25 +62,25 @@ _Every exercise ships a README.md (the instructions) and a SOLUTION.md (the walk
 
 :::columns
 ### Optimization
-- [Supplement slides →](slides-supplemental/slides_supplement_optimization.html)
+- [Supplement slides →](slides-supplemental/exercise_slides/slides_supplement_optimization.html)
 - [Exercise opt 01 — CLAUDE.md](exercises-opt/01-claude-md/)
 - [Exercise opt 02 — planning](exercises-opt/02-planning/)
 - [Exercise opt 03 — skills](exercises-opt/03-skills/)
-- [Exercise opt 04 — memory](exercises-opt/04-memory/)
+- [Exercise opt 04 — memory](exercises-opt/04-logbook/)
 
 ### PDE / FEM
-- [Supplement slides →](slides-supplemental/slides_supplement_pde.html)
+- [Supplement slides →](slides-supplemental/exercise_slides/slides_supplement_pde.html)
 - [Exercise pde 01 — CLAUDE.md](exercises-pde/01-claude-md/)
 - [Exercise pde 02 — planning](exercises-pde/02-planning/)
 - [Exercise pde 03 — skills](exercises-pde/03-skills/)
-- [Exercise pde 04 — memory](exercises-pde/04-memory/)
+- [Exercise pde 04 — memory](exercises-pde/04-logbook/)
 
 ### Linear algebra
-- [Supplement slides →](slides-supplemental/slides_supplement_lin_alg.html)
+- [Supplement slides →](slides-supplemental/exercise_slides/slides_supplement_lin_alg.html)
 - [Exercise lin_alg 01 — CLAUDE.md](exercises-lin_alg/01-claude-md/)
 - [Exercise lin_alg 02 — planning](exercises-lin_alg/02-planning/)
 - [Exercise lin_alg 03 — skills](exercises-lin_alg/03-skills/)
-- [Exercise lin_alg 04 — memory](exercises-lin_alg/04-memory/)
+- [Exercise lin_alg 04 — memory](exercises-lin_alg/04-logbook/)
 :::
 
 

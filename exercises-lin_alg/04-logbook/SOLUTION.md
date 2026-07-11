@@ -7,7 +7,7 @@ Three dated notebook entries describe one project — a heat-equation testbench 
 ## A worked LOGBOOK.md
 
 ```markdown
-# MEMORY — heat-equation SVD-preconditioner testbench
+# LOGBOOK — heat-equation SVD-preconditioner testbench
 
 ## Decisions
 - Backward Euler + CG is the fixed backbone; the per-step matrix (I - dt L)

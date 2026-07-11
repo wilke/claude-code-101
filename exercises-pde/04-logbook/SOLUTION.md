@@ -2,7 +2,7 @@
 
 ## What this exercise is doing
 
-The learner opens `claude` in `exercises-pde/04-memory/`, pastes a one-line synthesis prompt that asks Claude to read everything under `notebooks/` and produce a `LOGBOOK.md` with four sections — Decisions, Parameters, Dead Ends, Open Questions — citing the source notebook for every entry. They then trim the result, ask Claude for a next experiment that the new `LOGBOOK.md` would inform, and close with a two-minute end-of-session ritual that appends a dated entry to `LOGBOOK.md` and overwrites `STATUS.md`.
+The learner opens `claude` in `exercises-pde/04-logbook/`, pastes a one-line synthesis prompt that asks Claude to read everything under `notebooks/` and produce a `LOGBOOK.md` with four sections — Decisions, Parameters, Dead Ends, Open Questions — citing the source notebook for every entry. They then trim the result, ask Claude for a next experiment that the new `LOGBOOK.md` would inform, and close with a two-minute end-of-session ritual that appends a dated entry to `LOGBOOK.md` and overwrites `STATUS.md`.
 
 The pedagogy is **LOGBOOK.md as the file the next session reads on load**. The synthesis is the pretext; the file is the artifact. Unlike the prior PDE-track exercises, no FEM code runs here — the Claude-as-co-scientist value is editorial (read three loose notebooks, find the durable substance, throw away the rest). The exercise is short on purpose: the workflow is two minutes once you've done it once, and the goal is to make that two-minute habit feel cheap enough to keep.
 

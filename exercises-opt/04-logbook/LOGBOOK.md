@@ -28,7 +28,7 @@ Distilled from `plans/`. Each entry cites the plan file it came from.
   count; `FilterADMM.py` accumulates iteration counts/times. (`2026-06-03-iterCount.md`)
 - **Movie option mirrors the plot toggle** (off by default, one `movie` flag /
   `--movie`).  (`2026-06-03-movie.md`)
-- **2026-06-24 — Session: bootstrapped project memory & guidance.** Read all
+- **2026-06-24 — Session: bootstrapped project logbook & guidance.** Read all
   seven `plans/` files and synthesized this `LOGBOOK.md` (Decisions / Parameters /
   Dead Ends / Open Questions, each entry citing its plan); the user then trimmed
   it. Also created `CLAUDE.md` from a codebase analysis — captures the run-from-

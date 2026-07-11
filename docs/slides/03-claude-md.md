@@ -45,11 +45,11 @@ Develop a primal-dual IPM with inertia correction for nonconvex NLPs.
 ## Conventions
 - Variables: x (primal), y (eq mult), z (ineq mult). Use these names.
 - Tolerances default to 1e-8.
-- Never call scipy.optimize for constrained problems (see memory/decisions.md).
+- Never call scipy.optimize for constrained problems (see logbook/decisions.md).
 
 ## Pointers
-- memory/decisions.md — solver and parameter choices
-- memory/dead-ends.md — things we tried and why they failed
+- logbook/decisions.md — solver and parameter choices
+- logbook/dead-ends.md — things we tried and why they failed
 - docs/derivations.tex — the math in publishable form
 ```
 
@@ -60,14 +60,14 @@ _Please refer to your supplemental slide deck. Open your track's exercise:_
 
 :::columns
 ### Optimization
-- [Supplement slides →](slides-supplemental/slides_supplement_optimization.html)
+- [Supplement slides →](slides-supplemental/exercise_slides/slides_supplement_optimization.html)
 - [exercises-opt/01-claude-md/](exercises-opt/01-claude-md/)
 
 ### PDE / FEM
-- [Supplement slides →](slides-supplemental/slides_supplement_pde.html)
+- [Supplement slides →](slides-supplemental/exercise_slides/slides_supplement_pde.html)
 - [exercises-pde/01-claude-md/](exercises-pde/01-claude-md/)
 
 ### Linear algebra
-- [Supplement slides →](slides-supplemental/slides_supplement_lin_alg.html)
+- [Supplement slides →](slides-supplemental/exercise_slides/slides_supplement_lin_alg.html)
 - [exercises-lin_alg/01-claude-md/](exercises-lin_alg/01-claude-md/)
 :::

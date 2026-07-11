@@ -158,7 +158,7 @@ seemed right at the time* is exactly what stops someone re-proposing it.
 
 - **Slide deck** — Part 4 (`docs/slides/06-memory.md`) introduces `LOGBOOK.md` and
   points here for the scaling story.
-- **Exercise 4** — every track (`exercises-opt/04-memory/`,
-  `exercises-pde/04-memory/`, `exercises-lin_alg/04-memory/`) bootstraps a
+- **Exercise 4** — every track (`exercises-opt/04-logbook/`,
+  `exercises-pde/04-logbook/`, `exercises-lin_alg/04-logbook/`) bootstraps a
   `LOGBOOK.md` from raw dated notebook/plan entries (Stage 1), then a stretch splits
   it into a `logbook/` directory (Stage 2) and promotes decisions to ADRs (Stage 3).

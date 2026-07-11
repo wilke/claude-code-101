@@ -6,10 +6,10 @@ You have existing plan files in `plans/`. Each one is an actual plan created ove
 
 ## A worked LOGBOOK.md
 
-This is what Claude should produce when you ask it to read `plans/` and synthesize a memory file. Edit it down to the point where every line still earns its place.
+This is what Claude should produce when you ask it to read `plans/` and synthesize a logbook file. Edit it down to the point where every line still earns its place.
 
 ```markdown
-# MEMORY — ADMM-Filter project
+# LOGBOOK — ADMM-Filter project
 
 Distilled from `plans/`. Each entry cites the plan file it came from.
 

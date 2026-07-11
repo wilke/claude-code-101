@@ -206,7 +206,7 @@
 <p class="lede">Every exercise ships a README.md (the instructions) and a SOLUTION.md (the walkthrough). Those are for you — not for Claude.</p>
 <ul><li>Keep <code>README.md</code> and <code>SOLUTION.md</code> <b>outside</b> the directory where you run <code>claude</code>. If Claude can see them, it reads ahead and the exercise loses its point.</li><li>As you work through an exercise, <b>manually copy only the code and data files you need</b> into your working directory — e.g. <code>max_conopt.py</code>, <code>matrix_A.npy</code>, <code>laplace_square.py</code>.</li></ul>
 <div class="callout">Rule of thumb: Claude should see the <i>problem</i>, never the <i>solution</i>.</div>
-<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="slides-supplemental/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">Exercise opt 01 — CLAUDE.md</a><a href="exercises-opt/02-planning/" target="_blank" rel="noopener">Exercise opt 02 — planning</a><a href="exercises-opt/03-skills/" target="_blank" rel="noopener">Exercise opt 03 — skills</a><a href="exercises-opt/04-memory/" target="_blank" rel="noopener">Exercise opt 04 — memory</a></div><div class="col"><h4>PDE / FEM</h4><a href="slides-supplemental/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">Exercise pde 01 — CLAUDE.md</a><a href="exercises-pde/02-planning/" target="_blank" rel="noopener">Exercise pde 02 — planning</a><a href="exercises-pde/03-skills/" target="_blank" rel="noopener">Exercise pde 03 — skills</a><a href="exercises-pde/04-memory/" target="_blank" rel="noopener">Exercise pde 04 — memory</a></div><div class="col"><h4>Linear algebra</h4><a href="slides-supplemental/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">Exercise lin_alg 01 — CLAUDE.md</a><a href="exercises-lin_alg/02-planning/" target="_blank" rel="noopener">Exercise lin_alg 02 — planning</a><a href="exercises-lin_alg/03-skills/" target="_blank" rel="noopener">Exercise lin_alg 03 — skills</a><a href="exercises-lin_alg/04-memory/" target="_blank" rel="noopener">Exercise lin_alg 04 — memory</a></div></div>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="slides-supplemental/exercise_slides/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">Exercise opt 01 — CLAUDE.md</a><a href="exercises-opt/02-planning/" target="_blank" rel="noopener">Exercise opt 02 — planning</a><a href="exercises-opt/03-skills/" target="_blank" rel="noopener">Exercise opt 03 — skills</a><a href="exercises-opt/04-logbook/" target="_blank" rel="noopener">Exercise opt 04 — memory</a></div><div class="col"><h4>PDE / FEM</h4><a href="slides-supplemental/exercise_slides/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">Exercise pde 01 — CLAUDE.md</a><a href="exercises-pde/02-planning/" target="_blank" rel="noopener">Exercise pde 02 — planning</a><a href="exercises-pde/03-skills/" target="_blank" rel="noopener">Exercise pde 03 — skills</a><a href="exercises-pde/04-logbook/" target="_blank" rel="noopener">Exercise pde 04 — memory</a></div><div class="col"><h4>Linear algebra</h4><a href="slides-supplemental/exercise_slides/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">Exercise lin_alg 01 — CLAUDE.md</a><a href="exercises-lin_alg/02-planning/" target="_blank" rel="noopener">Exercise lin_alg 02 — planning</a><a href="exercises-lin_alg/03-skills/" target="_blank" rel="noopener">Exercise lin_alg 03 — skills</a><a href="exercises-lin_alg/04-logbook/" target="_blank" rel="noopener">Exercise lin_alg 04 — memory</a></div></div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
@@ -297,18 +297,18 @@ Develop a primal-dual IPM with inertia correction for nonconvex NLPs.
 ## Conventions
 - Variables: x (primal), y (eq mult), z (ineq mult). Use these names.
 - Tolerances default to 1e-8.
-- Never call scipy.optimize for constrained problems (see memory/decisions.md).
+- Never call scipy.optimize for constrained problems (see logbook/decisions.md).
 
 ## Pointers
-- memory/decisions.md — solver and parameter choices
-- memory/dead-ends.md — things we tried and why they failed
+- logbook/decisions.md — solver and parameter choices
+- logbook/dead-ends.md — things we tried and why they failed
 - docs/derivations.tex — the math in publishable form</code></pre>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide section-divider">
 <h1>Exercise 1</h1>
 <p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
-<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="slides-supplemental/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">exercises-opt/01-claude-md/</a></div><div class="col"><h4>PDE / FEM</h4><a href="slides-supplemental/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">exercises-pde/01-claude-md/</a></div><div class="col"><h4>Linear algebra</h4><a href="slides-supplemental/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">exercises-lin_alg/01-claude-md/</a></div></div>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="slides-supplemental/exercise_slides/slides_supplement_optimization.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-opt/01-claude-md/" target="_blank" rel="noopener">exercises-opt/01-claude-md/</a></div><div class="col"><h4>PDE / FEM</h4><a href="slides-supplemental/exercise_slides/slides_supplement_pde.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-pde/01-claude-md/" target="_blank" rel="noopener">exercises-pde/01-claude-md/</a></div><div class="col"><h4>Linear algebra</h4><a href="slides-supplemental/exercise_slides/slides_supplement_lin_alg.html" target="_blank" rel="noopener">Supplement slides →</a><a href="exercises-lin_alg/01-claude-md/" target="_blank" rel="noopener">exercises-lin_alg/01-claude-md/</a></div></div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide section-divider">
@@ -332,7 +332,7 @@ Develop a primal-dual IPM with inertia correction for nonconvex NLPs.
 <p>Or start directly by typing <code>plan: &lt;task&gt;</code> at the prompt.</p>
 <pre><code>plan: implement a filter line search for our IPM driver,
        then add a CUTEst-style test for problem HS071 with
-       tolerances matching memory/decisions.md.</code></pre>
+       tolerances matching logbook/decisions.md.</code></pre>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">
@@ -504,7 +504,7 @@ Then re-run pytest tests/test_linesearch.py -k HS071.</code></pre>
 <section class="slide section-divider">
 <h1>Exercise 4</h1>
 <p class="lede">Please refer to your supplemental slide deck. Open your track's exercise:</p>
-<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="exercises-opt/04-memory/" target="_blank" rel="noopener">exercises-opt/04-memory/</a></div><div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/04-memory/" target="_blank" rel="noopener">exercises-pde/04-memory/</a></div><div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/04-memory/" target="_blank" rel="noopener">exercises-lin_alg/04-memory/</a></div></div>
+<div class="exlinks"><div class="col"><h4>Optimization</h4><a href="exercises-opt/04-logbook/" target="_blank" rel="noopener">exercises-opt/04-logbook/</a></div><div class="col"><h4>PDE / FEM</h4><a href="exercises-pde/04-logbook/" target="_blank" rel="noopener">exercises-pde/04-logbook/</a></div><div class="col"><h4>Linear algebra</h4><a href="exercises-lin_alg/04-logbook/" target="_blank" rel="noopener">exercises-lin_alg/04-logbook/</a></div></div>
 <div class="footer"><span>Workshop · v1</span><div class="progress"><div></div></div><span class="counter"></span></div>
 </section>
 <section class="slide">

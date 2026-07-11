@@ -2,9 +2,9 @@
 
 **Goal.** Use Claude to turn three dated lab-notebook entries into a structured `LOGBOOK.md`, then use that `LOGBOOK.md` to inform a next-experiment question, and end the session with a two-minute append. The lesson is *LOGBOOK.md as how the next session inherits what this one learned* — not "build a knowledge base." The synthesis is the pretext; the file is the artifact.
 
-**Setup.** This is a *writing* exercise — no FEM code runs in the main workflow, and **you don't need a Firedrake container**. Just `cd exercises-pde/04-memory && claude`. (To verify a notebook claim by re-running code — a stretch — follow [`../01-claude-md/INSTALL.md`](../01-claude-md/INSTALL.md).) **Keep the `CLAUDE.md` you wrote for Exercises 01–03**; you can extend it with conventions about *how `LOGBOOK.md` gets maintained*.
+**Setup.** This is a *writing* exercise — no FEM code runs in the main workflow, and **you don't need a Firedrake container**. Just `cd exercises-pde/04-logbook && claude`. (To verify a notebook claim by re-running code — a stretch — follow [`../01-claude-md/INSTALL.md`](../01-claude-md/INSTALL.md).) **Keep the `CLAUDE.md` you wrote for Exercises 01–03**; you can extend it with conventions about *how `LOGBOOK.md` gets maintained*.
 
-> **Beyond `.md`:** Claude can read almost any file — source code, LaTeX, data — so a whole multi-format project can be distilled into one `MEMORY.md`, not just markdown notebooks. The **optimization track's Exercise 04** does exactly that (from `plans/` + `src/` + `tex/`) — worth a look.
+> **Beyond `.md`:** Claude can read almost any file — source code, LaTeX, data — so a whole multi-format project can be distilled into one `LOGBOOK.md`, not just markdown notebooks. The **optimization track's Exercise 04** does exactly that (from `plans/` + `src/` + `tex/`) — worth a look.
 
 ## The problem
 
@@ -17,7 +17,7 @@
 1. Open this folder in a Claude Code session on your host:
 
    ```bash
-   cd exercises-pde/04-memory
+   cd exercises-pde/04-logbook
    claude
    ```
 

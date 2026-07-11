@@ -2,9 +2,9 @@
 
 **Goal.** Turn three dated lab-notebook entries into a structured `LOGBOOK.md`, use it to inform a next-experiment question, and end with a two-minute append. The synthesis is the pretext; **the file is the artifact** — how the next session inherits what this one learned.
 
-**Setup.** This is a *writing* exercise — no code runs, no environment needed. The three notebooks are already in `notebooks/`. Just `cd exercises-lin_alg/04-memory && claude`. Keep the `CLAUDE.md` you wrote for Exercises 01–03.
+**Setup.** This is a *writing* exercise — no code runs, no environment needed. The three notebooks are already in `notebooks/`. Just `cd exercises-lin_alg/04-logbook && claude`. Keep the `CLAUDE.md` you wrote for Exercises 01–03.
 
-> **Beyond `.md`:** Claude can read almost any file — source code, LaTeX, data — so a whole multi-format project can be distilled into one `MEMORY.md`, not just markdown notebooks. The **optimization track's Exercise 04** does exactly that (from `plans/` + `src/` + `tex/`) — worth a look.
+> **Beyond `.md`:** Claude can read almost any file — source code, LaTeX, data — so a whole multi-format project can be distilled into one `LOGBOOK.md`, not just markdown notebooks. The **optimization track's Exercise 04** does exactly that (from `plans/` + `src/` + `tex/`) — worth a look.
 
 ## The project
 
@@ -12,7 +12,7 @@ The three entries in `notebooks/` (`2026-02-10`, `2026-03-05`, `2026-04-02`) com
 
 ## Steps
 
-1. `cd exercises-lin_alg/04-memory && claude`
+1. `cd exercises-lin_alg/04-logbook && claude`
 2. Paste verbatim:
 
    ```

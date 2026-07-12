@@ -10,7 +10,6 @@ These are walkthroughs of the exercises with the math explained gently for non-m
 | 2 | Plan a cardinality-constrained portfolio NLP | [exercises-opt/02-planning/solution/SOLUTION.md](exercises-opt/02-planning/solution/SOLUTION.md) |
 | 3 | Verify a KKT point | [exercises-opt/03-skills/SOLUTION.md](exercises-opt/03-skills/SOLUTION.md) |
 | 4 | Bootstrap LOGBOOK.md | [exercises-opt/04-logbook/SOLUTION.md](exercises-opt/04-logbook/SOLUTION.md) |
-| 6 | Capstone — Inverse Poisson (PETSc/TAO) | [exercises-opt/06-capstone/SOLUTION.md](exercises-opt/06-capstone/SOLUTION.md) |
 
 ### PDE / FEM track (`exercises-pde/`)
 
@@ -37,10 +36,10 @@ The exercises sit on top of a few math terms. You don't need to be fluent — th
 - **Optimization problem.** Find the inputs that minimize (or maximize) some quantity, possibly subject to rules called *constraints*. "Find the cheapest portfolio that returns at least 5%" is one.
 - **Nonlinear / convex / nonconvex.** A problem is nonlinear if its math involves products or powers of variables. Convex problems have a single bottom; nonconvex ones can have multiple local bottoms.
 - **MINLP.** Mixed-integer nonlinear program. Some variables must be whole numbers (e.g., "buy a stock or don't"); the rest are real-valued; the objective or constraints are nonlinear. These are usually hard.
-- **PDE-constrained optimization.** The constraint isn't an equation, it's a *partial differential equation* — the kind that describes heat flow, fluids, or electromagnetic fields. Capstone uses this.
+- **PDE-constrained optimization.** The constraint isn't an equation, it's a *partial differential equation* — the kind that describes heat flow, fluids, or electromagnetic fields.
 - **KKT conditions.** First-order optimality conditions for constrained problems — basically: "is this point actually a candidate solution?" Exercise 3 verifies them.
 - **Multiplier (Lagrange / dual variable).** An auxiliary variable that captures how much a constraint "matters" at the optimum. Multipliers come along with primal solutions; KKT conditions tie them together.
-- **Adjoint method.** A clever way to compute gradients of objectives that involve solving a PDE. Capstone uses this; the gradient check in exercise 6 verifies it.
+- **Adjoint method.** A clever way to compute gradients of objectives that involve solving a PDE.
 - **CUTEst.** A standard test set of optimization problems researchers use to compare solvers — like a benchmark suite for compilers.
 
 The PDE track adds a few numerical-PDE terms:

@@ -43,52 +43,10 @@ is a genuine, publishable contribution.
 
 ## A quick solver primer
 
-*Read this if you are not a numerical-linear-algebra specialist. Experts can
-skip to the problem statement.*
-
-Every method here is a way to solve a large linear system `A x = b`, where `A`
-comes from discretizing the PDE. There are two families.
-
-| Family | Idea | Strengths | Weaknesses |
-|---|---|---|---|
-| **Direct solvers** | Factor `A` into simpler pieces (LU / Cholesky), then back-substitute. Essentially "exact." | Robust; no tuning; great for small/medium problems | Memory and time blow up as the mesh grows — do not scale to large 3D problems |
-| **Iterative (Krylov) solvers** | Start from a guess and improve it using only matrix–vector products `A·v`. Stop when the residual is small. | Cheap memory; scale to huge problems | Need a good **preconditioner** or they converge slowly (or not at all) |
-
-**MUMPS** is the direct solver you will use as the "ground truth" reference — a
-parallel *multifrontal* LU factorization, available through PETSc.
-
-**Krylov methods** differ by what kind of matrix `A` is:
-
-| Method | Use when `A` is… | Typical PDE |
-|---|---|---|
-| **CG** (Conjugate Gradient) | symmetric **positive-definite** (SPD) | Poisson, compressible elasticity |
-| **MINRES** (Minimal Residual) | symmetric but **indefinite** (has +/− eigenvalues) | Stokes (saddle point) |
-| **GMRES** / **FGMRES** (Flexible GMRES) | **nonsymmetric**, or when the preconditioner itself changes between iterations | convection–diffusion; Stokes with a variable preconditioner |
-
-A **preconditioner** is a cheap, approximate inverse of `A` that you apply every
-iteration to make the Krylov method converge in far fewer steps. Choosing it
-*is* the game. The main options:
-
-| Preconditioner | What it does | Notes |
-|---|---|---|
-| **ILU** (Incomplete LU) | a cheap, approximate LU factorization | generic, easy, but iteration count grows as you refine the mesh |
-| **AMG** (Algebraic Multigrid) | builds a hierarchy of coarse problems *from the matrix alone* | for SPD elliptic problems it can give **mesh-independent** iteration counts; implementations: PETSc **GAMG**, **hypre BoomerAMG** |
-| **GMG** (Geometric Multigrid) | same multigrid idea, but using the actual mesh hierarchy | Firedrake supports this directly; often the fastest when available |
-| **Block / `fieldsplit`** | for multi-field systems (velocity + pressure), preconditions each field and their coupling separately via the **Schur complement** | the only sane option for saddle-point Stokes; variants below |
-
-For Stokes specifically, the block preconditioner must approximate the **Schur
-complement** (the pressure part). Common approximations you will compare:
-
-- **mass-matrix** — the simplest; the pressure mass matrix approximates the
-  Schur complement for Stokes.
-- **PCD** (Pressure Convection–Diffusion) and **LSC** (Least-Squares
-  Commutator) — smarter approximations that stay robust as flow is added.
-- **Augmented Lagrangian / iterated penalty** — the approach used with
-  Scott–Vogelius elements to handle the near-singular pressure block.
-
-**"Mesh-independent"** is the phrase you'll use most: it means the iteration
-count *stays flat* as you refine the mesh. That is the gold standard — it says
-the cost per unknown is bounded, so the method scales.
+New to direct vs. Krylov solvers, preconditioners (ILU / AMG / GMG / `fieldsplit`
+Schur), and what "mesh-independent" means? A short primer is in
+[`solver-primer.txt`](solver-primer.txt) — read it if you are not a
+numerical-linear-algebra specialist.
 
 ## Problem statement
 
@@ -120,69 +78,26 @@ Benchmarking these two against a shared set of preconditioners is a clean,
 self-contained Phase-2 result. For *why* the difference matters, see
 *Background*.
 
-## Suggested approach
+## Suggested approach (adaptable)
 
 Build the harness for Poisson first, get it honest, then swap in Stokes. **The
-harness is the deliverable; the PDE is a slot.**
+harness is the deliverable; the PDE is a slot.** Design it with Claude in plan mode —
+this is a sketch to adapt, not a recipe to follow.
 
-### Afternoon 1 — the harness + the Poisson baseline
+- **Afternoon 1 — harness + Poisson baseline.** Design a driver that runs one
+  `(problem, solver, mesh, parameter)` combination and records a fixed set of numbers,
+  then validate it on the Poisson baseline (`−Δu = f`, `u = 0` on the unit square) —
+  where mesh-independence is *supposed* to work. If your AMG line isn't roughly flat
+  here, the bug is in the harness, not the physics; fix it before trusting any Stokes
+  number.
+- **Afternoon 2 — the Stokes study + write-up.** Swap in steady linear Stokes, compare
+  the solver families under one fixed stopping criterion, sweep mesh and viscosity one
+  axis at a time, and report *where the winner changes* — the honest result is a map,
+  not a single champion. Then draft the paper.
 
-**Step 1. Build the benchmarking harness.**
-- One driver that runs a single `(problem, solver, mesh refinement, parameter)`
-  combination and records a *fixed set of numbers* — so every run is comparable.
-- Record, per run:
-  - Krylov **iteration count** and `KSPConvergedReason` (did it actually converge?)
-  - the independently recomputed **true residual `‖b − Ax‖₂`** (see the integrity warning)
-  - **setup time** vs. **solve time**, separately
-  - number of **degrees of freedom** (problem size)
-  - the **fully resolved PETSc options** (`-ksp_view` dump) + PETSc/Firedrake versions
-- Output: one JSON summary per run, written to a dated `runs/<timestamp>/` folder.
-
-**Step 2. Solve the Poisson baseline** (`−Δu = f` on the unit square, `u = 0` on
-the boundary) and compare these solvers:
-
-| Label | Solver | Preconditioner | Expectation |
-|---|---|---|---|
-| `direct` | MUMPS (direct LU) | — | robust reference; watch memory grow |
-| `cg_ilu` | CG | ILU | iterations grow as you refine — the "bad" baseline |
-| `cg_gamg` | CG | PETSc GAMG (AMG) | should be ~mesh-independent |
-| `cg_hypre` | CG | hypre BoomerAMG (AMG) | should be ~mesh-independent |
-| `cg_gmg` *(stretch)* | CG | geometric multigrid | often the fastest |
-
-**Produce:** the **mesh-independence plot** — iterations vs. mesh refinement, one
-line per solver. Flat lines (AMG, GMG) = good; rising lines (ILU) = not scalable.
-
-**Why this matters:** Poisson is the problem where mesh-independence is *supposed*
-to work. If your AMG line is not roughly flat here, the bug is in your harness or
-setup — fix it now, before you trust any Stokes number.
-
-### Afternoon 2 — the Stokes study + write-up
-
-**Step 3. Set up steady linear Stokes** (e.g. lid-driven cavity or a channel).
-- Pick an element pair (start with Taylor–Hood; add Scott–Vogelius if time).
-- Note the structure: it's a **saddle-point** system, and for *enclosed* flow the
-  pressure is defined only up to a constant — the operator has a **nullspace**.
-  Declare how you handle that nullspace **once**, and apply it identically to
-  every solver (see the integrity warning — this is where benchmarks go wrong).
-
-**Step 4. Compare the solver families** (all with the *same* stopping criterion):
-
-| Label | Solver | Preconditioner | What it tests |
-|---|---|---|---|
-| `direct` | MUMPS | — | reference truth |
-| `minres_mass` | MINRES | block-diagonal, Schur ≈ pressure mass matrix | the classic, simplest block method |
-| `fgmres_pcd` / `fgmres_lsc` | FGMRES | `fieldsplit` Schur factorization + PCD or LSC | smarter Schur approximations |
-| `sv_al` | FGMRES/MINRES | Scott–Vogelius + augmented-Lagrangian / iterated penalty | the divergence-free approach |
-
-**Step 5. Run the robustness sweep.** For the survivors, sweep **mesh refinement**
-*and* **viscosity** (one axis at a time). Report **where the winner changes** —
-the honest result is a *map*, not a single champion.
-
-**Produce:** iteration-vs-refinement and iteration-vs-viscosity plots, plus a
-summary table of the winning method per regime.
-
-**Step 6. Write it up.** Methodology, the reproducibility manifest, the plots,
-the map. Draft the paper.
+Plan the run-record schema and the specific solver/preconditioner configurations with
+Claude — **draw from the reference menu in [`solvers-reference.txt`](solvers-reference.txt)**
+for the named configs, PETSc settings, run-record fields, and the plots to produce.
 
 ## Keeping the benchmark sound
 

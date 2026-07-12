@@ -16,9 +16,8 @@ OptiUNO
 * Goal: Use openEvolve to search for an optimal optimization solver
 * Outcome: Methodology for tuning parameters in optimization solver; maybe a paper.
 
-SciComSkill 
-* Goal: Extend s
-cientific computing research skillset to include literature search
+SciCompSkills
+* Goal: Extend scientific computing research skillset to include literature search
 * Outcome: Extension to Ahmed's sci-comp-skills that include a literature search harness
 
 SolverBench
@@ -28,4 +27,16 @@ SolverBench
 optSolverBench
 * Goal: Optimizer & Solver Benchmarking for PDE-Constrained Optimization
 * Outcome: Paper describing the benchmarking set-up and outcome
+
+PrecisionBench
+* Goal: Mixed-precision benchmarking for numerical linear algebra (no GPU, no wall-clock)
+* Outcome: A harness + paper mapping where reduced precision keeps fp64-quality answers
+
+diffBLAS
+* Goal: Adapt differentiated BLAS routines to different AD activity contexts
+* Outcome: AD-context-aware differentiated BLAS variants and an evaluation
+
+VoroMesh2D
+* Goal: Voronoi-based interstitial meshing in 2D for packed disks
+* Outcome: A git repo — a disk-packing mesher built with Claude (meshio export)
 

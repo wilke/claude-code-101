@@ -1,0 +1,52 @@
+optSolverBench - PDE-constrained-optimization primer
+====================================================
+
+Read this if you are not a PDE-constrained-optimization specialist. It is background
+for the README's two-phase study (well-posed baseline -> ill-posed); the named
+configurations, run-record schema, Taylor-test gate, and metrics live separately in
+solvers-reference.txt.
+
+Two nested loops: the INNER loop solves a PDE; the OUTER loop searches over the unknown
+you actually want.
+
+Reduced space. For each candidate source f, solve the forward PDE for u(f), evaluate the
+objective J(f), and compute the gradient grad J(f) via the ADJOINT method - one extra
+linear solve, independent of the number of unknowns in f. In Firedrake, pyadjoint records
+the forward solve and produces this exact discrete adjoint for you. The outer optimizer
+never sees the PDE; it only sees f, J(f), grad J(f). Get the adjoint exact and cheap, and
+the outer loop is a standard optimization.
+
+Outer optimizers - the direct/iterative split of SolverBench, one level up. All driven
+through pyadjoint's ReducedFunctional (gradient + a Hessian action via a second-order
+adjoint), using scipy.optimize, ROL, or PETSc TAO as the engine:
+
+  First-order / quasi-Newton   use only J and grad J; L-BFGS (curvature from gradient
+                               history) or nonlinear CG / steepest descent.
+                               + cheap per step (one forward + one adjoint solve)
+                               - outer iteration count grows with refinement / ill-conditioning
+  Newton-type (second-order)   Hessian-vector products (second adjoint, or Gauss-Newton)
+                               inside a Krylov inner solve - Newton-CG / Gauss-Newton-CG.
+                               + outer iteration counts can be mesh-independent; fast near optimum
+                               - several PDE solves per outer step; needs a good inner solve + PC
+
+The inner PDE solve IS SolverBench. Every objective/gradient evaluation needs a forward
+Poisson solve and an adjoint Poisson solve - the same SPD elliptic operator. The
+solver+preconditioner choices reappear here as the engine inside each outer iteration
+(selected via Firedrake solver_parameters = PETSc options):
+
+  MUMPS (direct LU)        robust reference; reuse one factorization every outer iter
+  CG + ILU                 cheap iterative inner solve; grows on refinement (bad baseline)
+  CG + AMG (GAMG / hypre)  scalable inner solve; ~mesh-independent inner cost
+
+Two knobs unique to the optimization setting:
+
+  Regularization alpha   the data-misfit term alone is ill-posed; Tikhonov alpha*||f||^2
+                         makes it solvable and controls bias/variance. A property of the
+                         test case, NOT a solver tuning knob.
+  Inner-solve accuracy   you need not solve the PDEs to machine precision every outer iter.
+                         Inexact/truncated schemes loosen the inner tolerance early and
+                         tighten near the optimum - a real speedup, but only as a declared,
+                         controlled axis, because a sloppy inner solve -> a sloppy gradient.
+
+"Mesh-independent" here = the OUTER iteration count stays flat as you refine the mesh.
+Gold standard: the optimizer's cost per unknown is bounded, so the method scales.

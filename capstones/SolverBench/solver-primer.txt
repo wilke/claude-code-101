@@ -1,0 +1,43 @@
+SolverBench - solver primer
+===========================
+
+Read this if you are not a numerical-linear-algebra specialist. It is background for
+the README's two-phase study (Poisson baseline -> Stokes); the named configurations,
+run-record schema, and metrics live separately in solvers-reference.txt.
+
+Every method solves a large linear system  A x = b,  where A comes from discretizing
+the PDE. Two families:
+
+  Direct solvers      Factor A (LU / Cholesky), then back-substitute; ~exact.
+                      + robust, no tuning, great for small/medium problems
+                      - memory & time blow up as the mesh grows; poor for large 3D
+  Iterative (Krylov)  Improve a guess using only matvecs A*v; stop at small residual.
+                      + cheap memory, scale to huge problems
+                      - need a good preconditioner or they converge slowly / not at all
+
+MUMPS = the direct solver used as the "ground truth" reference (parallel multifrontal
+LU factorization, via PETSc).
+
+Krylov method by matrix type:
+  CG              symmetric positive-definite (SPD)      Poisson, compressible elasticity
+  MINRES          symmetric indefinite (+/- eigenvalues) Stokes (saddle point)
+  GMRES / FGMRES  nonsymmetric, or the preconditioner changes between iterations
+                  (convection-diffusion; Stokes with a variable preconditioner)
+
+Preconditioner = a cheap approximate inverse applied each iteration so the Krylov
+method converges in far fewer steps. Choosing it IS the game:
+  ILU         cheap approximate LU; generic, but iteration count grows on refinement
+  AMG         coarse-problem hierarchy from the matrix alone; ~mesh-independent for SPD
+              elliptic problems (PETSc GAMG, hypre BoomerAMG)
+  GMG         multigrid on the actual mesh hierarchy (Firedrake); often the fastest
+  fieldsplit  block preconditioning for multi-field systems (velocity + pressure) via
+              the Schur complement; the only sane option for saddle-point Stokes
+
+For Stokes, the block preconditioner must approximate the Schur complement (pressure):
+  mass-matrix   simplest; the pressure mass matrix approximates the Schur complement
+  PCD / LSC     smarter approximations that stay robust as flow is added
+  Aug. Lagrangian / iterated penalty   used with Scott-Vogelius for the near-singular
+                pressure block
+
+"Mesh-independent" = the iteration count stays flat as you refine the mesh. That is the
+gold standard: cost per unknown is bounded, so the method scales.

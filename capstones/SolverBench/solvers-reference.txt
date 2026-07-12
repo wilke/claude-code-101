@@ -1,0 +1,61 @@
+SolverBench - reference menu
+============================
+
+Draw from this when you plan the harness with Claude. It holds the named solver
+configurations, the run-record schema, and the metrics that the README's two-phase
+study (Poisson baseline -> Stokes) refers to. Adapt freely; nothing here is a fixed
+recipe. (New to solvers/preconditioners? See solver-primer.txt.)
+
+
+Run-record schema  (one JSON summary per run, in runs/<timestamp>/)
+-------------------------------------------------------------------
+Record a FIXED set of numbers so every run is comparable:
+  - solver label + fully resolved PETSc options (-ksp_view dump)
+  - Krylov iteration count and KSPConvergedReason (did it actually converge?)
+  - true, unpreconditioned residual ||b - A x||_2, recomputed AFTER the solve
+  - setup time and solve time, separately
+  - degrees of freedom (problem size) and mesh-refinement level
+  - peak memory
+  - PETSc / Firedrake versions + commit hash
+
+
+Phase 1 - Poisson baseline solver configs   (-div grad u = f, u = 0, unit square)
+---------------------------------------------------------------------------------
+  direct     MUMPS (direct LU)            robust reference; watch memory grow
+  cg_ilu     CG + ILU                     iterations grow on refinement - the "bad" baseline
+  cg_gamg    CG + PETSc GAMG (AMG)        should be ~mesh-independent
+  cg_hypre   CG + hypre BoomerAMG (AMG)   should be ~mesh-independent
+  cg_gmg     CG + geometric multigrid     often the fastest (stretch)
+
+Produce: the mesh-independence plot - iterations vs. mesh refinement, one line per
+solver. Flat lines (AMG, GMG) = good; rising lines (ILU) = not scalable. If your AMG
+line is not roughly flat HERE, the bug is in your harness/setup - fix it before you
+trust any Stokes number.
+
+
+Phase 2 - Stokes solver configs   (steady linear Stokes; saddle point)
+----------------------------------------------------------------------
+  direct        MUMPS                                                reference truth
+  minres_mass   MINRES + block-diag, Schur ~ pressure mass matrix    classic, simplest block method
+  fgmres_pcd    FGMRES + fieldsplit Schur + PCD                      smarter Schur approximation
+  fgmres_lsc    FGMRES + fieldsplit Schur + LSC                      smarter Schur approximation
+  sv_al         FGMRES/MINRES + Scott-Vogelius + aug. Lagrangian     the divergence-free approach
+
+Nullspace: enclosed / pure-Neumann Stokes has pressure defined only up to a constant.
+Declare the nullspace handling ONCE and apply it identically to every solver (see the
+README integrity warning - this is where benchmarks go wrong).
+
+Robustness sweep: for the survivors, sweep mesh refinement AND viscosity, one axis at
+a time. Report WHERE the winner changes - the result is a map, not a single champion.
+
+Produce: iteration-vs-refinement and iteration-vs-viscosity plots + a summary table of
+the winning method per regime.
+
+
+PETSc / Firedrake option pointers
+---------------------------------
+  - Firedrake solver_parameters ARE PETSc options:
+    https://www.firedrakeproject.org/solving-interface.html
+  - PETSc KSP manual (ksp_type, pc_type, fieldsplit, MUMPS/hypre/gamg options):
+    https://petsc.org/release/manual/ksp/
+  - hypre BoomerAMG: https://hypre.readthedocs.io/

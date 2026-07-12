@@ -1,0 +1,75 @@
+PrecisionBench - reference menu
+===============================
+
+Draw from this when you plan the harness with Claude. It holds the simulation discipline,
+the run-record schema, the named strategy configurations, and the sweep axes that the
+README's two-phase study (well-conditioned baseline -> ill-conditioned) refers to. Adapt
+freely; nothing here is a fixed recipe. (New to mixed precision? See precision-primer.txt.)
+
+
+Faithful low-precision simulation  (the discipline - get this right or the study is fiction)
+-------------------------------------------------------------------------------------------
+Storing values in a low-precision type is NOT the same as computing in low precision.
+Control two things INDEPENDENTLY:
+  1. Rounding of EVERY operation's result to the target format - round-to-nearest-even,
+     correct subnormal + overflow-to-Inf behavior. A chop-style rounder (pychop) does
+     this: compute in fp64, round the result to the target format.
+  2. The accumulator precision inside reductions (dot, norm, SpMV, orthogonalization).
+     A fp16 dot product that secretly accumulates in fp32 looks far better than real
+     hardware; accumulating in fp16 looks worse than tensor cores (fp16 multiply, fp32
+     accumulate). Neither is "fp16" unless you DECLARE which.
+Also:
+  - Round to the target format at defined boundaries (chop-style), computing in fp64.
+  - Make accumulator precision an explicit, first-class parameter of every reduction;
+    model the realistic hardware convention (low-precision multiply / higher-precision
+    accumulate) deliberately, not by accident.
+  - Handle RANGE, not just precision: fp16 overflows ~6.5e4, underflows ~6e-8. The
+    simulator must actually overflow to Inf and flush/keep subnormals - else you hide
+    the range failures that are half the fp16 story.
+  - Watch numpy's implicit casts: np.sum(x) over float16 differs from
+    np.sum(x, dtype=np.float32); matmul accumulation is murky - control it yourself.
+
+
+Run-record schema  (one JSON summary per run, in runs/<timestamp>/)
+-------------------------------------------------------------------
+  - relative forward error ||x - x_fp64|| / ||x_fp64||   (computed in fp64)
+  - true residual ||b - A x||   recomputed in fp64
+  - iterations to the fixed tolerance (the one real, hardware-independent cost)
+  - projected cost from the model (per-stage FLOPs/bytes x precision ratio)
+  - range events - counts of Inf / NaN / underflow-to-zero
+  - a precision manifest: storage, operation, and accumulator precision of every stage
+
+
+Phase 1 - well-conditioned baseline strategy configs
+----------------------------------------------------
+  fp64       everything fp64                                       the gold-standard reference
+  fp32_all   everything fp32                                       ~fp32 forward error (naive baseline)
+  ir_fp32    2-precision IR (fp32 solve, fp64 residual/update)     should RECOVER fp64 forward error
+  ir_fp16    3-precision IR (fp16 factor, fp32 work, fp64 resid)   fp64 quality if kappa small enough (stretch)
+
+Produce: the accuracy plot - forward error vs strategy, with the fp64 reference line. IR
+strategies should sit on the fp64 line; fp32_all above it. If ir_fp32 does NOT land on the
+fp64 line here, the bug is in your simulator/harness - fix it before any ill-conditioned number.
+
+
+Phase 2 - ill-conditioned study
+-------------------------------
+Raise conditioning (refine the operator, add anisotropy, shrink a shift) until fp32_all and
+simple IR stop reaching fp64 quality, then compare the survivors: GMRES-IR, 3-precision IR,
+inner-outer - holding the tolerance and the fp64 reference fixed.
+
+Sweep axes (one at a time):
+  Conditioning          kappa(A) via refinement / anisotropy / shift     frontier where each strategy loses fp64 quality
+  Stage allocation      which stages drop to fp32/fp16/bf16              correction-protected vs error-anchoring, empirically
+  Accumulator precision fp16/bf16 multiply x {fp16, fp32, fp64} accum    the fp16-multiply/fp32-accumulate sweet spot
+
+Produce: error-vs-conditioning and projected-cost-vs-accuracy (Pareto) plots + a summary
+table of the winning allocation per regime.
+
+
+Tools
+-----
+  - pychop    - chop-style low-precision simulator (fp16/bf16/fp8/custom):
+    https://pypi.org/project/pychop/
+  - ml_dtypes - numpy-compatible bfloat16 / float8 dtypes:
+    https://github.com/jax-ml/ml_dtypes

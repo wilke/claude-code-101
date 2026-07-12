@@ -9,6 +9,7 @@
 | [PrecisionBench](PrecisionBench/README.md) | Mixed-precision benchmarking for numerical linear algebra — no GPU, no wall-clock. |
 | [SciCompSkills](SciCompSkills/README.md) | A hallucination-resistant `verified-literature-search` research skill. |
 | [SolverBench](SolverBench/README.md) | A reproducible benchmark of solvers & preconditioners for PDEs. |
+| [VoroMesh2D](VoroMesh2D/README.md) | Voronoi-based interstitial meshing in 2D — build a disk-packing mesher with Claude. |
 | [diffBLAS](diffBLAS/README.md) | Adapt differentiated BLAS routines to different AD activity contexts. |
 | [optSolverBench](optSolverBench/README.md) | Benchmark optimizers & solvers for PDE-constrained optimization. |
 

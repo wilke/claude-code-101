@@ -1,0 +1,50 @@
+PrecisionBench - mixed-precision primer
+=======================================
+
+Read this if you are not a mixed-precision specialist. It is background for the README's
+two-phase study (well-conditioned baseline -> ill-conditioned); the run-record schema,
+named configurations, sweep axes, and simulation discipline live separately in
+precision-reference.txt.
+
+Formats. Every floating-point format has a unit roundoff u (relative error of one rounded
+op) and a dynamic range (largest/smallest magnitude). Lower precision means larger u AND
+a narrower range - it loses accuracy and the ability to represent very large/small numbers.
+
+  Format         unit roundoff u   approx overflow   note
+  fp64 (double)  ~1.1e-16          ~1.8e308          the gold standard
+  fp32 (single)  ~6.0e-8           ~3.4e38           ~2x throughput, 1/2 the bytes
+  bf16           ~3.9e-3           ~3.4e38           fp32's range, far fewer mantissa bits
+  fp16 (half)    ~4.9e-4           ~6.5e4            tiny range - overflow/underflow is a real hazard
+
+Organizing insight - an algorithm's stages split into two kinds:
+  Correction-protected  error absorbed by a higher-precision outer loop (iterative
+                        refinement, outer Krylov correction). REDUCE these aggressively.
+  Error-anchoring       error propagates unrecoverably. KEEP these in high precision.
+Allocate precision by that rule: starve the correction-protected stages, protect the
+error-anchoring ones.
+
+
+Stage-by-stage precision sensitivity  (Krylov + preconditioner solve of SPD A x = b)
+------------------------------------------------------------------------------------
+  Matrix / preconditioner setup    approximate inverse; low sensitivity   REDUCE aggressively (fp32, even fp16)
+  SpMV / operator apply (A*v)      dominant, bandwidth-bound; medium       fp32 storage/compute + outer correction
+  Preconditioner apply / smoother  approximate by design; low             REDUCE aggressively (inner-outer)
+  Orthogonalization / dot / norms  cancellation, loss of orthogonality;   KEEP high / compensated / high-prec accumulator
+                                   CRITICAL
+  Vector updates (axpy)            accumulates; low-medium                 usually keep working precision
+  Residual r = b - A x            the correction anchor; CRITICAL         KEEP fp64 (IR depends on it)
+  Convergence test / metric        the scientific claim; CRITICAL         fp64, fixed
+
+One line: starve the correction-protected stages (setup, PC apply, SpMV, storage);
+protect the error-anchoring stages (residual, reductions/orthogonalization, the metric).
+
+
+Strategies to benchmark
+-----------------------
+  2-precision iterative refinement   factor/solve fp32; fp64 residual+update loop     well-conditioned
+  3-precision IR (Carson-Higham)     factor fp16, work fp32, residual fp64            moderately conditioned
+  GMRES-IR                           low-precision factors as a preconditioner,       ill-conditioned (kappa up to ~1/u_low)
+                                     GMRES correction solve
+  Inner-outer Krylov                 FGMRES outer fp64, low-precision PC apply        general workhorse
+  Low-precision SpMV + high accum.   matvec low precision; fp64 accumulator           bandwidth-bound iterations
+  fp32 storage / fp64 compute        memory only; nothing to recover                  any bandwidth-bound kernel

@@ -60,58 +60,10 @@ changes**, and ships a re-runnable harness is a genuine, publishable contributio
 
 ## A quick PDE-constrained-optimization primer
 
-*Read this if you are not a PDE-constrained-optimization specialist. Experts can
-skip to the problem statement.*
-
-The problem has two nested loops. The **inner loop** solves a PDE; the **outer
-loop** searches over the unknown you actually want.
-
-**Reduced space.** For each candidate source `f`, you solve the forward PDE to get
-`u(f)`, evaluate the objective `J(f)`, and compute the gradient `∇J(f)` with the
-**adjoint method** — one extra linear solve, *independent of the number of
-unknowns in `f`*. In Firedrake, **pyadjoint** records the forward solve and
-produces this exact discrete adjoint for you. The outer optimizer never sees the
-PDE; it only sees `f`, `J(f)`, and `∇J(f)`. This is why the adjoint is the whole
-game: get it exact and cheap, and the outer loop is a standard optimization.
-
-**Outer optimizers** come in two families — the direct/iterative split of
-SolverBench, one level up. All are driven through pyadjoint's `ReducedFunctional`
-(which supplies the gradient, and a Hessian action via a second-order adjoint),
-using `scipy.optimize`, ROL, or PETSc TAO as the engine.
-
-| Family | Idea | Strengths | Weaknesses |
-|---|---|---|---|
-| **First-order / quasi-Newton** | use only `J` and `∇J`; build curvature from the gradient history (**L-BFGS**) or take (nonlinear) CG / steepest-descent steps | cheap per outer step; one forward + one adjoint solve per evaluation | outer iteration count can grow with mesh refinement and ill-conditioning |
-| **Newton-type (second-order)** | use **Hessian–vector products** (a second adjoint solve, or Gauss–Newton) inside a Krylov inner solve — **Newton-CG** / Gauss–Newton-CG | outer iteration counts can be **mesh-independent**; fast near the optimum | each outer step costs several PDE solves; needs a good inner Krylov solve + preconditioner |
-
-**The inner PDE solve is SolverBench.** Every objective and gradient evaluation
-requires a forward Poisson solve and an adjoint Poisson solve — the *same* SPD
-elliptic operator SolverBench studies in Phase 1. The solver + preconditioner
-choices there reappear here as the **engine inside each outer iteration**, selected
-through Firedrake `solver_parameters` (which *are* PETSc options). optSolverBench
-asks how that inner choice interacts with the outer optimizer.
-
-| Inner solver | Role here | Notes |
-|---|---|---|
-| **MUMPS (direct LU)** | robust reference for the forward/adjoint solves | reuse one factorization across every outer iteration — huge amortization |
-| **CG + ILU** | cheap iterative inner solve | inner iterations grow as you refine — the "bad" inner baseline |
-| **CG + AMG** (GAMG / hypre BoomerAMG) | scalable inner solve | ~mesh-independent inner cost; the honest choice for large meshes |
-
-**Two more knobs that are unique to the optimization setting:**
-
-- **Regularization `α`.** The data-misfit term alone is ill-posed; the Tikhonov
-  term `α‖f‖²` makes the reduced problem solvable and controls the
-  bias/variance trade-off. It is a *property of the test case*, not a solver tuning
-  knob.
-- **Inner-solve accuracy (inexactness).** You need not solve the forward/adjoint
-  PDEs to machine precision every outer iteration. **Inexact / truncated** schemes
-  loosen the inner tolerance early and tighten it near the optimum — a real
-  speedup, but only if done as a *declared, controlled axis*, because a sloppy
-  inner solve produces a sloppy gradient.
-
-**"Mesh-independent"** is the phrase you'll use most — here it means the *outer*
-iteration count stays flat as you refine the mesh. That is the gold standard: it
-says the optimizer's cost per unknown is bounded, so the method scales.
+New to reduced-space optimization, the adjoint gradient, and the outer-optimizer /
+inner-solver split? A short primer is in
+[`optimizer-primer.txt`](optimizer-primer.txt) — read it if you are not a
+PDE-constrained-optimization specialist.
 
 ## Problem statement
 
@@ -162,89 +114,28 @@ Benchmarking these three against a shared set of inner solvers is a clean,
 self-contained Phase-2 result. For *why* second-order pays off as the problem
 becomes ill-posed, see *Background*.
 
-## Suggested approach
+## Suggested approach (adaptable)
 
 Build the harness for the well-posed case first, get it honest, then turn up the
-difficulty. **The harness is the deliverable; the regime is a slot.**
+difficulty. **The harness is the deliverable; the regime is a slot.** Design it with
+Claude in plan mode — a sketch to adapt, not a recipe.
 
-### Afternoon 1 — the harness + the well-posed baseline
+- **Afternoon 1 — harness + well-posed baseline.** Design a driver that runs one
+  `(regime, optimizer, inner-solver, mesh, α)` combination and records a fixed set of
+  numbers, and **gate it on a Taylor test** of the adjoint gradient before trusting any
+  benchmark number. Validate on the well-posed baseline (moderate `α`, low noise, dense
+  sensors), where mesh-independent *outer*-iteration counts are *supposed* to appear —
+  if they don't (or the Taylor test isn't second-order), the bug is in the harness or
+  adjoint, not the physics.
+- **Afternoon 2 — the ill-posed study + write-up.** Turn up the difficulty (small `α`,
+  more noise, sparse sensors), compare the optimizer families under one fixed stopping
+  criterion, and sweep mesh / `α` / noise one axis at a time — reporting *where the
+  winner changes* in both cost (total PDE solves) and reconstruction accuracy. Then
+  draft the paper.
 
-**Step 1. Build the benchmarking harness.**
-- One driver that runs a single `(regime, optimizer, inner-solver, mesh
-  refinement, α)` combination and records a *fixed set of numbers* — so every run
-  is comparable.
-- Record, per run:
-  - **outer iteration count** and the optimizer's convergence reason (did the
-    reduced-gradient norm actually reach the tolerance?)
-  - the independently recomputed **true reduced-gradient norm `‖∇J(f*)‖`** at
-    termination (see the integrity warning)
-  - total **forward solves and adjoint solves** — the real cost currency, not
-    outer iterations
-  - the **reconstruction error `‖f* − f_true‖₂`** (relative L2) — the accuracy
-    that actually matters
-  - **setup time** vs. **solve time**, separately, and peak memory
-  - number of **degrees of freedom** (problem size)
-  - the **fully resolved solver options** (the inner `solver_parameters` and
-    `-ksp_view` dump; the optimizer options) + **Firedrake/PETSc versions** and the
-    noise seed
-- Output: one JSON summary per run, written to a dated `runs/<timestamp>/` folder.
-
-**Step 1½. Gate the harness on a Taylor test.** Before trusting *any* benchmark
-number, verify the adjoint gradient with a finite-difference **Taylor test**
-(pyadjoint's `taylor_test`): the remainder `|J(f+εδf) − J(f) − ε∇J·δf|` must shrink
-like `ε²`. A gradient that fails this is descending on a different functional — fix
-it before Step 2. (This is the exact analog of SolverBench recomputing
-`‖b − Ax‖₂`.)
-
-**Step 2. Solve the well-posed baseline** (moderate `α`, low noise, dense sensors)
-and compare these optimizers, all with the *same* inner solver family:
-
-| Label | Outer optimizer | Inner PDE solve | Expectation |
-|---|---|---|---|
-| `direct_lbfgs` | L-BFGS | MUMPS (direct, reused factorization) | robust reference; watch memory grow |
-| `lbfgs_ilu` | L-BFGS | CG + ILU | inner + outer cost grows on refinement — the "bad" baseline |
-| `lbfgs_amg` | L-BFGS | CG + AMG (GAMG / hypre) | inner cost ~mesh-independent |
-| `newtoncg` *(stretch)* | Newton-CG (adjoint Hessian–vec) | CG + AMG inner | should give ~mesh-independent **outer** iterations |
-
-**Produce:** the **mesh-independence plot** — outer iterations vs. mesh
-refinement, one line per optimizer. Flat lines (Newton-CG; well-preconditioned
-L-BFGS) = good; rising lines = not scalable.
-
-**Why this matters:** the well-posed regime is where mesh-independence is
-*supposed* to work. If your Newton-CG line is not roughly flat here — or the
-Taylor test does not show second-order convergence — the bug is in your harness,
-adjoint, or setup. Fix it now, before you trust any ill-posed number.
-
-### Afternoon 2 — the ill-posed study + write-up
-
-**Step 3. Set up the ill-posed regime** (small `α`, higher noise, sparse sensors).
-- The reduced Hessian becomes **near-singular**; the regularization `α` is what
-  keeps the problem solvable. Declare `α`, the sensor operator `S`, the noise
-  realization (seed), and the ground truth `f_true` **once**, as fixed properties
-  of the test case, and apply them identically to every optimizer (see the
-  integrity warning — this is where benchmarks go wrong).
-
-**Step 4. Compare the optimizer families** (all with the *same* stopping
-criterion):
-
-| Label | Outer optimizer | Inner PDE solve | What it tests |
-|---|---|---|---|
-| `direct_lbfgs` | L-BFGS | MUMPS | reference truth |
-| `lbfgs_amg` | L-BFGS | CG + AMG | scalable first-order |
-| `gauss_newton` | Gauss–Newton-CG | CG + AMG | curvature without the full Hessian |
-| `newton_cg` | truncated Newton-CG | CG + AMG | full second-order, mesh-independent outer iters |
-
-**Step 5. Run the robustness sweep.** For the survivors, sweep **mesh
-refinement**, **regularization `α`**, and **noise level** (one axis at a time).
-Report **where the winner changes** — the honest result is a *map*, not a single
-champion. Track both cost (total PDE solves) and accuracy (`‖f* − f_true‖`); the
-cheapest optimizer and the most accurate reconstruction need not agree.
-
-**Produce:** outer-iterations-vs-refinement, cost-vs-`α`, and
-error-vs-noise plots, plus a summary table of the winning method per regime.
-
-**Step 6. Write it up.** Methodology, the reproducibility manifest, the plots,
-the map. Draft the paper.
+Plan the run-record schema, the Taylor-test gate, and the specific optimizer ×
+inner-solver configurations with Claude — **draw from the reference menu in
+[`solvers-reference.txt`](solvers-reference.txt)**.
 
 ## Keeping the benchmark sound
 

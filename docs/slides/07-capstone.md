@@ -27,6 +27,7 @@ _Open-ended time. Your code, your problem — Claude as collaborator. Or pick a 
 - **PrecisionBench** — Mixed-precision benchmarking for numerical linear algebra.
 - **SciCompSkills** — A hallucination-resistant verified-literature-search skill.
 - **SolverBench** — A reproducible benchmark of solvers & preconditioners for PDEs.
+- **VoroMesh2D** — Voronoi-based 2D interstitial meshing for packed disks.
 - **diffBLAS** — Adapt differentiated BLAS routines to AD activity contexts.
 - **optSolverBench** — Benchmark optimizers & solvers for PDE-constrained optimization.
 :::

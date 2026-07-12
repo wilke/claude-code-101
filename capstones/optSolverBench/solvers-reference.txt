@@ -1,0 +1,68 @@
+optSolverBench - reference menu
+===============================
+
+Draw from this when you plan the harness with Claude. It holds the run-record schema,
+the Taylor-test gate, the named optimizer x inner-solver configurations, and the metrics
+that the README's two-phase study (well-posed baseline -> ill-posed) refers to. Adapt
+freely; nothing here is a fixed recipe. (New to reduced-space optimization? See
+optimizer-primer.txt.)
+
+
+Taylor-test gate  (do this BEFORE trusting any benchmark number)
+----------------------------------------------------------------
+Verify the adjoint gradient with a finite-difference Taylor test (pyadjoint's
+taylor_test): the remainder |J(f+eps*df) - J(f) - eps*gradJ.df| must shrink like eps^2.
+A gradient that fails this is descending on a different functional - fix it first. This
+is the exact analog of SolverBench recomputing ||b - A x||_2.
+
+
+Run-record schema  (one JSON summary per run, in runs/<timestamp>/)
+-------------------------------------------------------------------
+  - outer iteration count + the optimizer's convergence reason
+  - true reduced-gradient norm ||grad J(f*)|| at termination, independently recomputed
+  - total forward solves AND adjoint solves (the real cost currency, not outer iters)
+  - reconstruction error ||f* - f_true||_2 (relative L2) - the accuracy that matters
+  - setup time vs. solve time, separately; peak memory
+  - degrees of freedom (problem size)
+  - fully resolved solver options (inner solver_parameters, -ksp_view) + optimizer options
+  - Firedrake / PETSc versions + the noise seed
+
+
+Phase 1 - well-posed baseline optimizer configs   (moderate alpha, low noise, dense sensors)
+--------------------------------------------------------------------------------------------
+  direct_lbfgs   L-BFGS + MUMPS (direct, reused factorization)   robust reference; watch memory
+  lbfgs_ilu      L-BFGS + CG + ILU                               inner+outer cost grows (bad baseline)
+  lbfgs_amg      L-BFGS + CG + AMG (GAMG / hypre)                inner cost ~mesh-independent
+  newtoncg       Newton-CG (adjoint Hessian-vec) + CG + AMG      ~mesh-independent OUTER iters (stretch)
+
+Produce: the mesh-independence plot - outer iterations vs. refinement, one line per
+optimizer. Flat (Newton-CG; well-preconditioned L-BFGS) = good; rising = not scalable.
+If Newton-CG isn't flat here (or the Taylor test isn't 2nd-order), the bug is in the
+harness/adjoint - fix it before trusting any ill-posed number.
+
+
+Phase 2 - ill-posed optimizer configs   (small alpha, higher noise, sparse sensors)
+-----------------------------------------------------------------------------------
+  direct_lbfgs   L-BFGS + MUMPS                        reference truth
+  lbfgs_amg      L-BFGS + CG + AMG                     scalable first-order
+  gauss_newton   Gauss-Newton-CG + CG + AMG           curvature without the full Hessian
+  newton_cg      truncated Newton-CG + CG + AMG       full second-order, mesh-independent outer iters
+
+Declare alpha, the sensor operator S, the noise realization (seed), and the ground truth
+f_true ONCE, as fixed properties of the test case, applied identically to every optimizer.
+
+Robustness sweep: for the survivors, sweep mesh refinement, regularization alpha, and
+noise level (one axis at a time). Report WHERE the winner changes in both cost (total PDE
+solves) and accuracy (||f* - f_true||) - the cheapest and the most accurate need not agree.
+
+Produce: outer-iters-vs-refinement, cost-vs-alpha, and error-vs-noise plots + a summary
+table of the winning method per regime.
+
+
+PETSc / Firedrake option pointers
+---------------------------------
+  - Firedrake solver_parameters ARE PETSc options:
+    https://www.firedrakeproject.org/solving-interface.html
+  - PETSc KSP manual (inner solve):     https://petsc.org/release/manual/ksp/
+  - PETSc TAO manual (outer optimizer): https://petsc.org/release/manual/tao/
+  - pyadjoint / dolfin-adjoint (ReducedFunctional, taylor_test): https://www.dolfin-adjoint.org/

@@ -83,91 +83,20 @@ contribution.
 
 ## A quick mixed-precision primer
 
-*Read this if you are not a mixed-precision specialist. Experts can skip to the
-problem statement.*
-
-Every floating-point format has a **unit roundoff** `u` (the relative error of a
-single rounded operation) and a **dynamic range** (largest/smallest representable
-magnitude). Lower precision means larger `u` *and* a narrower range — so it loses
-both accuracy and the ability to represent very large/small numbers.
-
-| Format | Unit roundoff `u` | Approx. overflow | Note |
-|---|---|---|---|
-| fp64 (double) | ~1.1e-16 | ~1.8e308 | the gold standard |
-| fp32 (single) | ~6.0e-8 | ~3.4e38 | ~2× throughput, ½ the bytes |
-| bf16 (bfloat16) | ~3.9e-3 | ~3.4e38 | fp32's range, far fewer mantissa bits |
-| fp16 (half) | ~4.9e-4 | ~6.5e4 | **tiny range** — overflow/underflow is a real hazard |
-
-**The organizing insight:** an algorithm's stages split into two kinds.
-
-- **Correction-protected** stages — their error is absorbed by a higher-precision
-  outer loop (iterative refinement, an outer Krylov correction). **Reduce these
-  aggressively.**
-- **Error-anchoring** stages — their error propagates unrecoverably. **Keep these in
-  high precision.**
-
-Allocate precision by that rule: starve the correction-protected stages, protect the
-error-anchoring ones.
-
-## The categorization: stages of a solve by precision sensitivity
-
-Anchoring on a Krylov + preconditioner solve of an SPD system `A x = b`
-(generalizes to most of the numerical-linear-algebra pipeline):
-
-| Stage | What it does | Cost share | Sensitivity | Reduce? | Why |
-|---|---|---|---|---|---|
-| **Matrix / preconditioner setup** (e.g. incomplete/complete factorization, AMG build) | constructs an *approximate* inverse | high | **low** — already an approximation | **aggressively** (fp32, even fp16) | rounding is tolerated; a big, cheap win |
-| **SpMV / operator apply** (`A·v`) | per-iteration matvec | **dominant**, bandwidth-bound | medium — but correction-protectable | fp32 storage/compute + outer correction | halving bytes moved is the projected win |
-| **Preconditioner apply / smoother** | approximate solve each iteration | high | **low** — approximate by design | **aggressively** (inner–outer) | the classic low-precision-preconditioner trick |
-| **Orthogonalization + dot products / norms / reductions** | inner products, MGS/CGS | low FLOPs, high impact | **critical** — cancellation, loss of orthogonality | **keep high** / compensated summation, or a high-precision accumulator | error lost here is unrecoverable |
-| **Vector updates (axpy)** | `x ← x + αp` | low | low–medium (accumulates) | usually keep working precision | little upside to reducing |
-| **Residual `r = b − Ax`** | the correction anchor | low | **critical** | **keep fp64** | iterative refinement *depends* on an accurate residual |
-| **Convergence test / accuracy metric** | decides "done" and scores the result | negligible | **critical** | **fp64, fixed** | this is your scientific claim |
-
-**The principle in one line:** starve the correction-protected stages (setup,
-preconditioner apply, SpMV, storage); protect the error-anchoring stages (residual,
-reductions/orthogonalization, the metric).
-
-## The strategies to benchmark
-
-| Strategy | Where precision drops | Recovers fp64 quality via | Best regime |
-|---|---|---|---|
-| **2-precision iterative refinement** | factor/solve in fp32 | fp64 residual + update loop | well-conditioned |
-| **3-precision IR** (Carson–Higham) | factor fp16, work fp32, residual fp64 | IR loop | moderately conditioned |
-| **GMRES-IR** | low-precision factors as a preconditioner | GMRES correction solve | **ill-conditioned** (κ up to ~1/u_low) |
-| **Inner–outer Krylov** (FGMRES outer fp64, low-precision preconditioner) | preconditioner apply | flexible outer Krylov | general workhorse |
-| **Low-precision SpMV + high-precision accumulation** | matvec storage/compute | fp64 accumulator | bandwidth-bound iterations |
-| **fp32 storage / fp64 compute** | memory only | nothing needed | any bandwidth-bound kernel |
+New to floating-point formats, unit roundoff, and the **correction-protected vs.
+error-anchoring** split across an algorithm's stages? A short primer — plus the
+stage-by-stage precision-sensitivity categorization and the strategy menu — is in
+[`precision-primer.txt`](precision-primer.txt).
 
 ## Faithfully simulating low precision (the crux)
 
-The single biggest way this study goes wrong: **storing values in a low-precision
-type is not the same as computing in low precision.** Two things must be controlled
-*independently*:
-
-1. **Rounding of every operation's result** to the target format — round-to-nearest-
-   even, with correct subnormal and overflow-to-Inf behavior. A chop-style rounder
-   (`pychop`) does this: compute in fp64, round the result to the target format.
-2. **The accumulator precision inside reductions** (dot products, norms, SpMV,
-   orthogonalization). This is where studies silently cheat. If your fp16 dot product
-   secretly accumulates in fp32, low precision looks far better than real hardware
-   would deliver; if it accumulates in fp16, it can look *worse* than tensor-core
-   hardware (which multiplies in fp16 but accumulates in fp32). **Neither is "fp16"
-   unless you declare which.**
-
-Discipline:
-
-- Compute in fp64, **round to the target format at defined boundaries** (chop-style).
-- Make the **accumulator precision an explicit, first-class parameter** of every
-  reduction; model the realistic hardware convention (low-precision multiply /
-  higher-precision accumulate) *deliberately*, not by accident.
-- **Handle range, not just precision.** fp16 overflows around 6.5e4 and underflows
-  into subnormals around 6e-8; the simulator must actually overflow to Inf and
-  flush/keep subnormals as the format does — otherwise you hide the range failures
-  that are half the fp16 story.
-- **Watch numpy's implicit casts.** `np.sum(x)` over `float16` accumulates
-  differently from `np.sum(x, dtype=np.float32)`, and matmul internal accumulation is
-  murky — control the accumulator yourself rather than trusting the default.
+The single biggest way this study goes wrong: **storing values in a low-precision type
+is not the same as computing in low precision.** Two things must be controlled
+independently — the **rounding of every operation's result** to the target format, and
+the **accumulator precision inside reductions** (a fp16 dot product that secretly
+accumulates in fp32 is not fp16). Make the accumulator precision an explicit, declared
+parameter, handle dynamic range (overflow/underflow), and don't trust numpy's implicit
+casts. See [`precision-reference.txt`](precision-reference.txt) for the full discipline.
 
 ## Problem statement
 
@@ -185,79 +114,28 @@ add **scaling / equilibration** as a declared step — a clean on-ramp to why bf
 (wide range, few mantissa bits) and fp16 (narrow range, more mantissa bits) fail
 *differently*.
 
-### Phase 2 design choice: what you sweep
+## Suggested approach (adaptable)
 
-The central Phase-2 choice is which knob you turn:
+Build and *validate the simulator* first, then the harness, then the baseline. **The
+simulator and the harness are the deliverable; the problem is a slot.** Design it with
+Claude in plan mode — a sketch to adapt, not a recipe.
 
-| Axis | What you vary | Reveals |
-|---|---|---|
-| **Conditioning** | κ(A) via refinement / anisotropy / shift | the frontier where each strategy loses fp64 quality |
-| **Stage allocation** | which stages drop to fp32/fp16/bf16 | the correction-protected vs error-anchoring split, empirically |
-| **Accumulator precision** | fp16/bf16 multiply × {fp16, fp32, fp64} accumulate | the fp16-multiply/fp32-accumulate sweet spot |
+- **Afternoon 1 — simulator + harness + well-conditioned baseline.** Build the
+  low-precision simulator and **gate everything on a validation test** — it must
+  reproduce each format's unit roundoff, range, and subnormals (a simulator that quietly
+  computes in fp32 makes low precision look free). Then run the harness on the
+  well-conditioned baseline, where iterative refinement is *supposed* to recover fp64
+  quality — if `ir_fp32` doesn't land on the fp64 line here, the bug is in the simulator
+  or harness, not the physics.
+- **Afternoon 2 — the ill-conditioned study + write-up.** Raise the conditioning until
+  naive fp32 / simple IR stop reaching fp64 quality, compare the survivors, and sweep
+  conditioning / stage allocation / accumulator precision one axis at a time — reporting
+  *where the winner changes* in delivered accuracy and projected cost. Then draft the
+  paper.
 
-## Suggested approach
-
-Build and *validate the simulator* first, then the harness, then the baseline.
-**The simulator and the harness are the deliverable; the problem is a slot.**
-
-### Afternoon 1 — the simulator + harness + well-conditioned baseline
-
-**Step 1. Build and validate the low-precision simulator.**
-- Wrap `pychop` (and `ml_dtypes` for bf16 storage) behind a small interface that
-  rounds fp64 results to a chosen format with an explicit accumulator precision.
-- **Gate everything on a validation test** (`pytest`): the simulator must reproduce
-  each format's unit roundoff, overflow/underflow thresholds, and subnormal behavior.
-  A simulator that quietly computes in fp32 makes low precision look free — this test
-  is the analog of SolverBench recomputing `‖b − Ax‖`.
-
-**Step 2. Build the benchmarking harness.**
-- One driver that runs a single `(problem, strategy, stage-allocation, accumulator
-  precision, conditioning)` combination and records a *fixed set of numbers*.
-- Record, per run:
-  - **relative forward error** `‖x − x_fp64‖ / ‖x_fp64‖` (computed in fp64)
-  - **true residual** `‖b − A x‖` recomputed in fp64
-  - **iterations to the fixed tolerance** (the one real, hardware-independent cost)
-  - **projected cost** from the model (per-stage FLOPs/bytes × precision ratio)
-  - **range events** — counts of Inf / NaN / underflow-to-zero
-  - a **precision manifest**: the storage, operation, and accumulator precision of
-    every stage
-- Output: one JSON summary per run, written to a dated `runs/<timestamp>/` folder.
-
-**Step 3. Solve the well-conditioned baseline** and compare, all against the same
-validated fp64 reference:
-
-| Label | Strategy | Expectation |
-|---|---|---|
-| `fp64` | everything fp64 | the gold-standard reference |
-| `fp32_all` | everything fp32 | ~fp32 forward error — the naive baseline |
-| `ir_fp32` | 2-precision IR (fp32 solve, fp64 residual/update) | should recover **fp64** forward error |
-| `ir_fp16` *(stretch)* | 3-precision IR (fp16 factor, fp32 work, fp64 residual) | fp64 quality if κ is small enough |
-
-**Produce:** the **accuracy plot** — forward error vs strategy, with the fp64
-reference line. IR strategies should sit on the fp64 line; `fp32_all` above it.
-
-**Why this matters:** the well-conditioned regime is where iterative refinement is
-*supposed* to recover fp64 quality. If `ir_fp32` does **not** land on the fp64 line
-here, the bug is in your simulator or harness — fix it before you trust any
-ill-conditioned number.
-
-### Afternoon 2 — the ill-conditioned study + write-up
-
-**Step 4. Raise the conditioning** until `fp32_all` and simple IR stop reaching fp64
-quality, then compare the survivors — GMRES-IR, 3-precision IR, inner–outer — holding
-the tolerance and the fp64 reference fixed.
-
-**Step 5. Run the sweep.** Vary **conditioning**, **stage allocation**, and
-**accumulator precision** (one axis at a time). Report **where the winner changes** —
-the honest result is a *map*, not a single champion. Track delivered accuracy, the
-projected cost, and iterations; the cheapest allocation and the most accurate one need
-not agree.
-
-**Produce:** error-vs-conditioning and projected-cost-vs-accuracy (Pareto) plots, plus
-a summary table of the winning allocation per regime.
-
-**Step 6. Write it up.** Methodology, the simulator-validation evidence, the
-reproducibility manifest, the plots, the map. Draft the paper.
+Plan the run-record schema (including the precision manifest), the baseline/survivor
+configurations, and the sweep axes with Claude — **draw from the reference menu in
+[`precision-reference.txt`](precision-reference.txt)**.
 
 ## Accuracy metrics
 

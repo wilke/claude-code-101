@@ -56,6 +56,8 @@
   .nav { position: fixed; bottom: 14px; right: 18px; display: flex; gap: 6px; align-items: center; z-index: 10; }
   .nav button { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 10px; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); cursor: pointer; }
   .nav button:hover { background: var(--accent-soft); }
+  .nav .nav-label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .nav .jump-to { font-family: var(--sans); font-size: 11px; width: 44px; padding: 5px 6px; text-align: center; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); }
   @media (max-width: 800px) {
     .slide { padding: 32px 28px 56px; }
     .slide h1 { font-size: 32px; }
@@ -75,10 +77,10 @@
     <div class="footer"><span>Capstone Projects · List</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- Capstones 1-3 -->
+  <!-- Coding and Translation -->
   <section class="slide">
     <h3>Capstone Projects</h3>
-    <h1>Optimization Solvers</h1>
+    <h1>Coding and Translation</h1>
     <div class="capstone">
       <p class="name">BQPD-CPP</p>
       <ul>
@@ -94,33 +96,40 @@
       </ul>
     </div>
     <div class="capstone">
+      <p class="name">diffBLAS</p>
+      <ul>
+        <li><span class="lbl">Goal:</span> Adapt differentiated BLAS routines to different AD activity contexts</li>
+        <li><span class="lbl">Outcome:</span> AD-context-aware differentiated BLAS variants and an evaluation</li>
+      </ul>
+    </div>
+    <div class="footer"><span>Capstone Projects · List</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Optimization Solvers -->
+  <section class="slide">
+    <h3>Capstone Projects</h3>
+    <h1>Optimization Solvers</h1>
+    <div class="capstone">
       <p class="name">ConDFO</p>
       <ul>
         <li><span class="lbl">Goal:</span> Develop and build a derivative-free optimization solver with constraints</li>
         <li><span class="lbl">Outcome:</span> Python implementation and research paper on constrained DFO</li>
       </ul>
     </div>
-    <div class="footer"><span>Capstone Projects · List</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- Capstones 4-6 -->
-  <section class="slide">
-    <h3>Capstone Projects</h3>
-    <h1>Tuning, Skills &amp; Benchmarking</h1>
     <div class="capstone">
       <p class="name">OptiUNO</p>
       <ul>
         <li><span class="lbl">Goal:</span> Use openEvolve to search for an optimal optimization solver</li>
-        <li><span class="lbl">Outcome:</span> Methodology for tuning parameters in optimization solver; maybe a paper</li>
+        <li><span class="lbl">Outcome:</span> Methodology for tuning parameters in optimization solver; maybe a paper.</li>
       </ul>
     </div>
-    <div class="capstone">
-      <p class="name">SciCompSkills</p>
-      <ul>
-        <li><span class="lbl">Goal:</span> Extend scientific computing research skillset to include literature search</li>
-        <li><span class="lbl">Outcome:</span> Extension to Ahmed's sci-comp-skills that include a literature search harness</li>
-      </ul>
-    </div>
+    <div class="footer"><span>Capstone Projects · List</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Benchmarking -->
+  <section class="slide">
+    <h3>Capstone Projects</h3>
+    <h1>Benchmarking</h1>
     <div class="capstone">
       <p class="name">SolverBench</p>
       <ul>
@@ -128,13 +137,6 @@
         <li><span class="lbl">Outcome:</span> Paper describing the benchmarking set-up and outcome</li>
       </ul>
     </div>
-    <div class="footer"><span>Capstone Projects · List</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- Capstones 7-9 -->
-  <section class="slide">
-    <h3>Capstone Projects</h3>
-    <h1>PDE, Precision &amp; AD</h1>
     <div class="capstone">
       <p class="name">optSolverBench</p>
       <ul>
@@ -149,20 +151,20 @@
         <li><span class="lbl">Outcome:</span> A harness + paper mapping where reduced precision keeps fp64-quality answers</li>
       </ul>
     </div>
-    <div class="capstone">
-      <p class="name">diffBLAS</p>
-      <ul>
-        <li><span class="lbl">Goal:</span> Adapt differentiated BLAS routines to different AD activity contexts</li>
-        <li><span class="lbl">Outcome:</span> AD-context-aware differentiated BLAS variants and an evaluation</li>
-      </ul>
-    </div>
     <div class="footer"><span>Capstone Projects · List</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- Capstone 10 -->
+  <!-- AI Agents & Meshing -->
   <section class="slide">
     <h3>Capstone Projects</h3>
-    <h1>Meshing</h1>
+    <h1>AI Agents &amp; Meshing</h1>
+    <div class="capstone">
+      <p class="name">SciCompSkills</p>
+      <ul>
+        <li><span class="lbl">Goal:</span> Extend scientific computing research skillset to include literature search</li>
+        <li><span class="lbl">Outcome:</span> Extension to Ahmed's sci-comp-skills that include a literature search harness</li>
+      </ul>
+    </div>
     <div class="capstone">
       <p class="name">VoroMesh2D</p>
       <ul>

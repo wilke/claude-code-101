@@ -54,6 +54,8 @@
   .nav { position: fixed; bottom: 14px; right: 18px; display: flex; gap: 6px; align-items: center; z-index: 10; }
   .nav button { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 10px; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); cursor: pointer; }
   .nav button:hover { background: var(--accent-soft); }
+  .nav .nav-label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .nav .jump-to { font-family: var(--sans); font-size: 11px; width: 44px; padding: 5px 6px; text-align: center; background: var(--bg); color: var(--ink); border: 1px solid var(--rule); }
   @media (max-width: 800px) {
     .slide { padding: 32px 28px 56px; }
     .slide h1 { font-size: 32px; }
@@ -73,13 +75,13 @@
     <div class="footer"><span>Capstone Projects · Table</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- Capstones 1-3 -->
+  <!-- Coding and Translation -->
   <section class="slide">
     <h3>Capstone Projects</h3>
-    <h1>Optimization Solvers</h1>
+    <h1>Coding and Translation</h1>
     <table class="matrix">
       <colgroup><col class="c-name"><col class="c-desc"><col class="c-out"></colgroup>
-      <tr><th>Capstone</th><th>Description</th><th>Outcome</th></tr>
+      <tr><th>Capstone</th><th>Goal</th><th>Outcome</th></tr>
       <tr>
         <td class="name">BQPD-CPP</td>
         <td>Create a thread-safe C++ version of Roger Fletcher's F77 quadratic optimization solver</td>
@@ -91,47 +93,47 @@
         <td>C library derived from a Fortran implementation for testing AD capabilities</td>
       </tr>
       <tr>
-        <td class="name">ConDFO</td>
-        <td>Develop and build a derivative-free optimization solver with constraints</td>
-        <td>Python implementation and research paper on constrained DFO</td>
+        <td class="name">diffBLAS</td>
+        <td>Adapt differentiated BLAS routines to different AD activity contexts</td>
+        <td>AD-context-aware differentiated BLAS variants and an evaluation</td>
       </tr>
     </table>
     <div class="footer"><span>Capstone Projects · Table</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- Capstones 4-6 -->
+  <!-- Optimization Solvers -->
   <section class="slide">
     <h3>Capstone Projects</h3>
-    <h1>Tuning, Skills &amp; Benchmarking</h1>
+    <h1>Optimization Solvers</h1>
     <table class="matrix">
       <colgroup><col class="c-name"><col class="c-desc"><col class="c-out"></colgroup>
-      <tr><th>Capstone</th><th>Description</th><th>Outcome</th></tr>
+      <tr><th>Capstone</th><th>Goal</th><th>Outcome</th></tr>
+      <tr>
+        <td class="name">ConDFO</td>
+        <td>Develop and build a derivative-free optimization solver with constraints</td>
+        <td>Python implementation and research paper on constrained DFO</td>
+      </tr>
       <tr>
         <td class="name">OptiUNO</td>
         <td>Use openEvolve to search for an optimal optimization solver</td>
-        <td>Methodology for tuning parameters in optimization solver; maybe a paper</td>
+        <td>Methodology for tuning parameters in optimization solver; maybe a paper.</td>
       </tr>
-      <tr>
-        <td class="name">SciCompSkills</td>
-        <td>Extend scientific computing research skillset to include literature search</td>
-        <td>Extension to Ahmed's sci-comp-skills that include a literature search harness</td>
-      </tr>
+    </table>
+    <div class="footer"><span>Capstone Projects · Table</span><div class="progress"><div></div></div><span class="counter"></span></div>
+  </section>
+
+  <!-- Benchmarking -->
+  <section class="slide">
+    <h3>Capstone Projects</h3>
+    <h1>Benchmarking</h1>
+    <table class="matrix">
+      <colgroup><col class="c-name"><col class="c-desc"><col class="c-out"></colgroup>
+      <tr><th>Capstone</th><th>Goal</th><th>Outcome</th></tr>
       <tr>
         <td class="name">SolverBench</td>
         <td>Solver &amp; Preconditioner Benchmarking for PDEs</td>
         <td>Paper describing the benchmarking set-up and outcome</td>
       </tr>
-    </table>
-    <div class="footer"><span>Capstone Projects · Table</span><div class="progress"><div></div></div><span class="counter"></span></div>
-  </section>
-
-  <!-- Capstones 7-9 -->
-  <section class="slide">
-    <h3>Capstone Projects</h3>
-    <h1>PDE, Precision &amp; AD</h1>
-    <table class="matrix">
-      <colgroup><col class="c-name"><col class="c-desc"><col class="c-out"></colgroup>
-      <tr><th>Capstone</th><th>Description</th><th>Outcome</th></tr>
       <tr>
         <td class="name">optSolverBench</td>
         <td>Optimizer &amp; Solver Benchmarking for PDE-Constrained Optimization</td>
@@ -142,22 +144,22 @@
         <td>Mixed-precision benchmarking for numerical linear algebra (no GPU, no wall-clock)</td>
         <td>A harness + paper mapping where reduced precision keeps fp64-quality answers</td>
       </tr>
-      <tr>
-        <td class="name">diffBLAS</td>
-        <td>Adapt differentiated BLAS routines to different AD activity contexts</td>
-        <td>AD-context-aware differentiated BLAS variants and an evaluation</td>
-      </tr>
     </table>
     <div class="footer"><span>Capstone Projects · Table</span><div class="progress"><div></div></div><span class="counter"></span></div>
   </section>
 
-  <!-- Capstone 10 -->
+  <!-- AI Agents & Meshing -->
   <section class="slide">
     <h3>Capstone Projects</h3>
-    <h1>Meshing</h1>
+    <h1>AI Agents &amp; Meshing</h1>
     <table class="matrix">
       <colgroup><col class="c-name"><col class="c-desc"><col class="c-out"></colgroup>
-      <tr><th>Capstone</th><th>Description</th><th>Outcome</th></tr>
+      <tr><th>Capstone</th><th>Goal</th><th>Outcome</th></tr>
+      <tr>
+        <td class="name">SciCompSkills</td>
+        <td>Extend scientific computing research skillset to include literature search</td>
+        <td>Extension to Ahmed's sci-comp-skills that include a literature search harness</td>
+      </tr>
       <tr>
         <td class="name">VoroMesh2D</td>
         <td>Voronoi-based interstitial meshing in 2D for packed disks</td>

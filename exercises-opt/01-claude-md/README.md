@@ -84,6 +84,18 @@ Unlike the linear-algebra version (data only), `max_conopt.py` has real math wri
    ```
    /clear
    ```
+
+   > **Keep Claude scoped.** This folder sits inside the larger workshop repo, and its
+   > `SOLUTION.md`/`README.md` give the answer away. Paste this **before** `/init` so
+   > Claude builds the CLAUDE.md from *this folder's* code/data only:
+   >
+   > ```
+   > For this exercise, treat the current folder as the entire project.
+   > Build the CLAUDE.md from ONLY the code and data files in this directory.
+   > Do NOT read README.md or SOLUTION.md in this folder, and do NOT read any
+   > files in parent or sibling directories (the rest of the workshop repo).
+   > ```
+
    ```
    /init
    ```

@@ -70,6 +70,19 @@ claude
 
 Inside Claude Code, follow the steps in that exercise's `README.md`.
 
+> **Keep Claude scoped when running `/init`.** Each exercise folder lives inside this
+> larger workshop repo and ships a `SOLUTION.md`/`README.md` that give the answer away, so
+> before you run `/init` in the `01-claude-md` step, paste this so Claude builds the
+> CLAUDE.md from *that folder's* code/data only (each `01-claude-md/README.md` repeats it
+> inline):
+>
+> ```
+> For this exercise, treat the current folder as the entire project.
+> Build the CLAUDE.md from ONLY the code and data files in this directory.
+> Do NOT read README.md or SOLUTION.md in this folder, and do NOT read any
+> files in parent or sibling directories (the rest of the workshop repo).
+> ```
+
 ## Speaker notes
 
 - **Pacing.** Pick the table row above that fits your slot. The deck is dense and growing; you'll need to pick what to cut, not what to add. See "What to cut for a shorter slot" below.

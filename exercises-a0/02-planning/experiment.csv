@@ -1,0 +1,404 @@
+sample_id,batch,treatment_group,temperature_C,concentration,yield,outcome,outcome_label
+1070,B5, control ,32.67,1.1 mg/mL,46.55,0,failure
+1281,B3,CTRL,32.16,2.1 mg/mL,58.62,0,failure
+1283,B3, control ,34.54,1.3 mg/mL,52.04,0,failure
+1033,B4,Low,34.41,2.2 mg/mL,60.57,0,failure
+1042,B5, control ,40.63,1.2 mg/mL,58.17,0,failure
+1077,B2,low,38.47,2.4 mg/mL,76.39,1,success
+1137,B1,low,36.47,2.5 mg/mL,67.92,0,failure
+1392,B3,CTRL,37.09,2.9 mg/mL,65.48,1,success
+1301,B5,high,36.74,2.8 mg/mL,68.8,0,failure
+1349,B1, control ,36.58,0.9 mg/mL,50.0,0,failure
+1364,B1,Low,39.22,2.9 mg/mL,73.8,1,success
+1078,B4,HIGH,37.8,1.7 mg/mL,68.57,1,success
+1282,B5,LOW,38.67,1.9 mg/mL,70.19,0,failure
+1385,B1,LOW,34.49,0.9 mg/mL,57.03,0,failure
+1155,B4,low,38.37,2.7 mg/mL,76.16,1,success
+1280,B2,Control,38.06,1.7 mg/mL,60.07,1,success
+1177,B1,control,41.46,3.0 mg/mL,73.08,1,success
+1229,B2,high,36.67,0.8 mg/mL,58.69,1,success
+1009,B1,Low,34.06,1.6 mg/mL,63.61,0,failure
+1195,B1, control ,37.64,0.6 mg/mL,52.67,0,failure
+1055,B1,LOW,35.99,2.9 mg/mL,66.63,1,success
+1398,B2,high,34.4,2.7 mg/mL,66.11,0,failure
+1375,B1,LOW,38.19,0.6 mg/mL,57.04,0,failure
+1231,B6,Low,36.2,1.3 mg/mL,64.33,0,failure
+1278,B1,Low,37.03,1.6 mg/mL,63.2,0,failure
+1356,B1,CTRL,41.12,1.0 mg/mL,60.34,1,success
+1084,B4,LOW,36.96,2.0 mg/mL,70.85,0,failure
+1209,B5,high,37.11,0.7 mg/mL,63.4,0,failure
+1172,B5,CTRL,34.77,0.7 mg/mL,51.1,0,failure
+1015,B5,Low,41.55,1.3 mg/mL,70.06,0,failure
+1132,B1,Low,38.62,2.6 mg/mL,77.03,1,success
+1094,B6,High,37.68,0.8 mg/mL,67.76,1,success
+1000,B1,Low,40.12,2.1 mg/mL,67.21,1,success
+1124,B6,high,36.39,2.9 mg/mL,73.31,0,failure
+1249,B1,Low,37.08,3.0 mg/mL,69.43,1,success
+1373,B3,low,32.69,3.0 mg/mL,59.56,0,failure
+1056,B4,high,32.16,1.5 mg/mL,61.16,0,failure
+1310,B4,CTRL,35.92,1.7 mg/mL,53.25,0,failure
+1082,B1,CTRL,36.19,1.2 mg/mL,55.51,0,failure
+1322,B4, control ,33.16,1.8 mg/mL,49.3,0,failure
+1265,B4,LOW,41.38,1.3 mg/mL,73.5,1,success
+1352,B2,CTRL,37.19,2.0 mg/mL,60.3,0,failure
+1140,B6,control,38.71,0.9 mg/mL,58.48,0,failure
+1114,B4, control ,36.39,1.6 mg/mL,60.97,0,failure
+1101,B2,CTRL,37.97,1.6 mg/mL,65.02,1,success
+1307,B4,high,34.27,0.6 mg/mL,57.75,0,failure
+1025,B4,HIGH,40.19,2.1 mg/mL,82.96,1,success
+1366,B3,Low,40.0,2.1 mg/mL,67.39,1,success
+1173,B5, control ,37.03,0.9 mg/mL,55.33,1,success
+1126,B1,high,36.86,1.7 mg/mL,68.79,0,failure
+1145,B6,LOW,31.3,0.7 mg/mL,48.49,0,failure
+1022,B2,Low,32.56,,54.75,0,failure
+1116,B1,CTRL,31.37,1.8 mg/mL,53.45,0,failure
+1046,B3,low,35.45,2.8 mg/mL,75.67,0,failure
+1391,B2,CTRL,39.31,0.7 mg/mL,55.38,0,failure
+1340,B4,High,38.32,2.5 mg/mL,73.27,1,success
+1073,B1,Low,41.62,2.6 mg/mL,83.0,1,success
+1072,B3,control,36.02,2.8 mg/mL,60.23,0,failure
+1039,B4,control,38.78,1.1 mg/mL,61.71,0,failure
+1266,B3,low,36.77,1.0 mg/mL,53.3,0,failure
+1057,B1,CTRL,36.22,2.2 mg/mL,65.11,1,success
+1168,B3,CTRL,39.33,1.0 mg/mL,57.22,0,failure
+1030,B3,control,38.12,0.7 mg/mL,60.53,0,failure
+1153,B2,LOW,38.12,0.9 mg/mL,60.88,1,success
+1331,B3,LOW,37.17,2.5 mg/mL,67.75,0,failure
+1192,B4,low,41.2,2.6 mg/mL,74.14,1,success
+1399,B2,LOW,39.76,2.3 mg/mL,82.42,0,failure
+1104,B5,high,38.56,3.0 mg/mL,77.86,1,success
+1031,B2,Control,32.79,2.2 mg/mL,54.29,0,failure
+1275,B3,CTRL,39.27,2.8 mg/mL,71.27,0,failure
+1223,B2,Control,34.89,2.2 mg/mL,56.84,0,failure
+1334,B3,CTRL,37.99,3.0 mg/mL,70.35,1,success
+1076,B2,CTRL,34.24,2.4 mg/mL,67.64,0,failure
+1180,B6,LOW,39.14,1.6 mg/mL,62.09,0,failure
+1141,B2,HIGH,36.12,2.7 mg/mL,74.53,1,success
+1005,B6,control,36.27,0.9 mg/mL,55.61,0,failure
+1045,B6,High,37.67,2.2 mg/mL,69.35,1,success
+1090,B3,High,38.21,0.5 mg/mL,66.65,0,failure
+1248,B5, control ,37.07,1.8 mg/mL,62.16,0,failure
+1337,B2, control ,39.47,1.4 mg/mL,63.9,0,failure
+1390,B5,High,35.14,1.6 mg/mL,60.22,0,failure
+1353,B3,High,37.02,0.6 mg/mL,68.36,0,failure
+1233,B5,high,36.49,0.6 mg/mL,55.94,0,failure
+1003,B3, control ,30.98,2.9 mg/mL,50.79,0,failure
+1018,B6,HIGH,35.94,2.3 mg/mL,71.35,1,success
+1131,B4,CTRL,36.45,2.5 mg/mL,61.63,0,failure
+1118,B2,control,35.04,2.1 mg/mL,60.42,0,failure
+1326,B2,high,40.97,1.0 mg/mL,69.33,0,failure
+1063,B6,Control,33.26,2.8 mg/mL,54.59,0,failure
+1250,B2,Control,36.71,0.6 mg/mL,55.15,0,failure
+1211,B5,LOW,34.29,1.0 mg/mL,54.78,0,failure
+1380,B1,control,42.61,2.8 mg/mL,74.42,1,success
+1093,B3, control ,38.96,2.6 mg/mL,70.73,1,success
+1374,B6,High,38.13,2.9 mg/mL,79.76,1,success
+1108,B3,Control,35.8,1.2 mg/mL,53.54,0,failure
+1394,B5, control ,36.73,1.0 mg/mL,51.68,0,failure
+1222,B5,CTRL,37.1,1.0 mg/mL,55.5,0,failure
+1181,B1,HIGH,38.6,1.5 mg/mL,67.24,0,failure
+1246,B5,high,31.71,2.4 mg/mL,72.99,0,failure
+1376,B5,HIGH,34.09,2.3 mg/mL,64.34,1,success
+1336,B6,Low,35.44,1.6 mg/mL,58.99,1,success
+1218,B3,CTRL,36.69,2.8 mg/mL,63.03,0,failure
+1075,B3,CTRL,41.17,2.4 mg/mL,72.7,1,success
+1110,B2,control,40.75,2.2 mg/mL,71.27,1,success
+1113,B3,Control,,0.9 mg/mL,58.21,0,failure
+1016,B4,control,32.87,2.9 mg/mL,64.15,0,failure
+1066,B6,Control,37.43,1.9 mg/mL,60.4,0,failure
+1220,B1,LOW,39.65,1.0 mg/mL,60.14,0,failure
+1007,B5,LOW,38.79,2.6 mg/mL,73.53,1,success
+1019,B3,control,35.7,1.5 mg/mL,53.5,0,failure
+1176,B5,High,42.12,1.5 mg/mL,69.96,1,success
+1357,B6,CTRL,37.77,0.8 mg/mL,54.64,0,failure
+1351,B1,CTRL,36.42,1.4 mg/mL,52.71,0,failure
+1297,B3,LOW,,2.2 mg/mL,58.53,0,failure
+1296,B6,control,37.16,2.0 mg/mL,63.03,1,success
+1294,B4,low,34.48,2.6 mg/mL,69.04,0,failure
+1389,B1,control,36.36,1.5 mg/mL,58.05,0,failure
+1299,B1,LOW,36.97,2.9 mg/mL,68.68,1,success
+1060,B6,control,34.22,2.7 mg/mL,60.17,0,failure
+1079,B5,high,34.83,1.6 mg/mL,61.86,0,failure
+1287,B4,Control,35.27,0.9 mg/mL,46.21,0,failure
+1225,B2,High,37.86,0.7 mg/mL,65.62,0,failure
+1258,B2,LOW,34.76,1.7 mg/mL,61.77,0,failure
+1158,B4, control ,37.4,2.5 mg/mL,58.53,1,success
+1109,B5,CTRL,38.98,2.7 mg/mL,75.8,0,failure
+1017,B1,Control,33.8,1.4 mg/mL,48.93,0,failure
+1234,B3,control,35.56,1.4 mg/mL,54.67,0,failure
+1024,B5, control ,35.56,1.5 mg/mL,50.14,0,failure
+1323,B6,low,37.97,2.9 mg/mL,71.37,1,success
+1148,B5,Low,40.65,1.6 mg/mL,69.02,1,success
+1247,B3,LOW,32.35,2.5 mg/mL,54.7,0,failure
+1157,B4,Low,37.7,1.8 mg/mL,65.74,0,failure
+1165,B5,Control,34.45,2.4 mg/mL,56.3,0,failure
+1253,B2,control,37.99,2.9 mg/mL,73.13,0,failure
+1379,B2,control,35.79,0.6 mg/mL,54.62,0,failure
+1119,B1,High,31.2,3.0 mg/mL,66.06,1,success
+1196,B3,High,40.38,2.0 mg/mL,72.03,1,success
+1219,B6,HIGH,39.49,0.6 mg/mL,64.78,0,failure
+1286,B1,CTRL,37.21,0.7 mg/mL,56.16,0,failure
+1152,B6,LOW,34.2,2.6 mg/mL,63.49,0,failure
+1335,B5,CTRL,38.39,2.0 mg/mL,71.27,0,failure
+1036,B6,control,38.12,1.0 mg/mL,58.87,0,failure
+1139,B3,High,33.09,2.7 mg/mL,67.82,1,success
+1381,B6,low,37.0,2.6 mg/mL,67.39,0,failure
+1377,B5,low,35.22,1.3 mg/mL,59.42,0,failure
+1198,B3,Control,37.51,1.2 mg/mL,60.37,1,success
+1227,B4,High,40.22,1.6 mg/mL,73.97,1,success
+1059,B5,LOW,36.53,1.5 mg/mL,64.76,0,failure
+1111,B5,CTRL,35.85,0.8 mg/mL,54.58,0,failure
+1355,B6,Control,39.91,1.8 mg/mL,66.42,0,failure
+1175,B3,control,34.46,2.6 mg/mL,59.95,0,failure
+1006,B1,CTRL,34.32,2.2 mg/mL,60.29,0,failure
+1290,B5,Low,35.98,1.0 mg/mL,66.74,0,failure
+1277,B5,LOW,37.7,1.3 mg/mL,67.29,1,success
+1150,B6,low,38.92,0.6 mg/mL,56.54,0,failure
+1010,B4,low,34.91,2.7 mg/mL,70.91,0,failure
+1194,B6,CTRL,40.4,0.6 mg/mL,56.22,0,failure
+1103,B1,Low,39.04,2.8 mg/mL,66.76,1,success
+1081,B3, control ,40.03,2.1 mg/mL,69.91,0,failure
+1208,B2,Control,37.62,2.2 mg/mL,56.52,0,failure
+1362,B2,high,39.16,1.5 mg/mL,70.22,1,success
+1378,B3,HIGH,40.43,2.8 mg/mL,78.99,0,failure
+1210,B2,low,36.49,0.5 mg/mL,60.27,0,failure
+1291,B2,LOW,35.54,1.9 mg/mL,58.96,0,failure
+1383,B2, control ,41.04,0.6 mg/mL,59.19,0,failure
+1167,B2,LOW,37.25,1.4 mg/mL,57.06,1,success
+1089,B5,Control,32.96,0.9 mg/mL,49.5,0,failure
+1193,B3,Low,41.32,2.3 mg/mL,71.42,1,success
+1163,B3,CTRL,39.5,2.4 mg/mL,64.72,1,success
+1147,B2, control ,34.69,0.5 mg/mL,53.45,0,failure
+1354,B6, control ,38.12,1.7 mg/mL,65.89,0,failure
+1092,B6,High,30.59,2.5 mg/mL,58.43,0,failure
+1069,B3,Control,38.54,1.3 mg/mL,64.7,0,failure
+1123,B3,LOW,39.78,2.3 mg/mL,69.18,0,failure
+1096,B2,HIGH,33.71,0.8 mg/mL,52.31,0,failure
+1143,B3,Low,36.76,0.9 mg/mL,51.88,0,failure
+1305,B1,LOW,34.22,2.2 mg/mL,56.55,0,failure
+1097,B5,High,39.09,,65.85,0,failure
+1232,B1,LOW,37.54,1.4 mg/mL,67.81,0,failure
+1068,B1,control,36.64,2.1 mg/mL,57.48,1,success
+1023,B6,High,38.29,2.8 mg/mL,78.54,1,success
+1037,B5,LOW,34.98,2.4 mg/mL,67.32,0,failure
+1144,B6,low,39.82,1.8 mg/mL,64.2,1,success
+1122,B4,CTRL,36.5,0.7 mg/mL,51.34,0,failure
+1202,B3,LOW,33.74,1.9 mg/mL,60.75,0,failure
+1182,B3,low,38.11,2.7 mg/mL,70.08,0,failure
+1067,B3,CTRL,36.16,1.7 mg/mL,48.48,0,failure
+1397,B2,Low,34.5,0.7 mg/mL,56.86,0,failure
+1350,B4,control,38.03,2.2 mg/mL,68.55,1,success
+1327,B1,High,35.44,2.0 mg/mL,75.43,0,failure
+1361,B6, control ,39.35,2.9 mg/mL,71.33,1,success
+1228,B4,CTRL,39.75,0.9 mg/mL,66.11,0,failure
+1125,B4,low,34.42,1.3 mg/mL,53.27,0,failure
+1146,B1,high,33.26,0.6 mg/mL,52.56,0,failure
+1237,B3,LOW,35.43,1.0 mg/mL,57.94,0,failure
+1086,B1,CTRL,36.14,1.0 mg/mL,62.79,0,failure
+1338,B2,Control,39.89,1.5 mg/mL,68.06,0,failure
+1321,B1,control,38.2,1.7 mg/mL,57.1,0,failure
+1346,B6,control,35.57,1.8 mg/mL,56.19,1,success
+1203,B5, control ,36.87,1.5 mg/mL,58.5,1,success
+1261,B2,control,41.59,1.5 mg/mL,64.07,1,success
+1304,B4,low,39.37,0.6 mg/mL,61.05,0,failure
+1183,B5,control,40.12,2.9 mg/mL,71.98,0,failure
+1342,B4,HIGH,32.3,1.2 mg/mL,59.05,0,failure
+1285,B6,control,36.85,1.4 mg/mL,52.93,1,success
+1302,B1,high,36.93,1.9 mg/mL,70.03,0,failure
+1284,B3,CTRL,33.39,1.4 mg/mL,50.87,0,failure
+1129,B4,Control,34.72,2.2 mg/mL,54.85,1,success
+1038,B2,Control,33.79,2.7 mg/mL,60.11,0,failure
+1011,B6,Low,37.59,2.4 mg/mL,59.27,0,failure
+1272,B1, control ,39.42,1.6 mg/mL,55.38,1,success
+1185,B3,high,38.85,,65.02,1,success
+1238,B2,low,37.78,2.7 mg/mL,70.97,1,success
+1112,B4,control,35.94,2.6 mg/mL,63.98,0,failure
+1179,B4,Low,34.7,2.1 mg/mL,64.04,0,failure
+1271,B1, control ,35.23,1.5 mg/mL,57.71,0,failure
+1262,B2,high,36.16,1.5 mg/mL,65.96,1,success
+1117,B1,LOW,34.93,2.2 mg/mL,58.77,0,failure
+1371,B4,high,37.96,0.6 mg/mL,68.43,0,failure
+1318,B6,CTRL,39.62,1.2 mg/mL,61.28,1,success
+1387,B5,control,36.91,2.8 mg/mL,74.51,0,failure
+1289,B3,low,33.64,1.5 mg/mL,57.25,0,failure
+1365,B4,low,38.23,0.7 mg/mL,63.62,0,failure
+1164,B3,low,39.97,1.8 mg/mL,76.94,1,success
+1255,B1,control,34.18,2.5 mg/mL,63.98,0,failure
+1136,B4,control,36.97,2.4 mg/mL,56.8,0,failure
+1154,B3,CTRL,37.15,0.9 mg/mL,53.98,0,failure
+1199,B6,CTRL,34.27,1.5 mg/mL,48.8,0,failure
+1197,B1,control,37.03,1.7 mg/mL,60.91,0,failure
+1395,B6,CTRL,37.56,1.2 mg/mL,57.79,0,failure
+1002,B4,LOW,37.91,1.7 mg/mL,67.14,0,failure
+1204,B3,high,36.8,1.2 mg/mL,59.61,0,failure
+1115,B4, control ,39.38,1.9 mg/mL,62.73,0,failure
+1268,B4,CTRL,37.91,2.7 mg/mL,67.67,1,success
+1239,B4,Low,36.0,2.8 mg/mL,67.79,0,failure
+1026,B3,CTRL,35.43,1.4 mg/mL,57.42,0,failure
+1120,B3,High,34.59,3.0 mg/mL,69.5,1,success
+1384,B1,high,37.33,2.6 mg/mL,77.96,1,success
+1224,B5,low,34.29,1.0 mg/mL,56.66,0,failure
+1245,B1,low,34.09,2.6 mg/mL,66.42,0,failure
+1329,B4,control,36.44,1.4 mg/mL,58.32,0,failure
+1317,B5,low,36.22,1.9 mg/mL,64.94,0,failure
+1088,B5,low,32.74,2.7 mg/mL,68.48,0,failure
+1127,B5,Low,39.62,1.6 mg/mL,64.07,0,failure
+1074,B5,Low,36.56,2.9 mg/mL,70.39,0,failure
+1324,B6,control,37.26,2.9 mg/mL,63.54,0,failure
+1029,B3,CTRL,38.91,0.8 mg/mL,53.39,0,failure
+1083,B5,Control,32.77,1.1 mg/mL,47.87,0,failure
+1332,B2,control,34.31,1.7 mg/mL,55.88,0,failure
+1107,B4,Low,35.91,2.5 mg/mL,61.8,1,success
+1316,B5,control,37.1,1.4 mg/mL,56.89,0,failure
+1298,B2, control ,32.1,0.6 mg/mL,45.96,0,failure
+1133,B4,high,36.97,2.6 mg/mL,74.41,1,success
+1244,B4,CTRL,40.59,0.8 mg/mL,58.93,1,success
+1184,B3,Control,38.59,2.7 mg/mL,64.14,0,failure
+1292,B6,Low,36.88,,67.76,1,success
+1044,B1,LOW,37.08,1.2 mg/mL,66.18,0,failure
+1370,B3,Control,29.67,1.6 mg/mL,44.92,0,failure
+1065,B2, control ,42.13,1.3 mg/mL,66.78,1,success
+1085,B5,Control,34.74,1.5 mg/mL,54.69,0,failure
+1242,B1,low,34.15,0.8 mg/mL,53.45,0,failure
+1186,B1,LOW,38.59,1.1 mg/mL,60.63,0,failure
+1159,B5,LOW,38.94,0.7 mg/mL,64.05,0,failure
+1012,B5,CTRL,41.03,3.0 mg/mL,74.02,1,success
+1035,B1,high,33.44,1.3 mg/mL,61.92,0,failure
+1028,B4,LOW,38.35,1.6 mg/mL,68.05,0,failure
+1170,B1,low,38.29,2.4 mg/mL,69.68,0,failure
+1142,B2,High,34.44,0.7 mg/mL,60.98,0,failure
+1320,B2,High,34.84,2.4 mg/mL,66.87,0,failure
+1274,B3,CTRL,35.78,2.8 mg/mL,59.48,0,failure
+1221,B3,control,39.56,2.0 mg/mL,61.47,1,success
+1095,B2,high,35.22,2.4 mg/mL,69.54,1,success
+1051,B2,HIGH,9999.0,2.0 mg/mL,64.74,0,failure
+1240,B1,HIGH,37.61,0.7 mg/mL,64.6,0,failure
+1311,B5,High,30.75,1.7 mg/mL,53.14,0,failure
+1388,B6,Control,33.59,1.9 mg/mL,51.76,0,failure
+1178,B6,CTRL,39.84,0.8 mg/mL,62.1,1,success
+1041,B5,LOW,35.47,0.8 mg/mL,63.98,0,failure
+1312,B1,CTRL,32.74,0.5 mg/mL,43.53,0,failure
+1206,B5,CTRL,39.24,1.3 mg/mL,61.85,1,success
+1254,B4, control ,40.9,1.9 mg/mL,69.35,0,failure
+1333,B5,LOW,35.12,1.9 mg/mL,53.94,0,failure
+1004,B3,Control,34.11,1.4 mg/mL,52.85,0,failure
+1256,B5,HIGH,36.05,0.9 mg/mL,53.64,1,success
+1360,B6,Control,36.78,0.7 mg/mL,53.74,1,success
+1100,B5,low,38.05,0.9 mg/mL,61.58,1,success
+1226,B5,control,37.95,1.0 mg/mL,58.93,1,success
+1382,B6,control,38.02,0.8 mg/mL,54.3,0,failure
+1213,B3,HIGH,35.13,2.1 mg/mL,64.88,0,failure
+1171,B1,Control,36.07,0.8 mg/mL,56.05,0,failure
+1098,B4,Low,37.87,3.0 mg/mL,68.56,1,success
+1215,B2,control,38.28,2.7 mg/mL,62.98,0,failure
+1061,B5,HIGH,38.45,2.0 mg/mL,69.51,1,success
+1047,B6, control ,38.18,1.0 mg/mL,61.64,0,failure
+1032,B1,high,38.35,2.1 mg/mL,72.54,1,success
+1267,B3,high,,0.8 mg/mL,66.55,0,failure
+1200,B3,CTRL,37.99,2.4 mg/mL,66.24,1,success
+1358,B1,LOW,38.47,1.0 mg/mL,62.74,1,success
+1027,B5,Low,35.41,1.5 mg/mL,59.62,0,failure
+1314,B2,CTRL,35.61,1.3 mg/mL,53.21,0,failure
+1230,B3,High,33.89,2.7 mg/mL,68.11,0,failure
+1260,B5,LOW,40.57,2.9 mg/mL,73.72,1,success
+1288,B4,low,39.08,2.3 mg/mL,74.22,0,failure
+1162,B3,CTRL,31.38,1.1 mg/mL,50.18,0,failure
+1341,B2,LOW,40.41,2.6 mg/mL,67.74,1,success
+1138,B3,Control,33.96,1.7 mg/mL,61.89,0,failure
+1062,B3,control,38.31,1.6 mg/mL,58.98,0,failure
+1135,B2,LOW,34.41,1.3 mg/mL,58.91,0,failure
+1128,B4,Low,34.56,0.6 mg/mL,55.87,0,failure
+1008,B2, control ,41.99,0.6 mg/mL,63.61,1,success
+1064,B3,high,38.75,2.6 mg/mL,77.79,1,success
+1300,B3,low,36.45,1.5 mg/mL,61.58,0,failure
+1014,B5,Low,37.62,2.1 mg/mL,61.89,0,failure
+1156,B1,LOW,36.53,2.6 mg/mL,72.7,0,failure
+1040,B1,HIGH,37.6,2.2 mg/mL,70.64,0,failure
+1369,B5,low,37.84,1.6 mg/mL,65.34,1,success
+1325,B2,CTRL,36.63,2.6 mg/mL,66.61,0,failure
+1216,B1,control,37.98,1.7 mg/mL,53.6,0,failure
+1279,B1,CTRL,37.84,1.9 mg/mL,60.6,0,failure
+1347,B6, control ,36.58,1.7 mg/mL,57.36,1,success
+1236,B4,Control,35.74,2.0 mg/mL,61.67,0,failure
+1207,B6,High,37.03,1.9 mg/mL,73.11,0,failure
+1212,B5, control ,36.62,2.7 mg/mL,67.66,0,failure
+1295,B4,LOW,38.81,2.8 mg/mL,71.74,0,failure
+1367,B2,CTRL,37.72,2.7 mg/mL,66.71,1,success
+1251,B3,HIGH,40.04,1.5 mg/mL,72.65,0,failure
+1393,B4,low,36.29,1.3 mg/mL,56.69,0,failure
+1368,B1,CTRL,36.11,2.1 mg/mL,58.04,0,failure
+1303,B6,LOW,37.56,0.5 mg/mL,59.66,0,failure
+1269,B4,LOW,44.95,2.0 mg/mL,79.43,1,success
+1201,B6,High,37.15,2.6 mg/mL,72.9,1,success
+1161,B4,CTRL,32.95,2.3 mg/mL,57.86,0,failure
+1043,B3,LOW,35.9,0.8 mg/mL,61.51,0,failure
+1217,B1,Low,32.53,1.7 mg/mL,59.4,0,failure
+1190,B5,LOW,35.61,1.9 mg/mL,61.62,0,failure
+1309,B1, control ,40.11,2.6 mg/mL,70.4,0,failure
+1259,B4,low,36.18,1.7 mg/mL,66.71,0,failure
+1105,B5,Control,40.13,0.7 mg/mL,59.11,0,failure
+1053,B3,CTRL,41.03,2.1 mg/mL,74.54,0,failure
+1001,B5,HIGH,36.37,2.0 mg/mL,71.76,0,failure
+1049,B5,Control,35.97,2.3 mg/mL,61.77,0,failure
+1080,B6,Control,37.44,1.1 mg/mL,56.26,0,failure
+1205,B2,High,41.49,1.8 mg/mL,72.5,1,success
+1034,B6,High,37.59,0.5 mg/mL,60.32,0,failure
+1263,B6,CTRL,41.76,2.0 mg/mL,70.28,1,success
+1091,B5, control ,35.69,1.3 mg/mL,53.15,0,failure
+1339,B6,High,40.59,0.8 mg/mL,68.67,1,success
+1052,B3,Control,30.97,1.1 mg/mL,47.34,0,failure
+1345,B2,CTRL,37.3,0.6 mg/mL,54.34,0,failure
+1264,B6,Low,37.09,0.8 mg/mL,60.07,0,failure
+1241,B4,control,37.68,0.8 mg/mL,54.96,0,failure
+1013,B5,High,33.94,1.8 mg/mL,62.89,0,failure
+1315,B4,CTRL,35.98,2.7 mg/mL,66.58,0,failure
+1088,B5,low,32.74,2.7 mg/mL,68.48,0,failure
+1273,B6, control ,36.1,2.1 mg/mL,63.14,0,failure
+1166,B2,LOW,32.35,1.7 mg/mL,58.22,0,failure
+1328,B1,low,42.15,2.7 mg/mL,73.36,1,success
+1396,B1,low,38.54,2.9 mg/mL,69.98,1,success
+1134,B5,CTRL,38.75,1.5 mg/mL,61.67,0,failure
+1306,B2,control,34.07,1.9 mg/mL,59.63,0,failure
+1386,B1,Control,36.73,1.8 mg/mL,66.51,0,failure
+1319,B5,high,35.31,0.9 mg/mL,63.42,0,failure
+1243,B4, control ,,2.0 mg/mL,60.4,0,failure
+1054,B3, control ,43.37,1.3 mg/mL,69.91,0,failure
+1363,B6,Low,37.53,2.5 mg/mL,65.04,1,success
+1050,B5,LOW,40.41,2.9 mg/mL,76.67,0,failure
+1174,B5,Control,36.25,0.9 mg/mL,59.06,0,failure
+1189,B2,HIGH,37.21,2.3 mg/mL,71.89,0,failure
+1180,B6,LOW,39.14,1.6 mg/mL,62.09,0,failure
+1187,B3,high,37.85,2.1 mg/mL,75.08,1,success
+1169,B1,HIGH,41.49,1.0 mg/mL,77.52,1,success
+1058,B5,control,36.28,0.6 mg/mL,54.35,0,failure
+1048,B5,Control,35.67,1.9 mg/mL,62.13,0,failure
+1344,B6,Control,34.83,2.7 mg/mL,58.67,0,failure
+1235,B5,CTRL,37.63,1.2 mg/mL,62.86,0,failure
+1252,B2,low,30.32,1.3 mg/mL,52.5,0,failure
+1021,B3,control,,2.3 mg/mL,70.06,1,success
+1313,B2,CTRL,34.92,2.5 mg/mL,65.35,1,success
+1160,B6,HIGH,39.02,1.5 mg/mL,72.49,0,failure
+1276,B3,CTRL,37.08,1.5 mg/mL,58.6,0,failure
+1191,B4,control,33.8,1.9 mg/mL,55.99,0,failure
+1293,B2,Control,37.7,1.1 mg/mL,64.41,1,success
+1343,B4,high,36.21,1.3 mg/mL,63.73,0,failure
+1257,B1,Control,35.12,2.9 mg/mL,69.86,0,failure
+1308,B2,control,37.72,2.4 mg/mL,62.91,0,failure
+1149,B1, control ,37.71,2.4 mg/mL,59.12,0,failure
+1130,B4,LOW,38.4,1.4 mg/mL,62.83,1,success
+1151,B2,control,34.15,2.1 mg/mL,48.03,0,failure
+1359,B5, control ,34.12,1.4 mg/mL,53.11,0,failure
+1099,B1,Low,42.96,1.0 mg/mL,64.42,0,failure
+1372,B3,CTRL,27.88,1.8 mg/mL,46.37,0,failure
+1087,B2,control,36.8,,65.19,0,failure
+1330,B4,LOW,33.81,0.8 mg/mL,48.82,0,failure
+1214,B5,Control,33.87,0.9 mg/mL,49.54,0,failure
+1121,B5, control ,34.71,1.8 mg/mL,56.55,0,failure
+1343,B4,high,36.21,1.3 mg/mL,63.73,0,failure
+1020,B4, control ,39.03,1.9 mg/mL,62.73,0,failure
+1188,B2,control,32.54,1.2 mg/mL,52.14,0,failure
+1071,B2, control ,37.41,2.8 mg/mL,68.69,0,failure
+1106,B5,Control,35.7,0.8 mg/mL,60.06,0,failure
+1270,B2,Control,,1.4 mg/mL,57.06,0,failure
+1348,B2,LOW,41.71,2.2 mg/mL,77.94,1,success
+1102,B5,Low,36.58,2.0 mg/mL,65.5,0,failure

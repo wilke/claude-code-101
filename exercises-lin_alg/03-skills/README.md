@@ -13,9 +13,13 @@
     ├── qr-iteration/          # singular values of a dense matrix (QR iteration)
     │   ├── SKILL.md
     │   └── qr_svd.py
-    └── lanczos/               # dominant singular values of a sparse matrix or matrix-free operator
+    ├── lanczos/               # dominant singular values of a sparse matrix or matrix-free operator
+    │   ├── SKILL.md
+    │   └── lanczos_svd.py
+    └── paper-summary/         # bonus: literature-research skill
         ├── SKILL.md
-        └── lanczos_svd.py
+        └── examples/
+            └── example-output.md
 ```
 
 `problem.py` exposes the **three objects from Exercises 01–02**: the dense matrix (`matrix_A.npy`), the sparse matrix (`matrix_B.npz`), and the matrix-free heat-step operator (`heat_operator.py`).
@@ -59,3 +63,5 @@ cp -R skills .claude/
 ## Stretch
 
 Add a `--which SM` option to `lanczos` for the *smallest* singular values (a conditioning probe), and update its `description:` so a future session asking "how ill-conditioned is this operator?" routes to it.
+
+The `skills/` folder also ships `paper-summary`, a literature-research skill carried over from the upstream workshop (pre-positioned for the capstone). Note that the `paper-summary` skill was written by Claude, not by a person. Try it out on a paper of your choice. Do you like it? How would you change it to your preferences? Everybody reads and summarizes differently.

@@ -98,3 +98,5 @@ Read Claude's behavior, not just the skill's output, against this checklist.
 ## Stretch (optional, for experienced learners)
 
 If you would like a second skill to try, the same `skills/` folder ships `paper-summary` — a literature-research skill carried over from the upstream workshop. It is *not* part of this exercise's main flow; it is pre-positioned for the capstone, which assumes the skill is available. Read its `SKILL.md` to see a more elaborate skill design (nine-section output template, BibTeX requirements, references to project-level conventions). If you have a PDF handy, ask Claude to summarize it with `paper-summary` and compare the workflow to `wave-cfl-checker`'s.
+
+Note that the `paper-summary` skill was written by Claude, not by a person. Try it out on a paper of your choice. Do you like it? How would you change it to your preferences? Everybody reads and summarizes differently.

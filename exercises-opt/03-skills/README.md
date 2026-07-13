@@ -79,3 +79,4 @@ Specific data is in `problem.py`. The candidate KKT point in `solution.json` is 
 - In plan mode, ask Claude to extend the skill so it also reports the active set (indices where `x_i = 0` and `z_i > 0`) and warns about strict complementarity violations. Read the diff carefully before accepting — both `check_kkt.py` and `SKILL.md` should change.
 - Extend the kkt-checker skill to general nonlinear optimization problems.
 - What would you need if only the primal variables `x` were available (no multipliers)?
+- **The `paper-summary` skill was written by Claude, not by a person.** Try it out on a paper of your choice. Do you like it? How would you change it to your preferences? Everybody reads and summarizes differently.

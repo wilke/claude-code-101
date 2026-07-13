@@ -48,8 +48,6 @@ python -m pip install --user numpy scipy matplotlib pytest
 ├── slides-supplemental/      # intro deck + per-track supplement decks (opt / pde / lin_alg)
 ├── README.md                 # this file
 ├── SOLUTIONS.md              # walkthrough index for all tracks
-├── WORKFLOW.md               # sessions, version control, testing, plans, loops, literature
-├── LITERATURE.md             # addendum: literature research, RAG, wiki-rag integration
 ├── exercises-opt/            # optimization track (SciPy / Uno / CVXPY, KKT, portfolio NLP)
 │   └── 01-claude-md/  02-planning/  03-skills/  04-logbook/
 ├── exercises-pde/            # PDE/FEM track (Firedrake in Docker; Laplace, wave, CFL)
@@ -77,8 +75,7 @@ Inside Claude Code, follow the steps in that exercise's `README.md`.
 - **Pacing.** Pick the table row above that fits your slot. The deck is dense and growing; you'll need to pick what to cut, not what to add. See "What to cut for a shorter slot" below.
 - **Section dividers** (Parts 1 through 7) introduce each section; use them to take questions.
 - **Stretch goals** appear in callout boxes labeled "Stretch" — skip them under time pressure.
-- **Power features (Part 6)** is short and reference-y — checkpoints, subagents, hooks, headless mode. If you're tight on time, summarize verbally and point at `WORKFLOW.md`.
-- **WORKFLOW.md and LITERATURE.md** are deeper companions to the deck. Don't try to cover them in slides; assign as reading.
+- **Power features (Part 6)** is short and reference-y — checkpoints, subagents, hooks, headless mode. If you're tight on time, summarize verbally.
 
 ### What to cut for a shorter slot
 

@@ -1,0 +1,913 @@
+player,country,position,price,proj_points
+Brazil GK1,Brazil,GK,11.0,44.3
+Brazil GK2,Brazil,GK,10.3,33.8
+Brazil GK3,Brazil,GK,9.3,42.4
+Brazil DEF1,Brazil,DEF,11.7,35.9
+Brazil DEF2,Brazil,DEF,11.2,46.7
+Brazil DEF3,Brazil,DEF,11.5,38.7
+Brazil DEF4,Brazil,DEF,10.3,42.5
+Brazil DEF5,Brazil,DEF,10.4,41.4
+Brazil DEF6,Brazil,DEF,10.8,42.3
+Brazil MID1,Brazil,MID,11.8,43.0
+Brazil MID2,Brazil,MID,9.5,41.6
+Brazil MID3,Brazil,MID,9.4,37.4
+Brazil MID4,Brazil,MID,12.8,44.8
+Brazil MID5,Brazil,MID,9.8,42.6
+Brazil MID6,Brazil,MID,10.3,45.3
+Brazil FWD1,Brazil,FWD,12.3,47.0
+Brazil FWD2,Brazil,FWD,12.5,48.6
+Brazil FWD3,Brazil,FWD,11.2,52.3
+Brazil FWD4,Brazil,FWD,11.4,47.9
+France GK1,France,GK,9.1,41.4
+France GK2,France,GK,10.0,42.2
+France GK3,France,GK,9.4,35.9
+France DEF1,France,DEF,11.2,40.0
+France DEF2,France,DEF,10.8,43.1
+France DEF3,France,DEF,8.9,38.6
+France DEF4,France,DEF,9.6,42.7
+France DEF5,France,DEF,10.9,42.4
+France DEF6,France,DEF,9.1,36.9
+France MID1,France,MID,10.9,37.6
+France MID2,France,MID,10.9,39.2
+France MID3,France,MID,9.7,41.3
+France MID4,France,MID,13.0,45.9
+France MID5,France,MID,11.4,47.1
+France MID6,France,MID,10.6,43.2
+France FWD1,France,FWD,13.0,46.1
+France FWD2,France,FWD,11.8,46.7
+France FWD3,France,FWD,10.5,44.8
+France FWD4,France,FWD,10.8,43.9
+Argentina GK1,Argentina,GK,11.1,45.1
+Argentina GK2,Argentina,GK,11.3,43.7
+Argentina GK3,Argentina,GK,10.2,42.2
+Argentina DEF1,Argentina,DEF,11.1,43.1
+Argentina DEF2,Argentina,DEF,9.6,36.9
+Argentina DEF3,Argentina,DEF,11.4,45.9
+Argentina DEF4,Argentina,DEF,9.7,42.9
+Argentina DEF5,Argentina,DEF,11.3,33.8
+Argentina DEF6,Argentina,DEF,10.7,40.5
+Argentina MID1,Argentina,MID,11.1,44.9
+Argentina MID2,Argentina,MID,11.6,48.9
+Argentina MID3,Argentina,MID,9.9,44.1
+Argentina MID4,Argentina,MID,9.4,32.7
+Argentina MID5,Argentina,MID,10.4,46.5
+Argentina MID6,Argentina,MID,11.1,37.8
+Argentina FWD1,Argentina,FWD,11.6,51.5
+Argentina FWD2,Argentina,FWD,10.9,45.5
+Argentina FWD3,Argentina,FWD,11.4,44.7
+Argentina FWD4,Argentina,FWD,11.5,51.8
+England GK1,England,GK,9.8,38.9
+England GK2,England,GK,10.4,40.2
+England GK3,England,GK,10.3,49.5
+England DEF1,England,DEF,9.2,39.9
+England DEF2,England,DEF,8.9,36.6
+England DEF3,England,DEF,9.2,42.7
+England DEF4,England,DEF,10.4,44.8
+England DEF5,England,DEF,9.3,37.7
+England DEF6,England,DEF,10.7,44.1
+England MID1,England,MID,9.1,33.3
+England MID2,England,MID,11.4,46.4
+England MID3,England,MID,10.6,39.0
+England MID4,England,MID,10.4,42.2
+England MID5,England,MID,10.2,38.7
+England MID6,England,MID,10.8,43.0
+England FWD1,England,FWD,11.0,42.0
+England FWD2,England,FWD,9.7,32.2
+England FWD3,England,FWD,11.5,40.7
+England FWD4,England,FWD,10.1,45.2
+Spain GK1,Spain,GK,11.4,45.4
+Spain GK2,Spain,GK,8.7,46.4
+Spain GK3,Spain,GK,11.0,49.6
+Spain DEF1,Spain,DEF,10.2,41.2
+Spain DEF2,Spain,DEF,10.3,36.2
+Spain DEF3,Spain,DEF,11.5,41.2
+Spain DEF4,Spain,DEF,9.6,40.6
+Spain DEF5,Spain,DEF,9.7,36.5
+Spain DEF6,Spain,DEF,10.3,47.7
+Spain MID1,Spain,MID,10.2,42.6
+Spain MID2,Spain,MID,10.4,47.4
+Spain MID3,Spain,MID,10.6,31.9
+Spain MID4,Spain,MID,10.1,43.1
+Spain MID5,Spain,MID,9.1,36.1
+Spain MID6,Spain,MID,9.2,42.4
+Spain FWD1,Spain,FWD,10.4,43.8
+Spain FWD2,Spain,FWD,10.2,42.3
+Spain FWD3,Spain,FWD,12.1,44.5
+Spain FWD4,Spain,FWD,11.3,44.9
+Portugal GK1,Portugal,GK,7.9,37.4
+Portugal GK2,Portugal,GK,9.0,36.3
+Portugal GK3,Portugal,GK,9.3,44.7
+Portugal DEF1,Portugal,DEF,11.0,37.8
+Portugal DEF2,Portugal,DEF,11.8,40.7
+Portugal DEF3,Portugal,DEF,10.3,38.5
+Portugal DEF4,Portugal,DEF,8.8,38.8
+Portugal DEF5,Portugal,DEF,10.8,42.0
+Portugal DEF6,Portugal,DEF,10.9,44.6
+Portugal MID1,Portugal,MID,9.3,43.3
+Portugal MID2,Portugal,MID,10.7,36.4
+Portugal MID3,Portugal,MID,10.1,42.4
+Portugal MID4,Portugal,MID,9.8,38.4
+Portugal MID5,Portugal,MID,11.2,48.6
+Portugal MID6,Portugal,MID,10.3,39.0
+Portugal FWD1,Portugal,FWD,10.5,37.9
+Portugal FWD2,Portugal,FWD,10.2,40.3
+Portugal FWD3,Portugal,FWD,10.3,38.9
+Portugal FWD4,Portugal,FWD,10.3,46.7
+Netherlands GK1,Netherlands,GK,9.8,38.3
+Netherlands GK2,Netherlands,GK,9.9,45.9
+Netherlands GK3,Netherlands,GK,9.1,33.2
+Netherlands DEF1,Netherlands,DEF,10.6,45.6
+Netherlands DEF2,Netherlands,DEF,10.3,41.8
+Netherlands DEF3,Netherlands,DEF,10.7,46.0
+Netherlands DEF4,Netherlands,DEF,11.3,43.0
+Netherlands DEF5,Netherlands,DEF,9.3,35.5
+Netherlands DEF6,Netherlands,DEF,9.6,39.5
+Netherlands MID1,Netherlands,MID,10.6,48.2
+Netherlands MID2,Netherlands,MID,9.5,43.3
+Netherlands MID3,Netherlands,MID,11.2,53.1
+Netherlands MID4,Netherlands,MID,9.1,40.7
+Netherlands MID5,Netherlands,MID,11.2,49.6
+Netherlands MID6,Netherlands,MID,10.4,41.6
+Netherlands FWD1,Netherlands,FWD,11.6,46.1
+Netherlands FWD2,Netherlands,FWD,10.2,47.9
+Netherlands FWD3,Netherlands,FWD,11.7,49.9
+Netherlands FWD4,Netherlands,FWD,11.1,47.5
+Germany GK1,Germany,GK,11.1,44.6
+Germany GK2,Germany,GK,9.1,28.2
+Germany GK3,Germany,GK,11.0,37.4
+Germany DEF1,Germany,DEF,9.3,42.1
+Germany DEF2,Germany,DEF,9.6,48.6
+Germany DEF3,Germany,DEF,9.8,46.4
+Germany DEF4,Germany,DEF,8.5,29.0
+Germany DEF5,Germany,DEF,10.7,47.7
+Germany DEF6,Germany,DEF,10.1,37.1
+Germany MID1,Germany,MID,10.3,41.6
+Germany MID2,Germany,MID,11.1,39.6
+Germany MID3,Germany,MID,10.4,35.4
+Germany MID4,Germany,MID,10.9,43.1
+Germany MID5,Germany,MID,10.9,43.5
+Germany MID6,Germany,MID,11.9,50.1
+Germany FWD1,Germany,FWD,8.9,40.1
+Germany FWD2,Germany,FWD,11.2,38.7
+Germany FWD3,Germany,FWD,11.1,39.0
+Germany FWD4,Germany,FWD,10.6,46.6
+Belgium GK1,Belgium,GK,10.1,36.4
+Belgium GK2,Belgium,GK,8.4,42.7
+Belgium GK3,Belgium,GK,8.9,36.4
+Belgium DEF1,Belgium,DEF,9.6,40.4
+Belgium DEF2,Belgium,DEF,8.9,45.2
+Belgium DEF3,Belgium,DEF,8.7,42.8
+Belgium DEF4,Belgium,DEF,8.7,40.6
+Belgium DEF5,Belgium,DEF,10.1,32.9
+Belgium DEF6,Belgium,DEF,7.8,40.7
+Belgium MID1,Belgium,MID,9.6,42.3
+Belgium MID2,Belgium,MID,8.7,36.1
+Belgium MID3,Belgium,MID,10.3,39.6
+Belgium MID4,Belgium,MID,9.9,37.9
+Belgium MID5,Belgium,MID,12.0,47.2
+Belgium MID6,Belgium,MID,10.0,45.1
+Belgium FWD1,Belgium,FWD,10.2,44.3
+Belgium FWD2,Belgium,FWD,11.0,39.6
+Belgium FWD3,Belgium,FWD,9.5,36.5
+Belgium FWD4,Belgium,FWD,10.0,38.7
+Italy GK1,Italy,GK,9.2,30.8
+Italy GK2,Italy,GK,9.8,36.5
+Italy GK3,Italy,GK,9.6,38.1
+Italy DEF1,Italy,DEF,11.4,49.4
+Italy DEF2,Italy,DEF,10.5,34.3
+Italy DEF3,Italy,DEF,9.9,41.4
+Italy DEF4,Italy,DEF,8.0,33.8
+Italy DEF5,Italy,DEF,9.7,39.5
+Italy DEF6,Italy,DEF,9.7,41.8
+Italy MID1,Italy,MID,9.4,40.5
+Italy MID2,Italy,MID,9.3,43.9
+Italy MID3,Italy,MID,10.6,37.8
+Italy MID4,Italy,MID,10.7,44.5
+Italy MID5,Italy,MID,9.6,45.5
+Italy MID6,Italy,MID,11.0,45.9
+Italy FWD1,Italy,FWD,10.4,39.3
+Italy FWD2,Italy,FWD,9.5,45.6
+Italy FWD3,Italy,FWD,10.3,42.7
+Italy FWD4,Italy,FWD,11.1,39.4
+Croatia GK1,Croatia,GK,8.6,37.3
+Croatia GK2,Croatia,GK,8.3,31.7
+Croatia GK3,Croatia,GK,10.6,44.5
+Croatia DEF1,Croatia,DEF,11.3,35.5
+Croatia DEF2,Croatia,DEF,8.8,39.7
+Croatia DEF3,Croatia,DEF,10.4,44.6
+Croatia DEF4,Croatia,DEF,10.1,46.1
+Croatia DEF5,Croatia,DEF,9.8,32.6
+Croatia DEF6,Croatia,DEF,10.3,45.1
+Croatia MID1,Croatia,MID,9.9,45.8
+Croatia MID2,Croatia,MID,7.8,34.9
+Croatia MID3,Croatia,MID,8.8,41.3
+Croatia MID4,Croatia,MID,9.9,41.6
+Croatia MID5,Croatia,MID,10.9,41.4
+Croatia MID6,Croatia,MID,8.8,40.7
+Croatia FWD1,Croatia,FWD,9.9,38.0
+Croatia FWD2,Croatia,FWD,10.8,45.0
+Croatia FWD3,Croatia,FWD,9.5,33.2
+Croatia FWD4,Croatia,FWD,10.1,48.8
+Uruguay GK1,Uruguay,GK,8.0,37.6
+Uruguay GK2,Uruguay,GK,8.1,33.3
+Uruguay GK3,Uruguay,GK,9.0,30.7
+Uruguay DEF1,Uruguay,DEF,10.6,47.8
+Uruguay DEF2,Uruguay,DEF,10.7,42.0
+Uruguay DEF3,Uruguay,DEF,9.8,36.5
+Uruguay DEF4,Uruguay,DEF,7.9,37.4
+Uruguay DEF5,Uruguay,DEF,10.2,38.0
+Uruguay DEF6,Uruguay,DEF,9.7,40.1
+Uruguay MID1,Uruguay,MID,9.7,43.8
+Uruguay MID2,Uruguay,MID,8.4,41.4
+Uruguay MID3,Uruguay,MID,10.0,38.4
+Uruguay MID4,Uruguay,MID,10.4,44.1
+Uruguay MID5,Uruguay,MID,10.3,44.1
+Uruguay MID6,Uruguay,MID,9.3,36.7
+Uruguay FWD1,Uruguay,FWD,8.6,38.2
+Uruguay FWD2,Uruguay,FWD,10.4,38.2
+Uruguay FWD3,Uruguay,FWD,10.5,40.9
+Uruguay FWD4,Uruguay,FWD,11.6,45.2
+Colombia GK1,Colombia,GK,8.7,34.6
+Colombia GK2,Colombia,GK,8.8,36.7
+Colombia GK3,Colombia,GK,8.8,36.9
+Colombia DEF1,Colombia,DEF,9.0,36.3
+Colombia DEF2,Colombia,DEF,10.2,40.0
+Colombia DEF3,Colombia,DEF,9.5,39.2
+Colombia DEF4,Colombia,DEF,9.5,43.2
+Colombia DEF5,Colombia,DEF,10.2,35.3
+Colombia DEF6,Colombia,DEF,8.6,38.8
+Colombia MID1,Colombia,MID,9.4,34.5
+Colombia MID2,Colombia,MID,7.9,37.0
+Colombia MID3,Colombia,MID,8.2,36.6
+Colombia MID4,Colombia,MID,9.6,40.9
+Colombia MID5,Colombia,MID,9.4,36.3
+Colombia MID6,Colombia,MID,9.9,40.1
+Colombia FWD1,Colombia,FWD,9.8,36.2
+Colombia FWD2,Colombia,FWD,10.3,40.9
+Colombia FWD3,Colombia,FWD,10.4,36.6
+Colombia FWD4,Colombia,FWD,9.0,47.2
+Morocco GK1,Morocco,GK,8.5,38.3
+Morocco GK2,Morocco,GK,9.3,45.4
+Morocco GK3,Morocco,GK,9.2,47.6
+Morocco DEF1,Morocco,DEF,10.3,44.4
+Morocco DEF2,Morocco,DEF,9.0,43.3
+Morocco DEF3,Morocco,DEF,8.8,43.2
+Morocco DEF4,Morocco,DEF,9.0,41.4
+Morocco DEF5,Morocco,DEF,9.8,39.4
+Morocco DEF6,Morocco,DEF,9.4,36.6
+Morocco MID1,Morocco,MID,9.0,33.1
+Morocco MID2,Morocco,MID,8.9,41.9
+Morocco MID3,Morocco,MID,9.5,38.5
+Morocco MID4,Morocco,MID,10.7,40.7
+Morocco MID5,Morocco,MID,10.3,48.2
+Morocco MID6,Morocco,MID,8.8,38.1
+Morocco FWD1,Morocco,FWD,11.2,43.1
+Morocco FWD2,Morocco,FWD,10.9,45.1
+Morocco FWD3,Morocco,FWD,9.8,42.7
+Morocco FWD4,Morocco,FWD,8.8,43.1
+Mexico GK1,Mexico,GK,8.2,34.1
+Mexico GK2,Mexico,GK,10.4,44.1
+Mexico GK3,Mexico,GK,11.1,49.3
+Mexico DEF1,Mexico,DEF,7.9,25.2
+Mexico DEF2,Mexico,DEF,9.0,38.4
+Mexico DEF3,Mexico,DEF,8.3,40.0
+Mexico DEF4,Mexico,DEF,9.7,39.7
+Mexico DEF5,Mexico,DEF,9.2,36.3
+Mexico DEF6,Mexico,DEF,10.4,33.0
+Mexico MID1,Mexico,MID,9.5,39.2
+Mexico MID2,Mexico,MID,9.8,35.2
+Mexico MID3,Mexico,MID,9.3,34.7
+Mexico MID4,Mexico,MID,9.8,31.5
+Mexico MID5,Mexico,MID,9.4,42.1
+Mexico MID6,Mexico,MID,9.0,37.3
+Mexico FWD1,Mexico,FWD,9.0,41.0
+Mexico FWD2,Mexico,FWD,10.1,35.5
+Mexico FWD3,Mexico,FWD,8.9,43.4
+Mexico FWD4,Mexico,FWD,8.7,41.1
+USA GK1,USA,GK,7.7,40.2
+USA GK2,USA,GK,9.7,35.5
+USA GK3,USA,GK,8.5,39.7
+USA DEF1,USA,DEF,8.9,34.0
+USA DEF2,USA,DEF,8.3,35.1
+USA DEF3,USA,DEF,10.9,40.6
+USA DEF4,USA,DEF,9.1,32.6
+USA DEF5,USA,DEF,10.6,38.2
+USA DEF6,USA,DEF,8.1,32.4
+USA MID1,USA,MID,9.4,37.9
+USA MID2,USA,MID,9.1,39.6
+USA MID3,USA,MID,10.5,43.0
+USA MID4,USA,MID,7.7,42.3
+USA MID5,USA,MID,10.1,36.4
+USA MID6,USA,MID,10.1,42.9
+USA FWD1,USA,FWD,8.8,37.8
+USA FWD2,USA,FWD,11.0,39.7
+USA FWD3,USA,FWD,10.3,48.3
+USA FWD4,USA,FWD,10.0,39.1
+Switzerland GK1,Switzerland,GK,9.4,44.5
+Switzerland GK2,Switzerland,GK,9.1,33.4
+Switzerland GK3,Switzerland,GK,8.9,43.5
+Switzerland DEF1,Switzerland,DEF,7.8,40.2
+Switzerland DEF2,Switzerland,DEF,8.3,40.5
+Switzerland DEF3,Switzerland,DEF,10.5,38.8
+Switzerland DEF4,Switzerland,DEF,9.8,43.9
+Switzerland DEF5,Switzerland,DEF,8.2,26.8
+Switzerland DEF6,Switzerland,DEF,7.8,30.9
+Switzerland MID1,Switzerland,MID,10.3,36.5
+Switzerland MID2,Switzerland,MID,9.1,43.4
+Switzerland MID3,Switzerland,MID,10.0,53.1
+Switzerland MID4,Switzerland,MID,8.3,41.2
+Switzerland MID5,Switzerland,MID,8.8,31.8
+Switzerland MID6,Switzerland,MID,8.9,31.1
+Switzerland FWD1,Switzerland,FWD,9.8,41.2
+Switzerland FWD2,Switzerland,FWD,10.1,49.2
+Switzerland FWD3,Switzerland,FWD,9.5,41.0
+Switzerland FWD4,Switzerland,FWD,8.7,41.0
+Denmark GK1,Denmark,GK,8.1,37.9
+Denmark GK2,Denmark,GK,9.2,40.5
+Denmark GK3,Denmark,GK,7.9,44.8
+Denmark DEF1,Denmark,DEF,8.3,37.4
+Denmark DEF2,Denmark,DEF,8.0,37.2
+Denmark DEF3,Denmark,DEF,9.0,40.9
+Denmark DEF4,Denmark,DEF,8.1,38.8
+Denmark DEF5,Denmark,DEF,8.2,32.9
+Denmark DEF6,Denmark,DEF,8.4,42.5
+Denmark MID1,Denmark,MID,8.2,30.9
+Denmark MID2,Denmark,MID,10.4,42.8
+Denmark MID3,Denmark,MID,10.1,40.5
+Denmark MID4,Denmark,MID,9.7,40.5
+Denmark MID5,Denmark,MID,9.8,35.7
+Denmark MID6,Denmark,MID,10.9,31.6
+Denmark FWD1,Denmark,FWD,9.9,46.6
+Denmark FWD2,Denmark,FWD,8.2,30.6
+Denmark FWD3,Denmark,FWD,9.8,42.3
+Denmark FWD4,Denmark,FWD,10.4,38.8
+Japan GK1,Japan,GK,8.6,42.2
+Japan GK2,Japan,GK,9.2,43.4
+Japan GK3,Japan,GK,8.8,42.3
+Japan DEF1,Japan,DEF,9.4,43.7
+Japan DEF2,Japan,DEF,9.7,41.5
+Japan DEF3,Japan,DEF,9.3,45.7
+Japan DEF4,Japan,DEF,9.0,34.7
+Japan DEF5,Japan,DEF,9.1,38.0
+Japan DEF6,Japan,DEF,8.0,30.4
+Japan MID1,Japan,MID,9.3,36.9
+Japan MID2,Japan,MID,9.1,32.0
+Japan MID3,Japan,MID,9.3,40.2
+Japan MID4,Japan,MID,8.6,41.5
+Japan MID5,Japan,MID,9.9,44.4
+Japan MID6,Japan,MID,10.3,47.6
+Japan FWD1,Japan,FWD,9.8,38.5
+Japan FWD2,Japan,FWD,10.4,41.3
+Japan FWD3,Japan,FWD,8.9,31.1
+Japan FWD4,Japan,FWD,7.6,32.3
+Senegal GK1,Senegal,GK,9.0,35.5
+Senegal GK2,Senegal,GK,8.1,41.2
+Senegal GK3,Senegal,GK,8.9,42.1
+Senegal DEF1,Senegal,DEF,10.3,41.9
+Senegal DEF2,Senegal,DEF,8.8,38.6
+Senegal DEF3,Senegal,DEF,8.6,38.3
+Senegal DEF4,Senegal,DEF,9.4,38.2
+Senegal DEF5,Senegal,DEF,10.0,33.7
+Senegal DEF6,Senegal,DEF,8.8,36.6
+Senegal MID1,Senegal,MID,8.3,35.7
+Senegal MID2,Senegal,MID,9.6,41.9
+Senegal MID3,Senegal,MID,8.7,37.6
+Senegal MID4,Senegal,MID,6.5,32.5
+Senegal MID5,Senegal,MID,9.2,38.1
+Senegal MID6,Senegal,MID,9.9,42.4
+Senegal FWD1,Senegal,FWD,9.9,38.7
+Senegal FWD2,Senegal,FWD,11.3,38.5
+Senegal FWD3,Senegal,FWD,10.2,31.8
+Senegal FWD4,Senegal,FWD,8.6,41.1
+Serbia GK1,Serbia,GK,7.8,32.5
+Serbia GK2,Serbia,GK,9.1,45.1
+Serbia GK3,Serbia,GK,7.1,35.1
+Serbia DEF1,Serbia,DEF,9.3,42.7
+Serbia DEF2,Serbia,DEF,7.7,38.3
+Serbia DEF3,Serbia,DEF,7.1,35.4
+Serbia DEF4,Serbia,DEF,8.2,35.7
+Serbia DEF5,Serbia,DEF,9.0,47.3
+Serbia DEF6,Serbia,DEF,9.7,42.5
+Serbia MID1,Serbia,MID,9.2,40.2
+Serbia MID2,Serbia,MID,9.2,37.1
+Serbia MID3,Serbia,MID,9.3,36.7
+Serbia MID4,Serbia,MID,8.6,35.3
+Serbia MID5,Serbia,MID,9.3,28.0
+Serbia MID6,Serbia,MID,8.1,34.4
+Serbia FWD1,Serbia,FWD,9.9,35.9
+Serbia FWD2,Serbia,FWD,9.6,35.7
+Serbia FWD3,Serbia,FWD,8.7,40.8
+Serbia FWD4,Serbia,FWD,10.2,42.5
+Ecuador GK1,Ecuador,GK,7.6,33.0
+Ecuador GK2,Ecuador,GK,7.8,33.9
+Ecuador GK3,Ecuador,GK,7.8,34.0
+Ecuador DEF1,Ecuador,DEF,9.4,42.1
+Ecuador DEF2,Ecuador,DEF,8.3,40.0
+Ecuador DEF3,Ecuador,DEF,9.4,41.8
+Ecuador DEF4,Ecuador,DEF,7.9,31.4
+Ecuador DEF5,Ecuador,DEF,8.2,30.4
+Ecuador DEF6,Ecuador,DEF,10.3,45.1
+Ecuador MID1,Ecuador,MID,8.3,49.3
+Ecuador MID2,Ecuador,MID,8.9,42.5
+Ecuador MID3,Ecuador,MID,10.6,41.8
+Ecuador MID4,Ecuador,MID,8.4,43.9
+Ecuador MID5,Ecuador,MID,9.8,38.2
+Ecuador MID6,Ecuador,MID,9.2,36.9
+Ecuador FWD1,Ecuador,FWD,9.8,42.8
+Ecuador FWD2,Ecuador,FWD,8.7,35.7
+Ecuador FWD3,Ecuador,FWD,9.4,44.8
+Ecuador FWD4,Ecuador,FWD,9.9,41.3
+South Korea GK1,South Korea,GK,9.4,44.6
+South Korea GK2,South Korea,GK,6.2,35.2
+South Korea GK3,South Korea,GK,8.9,38.4
+South Korea DEF1,South Korea,DEF,8.5,41.3
+South Korea DEF2,South Korea,DEF,9.1,35.1
+South Korea DEF3,South Korea,DEF,10.1,37.0
+South Korea DEF4,South Korea,DEF,9.6,42.6
+South Korea DEF5,South Korea,DEF,8.9,35.6
+South Korea DEF6,South Korea,DEF,8.4,40.2
+South Korea MID1,South Korea,MID,8.2,34.6
+South Korea MID2,South Korea,MID,9.7,34.4
+South Korea MID3,South Korea,MID,7.8,41.1
+South Korea MID4,South Korea,MID,11.0,45.9
+South Korea MID5,South Korea,MID,8.2,43.0
+South Korea MID6,South Korea,MID,9.2,27.9
+South Korea FWD1,South Korea,FWD,8.1,36.9
+South Korea FWD2,South Korea,FWD,8.6,37.0
+South Korea FWD3,South Korea,FWD,10.0,37.8
+South Korea FWD4,South Korea,FWD,8.9,41.1
+Poland GK1,Poland,GK,9.3,32.9
+Poland GK2,Poland,GK,7.3,33.9
+Poland GK3,Poland,GK,9.1,38.8
+Poland DEF1,Poland,DEF,7.4,37.2
+Poland DEF2,Poland,DEF,8.6,37.5
+Poland DEF3,Poland,DEF,8.8,35.0
+Poland DEF4,Poland,DEF,7.8,34.8
+Poland DEF5,Poland,DEF,9.3,39.1
+Poland DEF6,Poland,DEF,9.5,46.9
+Poland MID1,Poland,MID,10.7,37.2
+Poland MID2,Poland,MID,10.8,38.6
+Poland MID3,Poland,MID,9.2,36.5
+Poland MID4,Poland,MID,8.5,36.3
+Poland MID5,Poland,MID,9.5,32.6
+Poland MID6,Poland,MID,8.0,32.4
+Poland FWD1,Poland,FWD,8.8,38.0
+Poland FWD2,Poland,FWD,10.9,46.2
+Poland FWD3,Poland,FWD,8.9,35.3
+Poland FWD4,Poland,FWD,10.1,42.0
+Australia GK1,Australia,GK,8.6,32.3
+Australia GK2,Australia,GK,8.6,36.6
+Australia GK3,Australia,GK,8.9,39.6
+Australia DEF1,Australia,DEF,7.2,26.8
+Australia DEF2,Australia,DEF,9.8,37.6
+Australia DEF3,Australia,DEF,7.5,30.0
+Australia DEF4,Australia,DEF,9.0,30.3
+Australia DEF5,Australia,DEF,8.6,38.2
+Australia DEF6,Australia,DEF,9.4,39.8
+Australia MID1,Australia,MID,9.2,37.5
+Australia MID2,Australia,MID,9.7,34.1
+Australia MID3,Australia,MID,9.3,37.5
+Australia MID4,Australia,MID,8.6,38.4
+Australia MID5,Australia,MID,9.1,42.8
+Australia MID6,Australia,MID,8.7,38.4
+Australia FWD1,Australia,FWD,8.7,37.6
+Australia FWD2,Australia,FWD,9.7,49.4
+Australia FWD3,Australia,FWD,9.7,39.1
+Australia FWD4,Australia,FWD,10.7,40.8
+Canada GK1,Canada,GK,9.2,35.4
+Canada GK2,Canada,GK,9.0,36.2
+Canada GK3,Canada,GK,6.8,31.6
+Canada DEF1,Canada,DEF,8.6,34.5
+Canada DEF2,Canada,DEF,7.9,35.8
+Canada DEF3,Canada,DEF,9.9,29.5
+Canada DEF4,Canada,DEF,7.7,32.0
+Canada DEF5,Canada,DEF,7.0,37.8
+Canada DEF6,Canada,DEF,8.8,38.8
+Canada MID1,Canada,MID,10.4,42.2
+Canada MID2,Canada,MID,9.7,35.9
+Canada MID3,Canada,MID,9.9,39.4
+Canada MID4,Canada,MID,8.9,43.0
+Canada MID5,Canada,MID,8.5,42.8
+Canada MID6,Canada,MID,8.8,34.2
+Canada FWD1,Canada,FWD,9.3,36.6
+Canada FWD2,Canada,FWD,8.8,36.6
+Canada FWD3,Canada,FWD,10.0,45.1
+Canada FWD4,Canada,FWD,10.2,36.1
+Ukraine GK1,Ukraine,GK,7.3,32.9
+Ukraine GK2,Ukraine,GK,7.8,42.0
+Ukraine GK3,Ukraine,GK,9.3,36.5
+Ukraine DEF1,Ukraine,DEF,7.4,33.6
+Ukraine DEF2,Ukraine,DEF,9.1,44.3
+Ukraine DEF3,Ukraine,DEF,8.0,38.8
+Ukraine DEF4,Ukraine,DEF,8.1,39.0
+Ukraine DEF5,Ukraine,DEF,9.0,44.6
+Ukraine DEF6,Ukraine,DEF,8.3,26.9
+Ukraine MID1,Ukraine,MID,8.2,27.5
+Ukraine MID2,Ukraine,MID,10.5,36.2
+Ukraine MID3,Ukraine,MID,8.8,29.7
+Ukraine MID4,Ukraine,MID,8.1,34.4
+Ukraine MID5,Ukraine,MID,8.9,49.4
+Ukraine MID6,Ukraine,MID,7.6,38.8
+Ukraine FWD1,Ukraine,FWD,9.5,39.7
+Ukraine FWD2,Ukraine,FWD,10.1,40.7
+Ukraine FWD3,Ukraine,FWD,8.8,34.5
+Ukraine FWD4,Ukraine,FWD,8.4,35.5
+Austria GK1,Austria,GK,8.1,32.9
+Austria GK2,Austria,GK,9.3,38.5
+Austria GK3,Austria,GK,7.4,34.4
+Austria DEF1,Austria,DEF,8.1,36.3
+Austria DEF2,Austria,DEF,8.5,35.2
+Austria DEF3,Austria,DEF,8.5,32.7
+Austria DEF4,Austria,DEF,9.0,40.9
+Austria DEF5,Austria,DEF,9.2,36.6
+Austria DEF6,Austria,DEF,8.4,36.0
+Austria MID1,Austria,MID,8.7,42.3
+Austria MID2,Austria,MID,8.7,35.7
+Austria MID3,Austria,MID,7.5,35.0
+Austria MID4,Austria,MID,9.1,47.2
+Austria MID5,Austria,MID,8.1,33.3
+Austria MID6,Austria,MID,7.9,34.4
+Austria FWD1,Austria,FWD,9.7,40.8
+Austria FWD2,Austria,FWD,8.8,44.8
+Austria FWD3,Austria,FWD,9.2,40.6
+Austria FWD4,Austria,FWD,8.8,29.4
+Nigeria GK1,Nigeria,GK,8.4,42.9
+Nigeria GK2,Nigeria,GK,8.6,31.2
+Nigeria GK3,Nigeria,GK,7.8,32.8
+Nigeria DEF1,Nigeria,DEF,9.4,31.9
+Nigeria DEF2,Nigeria,DEF,7.2,32.5
+Nigeria DEF3,Nigeria,DEF,8.1,36.7
+Nigeria DEF4,Nigeria,DEF,7.6,38.8
+Nigeria DEF5,Nigeria,DEF,7.5,39.0
+Nigeria DEF6,Nigeria,DEF,8.2,35.2
+Nigeria MID1,Nigeria,MID,8.7,37.7
+Nigeria MID2,Nigeria,MID,8.5,47.8
+Nigeria MID3,Nigeria,MID,8.4,36.7
+Nigeria MID4,Nigeria,MID,8.4,40.6
+Nigeria MID5,Nigeria,MID,9.1,49.9
+Nigeria MID6,Nigeria,MID,8.7,44.3
+Nigeria FWD1,Nigeria,FWD,9.3,49.6
+Nigeria FWD2,Nigeria,FWD,9.4,37.0
+Nigeria FWD3,Nigeria,FWD,8.9,39.2
+Nigeria FWD4,Nigeria,FWD,11.8,45.9
+Peru GK1,Peru,GK,9.3,39.5
+Peru GK2,Peru,GK,7.8,35.1
+Peru GK3,Peru,GK,7.9,30.5
+Peru DEF1,Peru,DEF,8.1,41.1
+Peru DEF2,Peru,DEF,7.7,37.1
+Peru DEF3,Peru,DEF,8.7,39.9
+Peru DEF4,Peru,DEF,6.6,35.8
+Peru DEF5,Peru,DEF,9.7,34.1
+Peru DEF6,Peru,DEF,7.5,35.8
+Peru MID1,Peru,MID,9.3,38.3
+Peru MID2,Peru,MID,8.1,26.4
+Peru MID3,Peru,MID,6.8,28.4
+Peru MID4,Peru,MID,10.6,35.6
+Peru MID5,Peru,MID,9.3,39.8
+Peru MID6,Peru,MID,9.0,39.3
+Peru FWD1,Peru,FWD,8.1,37.7
+Peru FWD2,Peru,FWD,8.6,36.9
+Peru FWD3,Peru,FWD,8.1,35.8
+Peru FWD4,Peru,FWD,8.3,35.0
+Sweden GK1,Sweden,GK,8.7,33.9
+Sweden GK2,Sweden,GK,8.9,37.0
+Sweden GK3,Sweden,GK,7.6,30.1
+Sweden DEF1,Sweden,DEF,8.4,41.0
+Sweden DEF2,Sweden,DEF,8.0,31.3
+Sweden DEF3,Sweden,DEF,8.4,38.9
+Sweden DEF4,Sweden,DEF,7.9,28.3
+Sweden DEF5,Sweden,DEF,6.7,28.1
+Sweden DEF6,Sweden,DEF,8.0,37.4
+Sweden MID1,Sweden,MID,7.2,34.1
+Sweden MID2,Sweden,MID,9.6,31.5
+Sweden MID3,Sweden,MID,8.1,28.2
+Sweden MID4,Sweden,MID,8.5,33.8
+Sweden MID5,Sweden,MID,8.3,30.4
+Sweden MID6,Sweden,MID,9.2,42.9
+Sweden FWD1,Sweden,FWD,8.8,33.0
+Sweden FWD2,Sweden,FWD,9.6,35.8
+Sweden FWD3,Sweden,FWD,9.0,40.1
+Sweden FWD4,Sweden,FWD,8.7,32.0
+Wales GK1,Wales,GK,9.1,36.3
+Wales GK2,Wales,GK,6.8,32.9
+Wales GK3,Wales,GK,8.3,35.5
+Wales DEF1,Wales,DEF,6.4,34.4
+Wales DEF2,Wales,DEF,9.5,40.9
+Wales DEF3,Wales,DEF,7.7,23.6
+Wales DEF4,Wales,DEF,8.9,38.2
+Wales DEF5,Wales,DEF,8.1,35.9
+Wales DEF6,Wales,DEF,7.3,34.0
+Wales MID1,Wales,MID,7.4,37.2
+Wales MID2,Wales,MID,8.6,44.7
+Wales MID3,Wales,MID,7.2,29.9
+Wales MID4,Wales,MID,7.5,36.1
+Wales MID5,Wales,MID,10.0,35.2
+Wales MID6,Wales,MID,6.8,31.4
+Wales FWD1,Wales,FWD,7.7,33.3
+Wales FWD2,Wales,FWD,8.0,41.2
+Wales FWD3,Wales,FWD,8.6,34.7
+Wales FWD4,Wales,FWD,8.8,34.3
+Tunisia GK1,Tunisia,GK,6.4,32.8
+Tunisia GK2,Tunisia,GK,9.1,40.7
+Tunisia GK3,Tunisia,GK,7.9,32.3
+Tunisia DEF1,Tunisia,DEF,9.0,41.9
+Tunisia DEF2,Tunisia,DEF,7.9,39.0
+Tunisia DEF3,Tunisia,DEF,6.7,30.4
+Tunisia DEF4,Tunisia,DEF,8.8,37.1
+Tunisia DEF5,Tunisia,DEF,8.3,35.3
+Tunisia DEF6,Tunisia,DEF,6.5,31.1
+Tunisia MID1,Tunisia,MID,7.0,32.4
+Tunisia MID2,Tunisia,MID,8.1,33.0
+Tunisia MID3,Tunisia,MID,9.2,34.3
+Tunisia MID4,Tunisia,MID,7.7,39.9
+Tunisia MID5,Tunisia,MID,9.0,42.1
+Tunisia MID6,Tunisia,MID,6.6,27.0
+Tunisia FWD1,Tunisia,FWD,7.9,36.3
+Tunisia FWD2,Tunisia,FWD,9.1,38.8
+Tunisia FWD3,Tunisia,FWD,7.9,34.2
+Tunisia FWD4,Tunisia,FWD,9.0,36.8
+Iran GK1,Iran,GK,8.2,41.9
+Iran GK2,Iran,GK,7.2,28.4
+Iran GK3,Iran,GK,7.3,34.2
+Iran DEF1,Iran,DEF,7.8,39.1
+Iran DEF2,Iran,DEF,9.4,35.0
+Iran DEF3,Iran,DEF,7.0,33.6
+Iran DEF4,Iran,DEF,6.8,32.7
+Iran DEF5,Iran,DEF,7.8,34.9
+Iran DEF6,Iran,DEF,6.5,34.0
+Iran MID1,Iran,MID,8.2,41.3
+Iran MID2,Iran,MID,7.5,34.7
+Iran MID3,Iran,MID,7.8,38.8
+Iran MID4,Iran,MID,9.8,41.2
+Iran MID5,Iran,MID,7.1,35.2
+Iran MID6,Iran,MID,7.0,29.0
+Iran FWD1,Iran,FWD,10.8,42.6
+Iran FWD2,Iran,FWD,8.4,39.7
+Iran FWD3,Iran,FWD,6.9,37.0
+Iran FWD4,Iran,FWD,9.0,30.6
+Ghana GK1,Ghana,GK,6.5,38.1
+Ghana GK2,Ghana,GK,8.5,28.3
+Ghana GK3,Ghana,GK,7.3,32.0
+Ghana DEF1,Ghana,DEF,8.1,38.3
+Ghana DEF2,Ghana,DEF,8.9,28.1
+Ghana DEF3,Ghana,DEF,7.0,32.8
+Ghana DEF4,Ghana,DEF,7.8,39.6
+Ghana DEF5,Ghana,DEF,8.1,37.8
+Ghana DEF6,Ghana,DEF,7.8,30.8
+Ghana MID1,Ghana,MID,7.3,27.0
+Ghana MID2,Ghana,MID,7.8,32.8
+Ghana MID3,Ghana,MID,8.2,28.4
+Ghana MID4,Ghana,MID,8.4,32.2
+Ghana MID5,Ghana,MID,8.0,42.0
+Ghana MID6,Ghana,MID,7.7,39.6
+Ghana FWD1,Ghana,FWD,9.0,39.5
+Ghana FWD2,Ghana,FWD,7.8,43.0
+Ghana FWD3,Ghana,FWD,6.8,35.4
+Ghana FWD4,Ghana,FWD,8.0,33.4
+Egypt GK1,Egypt,GK,7.3,37.5
+Egypt GK2,Egypt,GK,8.1,39.0
+Egypt GK3,Egypt,GK,7.9,41.1
+Egypt DEF1,Egypt,DEF,5.7,26.8
+Egypt DEF2,Egypt,DEF,7.3,38.7
+Egypt DEF3,Egypt,DEF,6.7,27.1
+Egypt DEF4,Egypt,DEF,6.9,28.7
+Egypt DEF5,Egypt,DEF,7.6,35.8
+Egypt DEF6,Egypt,DEF,7.0,31.4
+Egypt MID1,Egypt,MID,8.2,39.4
+Egypt MID2,Egypt,MID,8.1,35.0
+Egypt MID3,Egypt,MID,9.0,43.9
+Egypt MID4,Egypt,MID,8.4,34.1
+Egypt MID5,Egypt,MID,7.1,35.2
+Egypt MID6,Egypt,MID,9.1,39.2
+Egypt FWD1,Egypt,FWD,8.6,31.0
+Egypt FWD2,Egypt,FWD,8.7,34.8
+Egypt FWD3,Egypt,FWD,7.8,36.7
+Egypt FWD4,Egypt,FWD,7.1,30.2
+Cameroon GK1,Cameroon,GK,6.5,31.1
+Cameroon GK2,Cameroon,GK,7.1,39.7
+Cameroon GK3,Cameroon,GK,7.3,24.2
+Cameroon DEF1,Cameroon,DEF,7.2,33.4
+Cameroon DEF2,Cameroon,DEF,8.0,34.1
+Cameroon DEF3,Cameroon,DEF,5.5,30.2
+Cameroon DEF4,Cameroon,DEF,7.8,33.3
+Cameroon DEF5,Cameroon,DEF,8.0,30.0
+Cameroon DEF6,Cameroon,DEF,7.8,33.8
+Cameroon MID1,Cameroon,MID,8.8,38.0
+Cameroon MID2,Cameroon,MID,7.2,37.3
+Cameroon MID3,Cameroon,MID,8.4,34.5
+Cameroon MID4,Cameroon,MID,6.8,34.1
+Cameroon MID5,Cameroon,MID,8.4,36.0
+Cameroon MID6,Cameroon,MID,9.2,34.0
+Cameroon FWD1,Cameroon,FWD,7.9,28.6
+Cameroon FWD2,Cameroon,FWD,7.7,31.5
+Cameroon FWD3,Cameroon,FWD,9.6,36.3
+Cameroon FWD4,Cameroon,FWD,6.6,34.8
+Ivory Coast GK1,Ivory Coast,GK,6.8,31.7
+Ivory Coast GK2,Ivory Coast,GK,6.4,32.7
+Ivory Coast GK3,Ivory Coast,GK,7.3,32.8
+Ivory Coast DEF1,Ivory Coast,DEF,8.1,34.7
+Ivory Coast DEF2,Ivory Coast,DEF,7.6,32.4
+Ivory Coast DEF3,Ivory Coast,DEF,7.2,26.2
+Ivory Coast DEF4,Ivory Coast,DEF,6.4,29.1
+Ivory Coast DEF5,Ivory Coast,DEF,4.6,26.1
+Ivory Coast DEF6,Ivory Coast,DEF,7.9,36.3
+Ivory Coast MID1,Ivory Coast,MID,7.9,34.5
+Ivory Coast MID2,Ivory Coast,MID,6.7,30.7
+Ivory Coast MID3,Ivory Coast,MID,6.9,32.0
+Ivory Coast MID4,Ivory Coast,MID,7.5,31.9
+Ivory Coast MID5,Ivory Coast,MID,8.4,42.8
+Ivory Coast MID6,Ivory Coast,MID,7.7,39.2
+Ivory Coast FWD1,Ivory Coast,FWD,7.8,36.2
+Ivory Coast FWD2,Ivory Coast,FWD,7.6,40.2
+Ivory Coast FWD3,Ivory Coast,FWD,7.4,36.9
+Ivory Coast FWD4,Ivory Coast,FWD,9.0,42.1
+Qatar GK1,Qatar,GK,5.6,32.2
+Qatar GK2,Qatar,GK,7.1,30.5
+Qatar GK3,Qatar,GK,7.0,32.9
+Qatar DEF1,Qatar,DEF,8.2,38.2
+Qatar DEF2,Qatar,DEF,8.0,31.9
+Qatar DEF3,Qatar,DEF,6.6,29.3
+Qatar DEF4,Qatar,DEF,7.0,29.5
+Qatar DEF5,Qatar,DEF,7.7,35.6
+Qatar DEF6,Qatar,DEF,8.0,41.2
+Qatar MID1,Qatar,MID,6.3,34.6
+Qatar MID2,Qatar,MID,7.4,31.1
+Qatar MID3,Qatar,MID,9.0,41.2
+Qatar MID4,Qatar,MID,8.9,34.3
+Qatar MID5,Qatar,MID,8.2,36.2
+Qatar MID6,Qatar,MID,6.4,41.3
+Qatar FWD1,Qatar,FWD,8.4,37.3
+Qatar FWD2,Qatar,FWD,9.1,42.3
+Qatar FWD3,Qatar,FWD,7.9,35.1
+Qatar FWD4,Qatar,FWD,8.4,38.0
+Saudi Arabia GK1,Saudi Arabia,GK,8.1,36.1
+Saudi Arabia GK2,Saudi Arabia,GK,6.8,32.7
+Saudi Arabia GK3,Saudi Arabia,GK,7.5,39.0
+Saudi Arabia DEF1,Saudi Arabia,DEF,6.8,36.4
+Saudi Arabia DEF2,Saudi Arabia,DEF,6.5,30.0
+Saudi Arabia DEF3,Saudi Arabia,DEF,6.6,26.5
+Saudi Arabia DEF4,Saudi Arabia,DEF,5.8,32.0
+Saudi Arabia DEF5,Saudi Arabia,DEF,7.1,28.1
+Saudi Arabia DEF6,Saudi Arabia,DEF,7.5,31.5
+Saudi Arabia MID1,Saudi Arabia,MID,7.4,31.7
+Saudi Arabia MID2,Saudi Arabia,MID,6.2,26.3
+Saudi Arabia MID3,Saudi Arabia,MID,8.1,37.1
+Saudi Arabia MID4,Saudi Arabia,MID,7.9,38.8
+Saudi Arabia MID5,Saudi Arabia,MID,8.7,31.5
+Saudi Arabia MID6,Saudi Arabia,MID,8.6,30.6
+Saudi Arabia FWD1,Saudi Arabia,FWD,7.8,33.5
+Saudi Arabia FWD2,Saudi Arabia,FWD,7.4,31.9
+Saudi Arabia FWD3,Saudi Arabia,FWD,8.2,33.7
+Saudi Arabia FWD4,Saudi Arabia,FWD,7.1,39.7
+Costa Rica GK1,Costa Rica,GK,6.6,21.4
+Costa Rica GK2,Costa Rica,GK,6.8,37.5
+Costa Rica GK3,Costa Rica,GK,5.3,33.8
+Costa Rica DEF1,Costa Rica,DEF,6.1,40.1
+Costa Rica DEF2,Costa Rica,DEF,5.2,39.3
+Costa Rica DEF3,Costa Rica,DEF,5.8,30.8
+Costa Rica DEF4,Costa Rica,DEF,6.9,36.1
+Costa Rica DEF5,Costa Rica,DEF,8.2,34.0
+Costa Rica DEF6,Costa Rica,DEF,7.1,32.4
+Costa Rica MID1,Costa Rica,MID,7.5,40.0
+Costa Rica MID2,Costa Rica,MID,8.3,36.4
+Costa Rica MID3,Costa Rica,MID,6.3,29.2
+Costa Rica MID4,Costa Rica,MID,7.2,33.8
+Costa Rica MID5,Costa Rica,MID,7.4,33.7
+Costa Rica MID6,Costa Rica,MID,7.0,34.2
+Costa Rica FWD1,Costa Rica,FWD,8.2,34.9
+Costa Rica FWD2,Costa Rica,FWD,8.7,33.9
+Costa Rica FWD3,Costa Rica,FWD,8.4,33.4
+Costa Rica FWD4,Costa Rica,FWD,8.0,31.4
+Paraguay GK1,Paraguay,GK,6.9,29.8
+Paraguay GK2,Paraguay,GK,7.5,32.1
+Paraguay GK3,Paraguay,GK,7.8,32.1
+Paraguay DEF1,Paraguay,DEF,7.4,38.0
+Paraguay DEF2,Paraguay,DEF,6.3,25.1
+Paraguay DEF3,Paraguay,DEF,6.9,42.8
+Paraguay DEF4,Paraguay,DEF,7.5,31.7
+Paraguay DEF5,Paraguay,DEF,9.0,38.7
+Paraguay DEF6,Paraguay,DEF,6.7,24.5
+Paraguay MID1,Paraguay,MID,7.9,30.0
+Paraguay MID2,Paraguay,MID,6.1,25.0
+Paraguay MID3,Paraguay,MID,7.1,36.2
+Paraguay MID4,Paraguay,MID,7.7,38.6
+Paraguay MID5,Paraguay,MID,9.1,41.4
+Paraguay MID6,Paraguay,MID,7.8,29.8
+Paraguay FWD1,Paraguay,FWD,6.7,35.8
+Paraguay FWD2,Paraguay,FWD,7.5,31.8
+Paraguay FWD3,Paraguay,FWD,7.7,31.0
+Paraguay FWD4,Paraguay,FWD,6.7,35.1
+Algeria GK1,Algeria,GK,8.1,29.3
+Algeria GK2,Algeria,GK,7.1,31.2
+Algeria GK3,Algeria,GK,7.7,34.5
+Algeria DEF1,Algeria,DEF,7.3,30.6
+Algeria DEF2,Algeria,DEF,6.6,31.7
+Algeria DEF3,Algeria,DEF,7.0,23.6
+Algeria DEF4,Algeria,DEF,8.1,37.4
+Algeria DEF5,Algeria,DEF,7.8,32.1
+Algeria DEF6,Algeria,DEF,9.8,38.2
+Algeria MID1,Algeria,MID,7.4,34.3
+Algeria MID2,Algeria,MID,9.5,35.6
+Algeria MID3,Algeria,MID,7.2,29.1
+Algeria MID4,Algeria,MID,7.3,31.0
+Algeria MID5,Algeria,MID,7.0,29.0
+Algeria MID6,Algeria,MID,7.7,38.9
+Algeria FWD1,Algeria,FWD,7.5,36.4
+Algeria FWD2,Algeria,FWD,7.7,39.5
+Algeria FWD3,Algeria,FWD,7.1,37.2
+Algeria FWD4,Algeria,FWD,8.6,40.8
+Chile GK1,Chile,GK,7.1,29.1
+Chile GK2,Chile,GK,7.9,29.2
+Chile GK3,Chile,GK,7.4,36.5
+Chile DEF1,Chile,DEF,7.8,28.1
+Chile DEF2,Chile,DEF,6.3,34.4
+Chile DEF3,Chile,DEF,6.1,29.7
+Chile DEF4,Chile,DEF,7.4,37.1
+Chile DEF5,Chile,DEF,7.4,21.9
+Chile DEF6,Chile,DEF,7.6,30.1
+Chile MID1,Chile,MID,7.1,32.5
+Chile MID2,Chile,MID,7.0,24.2
+Chile MID3,Chile,MID,8.3,41.3
+Chile MID4,Chile,MID,6.7,32.0
+Chile MID5,Chile,MID,7.8,36.0
+Chile MID6,Chile,MID,7.2,34.2
+Chile FWD1,Chile,FWD,8.7,36.7
+Chile FWD2,Chile,FWD,7.6,41.4
+Chile FWD3,Chile,FWD,8.0,28.2
+Chile FWD4,Chile,FWD,9.1,39.6
+Panama GK1,Panama,GK,6.8,32.6
+Panama GK2,Panama,GK,7.0,27.3
+Panama GK3,Panama,GK,8.0,40.4
+Panama DEF1,Panama,DEF,8.0,41.2
+Panama DEF2,Panama,DEF,7.1,29.9
+Panama DEF3,Panama,DEF,7.8,36.0
+Panama DEF4,Panama,DEF,8.6,27.9
+Panama DEF5,Panama,DEF,5.3,23.6
+Panama DEF6,Panama,DEF,5.6,29.5
+Panama MID1,Panama,MID,7.9,33.9
+Panama MID2,Panama,MID,6.5,32.4
+Panama MID3,Panama,MID,7.0,31.0
+Panama MID4,Panama,MID,6.8,30.1
+Panama MID5,Panama,MID,6.5,24.5
+Panama MID6,Panama,MID,6.9,32.3
+Panama FWD1,Panama,FWD,8.8,28.0
+Panama FWD2,Panama,FWD,7.0,34.8
+Panama FWD3,Panama,FWD,7.9,32.4
+Panama FWD4,Panama,FWD,7.7,38.6
+Jamaica GK1,Jamaica,GK,8.4,31.8
+Jamaica GK2,Jamaica,GK,7.2,32.8
+Jamaica GK3,Jamaica,GK,7.7,37.7
+Jamaica DEF1,Jamaica,DEF,7.5,36.7
+Jamaica DEF2,Jamaica,DEF,6.2,30.6
+Jamaica DEF3,Jamaica,DEF,8.6,38.6
+Jamaica DEF4,Jamaica,DEF,6.9,28.7
+Jamaica DEF5,Jamaica,DEF,7.6,28.1
+Jamaica DEF6,Jamaica,DEF,5.5,30.3
+Jamaica MID1,Jamaica,MID,7.0,34.2
+Jamaica MID2,Jamaica,MID,7.1,30.1
+Jamaica MID3,Jamaica,MID,7.1,34.3
+Jamaica MID4,Jamaica,MID,6.6,29.7
+Jamaica MID5,Jamaica,MID,10.5,43.2
+Jamaica MID6,Jamaica,MID,7.1,35.9
+Jamaica FWD1,Jamaica,FWD,7.2,33.9
+Jamaica FWD2,Jamaica,FWD,7.5,39.4
+Jamaica FWD3,Jamaica,FWD,5.4,33.4
+Jamaica FWD4,Jamaica,FWD,6.8,25.1
+New Zealand GK1,New Zealand,GK,6.6,39.5
+New Zealand GK2,New Zealand,GK,4.5,34.5
+New Zealand GK3,New Zealand,GK,6.2,32.9
+New Zealand DEF1,New Zealand,DEF,6.0,29.6
+New Zealand DEF2,New Zealand,DEF,7.2,35.0
+New Zealand DEF3,New Zealand,DEF,6.2,28.0
+New Zealand DEF4,New Zealand,DEF,6.6,32.8
+New Zealand DEF5,New Zealand,DEF,7.0,34.8
+New Zealand DEF6,New Zealand,DEF,6.1,38.0
+New Zealand MID1,New Zealand,MID,7.1,34.3
+New Zealand MID2,New Zealand,MID,5.8,28.8
+New Zealand MID3,New Zealand,MID,6.6,29.5
+New Zealand MID4,New Zealand,MID,5.4,27.9
+New Zealand MID5,New Zealand,MID,7.5,30.2
+New Zealand MID6,New Zealand,MID,6.9,28.0
+New Zealand FWD1,New Zealand,FWD,7.2,40.5
+New Zealand FWD2,New Zealand,FWD,6.4,26.3
+New Zealand FWD3,New Zealand,FWD,6.8,30.8
+New Zealand FWD4,New Zealand,FWD,7.8,40.0
+Honduras GK1,Honduras,GK,4.4,32.7
+Honduras GK2,Honduras,GK,5.9,34.5
+Honduras GK3,Honduras,GK,5.7,33.6
+Honduras DEF1,Honduras,DEF,6.4,32.8
+Honduras DEF2,Honduras,DEF,6.2,35.3
+Honduras DEF3,Honduras,DEF,7.1,33.6
+Honduras DEF4,Honduras,DEF,5.6,33.2
+Honduras DEF5,Honduras,DEF,7.0,31.8
+Honduras DEF6,Honduras,DEF,5.5,39.7
+Honduras MID1,Honduras,MID,5.5,25.1
+Honduras MID2,Honduras,MID,7.2,32.3
+Honduras MID3,Honduras,MID,7.7,34.0
+Honduras MID4,Honduras,MID,8.7,31.5
+Honduras MID5,Honduras,MID,7.1,29.6
+Honduras MID6,Honduras,MID,6.4,34.8
+Honduras FWD1,Honduras,FWD,7.5,38.8
+Honduras FWD2,Honduras,FWD,6.4,31.8
+Honduras FWD3,Honduras,FWD,7.1,36.4
+Honduras FWD4,Honduras,FWD,6.8,37.0
